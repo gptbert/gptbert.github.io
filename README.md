@@ -9,8 +9,8 @@
 
 ## 页面地址
 
-[隐私政策网址](https://gptbert.github.io/privacy.html)：
+隐私政策网址：
 https://gptbert.github.io/privacy.html
 
-[技术支持网址](https://gptbert.github.io/support.html)：
+技术支持网址：
 https://gptbert.github.io/support.html
