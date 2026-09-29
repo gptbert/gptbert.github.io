@@ -20,6 +20,8 @@ alternate_url: /en/posts/2026/09/29/slug/
 
 创建 Pull Request 后先查看 Cloudflare Pages 预览；合并到 `main` 后，Cloudflare Pages 与 GitHub Pages 会各自自动构建。
 
+文章默认显示 GitHub Discussions 评论区。新文章使用其固定路径自动对应一个讨论；如需关闭某篇文章的评论，在文章 front matter 中设置 `comments: false`。如已创建讨论，可设置 `discussion_url`，为读者提供直接打开 GitHub 讨论的链接。嵌入评论使用 Giscus，仓库需启用 Discussions，并将 Giscus GitHub App 安装到此仓库。
+
 中文版是默认站点（`/`），英文版位于 `/en/`。如果文章提供英文版，请另建一篇 `lang: en` 的文章，设置 `/en/posts/.../` 的 `permalink` 和指回中文版的 `alternate_url`。两个 RSS 分别位于 `/feed.xml` 和 `/en/feed.xml`。页面文案在 `_data/ui.yml` 中维护。
 
 ## 添加翻译图书

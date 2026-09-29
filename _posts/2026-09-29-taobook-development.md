@@ -3,6 +3,7 @@ title: "从读一本书开始：taobook 的开发历程"
 description: "从 iOS 阅读器到 Android 与鸿蒙原生版，记录 taobook 如何处理多格式阅读、翻译与朗读。"
 date: 2026-09-29 17:00:00 +0800
 lang: zh-CN
+discussion_url: https://github.com/gptbert/gptbert.github.io/discussions/17
 ---
 
 电子书格式很多，阅读却常常被格式、设备和应用功能打断：一份资料是 EPUB，另一份是 PDF；想听书时，朗读位置又和眼前的文字脱节。我做 taobook，就是希望把导入、阅读、查找、翻译和朗读放进一条顺畅的使用路径里。
