@@ -24,7 +24,7 @@ alternate_url: /en/posts/2026/09/29/slug/
 
 ## 添加译书
 
-在 `_data/translated_books.yml` 为每本书添加一项。`title`、`status`、`credit`、`publisher_url` 应按可靠书目信息填写；英文展示另填 `title_en`、`status_en`、`description_en` 和 `credit_en`。非图灵图书可设置 `publisher_label` 和 `publisher_label_en`。没有公开译文时，省略 `read_url`。封面图片保存在 `assets/books/`，通过 `cover` 引用；如果展示原书封面，设置 `cover_note` 和 `cover_note_en` 明确标注。
+在 `_data/translated_books.yml` 为每本书添加一项。`title`、`status`、`credit`、`publisher_url` 应按可靠书目信息填写；英文展示另填 `title_en`、`status_en`、`description_en` 和 `credit_en`。非图灵图书可设置 `publisher_label` 和 `publisher_label_en`。没有公开译文时，省略 `read_url`。封面图片保存在 `assets/books/`，通过 `cover` 引用；如果展示原书封面，设置 `cover_note` 和 `cover_note_en` 明确标注。只添加已获准公开使用的封面图片。
 
 当前封面来源：图灵图书详情（八本译书及一本审校书）、[《Python访谈录》书目](https://book.douban.com/subject/34759902/)、[《Python数据分析》原书](https://www.packtpub.com/en-us/product/data-analysis-with-python-9781789950069?type=print)和[《asyncio实例集锦》原书](https://link.springer.com/book/10.1007/978-1-4842-4401-2)。封面仅用于介绍对应图书。
 
