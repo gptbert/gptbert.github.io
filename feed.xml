@@ -9,8 +9,8 @@ permalink: /feed.xml
   <link href="{{ '/' | absolute_url }}"/>
   <link href="{{ '/feed.xml' | absolute_url }}" rel="self" type="application/atom+xml"/>
   <id>{{ '/' | absolute_url }}</id>
-  <updated>{% if site.posts.size > 0 %}{{ site.posts.first.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}</updated>
-  {% for post in site.posts limit: 20 %}
+  {% assign zh_posts = site.posts | where: 'lang', 'zh-CN' %}<updated>{% if zh_posts.size > 0 %}{{ zh_posts.first.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}</updated>
+  {% for post in zh_posts limit: 20 %}
   <entry>
     <title>{{ post.title | xml_escape }}</title>
     <link href="{{ post.url | absolute_url }}"/>

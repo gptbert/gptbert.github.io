@@ -1,0 +1,23 @@
+---
+layout: default
+title: Posts
+description: Notes on software projects, tools, and learning.
+lang: en
+permalink: /en/posts/
+alternate_url: /posts/
+---
+<header class="page-header">
+  <p class="eyebrow">JOURNAL / POSTS</p>
+  <h1>Notes from the work.</h1>
+  <p>Questions, experiments, results, and what comes next.</p>
+</header>
+<section class="post-list archive-list" aria-label="All posts">
+  {% assign en_posts = site.posts | where: 'lang', 'en' %}{% for post in en_posts %}
+  <a class="post-card" href="{{ post.url | relative_url }}">
+    <div class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><span>POST</span></div>
+    <h2>{{ post.title | escape }}</h2>
+    <p>{{ post.description | default: post.excerpt | strip_html | truncate: 150 | escape }}</p>
+    <span class="card-arrow" aria-hidden="true">↗</span>
+  </a>
+  {% endfor %}
+</section>
