@@ -14,10 +14,7 @@ alternate_url: /en/books/
 <div class="book-list">
   {% for book in site.data.translated_books %}
   <article class="book-card">
-    <div class="book-cover" aria-hidden="true">
-      {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="">{% else %}{{ book.cover_text | default: '译书' | escape }}{% endif %}
-    </div>
-    <div>
+    <div class="book-copy">
       <p class="eyebrow">{{ book.status | escape }}</p>
       <h2>{{ book.title | escape }}</h2>
       {% if book.original_title %}<p class="book-original">{{ book.original_title | escape }}</p>{% endif %}
@@ -29,6 +26,10 @@ alternate_url: /en/books/
         {% if book.original_url %}<a href="{{ book.original_url }}">原书信息 ↗</a>{% endif %}
       </div>
     </div>
+    <figure class="book-cover">
+      {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="{% if book.cover_note %}{{ book.original_title | escape }}原书封面{% else %}{{ book.title | escape }}封面{% endif %}" loading="lazy" decoding="async">{% else %}<span class="book-cover-fallback" aria-hidden="true">{{ book.cover_text | default: '译书' | escape }}</span>{% endif %}
+      {% if book.cover_note %}<figcaption>{{ book.cover_note | escape }}</figcaption>{% endif %}
+    </figure>
   </article>
   {% else %}
   <p class="book-description">书目正在整理，稍后更新。</p>
@@ -42,8 +43,7 @@ alternate_url: /en/books/
   <div class="book-list">
     {% for book in site.data.reviewed_books %}
     <article class="book-card">
-      <div class="book-cover" aria-hidden="true">{{ book.cover_text | default: '审校' | escape }}</div>
-      <div>
+      <div class="book-copy">
         <p class="eyebrow">{{ book.status | escape }}</p>
         <h2>{{ book.title | escape }}</h2>
         <p class="book-original">{{ book.original_title | escape }}</p>
@@ -51,6 +51,9 @@ alternate_url: /en/books/
         <p class="book-meta">{{ book.credit | escape }}</p>
         <div class="book-links"><a href="{{ book.publisher_url }}">图灵图书详情 ↗</a></div>
       </div>
+      <figure class="book-cover">
+        {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="{{ book.title | escape }}封面" loading="lazy" decoding="async">{% else %}<span class="book-cover-fallback" aria-hidden="true">{{ book.cover_text | default: '审校' | escape }}</span>{% endif %}
+      </figure>
     </article>
     {% endfor %}
   </div>

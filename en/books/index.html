@@ -15,10 +15,7 @@ alternate_url: /books/
 <div class="book-list">
   {% for book in site.data.translated_books %}
   <article class="book-card">
-    <div class="book-cover" aria-hidden="true">
-      {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="">{% else %}{{ book.cover_text_en | default: book.cover_text | default: 'BOOK' | escape }}{% endif %}
-    </div>
-    <div>
+    <div class="book-copy">
       <p class="eyebrow">{{ book.status_en | escape }}</p>
       <h2>{{ book.title_en | default: book.original_title | default: book.title | escape }}</h2>
       <p class="book-original" lang="zh-CN">{{ book.title | escape }}</p>
@@ -30,6 +27,10 @@ alternate_url: /books/
         {% if book.original_url %}<a href="{{ book.original_url }}">Original book ↗</a>{% endif %}
       </div>
     </div>
+    <figure class="book-cover">
+      {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="{% if book.cover_note_en %}Original cover: {{ book.original_title | escape }}{% else %}Cover: {{ book.title | escape }}{% endif %}" loading="lazy" decoding="async">{% else %}<span class="book-cover-fallback" aria-hidden="true">{{ book.cover_text_en | default: book.cover_text | default: 'BOOK' | escape }}</span>{% endif %}
+      {% if book.cover_note_en %}<figcaption>{{ book.cover_note_en | escape }}</figcaption>{% endif %}
+    </figure>
   </article>
   {% else %}
   <p class="book-description">The book list is being prepared.</p>
@@ -43,8 +44,7 @@ alternate_url: /books/
   <div class="book-list">
     {% for book in site.data.reviewed_books %}
     <article class="book-card">
-      <div class="book-cover" aria-hidden="true">{{ book.cover_text_en | default: book.cover_text | default: 'BOOK' | escape }}</div>
-      <div>
+      <div class="book-copy">
         <p class="eyebrow">{{ book.status_en | escape }}</p>
         <h2>{{ book.title_en | escape }}</h2>
         <p class="book-original" lang="zh-CN">{{ book.title | escape }}</p>
@@ -52,6 +52,9 @@ alternate_url: /books/
         <p class="book-meta">{{ book.credit_en | escape }}</p>
         <div class="book-links"><a href="{{ book.publisher_url }}">Publisher details ↗</a></div>
       </div>
+      <figure class="book-cover">
+        {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="Cover: {{ book.title_en | escape }}" loading="lazy" decoding="async">{% else %}<span class="book-cover-fallback" aria-hidden="true">{{ book.cover_text_en | default: book.cover_text | default: 'BOOK' | escape }}</span>{% endif %}
+      </figure>
     </article>
     {% endfor %}
   </div>
