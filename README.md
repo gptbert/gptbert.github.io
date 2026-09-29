@@ -18,10 +18,15 @@ date: 2026-09-29 12:00:00 +0800
 
 创建 Pull Request 后先查看 Cloudflare Pages 预览；合并到 `main` 后，Cloudflare Pages 与 GitHub Pages 会各自自动构建。
 
+## 添加译书
+
+在 `_data/translated_books.yml` 为每本书添加一项。`title`、`status`、`credit`、`original_url` 和 `read_url` 应按可核实的书目信息填写；没有公开译文时，省略 `read_url`。只添加已获准公开使用的封面图片。
+
 ## 站点结构
 
 - `index.html`：首页
 - `posts/` 与 `_posts/`：文章列表和 Markdown 文章
+- `books/`、`_data/translated_books.yml`：译书目录与书目数据
 - `projects/`、`about/`：项目与关于
 - `feed.xml`、`sitemap.xml`：RSS 和站点地图
 - `privacy.html`、`support.html`：原有 App Store 审核页面，路径保持不变

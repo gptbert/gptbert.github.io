@@ -1,0 +1,34 @@
+---
+layout: default
+title: 译书
+description: gptbert 参与翻译的图书与公开译稿。
+permalink: /books/
+---
+<header class="page-header">
+  <p class="eyebrow">BOOKS / 译书</p>
+  <h1>把好书带给更多读者。</h1>
+  <p>这里记录参与翻译的图书和译稿。每本书会注明原书、参与方式与可公开访问的链接。</p>
+</header>
+
+<div class="book-list">
+  {% for book in site.data.translated_books %}
+  <article class="book-card">
+    <div class="book-cover" aria-hidden="true">
+      {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="">{% else %}{{ book.cover_text | default: '译书' | escape }}{% endif %}
+    </div>
+    <div>
+      <p class="eyebrow">{{ book.status | escape }}</p>
+      <h2>{{ book.title | escape }}</h2>
+      {% if book.original_title %}<p class="book-original">{{ book.original_title | escape }}</p>{% endif %}
+      {% if book.description %}<p class="book-description">{{ book.description | escape }}</p>{% endif %}
+      {% if book.credit %}<p class="book-meta">{{ book.credit | escape }}</p>{% endif %}
+      <div class="book-links">
+        {% if book.read_url %}<a href="{{ book.read_url }}">阅读译文 ↗</a>{% endif %}
+        {% if book.original_url %}<a href="{{ book.original_url }}">原书信息 ↗</a>{% endif %}
+      </div>
+    </div>
+  </article>
+  {% else %}
+  <p class="book-description">书目正在整理，稍后更新。</p>
+  {% endfor %}
+</div>
