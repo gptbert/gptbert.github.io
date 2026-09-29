@@ -1,0 +1,64 @@
+---
+layout: null
+permalink: /search-index.json
+---
+{%- assign all_books = site.data.translated_books | concat: site.data.reviewed_books -%}
+{%- assign languages = 'zh-CN,en' | split: ',' -%}
+{
+  "version": 1,
+  "tags": [
+    {%- for tag in site.data.tags -%}
+      {"id": {{ tag[0] | jsonify }}, "name": {{ tag[1].name | jsonify }}, "name_en": {{ tag[1].name_en | jsonify }}}{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ],
+  "items": [
+    {%- assign item_emitted = false -%}
+    {%- for post in site.posts -%}
+      {%- if item_emitted -%},{%- endif -%}
+      {%- assign post_id = post.search_id | default: post.id | prepend: 'post:' -%}
+      {%- assign post_lang = post.lang | default: site.lang -%}
+      {%- assign post_description = post.description | default: post.excerpt | markdownify | strip_html | normalize_whitespace -%}
+      {%- assign post_content = post.content | markdownify | strip_html | normalize_whitespace -%}
+      {"id": {{ post_id | jsonify }}, "type": "post", "lang": {{ post_lang | jsonify }}, "title": {{ post.title | jsonify }}, "url": {{ post.url | relative_url | jsonify }}, "description": {{ post_description | jsonify }}, "content": {{ post_content | jsonify }}, "tags": {{ post.tags | jsonify }}}
+      {%- assign item_emitted = true -%}
+    {%- endfor -%}
+    {%- for book in all_books -%}
+      {%- assign book_id = book.id | prepend: 'book:' -%}
+      {%- capture book_content -%}{{ book.title }} {{ book.title_en }} {{ book.original_title }} {{ book.description }} {{ book.description_en }} {{ book.credit }} {{ book.credit_en }} {{ book.status }} {{ book.status_en }}{%- endcapture -%}
+      {%- assign book_content = book_content | strip_html | normalize_whitespace -%}
+      {%- for language in languages -%}
+        {%- if item_emitted -%},{%- endif -%}
+        {%- if language == 'en' -%}
+          {%- assign book_title = book.title_en | default: book.title -%}
+          {%- assign book_description = book.description_en | default: book.description -%}
+          {%- assign book_url = '/en/books/#' | append: book.id -%}
+        {%- else -%}
+          {%- assign book_title = book.title -%}
+          {%- assign book_description = book.description -%}
+          {%- assign book_url = '/books/#' | append: book.id -%}
+        {%- endif -%}
+        {"id": {{ book_id | jsonify }}, "type": "book", "lang": {{ language | jsonify }}, "title": {{ book_title | jsonify }}, "url": {{ book_url | relative_url | jsonify }}, "description": {{ book_description | jsonify }}, "content": {{ book_content | jsonify }}, "tags": {{ book.tags | jsonify }}}
+        {%- assign item_emitted = true -%}
+      {%- endfor -%}
+    {%- endfor -%}
+    {%- for project in site.data.projects -%}
+      {%- assign project_id = project.id | prepend: 'project:' -%}
+      {%- capture project_content -%}{{ project.title }} {{ project.title_en }} {{ project.description }} {{ project.description_en }} {{ project.label }} {{ project.label_en }} {{ project.category }} {{ project.category_en }}{%- endcapture -%}
+      {%- assign project_content = project_content | strip_html | normalize_whitespace -%}
+      {%- for language in languages -%}
+        {%- if item_emitted -%},{%- endif -%}
+        {%- if language == 'en' -%}
+          {%- assign project_title = project.title_en | default: project.title -%}
+          {%- assign project_description = project.description_en | default: project.description -%}
+          {%- assign project_url = '/en/projects/#project-' | append: project.id -%}
+        {%- else -%}
+          {%- assign project_title = project.title -%}
+          {%- assign project_description = project.description -%}
+          {%- assign project_url = '/projects/#project-' | append: project.id -%}
+        {%- endif -%}
+        {"id": {{ project_id | jsonify }}, "type": "project", "lang": {{ language | jsonify }}, "title": {{ project_title | jsonify }}, "url": {{ project_url | relative_url | jsonify }}, "description": {{ project_description | jsonify }}, "content": {{ project_content | jsonify }}, "tags": {{ project.tags | jsonify }}}
+        {%- assign item_emitted = true -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  ]
+}

@@ -1,23 +1,31 @@
 ---
 layout: default
 title: Posts
-description: Notes on software projects, tools, and learning.
+description: Engineering notes on data, AI, product development, and technical decisions.
 lang: en
 permalink: /en/posts/
 alternate_url: /posts/
 ---
 <header class="page-header">
-  <p class="eyebrow">JOURNAL / POSTS</p>
-  <h1>Notes from the work.</h1>
-  <p>Questions, experiments, results, and what comes next.</p>
+  <p class="eyebrow">ENGINEERING NOTES / POSTS</p>
+  <h1>Problems. Decisions. Evidence.</h1>
+  <p>Notes on data and AI engineering, building products, and continued learning. The process, the results, and their limits.</p>
 </header>
 <section class="post-list archive-list" aria-label="All posts">
   {% assign en_posts = site.posts | where: 'lang', 'en' %}{% for post in en_posts %}
-  <a class="post-card" href="{{ post.url | relative_url }}">
+  <article class="post-card">
     <div class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><span>POST</span></div>
-    <h2>{{ post.title | escape }}</h2>
+    <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
     <p>{{ post.description | default: post.excerpt | strip_html | truncate: 150 | escape }}</p>
+    {% include tag-list.html tags=post.tags lang="en" %}
     <span class="card-arrow" aria-hidden="true">↗</span>
-  </a>
+  </article>
+  {% else %}
+  <div class="empty-state prose">
+    <p class="eyebrow">CURRENTLY WRITING IN CHINESE</p>
+    <h2>English posts are still to come.</h2>
+    <p>There are no English articles published yet. The Chinese archive includes the development story of taobook, from its first iOS reader to Android and HarmonyOS.</p>
+    <p><a class="section-link" href="{{ '/posts/' | relative_url }}">Read the Chinese articles →</a></p>
+  </div>
   {% endfor %}
 </section>

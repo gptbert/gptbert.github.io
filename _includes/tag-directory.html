@@ -1,0 +1,68 @@
+{% assign directory_lang = page.lang | default: site.lang %}
+{% assign directory_books = site.data.translated_books | concat: site.data.reviewed_books %}
+{% assign directory_preferred_posts = '' | split: ',' %}{% assign directory_fallback_posts = '' | split: ',' %}
+{% for post in site.posts %}
+  {% assign post_lang = post.lang | default: site.lang %}
+  {% if post_lang == directory_lang %}{% assign directory_preferred_posts = directory_preferred_posts | push: post %}{% else %}{% assign directory_fallback_posts = directory_fallback_posts | push: post %}{% endif %}
+{% endfor %}
+{% assign directory_posts = directory_preferred_posts | concat: directory_fallback_posts %}
+{% assign directory_tag_counts = '' | split: ',' %}
+{% if directory_lang == 'en' %}{% assign directory_prefix = '/en' %}{% else %}{% assign directory_prefix = '' %}{% endif %}
+<div class="tag-directory">
+  <nav class="tag-cloud" aria-label="{% if directory_lang == 'en' %}Browse topics{% else %}按主题浏览{% endif %}">
+    {% for tag in site.data.tags %}
+      {% assign tag_id = tag[0] %}{% assign tag_count = 0 %}
+      {% assign tag_post_ids = '' | split: ',' %}
+      {% for post in directory_posts %}{% if post.tags contains tag_id %}
+        {% assign post_id = post.search_id | default: post.id %}
+        {% unless tag_post_ids contains post_id %}{% assign tag_post_ids = tag_post_ids | push: post_id %}{% assign tag_count = tag_count | plus: 1 %}{% endunless %}
+      {% endif %}{% endfor %}
+      {% for book in directory_books %}{% if book.tags contains tag_id %}{% assign tag_count = tag_count | plus: 1 %}{% endif %}{% endfor %}
+      {% for project in site.data.projects %}{% if project.tags contains tag_id %}{% assign tag_count = tag_count | plus: 1 %}{% endif %}{% endfor %}
+      {% assign directory_tag_counts = directory_tag_counts | push: tag_count %}
+      {% if tag_count > 0 %}
+      <a class="tag-chip" href="#{{ tag_id | escape }}">{% if directory_lang == 'en' %}{{ tag[1].name_en | default: tag[1].name | escape }}{% else %}{{ tag[1].name | escape }}{% endif %}<span class="tag-count">{{ tag_count }}</span></a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+  <div class="tag-sections">
+    {% for tag in site.data.tags %}
+      {% assign tag_id = tag[0] %}{% assign tag_count = directory_tag_counts[forloop.index0] %}
+      {% if tag_count > 0 %}
+      {% assign tag_post_ids = '' | split: ',' %}{% assign tag_posts = '' | split: ',' %}
+      {% for post in directory_posts %}{% if post.tags contains tag_id %}
+        {% assign post_id = post.search_id | default: post.id %}
+        {% unless tag_post_ids contains post_id %}{% assign tag_post_ids = tag_post_ids | push: post_id %}{% assign tag_posts = tag_posts | push: post %}{% endunless %}
+      {% endif %}{% endfor %}
+      <section class="tag-section" id="{{ tag_id | escape }}" aria-labelledby="heading-{{ tag_id | escape }}">
+        <div class="tag-section-heading">
+          <h2 id="heading-{{ tag_id | escape }}">{% if directory_lang == 'en' %}{{ tag[1].name_en | default: tag[1].name | escape }}{% else %}{{ tag[1].name | escape }}{% endif %} <span class="tag-count">{{ tag_count }}</span></h2>
+          <a class="section-link" href="{{ directory_prefix | append: '/search/' | relative_url }}?tag={{ tag_id | url_encode }}">{% if directory_lang == 'en' %}Search this topic{% else %}搜索此标签{% endif %} →</a>
+        </div>
+        <ul class="tag-entry-list">
+          {% for post in tag_posts %}
+          {% assign entry_lang = post.lang | default: site.lang %}
+          <li class="tag-entry">
+            <span class="tag-entry-type">{% if directory_lang == 'en' %}Article{% else %}文章{% endif %}</span>
+            <a href="{{ post.url | relative_url }}"{% if entry_lang != directory_lang %} lang="{{ entry_lang | escape }}" hreflang="{{ entry_lang | escape }}"{% endif %}>{{ post.title | escape }}</a>
+            {% if entry_lang != directory_lang %}<span class="language-badge">{% if entry_lang == 'en' %}English{% else %}中文{% endif %}</span>{% endif %}
+          </li>
+          {% endfor %}
+          {% for book in directory_books %}{% if book.tags contains tag_id %}
+          <li class="tag-entry">
+            <span class="tag-entry-type">{% if directory_lang == 'en' %}Book{% else %}图书{% endif %}</span>
+            <a href="{{ directory_prefix | append: '/books/' | relative_url }}#{{ book.id | escape }}">{% if directory_lang == 'en' %}{{ book.title_en | default: book.title | escape }}{% else %}{{ book.title | escape }}{% endif %}</a>
+          </li>
+          {% endif %}{% endfor %}
+          {% for project in site.data.projects %}{% if project.tags contains tag_id %}
+          <li class="tag-entry">
+            <span class="tag-entry-type">{% if directory_lang == 'en' %}Project{% else %}项目{% endif %}</span>
+            <a href="{{ directory_prefix | append: '/projects/' | relative_url }}#project-{{ project.id | escape }}">{% if directory_lang == 'en' %}{{ project.title_en | default: project.title | escape }}{% else %}{{ project.title | escape }}{% endif %}</a>
+          </li>
+          {% endif %}{% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
