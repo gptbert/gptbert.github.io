@@ -1,18 +1,58 @@
-<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>App Support Pages | gptbert</title>
-</head>
-<body>
-  <main>
-    <h1>App Support Pages</h1>
-    <p>本网站托管 App Store Connect 审核所需的公开页面。</p>
-    <ul>
-      <li><a href="/privacy.html">隐私政策</a></li>
-      <li><a href="/support.html">技术支持</a></li>
-    </ul>
-  </main>
-</body>
-</html>
+---
+layout: default
+title: 首页
+description: gptbert 的文章、项目与学习记录。
+---
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="signal" aria-hidden="true"></span> 一个持续更新的个人站点</p>
+    <h1 id="hero-title">写代码，<br><em>也记录过程。</em></h1>
+    <p class="hero-description">这里收集软件实践、工具探索和学习笔记。把做过的事写清楚，也把仍在思考的问题留下来。</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="{{ '/posts/' | relative_url }}">阅读文章 <span aria-hidden="true">↗</span></a>
+      <a class="button button-text" href="{{ '/about/' | relative_url }}">了解本站 <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <div class="hero-aside" aria-label="站点介绍">
+    <div class="aside-top"><span>FIELD NOTES</span><span>01 / ∞</span></div>
+    <div class="aside-mark" aria-hidden="true">g<span>.</span></div>
+    <p>想法从草稿开始，<br>作品在迭代中成形。</p>
+    <div class="aside-bottom"><span>BUILD · LEARN · SHARE</span><span>↗</span></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="latest-title">
+  <div class="section-heading">
+    <div><p class="eyebrow">01 / JOURNAL</p><h2 id="latest-title">最近的文章</h2></div>
+    <a class="section-link" href="{{ '/posts/' | relative_url }}">查看全部 <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="post-list">
+    {% for post in site.posts limit: 3 %}
+    <a class="post-card" href="{{ post.url | relative_url }}">
+      <div class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><span>文章</span></div>
+      <h3>{{ post.title | escape }}</h3>
+      <p>{{ post.description | default: post.excerpt | strip_html | truncate: 110 | escape }}</p>
+      <span class="card-arrow" aria-hidden="true">↗</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section projects-section" aria-labelledby="projects-title">
+  <div class="section-heading">
+    <div><p class="eyebrow">02 / WORK</p><h2 id="projects-title">一些项目</h2></div>
+    <a class="section-link" href="{{ '/projects/' | relative_url }}">更多项目 <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="project-grid">
+    <a class="project-card" href="https://github.com/gptbert/memcrab">
+      <span class="project-number">01 / OPEN SOURCE</span><h3>MemCrab <span aria-hidden="true">↗</span></h3>
+      <p>围绕上下文工程的 AI CLI 项目。</p>
+    </a>
+    <a class="project-card" href="https://github.com/gptbert/todo">
+      <span class="project-number">02 / EXPERIMENT</span><h3>todo <span aria-hidden="true">↗</span></h3>
+      <p>一个 Flet 应用示例。</p>
+    </a>
+  </div>
+</section>
+
+<section class="closing-note"><span aria-hidden="true">✳</span><p>持续写，持续做。<br><strong>下一篇，正在路上。</strong></p><a href="https://github.com/gptbert">在 GitHub 找到我 ↗</a></section>
