@@ -1,16 +1,29 @@
-# App Support Pages
+# gptbert
 
-本仓库用于托管 App Store Connect 审核所需的公开页面，包括：
+个人博客与公开项目页面。主站：[gptbert.com](https://gptbert.com/)；GitHub Pages 镜像：[gptbert.github.io](https://gptbert.github.io/)。
 
-* 隐私政策页面：`privacy.html`
-* 技术支持页面：`support.html`
+## 发布文章
 
-启用 GitHub Pages 后，可以在 App Store Connect 中填写以下 URL。
+在 `_posts/` 新建 `YYYY-MM-DD-slug.md`，添加标题、简介和日期：
 
-## 页面地址
+```markdown
+---
+title: "文章标题"
+description: "一句话简介"
+date: 2026-09-29 12:00:00 +0800
+---
 
-[隐私政策网址](https://gptbert.github.io/privacy.html)：
-https://gptbert.github.io/privacy.html
+文章正文。
+```
 
-[技术支持网址](https://gptbert.github.io/support.html)：
-https://gptbert.github.io/support.html
+创建 Pull Request 后先查看 Cloudflare Pages 预览；合并到 `main` 后，Cloudflare Pages 与 GitHub Pages 会各自自动构建。
+
+## 站点结构
+
+- `index.html`：首页
+- `posts/` 与 `_posts/`：文章列表和 Markdown 文章
+- `projects/`、`about/`：项目与关于
+- `feed.xml`、`sitemap.xml`：RSS 和站点地图
+- `privacy.html`、`support.html`：原有 App Store 审核页面，路径保持不变
+
+原有页面地址仍可用：[隐私政策](https://gptbert.github.io/privacy.html) · [技术支持](https://gptbert.github.io/support.html)。
