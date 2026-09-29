@@ -1,31 +1,32 @@
 ---
 layout: default
 title: Translated books
-description: Books and public drafts translated by gptbert.
+description: Seven Python books translated by 陶俊杰 and collaborators.
 lang: en
 permalink: /en/books/
 alternate_url: /books/
 ---
 <header class="page-header">
   <p class="eyebrow">BOOKS / TRANSLATIONS</p>
-  <h1>Bringing good books to more readers.</h1>
-  <p>Books and drafts I have helped translate, with original titles, credits, and public links where available.</p>
+  <h1>Translated books.</h1>
+  <p>Seven Python books translated by 陶俊杰 and collaborators. Titles, translator credits, and ISBNs are based on the publisher's catalog.</p>
 </header>
 
 <div class="book-list">
   {% for book in site.data.translated_books %}
   <article class="book-card">
     <div class="book-cover" aria-hidden="true">
-      {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="">{% else %}{{ book.cover_text_en | default: 'BOOK' | escape }}{% endif %}
+      {% if book.cover %}<img src="{{ book.cover | relative_url }}" alt="">{% else %}{{ book.cover_text_en | default: book.cover_text | default: 'BOOK' | escape }}{% endif %}
     </div>
     <div>
       <p class="eyebrow">{{ book.status_en | escape }}</p>
       <h2>{{ book.title_en | default: book.original_title | default: book.title | escape }}</h2>
-      {% if book.original_title and book.title_en %}<p class="book-original">{{ book.original_title | escape }}</p>{% endif %}
+      <p class="book-original" lang="zh-CN">{{ book.title | escape }}</p>
       {% if book.description_en %}<p class="book-description">{{ book.description_en | escape }}</p>{% endif %}
       {% if book.credit_en %}<p class="book-meta">{{ book.credit_en | escape }}</p>{% endif %}
       <div class="book-links">
         {% if book.read_url %}<a href="{{ book.read_url }}">Read translation ↗</a>{% endif %}
+        {% if book.publisher_url %}<a href="{{ book.publisher_url }}">Publisher details ↗</a>{% endif %}
         {% if book.original_url %}<a href="{{ book.original_url }}">Original book ↗</a>{% endif %}
       </div>
     </div>
