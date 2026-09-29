@@ -1,0 +1,23 @@
+---
+layout: null
+permalink: /en/feed.xml
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>{{ site.title | xml_escape }}</title>
+  <subtitle>Notes on software, tools, and learning.</subtitle>
+  <link href="{{ '/en/' | absolute_url }}"/>
+  <link href="{{ '/en/feed.xml' | absolute_url }}" rel="self" type="application/atom+xml"/>
+  <id>{{ '/en/' | absolute_url }}</id>
+  {% assign en_posts = site.posts | where: 'lang', 'en' %}<updated>{% if en_posts.size > 0 %}{{ en_posts.first.date | date_to_xmlschema }}{% else %}{{ site.time | date_to_xmlschema }}{% endif %}</updated>
+  {% for post in en_posts limit: 20 %}
+  <entry>
+    <title>{{ post.title | xml_escape }}</title>
+    <link href="{{ post.url | absolute_url }}"/>
+    <id>{{ post.url | absolute_url }}</id>
+    <published>{{ post.date | date_to_xmlschema }}</published>
+    <updated>{{ post.date | date_to_xmlschema }}</updated>
+    <summary>{{ post.description | default: post.excerpt | strip_html | xml_escape }}</summary>
+  </entry>
+  {% endfor %}
+</feed>

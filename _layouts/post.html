@@ -2,15 +2,16 @@
 layout: default
 ---
 <article class="article">
-  <a class="back-link" href="{{ '/posts/' | relative_url }}">← 返回全部文章</a>
+  {% assign lang = page.lang | default: site.lang %}{% assign ui = site.data.ui[lang] %}{% if lang == 'en' %}{% assign posts_path = '/en/posts/' %}{% else %}{% assign posts_path = '/posts/' %}{% endif %}
+  <a class="back-link" href="{{ posts_path | relative_url }}">← {{ ui.back_posts }}</a>
   <header class="article-header">
-    <p class="eyebrow">文章 · <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y 年 %m 月 %d 日' }}</time></p>
+    <p class="eyebrow">{{ ui.article }} · <time datetime="{{ page.date | date_to_xmlschema }}">{% if lang == 'en' %}{{ page.date | date: '%B %d, %Y' }}{% else %}{{ page.date | date: '%Y 年 %m 月 %d 日' }}{% endif %}</time></p>
     <h1>{{ page.title | escape }}</h1>
     {% if page.description %}<p class="article-deck">{{ page.description | escape }}</p>{% endif %}
   </header>
   <div class="prose">{{ content }}</div>
   <div class="article-end">
-    <span>感谢阅读。</span>
-    <a href="{{ '/posts/' | relative_url }}">继续浏览文章 →</a>
+    <span>{{ ui.thanks }}</span>
+    <a href="{{ posts_path | relative_url }}">{{ ui.more_posts }} →</a>
   </div>
 </article>
