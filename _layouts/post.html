@@ -10,6 +10,27 @@ layout: default
     {% if page.description %}<p class="article-deck">{{ page.description | escape }}</p>{% endif %}
   </header>
   <div class="prose">{{ content }}</div>
+  {% if page.comments %}
+  <section class="article-comments" aria-labelledby="comments-title">
+    <h2 id="comments-title">{% if lang == 'en' %}Comments{% else %}评论{% endif %}</h2>
+    <p>{% if lang == 'en' %}Join the discussion with your GitHub account.{% else %}使用 GitHub 账号参与讨论。{% endif %} <a href="{{ page.discussion_url | default: 'https://github.com/gptbert/gptbert.github.io/discussions' }}">{% if lang == 'en' %}Open on GitHub{% else %}前往 GitHub 评论{% endif %}</a></p>
+    <div class="giscus"></div>
+    <script src="https://giscus.app/client.js"
+            data-repo="gptbert/gptbert.github.io"
+            data-repo-id="R_kgDOTGCUoA"
+            data-category="General"
+            data-category-id="DIC_kwDOTGCUoM4DGpNx"
+            data-mapping="pathname"
+            data-strict="1"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="light"
+            data-lang="{{ lang }}"
+            crossorigin="anonymous"
+            async></script>
+  </section>
+  {% endif %}
   <div class="article-end">
     <span>{{ ui.thanks }}</span>
     <a href="{{ posts_path | relative_url }}">{{ ui.more_posts }} →</a>
