@@ -7,7 +7,7 @@ permalink: /en/posts/2026/09/29/hello-world/
 alternate_url: /posts/2026/09/29/hello-world/
 ---
 
-This blog started as a small site. The original pages provided a [privacy policy](/privacy.html) and [support information](/support.html). Now posts have a place of their own, too.
+This blog started as a small site. The original pages provided a [privacy policy](/en/privacy.html) and [support information](/en/support.html). Now posts have a place of their own, too.
 
 ## How it is published
 

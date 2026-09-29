@@ -30,5 +30,6 @@ alternate_url: /en/posts/2026/09/29/slug/
 - `en/`：英文页面与英文 RSS
 - `feed.xml`、`sitemap.xml`：RSS 和站点地图
 - `privacy.html`、`support.html`：原有 App Store 审核页面，路径保持不变
+- `en/privacy.html`、`en/support.html`：上述页面的英文版本
 
 原有页面地址仍可用：[隐私政策](https://gptbert.github.io/privacy.html) · [技术支持](https://gptbert.github.io/support.html)。
