@@ -24,7 +24,7 @@ alternate_url: /en/posts/2026/09/29/slug/
 
 ## 添加译书
 
-在 `_data/translated_books.yml` 为每本书添加一项。`title`、`status`、`credit`、`publisher_url` 应按出版社书目信息填写；英文展示另填 `title_en`、`status_en`、`description_en` 和 `credit_en`。没有公开译文时，省略 `read_url`。只添加已获准公开使用的封面图片。
+在 `_data/translated_books.yml` 为每本书添加一项。`title`、`status`、`credit`、`publisher_url` 应按可靠书目信息填写；英文展示另填 `title_en`、`status_en`、`description_en` 和 `credit_en`。非图灵图书可设置 `publisher_label` 和 `publisher_label_en`。没有公开译文时，省略 `read_url`。只添加已获准公开使用的封面图片。
 
 参与审校的图书单独维护在 `_data/reviewed_books.yml`，不计入译书数量。
 
