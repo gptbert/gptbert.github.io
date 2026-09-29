@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 775" role="img" aria-labelledby="title description">
+  <title id="title">taobook 系统架构</title>
+  <desc id="description">读者选择本地图书，分别进入 iOS、Android 和鸿蒙原生客户端。三个客户端各自完成阅读和本地保存；iOS 和 Android 可按需连接在线书源与用户配置的模型服务，鸿蒙原生版使用系统离线语音。三端目前没有数据同步。</desc>
+  <defs>
+    <style>
+      .heading{font:700 28px -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK SC",sans-serif;fill:#17251f}
+      .eyebrow{font:700 12px -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK SC",sans-serif;letter-spacing:2px;fill:#236b4d}
+      .platform{font:700 24px -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK SC",sans-serif;fill:#17251f}
+      .label{font:700 17px -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK SC",sans-serif;fill:#17251f}
+      .detail{font:14px -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK SC",sans-serif;fill:#526458}
+      .note{font:14px -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK SC",sans-serif;fill:#66736a}
+      .zone{fill:#fffefa;stroke:#dce3db;stroke-width:1.5}
+      .node{fill:#f7f7f2;stroke:#dce3db;stroke-width:1.3}
+      .flow{fill:none;stroke:#8ba998;stroke-width:2}
+      .optional{fill:none;stroke:#8ba998;stroke-width:1.8;stroke-dasharray:6 6}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9 Z" fill="#8ba998"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="775" fill="#f7f7f2"/>
+  <text class="eyebrow" x="35" y="45">TAOBOOK / SYSTEM OVERVIEW</text>
+  <text class="heading" x="35" y="80">三端独立实现，同一条阅读路径</text>
+
+  <rect x="35" y="106" width="930" height="65" rx="8" fill="#e8f0e6" stroke="#a5c8ad" stroke-width="1.5"/>
+  <text class="label" x="500" y="134" text-anchor="middle">读者选择的本地图书</text>
+  <text class="detail" x="500" y="155" text-anchor="middle">EPUB · PDF · TXT · Markdown · 未加密 MOBI / AZW3</text>
+
+  <path class="flow" d="M185 171 V211" marker-end="url(#arrow)"/>
+  <path class="flow" d="M500 171 V211" marker-end="url(#arrow)"/>
+  <path class="flow" d="M815 171 V211" marker-end="url(#arrow)"/>
+
+  <rect class="zone" x="35" y="220" width="300" height="385" rx="8"/>
+  <rect class="zone" x="350" y="220" width="300" height="385" rx="8"/>
+  <rect class="zone" x="665" y="220" width="300" height="385" rx="8"/>
+
+  <text class="eyebrow" x="57" y="251">APPLE CLIENT</text>
+  <text class="platform" x="57" y="282">iOS</text>
+  <text class="detail" x="57" y="304">Swift · UIKit / SwiftUI</text>
+  <rect class="node" x="57" y="328" width="256" height="66" rx="6"/>
+  <text class="label" x="73" y="355">书库与阅读器</text>
+  <text class="detail" x="73" y="377">Readium Swift · EPUB / PDF</text>
+  <path class="flow" d="M185 394 V412" marker-end="url(#arrow)"/>
+  <rect class="node" x="57" y="421" width="256" height="66" rx="6"/>
+  <text class="label" x="73" y="448">本地保存</text>
+  <text class="detail" x="73" y="470">书籍、进度与阅读记录</text>
+  <text class="detail" x="57" y="535">OPDS 书源 · 翻译 · 朗读 · 聊天</text>
+  <text class="note" x="57" y="565">模型服务由用户自行配置</text>
+
+  <text class="eyebrow" x="372" y="251">ANDROID CLIENT</text>
+  <text class="platform" x="372" y="282">Android</text>
+  <text class="detail" x="372" y="304">Kotlin · Jetpack Compose</text>
+  <rect class="node" x="372" y="328" width="256" height="66" rx="6"/>
+  <text class="label" x="388" y="355">书库与阅读器</text>
+  <text class="detail" x="388" y="377">Readium Kotlin · EPUB / PDF</text>
+  <path class="flow" d="M500 394 V412" marker-end="url(#arrow)"/>
+  <rect class="node" x="372" y="421" width="256" height="66" rx="6"/>
+  <text class="label" x="388" y="448">Room 本地数据库</text>
+  <text class="detail" x="388" y="470">图书、进度与聊天记录</text>
+  <text class="detail" x="372" y="535">书源 / RSS · 翻译 · 朗读 · 聊天</text>
+  <text class="note" x="372" y="565">模型服务由用户自行配置</text>
+
+  <text class="eyebrow" x="687" y="251">HARMONYOS NATIVE</text>
+  <text class="platform" x="687" y="282">鸿蒙原生</text>
+  <text class="detail" x="687" y="304">ArkTS · ArkUI</text>
+  <rect class="node" x="687" y="328" width="256" height="66" rx="6"/>
+  <text class="label" x="703" y="355">本地书库与阅读器</text>
+  <text class="detail" x="703" y="377">ArkWeb · PDF Kit</text>
+  <path class="flow" d="M815 394 V412" marker-end="url(#arrow)"/>
+  <rect class="node" x="687" y="421" width="256" height="66" rx="6"/>
+  <text class="label" x="703" y="448">本地保存</text>
+  <text class="detail" x="703" y="470">图书与阅读进度</text>
+  <text class="detail" x="687" y="535">系统离线语音 · 段落高亮</text>
+  <text class="note" x="687" y="565">聚焦本地阅读与听书</text>
+
+  <path class="optional" d="M185 605 V645" marker-end="url(#arrow)"/>
+  <path class="optional" d="M500 605 V645" marker-end="url(#arrow)"/>
+  <rect x="35" y="654" width="615" height="69" rx="8" fill="#f0f5ef" stroke="#a5c8ad" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text class="label" x="342.5" y="682" text-anchor="middle">可选的在线能力</text>
+  <text class="detail" x="342.5" y="704" text-anchor="middle">公开书源 · 用户配置的模型服务</text>
+  <text class="note" x="965" y="690" text-anchor="end">三端之间暂未同步数据</text>
+  <text class="note" x="35" y="752">实线：本地阅读路径　　虚线：按需联网</text>
+</svg>
