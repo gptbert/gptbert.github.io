@@ -2,6 +2,8 @@
 title: "这里开始：用 GitHub 和 Cloudflare 发布博客"
 description: "第一篇站点笔记：内容放在 GitHub，主站通过 Cloudflare Pages 发布。"
 date: 2026-09-29 12:00:00 +0800
+lang: zh-CN
+alternate_url: /en/posts/2026/09/29/hello-world/
 ---
 
 这个博客从一个很小的站点开始。原有的页面用于展示[隐私政策](/privacy.html)和[技术支持](/support.html)；现在，首页和文章也有了自己的位置。
