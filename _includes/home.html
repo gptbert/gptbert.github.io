@@ -1,0 +1,98 @@
+{% assign lang = page.lang | default: site.lang %}
+{% assign home = site.data.home[lang] %}
+{% assign prefix = '' %}{% if lang == 'en' %}{% assign prefix = '/en' %}{% endif %}
+{% assign posts = site.posts | where: 'lang', lang %}
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow hero-intro"><span class="signal" aria-hidden="true"></span>{{ home.intro }}</p>
+    <h1 id="hero-title">{{ home.title }}<br><em>{{ home.title_accent }}</em></h1>
+    <p class="hero-description">{{ home.description }}</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href="{{ prefix | append: '/posts/' | relative_url }}">{{ home.read }} <span aria-hidden="true">↗</span></a>
+      <a class="button button-text" href="{{ prefix | append: '/about/' | relative_url }}">{{ home.about }} <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+  <figure class="system-map" aria-label="{{ home.diagram_label }}">
+    <div class="map-heading"><span>THE ENGINEERING MINDSET</span><span aria-hidden="true">↗</span></div>
+    <div class="map-flow">
+      <div class="map-node"><span class="node-number">01</span><div><strong>Data</strong><span>{{ home.data_detail }}</span></div><span class="node-symbol" aria-hidden="true">[ ]</span></div>
+      <div class="map-connector" aria-hidden="true"><span></span><span>structure</span></div>
+      <div class="map-node"><span class="node-number">02</span><div><strong>Systems</strong><span>{{ home.system_detail }}</span></div><span class="node-symbol" aria-hidden="true">{ }</span></div>
+      <div class="map-connector" aria-hidden="true"><span></span><span>intelligence</span></div>
+      <div class="map-node map-node-accent"><span class="node-number">03</span><div><strong>AI Applications</strong><span>{{ home.ai_detail }}</span></div><span class="node-symbol" aria-hidden="true">✳</span></div>
+    </div>
+    <figcaption><span class="map-status" aria-hidden="true"></span>{{ home.diagram_note }}<span class="map-coordinate" aria-hidden="true">DATA × AI</span></figcaption>
+  </figure>
+</section>
+
+<div class="credentials" aria-label="{% if lang == 'en' %}Experience and publications{% else %}经验与出版{% endif %}">
+  <div class="credential"><strong>15<span>Y</span></strong><span>{{ home.experience }}</span></div>
+  <a class="credential" href="{{ prefix | append: '/books/' | relative_url }}"><strong>{{ site.data.translated_books | size }}<span>↗</span></strong><span>{{ home.books_stat }}</span></a>
+  <a class="credential" href="{{ prefix | append: '/books/#reviewed-title' | relative_url }}"><strong>{{ site.data.reviewed_books | size }}<span>↗</span></strong><span>{{ home.review_stat }}</span></a>
+  <p class="credential-note"><span>THINK DEEPLY. BUILD PRACTICALLY.</span>{{ home.principle }}</p>
+</div>
+
+<section class="section journal-section" aria-labelledby="latest-title">
+  <div class="section-heading"><div><p class="eyebrow">01 / FIELD NOTES</p><h2 id="latest-title">{{ home.latest }}</h2></div><a class="section-link" href="{{ prefix | append: '/posts/' | relative_url }}">{{ home.all_posts }} <span aria-hidden="true">↗</span></a></div>
+  <div class="journal-grid">
+    <div class="home-posts">
+      {% for post in posts limit: 3 %}
+      <article class="featured-post{% unless forloop.first %} secondary-post{% endunless %}">
+        <div class="post-meta"><span>{{ home.article_type }}</span><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time></div>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+        <p>{{ post.description | default: post.excerpt | strip_html | truncate: 150 | escape }}</p>
+        {% include tag-list.html tags=post.tags lang=lang %}
+        <a class="read-story" href="{{ post.url | relative_url }}">{{ home.read_article }} <span aria-hidden="true">↗</span></a>
+      </article>
+      {% else %}
+      <div class="featured-post empty-post">
+        <div class="post-meta"><span>NOTES IN PROGRESS</span></div><h3>{{ home.no_posts }}</h3><p>{{ home.no_posts_description }}</p>
+        <a class="read-story" href="{{ '/posts/' | relative_url }}">{{ home.chinese_posts }} <span aria-hidden="true">↗</span></a>
+      </div>
+      {% endfor %}
+    </div>
+    <aside class="focus-note" aria-labelledby="focus-title">
+      <h3 id="focus-title">{{ home.focus }}<span aria-hidden="true">↙</span></h3>
+      <ul>
+        <li><span>01</span><div><strong>{{ home.focus_data }}</strong><p>{{ home.focus_data_detail }}</p></div></li>
+        <li><span>02</span><div><strong>{{ home.focus_ai }}</strong><p>{{ home.focus_ai_detail }}</p></div></li>
+        <li><span>03</span><div><strong>{{ home.focus_code }}</strong><p>{{ home.focus_code_detail }}</p></div></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<section class="section projects-section" aria-labelledby="projects-title">
+  <div class="section-heading"><div><p class="eyebrow">02 / SELECTED WORK</p><h2 id="projects-title">{{ home.projects }}</h2></div><a class="section-link" href="{{ prefix | append: '/projects/' | relative_url }}">{{ home.all_projects }} <span aria-hidden="true">↗</span></a></div>
+  <div class="project-grid home-projects">
+    {% for project in site.data.projects %}
+    {% assign project_url = project.url %}{% if lang == 'en' %}{% assign project_url = project.url_en | default: project.url %}{% endif %}{% unless project_url contains '://' %}{% assign project_url = project_url | relative_url %}{% endunless %}
+    <article class="project-card">
+      <div class="project-top"><span class="project-icon" aria-hidden="true">{{ project.icon | escape }}</span><span class="project-number">0{{ forloop.index }} / {{ project.label_en | escape }}</span></div>
+      <h3><a href="{{ project_url }}">{{ project.title | escape }} <span aria-hidden="true">↗</span></a></h3>
+      <p>{% if lang == 'en' %}{{ project.description_en | escape }}{% else %}{{ project.description | escape }}{% endif %}</p>
+      {% include tag-list.html tags=project.tags lang=lang %}
+      <a class="project-cta" href="{{ project_url }}">{% if project.id == 'taobook' %}{{ home.taobook_link }}{% else %}{{ home.source }}{% endif %} <span aria-hidden="true">→</span></a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section translations-section" aria-labelledby="translations-title">
+  <div class="section-heading"><div><p class="eyebrow">03 / TRANSLATIONS</p><h2 id="translations-title">{{ home.translations }}</h2></div><a class="section-link" href="{{ prefix | append: '/books/' | relative_url }}">{{ home.all_books }} <span aria-hidden="true">↗</span></a></div>
+  <p class="section-description">{{ home.translations_description }}</p>
+  <div class="bookshelf">
+    {% for book in site.data.translated_books %}{% if forloop.index == 1 or forloop.index == 5 or forloop.index == 8 or forloop.index == 10 %}
+    {% assign book_url = prefix | append: "/books/" | relative_url | append: "#" | append: book.id %}
+    <article class="shelf-book">
+      <a class="shelf-cover" href="{{ book_url }}" tabindex="-1" aria-hidden="true"><img src="{{ book.cover | relative_url }}" alt="{{ book.title | escape }}{% if lang == 'en' %} — Chinese edition{% else %}封面{% endif %}" width="180" height="240" loading="lazy" decoding="async"></a>
+      <p>{% if lang == 'en' %}{{ book.status_en | escape }}{% else %}{{ book.status | escape }}{% endif %}</p>
+      <h3><a href="{{ book_url }}">{% if lang == 'en' %}{{ book.title_en | escape }}{% else %}{{ book.title | escape }}{% endif %}</a></h3>
+      {% include tag-list.html tags=book.tags lang=lang %}
+      <a class="shelf-book-detail" href="{{ book_url }}">{{ home.book_detail }} ↗</a>
+    </article>
+    {% endif %}{% endfor %}
+  </div>
+</section>
+
+<section class="closing-note"><div><p class="eyebrow">KEEP THINKING. KEEP BUILDING.</p><h2>{{ home.closing }}</h2><p>{{ home.closing_detail }}</p></div><a class="button" href="{{ prefix | append: '/feed.xml' | relative_url }}">{{ home.subscribe }} <span aria-hidden="true">↗</span></a></section>

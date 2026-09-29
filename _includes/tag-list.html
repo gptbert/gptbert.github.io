@@ -1,0 +1,12 @@
+{%- if include.tags and include.tags.size > 0 -%}
+{%- assign tag_language = include.lang | default: page.lang | default: site.lang -%}
+{%- assign tag_index_path = '/tags/' -%}{%- if tag_language == 'en' -%}{%- assign tag_index_path = '/en/tags/' -%}{%- endif -%}
+<div class="tag-list" role="group" aria-label="{% if tag_language == 'en' %}Tags{% else %}标签{% endif %}">
+  {%- for tag_slug in include.tags -%}
+  {%- assign tag_definition = site.data.tags[tag_slug] -%}
+  {%- assign tag_name = tag_definition.name | default: tag_slug -%}
+  {%- if tag_language == 'en' -%}{%- assign tag_name = tag_definition.name_en | default: tag_name -%}{%- endif -%}
+  <a class="tag-link" href="{{ tag_index_path | relative_url }}#{{ tag_slug | escape }}" aria-label="{% if tag_language == 'en' %}Browse tag: {% else %}浏览标签：{% endif %}{{ tag_name | escape }}">{{ tag_name | escape }}</a>
+  {%- endfor -%}
+</div>
+{%- endif -%}

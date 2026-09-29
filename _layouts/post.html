@@ -8,6 +8,7 @@ layout: default
     <p class="eyebrow">{{ ui.article }} · <time datetime="{{ page.date | date_to_xmlschema }}">{% if lang == 'en' %}{{ page.date | date: '%B %d, %Y' }}{% else %}{{ page.date | date: '%Y 年 %m 月 %d 日' }}{% endif %}</time></p>
     <h1>{{ page.title | escape }}</h1>
     {% if page.description %}<p class="article-deck">{{ page.description | escape }}</p>{% endif %}
+    {% include tag-list.html tags=page.tags lang=lang %}
   </header>
   <div class="prose">{{ content }}</div>
   {% if page.comments %}
@@ -25,7 +26,7 @@ layout: default
             data-reactions-enabled="1"
             data-emit-metadata="0"
             data-input-position="bottom"
-            data-theme="light"
+            data-theme="preferred_color_scheme"
             data-lang="{{ lang }}"
             crossorigin="anonymous"
             async></script>

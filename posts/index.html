@@ -1,22 +1,23 @@
 ---
 layout: default
 title: 文章
-description: 软件实践、工具探索和学习笔记。
+description: 大数据与 AI 工程师的实践记录，关注系统设计、产品开发与技术取舍。
 permalink: /posts/
 alternate_url: /en/posts/
 ---
 <header class="page-header">
-  <p class="eyebrow">JOURNAL / 文章</p>
-  <h1>写下来的事。</h1>
-  <p>从一个问题开始，留下过程、结果与下一步。</p>
+  <p class="eyebrow">ENGINEERING NOTES / 文章</p>
+  <h1>问题、取舍，以及验证。</h1>
+  <p>记录数据与 AI 工程、产品开发和持续学习中的具体问题。写清过程，也交代边界。</p>
 </header>
 <section class="post-list archive-list" aria-label="全部文章">
   {% assign zh_posts = site.posts | where: 'lang', 'zh-CN' %}{% for post in zh_posts %}
-  <a class="post-card" href="{{ post.url | relative_url }}">
+  <article class="post-card">
     <div class="post-meta"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time><span>文章</span></div>
-    <h2>{{ post.title | escape }}</h2>
+    <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
     <p>{{ post.description | default: post.excerpt | strip_html | truncate: 150 | escape }}</p>
+    {% include tag-list.html tags=post.tags lang="zh-CN" %}
     <span class="card-arrow" aria-hidden="true">↗</span>
-  </a>
+  </article>
   {% endfor %}
 </section>

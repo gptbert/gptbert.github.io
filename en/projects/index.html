@@ -1,24 +1,25 @@
 ---
 layout: default
 title: Projects
-description: Public projects and experiments by gptbert.
+description: Reading products, AI tools, and public experiments that turn ideas into working software.
 lang: en
 permalink: /en/projects/
 alternate_url: /projects/
 ---
 <header class="page-header">
-  <p class="eyebrow">WORK / PROJECTS</p>
-  <h1>Things I've built.</h1>
-  <p>A selection of public projects. Find more code and updates on GitHub.</p>
+  <p class="eyebrow">SELECTED WORK / PROJECTS</p>
+  <h1>Engineering experience, put into practice.</h1>
+  <p>Reading products, AI tools, and public experiments. Each starts with a concrete problem.</p>
 </header>
 <div class="project-grid project-page-grid">
-  <a class="project-card" href="https://github.com/gptbert/memcrab">
-    <span class="project-number">01 / OPEN SOURCE</span><h2>MemCrab <span aria-hidden="true">↗</span></h2>
-    <p>An AI CLI project focused on context engineering.</p>
-  </a>
-  <a class="project-card" href="https://github.com/gptbert/todo">
-    <span class="project-number">02 / EXPERIMENT</span><h2>todo <span aria-hidden="true">↗</span></h2>
-    <p>A small application built with Flet.</p>
-  </a>
+  {% for project in site.data.projects %}
+  {% assign project_url = project.url_en | default: project.url %}{% unless project_url contains '://' %}{% assign project_url = project_url | relative_url %}{% endunless %}
+  <article class="project-card" id="project-{{ project.id | escape }}">
+    <span class="project-number">0{{ forloop.index }} / {{ project.label_en | escape }}</span>
+    <h2><a href="{{ project_url }}">{{ project.title | escape }} <span aria-hidden="true">↗</span></a></h2>
+    <p>{{ project.description_en | escape }}</p>
+    {% include tag-list.html tags=project.tags lang="en" %}
+  </article>
+  {% endfor %}
 </div>
 <p class="page-outro"><a class="section-link" href="https://github.com/gptbert?tab=repositories">Browse all public repositories on GitHub →</a></p>

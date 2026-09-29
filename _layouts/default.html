@@ -16,20 +16,23 @@
   <meta property="og:title" content="{{ page.title | default: site.title | escape }}">
   <meta property="og:description" content="{{ page.description | default: site.description | strip_html | escape }}">
   <meta property="og:url" content="{{ page.url | absolute_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}">
 </head>
 <body>
   <a class="skip-link" href="#main">{{ ui.skip }}</a>
   <header class="site-header">
     <div class="shell header-inner">
-      <a class="brand" href="{{ prefix | append: '/' | relative_url }}" aria-label="gptbert {{ ui.home }}">gptbert<span aria-hidden="true">.</span></a>
+      <a class="brand" href="{{ prefix | append: '/' | relative_url }}" aria-label="gptbert {{ ui.home }}"><span class="brand-mark" aria-hidden="true">g/</span><span class="brand-name">gptbert<span>.</span></span><span class="brand-caption">ENGINEERING NOTES</span></a>
       <nav class="site-nav" aria-label="{{ ui.nav }}">
         <a{% if page.url == '/' or page.url == '/en/' %} aria-current="page"{% endif %} href="{{ prefix | append: '/' | relative_url }}">{{ ui.home }}</a>
         <a{% if page.url == '/posts/' or page.url == '/en/posts/' or page.layout == 'post' %} aria-current="page"{% endif %} href="{{ prefix | append: '/posts/' | relative_url }}">{{ ui.posts }}</a>
         <a{% if page.url == '/books/' or page.url == '/en/books/' %} aria-current="page"{% endif %} href="{{ prefix | append: '/books/' | relative_url }}">{{ ui.books }}</a>
         <a{% if page.url == '/projects/' or page.url == '/en/projects/' %} aria-current="page"{% endif %} href="{{ prefix | append: '/projects/' | relative_url }}">{{ ui.projects }}</a>
         <a{% if page.url == '/about/' or page.url == '/en/about/' %} aria-current="page"{% endif %} href="{{ prefix | append: '/about/' | relative_url }}">{{ ui.about }}</a>
-        <a class="lang-switch" href="{{ page.alternate_url | default: '/en/' | relative_url }}" hreflang="{{ other_lang }}">{{ ui.switch }}</a>
+        <a class="search-nav"{% if page.url == '/search/' or page.url == '/en/search/' %} aria-current="page"{% endif %} href="{{ prefix | append: '/search/' | relative_url }}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>{{ ui.search }}</span></a>
+        {% if lang == 'en' %}{% assign fallback_url = '/' %}{% else %}{% assign fallback_url = '/en/' %}{% endif %}
+        <a class="lang-switch" href="{{ page.alternate_url | default: fallback_url | relative_url }}" hreflang="{{ other_lang }}">{{ ui.switch }} <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
   </header>
@@ -39,11 +42,13 @@
   <footer class="site-footer">
     <div class="shell footer-inner">
       <div>
-        <a class="brand footer-brand" href="{{ prefix | append: '/' | relative_url }}">gptbert<span aria-hidden="true">.</span></a>
+        <a class="brand footer-brand" href="{{ prefix | append: '/' | relative_url }}"><span class="brand-mark" aria-hidden="true">g/</span><span class="brand-name">gptbert<span aria-hidden="true">.</span></span></a>
         <p>{{ ui.footer }}</p>
         <p class="footer-copyright">© 2026 Gptbert. All rights reserved</p>
       </div>
       <nav aria-label="{{ ui.footer_nav }}">
+        <a href="{{ prefix | append: '/search/' | relative_url }}">{{ ui.search }}</a>
+        <a href="{{ prefix | append: '/tags/' | relative_url }}">{{ ui.tags }}</a>
         <a href="{{ prefix | append: '/feed.xml' | relative_url }}">{{ ui.rss }}</a>
         <a href="https://github.com/gptbert">{{ ui.github }}</a>
         <a href="{{ prefix | append: '/support.html' | relative_url }}">{{ ui.support }}</a>

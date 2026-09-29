@@ -1,23 +1,24 @@
 ---
 layout: default
 title: 项目
-description: gptbert 的公开项目与实验。
+description: 阅读产品、AI 工具与公开实验，记录想法如何走向可用的软件。
 permalink: /projects/
 alternate_url: /en/projects/
 ---
 <header class="page-header">
-  <p class="eyebrow">WORK / 项目</p>
-  <h1>做出来的事。</h1>
-  <p>这里列出部分公开项目。更多代码和更新可以在 GitHub 查看。</p>
+  <p class="eyebrow">SELECTED WORK / 项目</p>
+  <h1>从工程经验，到真实产品。</h1>
+  <p>阅读产品、AI 工具与公开实验。每一个项目，都从一个具体问题开始。</p>
 </header>
 <div class="project-grid project-page-grid">
-  <a class="project-card" href="https://github.com/gptbert/memcrab">
-    <span class="project-number">01 / OPEN SOURCE</span><h2>MemCrab <span aria-hidden="true">↗</span></h2>
-    <p>围绕上下文工程的 AI CLI 项目。</p>
-  </a>
-  <a class="project-card" href="https://github.com/gptbert/todo">
-    <span class="project-number">02 / EXPERIMENT</span><h2>todo <span aria-hidden="true">↗</span></h2>
-    <p>一个 Flet 应用示例。</p>
-  </a>
+  {% for project in site.data.projects %}
+  {% assign project_url = project.url %}{% unless project.url contains '://' %}{% assign project_url = project.url | relative_url %}{% endunless %}
+  <article class="project-card" id="project-{{ project.id | escape }}">
+    <span class="project-number">0{{ forloop.index }} / {{ project.label | escape }}</span>
+    <h2><a href="{{ project_url }}">{{ project.title | escape }} <span aria-hidden="true">↗</span></a></h2>
+    <p>{{ project.description | escape }}</p>
+    {% include tag-list.html tags=project.tags lang="zh-CN" %}
+  </article>
+  {% endfor %}
 </div>
 <p class="page-outro"><a class="section-link" href="https://github.com/gptbert?tab=repositories">查看 GitHub 上的全部公开仓库 →</a></p>

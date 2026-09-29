@@ -1,0 +1,30 @@
+{% assign search_lang = page.lang | default: site.lang %}
+{% assign search_prefix = '' %}{% if search_lang == 'en' %}{% assign search_prefix = '/en' %}{% endif %}
+<header class="page-header discovery-header">
+  <p class="eyebrow">DISCOVER / {% if search_lang == 'en' %}SEARCH{% else %}全文搜索{% endif %}</p>
+  <h1>{% if search_lang == 'en' %}Search the site.{% else %}全文搜索。{% endif %}</h1>
+  <p>{% if search_lang == 'en' %}Search full article text, book descriptions and credits, and project notes.{% else %}搜索文章正文、图书介绍与译者信息，以及项目说明。{% endif %}</p>
+  <a class="section-link discovery-link" href="{{ search_prefix | append: '/tags/' | relative_url }}">{% if search_lang == 'en' %}Explore the tag index{% else %}按标签浏览内容{% endif %} <span aria-hidden="true">↗</span></a>
+</header>
+<section class="search-app" data-search-app data-lang="{{ search_lang }}" data-index="{{ '/search-index.json' | relative_url }}" data-tags-url="{{ search_prefix | append: '/tags/' | relative_url }}" aria-label="{% if search_lang == 'en' %}Site search{% else %}站内搜索{% endif %}">
+  <form class="search-form" role="search" action="{{ page.url | relative_url }}" method="get">
+    <label class="search-label" for="search-query">{% if search_lang == 'en' %}Keywords{% else %}搜索关键词{% endif %}</label>
+    <div class="search-input-row"><input id="search-query" type="search" name="q" maxlength="200" placeholder="{% if search_lang == 'en' %}Try Readium, Python, or a book title…{% else %}试试 Readium、Python，或一本书的名字…{% endif %}" aria-describedby="search-hint" autocomplete="off" spellcheck="false"><button class="button button-primary" type="submit">{% if search_lang == 'en' %}Search{% else %}搜索{% endif %} <span aria-hidden="true">↗</span></button></div>
+    <p id="search-hint" class="search-hint">{% if search_lang == 'en' %}Search in Chinese or English. Separate keywords with spaces. Books are searched by catalog information, not their full text.{% else %}支持中英文，多个关键词用空格分隔。图书检索范围为本站书目信息，不含图书全文。{% endif %}</p>
+    <div class="search-filters">
+      <fieldset class="type-filters"><legend>{% if search_lang == 'en' %}Content type{% else %}内容类型{% endif %}</legend><div>
+        <label><input type="radio" name="type" value="all" checked><span>{% if search_lang == 'en' %}All{% else %}全部{% endif %}</span></label>
+        <label><input type="radio" name="type" value="post"><span>{% if search_lang == 'en' %}Articles{% else %}文章{% endif %}</span></label>
+        <label><input type="radio" name="type" value="book"><span>{% if search_lang == 'en' %}Books{% else %}图书{% endif %}</span></label>
+        <label><input type="radio" name="type" value="project"><span>{% if search_lang == 'en' %}Projects{% else %}项目{% endif %}</span></label>
+      </div></fieldset>
+      <label class="tag-filter" for="search-tag"><span>{% if search_lang == 'en' %}Topic{% else %}主题标签{% endif %}</span><select id="search-tag" name="tag"><option value="">{% if search_lang == 'en' %}All tags{% else %}全部标签{% endif %}</option>{% for entry in site.data.tags %}<option value="{{ entry[0] | escape }}">{% if search_lang == 'en' %}{{ entry[1].name_en | escape }}{% else %}{{ entry[1].name | escape }}{% endif %}</option>{% endfor %}</select></label>
+      <button class="search-reset" type="button" data-search-reset hidden>{% if search_lang == 'en' %}Clear filters{% else %}清除筛选{% endif %}</button>
+    </div>
+  </form>
+  <p class="search-status" role="status" aria-live="polite" aria-atomic="true" data-search-status></p>
+  <div class="search-error" data-search-error hidden><p>{% if search_lang == 'en' %}Search could not load. Retry, or browse the tag index above.{% else %}搜索内容暂时未能加载，请重试，或通过上方标签索引继续浏览。{% endif %}</p><button type="button" class="button" data-search-retry>{% if search_lang == 'en' %}Retry{% else %}重新加载{% endif %}</button></div>
+  <div class="search-results" data-search-results aria-label="{% if search_lang == 'en' %}Search results{% else %}搜索结果{% endif %}"></div>
+  <noscript><p class="empty-state">{% if search_lang == 'en' %}Enable JavaScript to search, or <a href="{{ search_prefix | append: '/tags/' | relative_url }}">browse all content by tag</a>.{% else %}请启用 JavaScript 使用全文搜索，或<a href="{{ search_prefix | append: '/tags/' | relative_url }}">通过标签索引浏览全部内容</a>。{% endif %}</p></noscript>
+</section>
+<script type="module" src="{{ '/assets/js/search.js' | relative_url }}?v={{ site.time | date: '%s' }}"></script>

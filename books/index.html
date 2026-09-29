@@ -13,13 +13,14 @@ alternate_url: /en/books/
 
 <div class="book-list">
   {% for book in site.data.translated_books %}
-  <article class="book-card">
+  <article class="book-card" id="{{ book.id | escape }}">
     <div class="book-copy">
       <p class="eyebrow">{{ book.status | escape }}</p>
-      <h2>{{ book.title | escape }}</h2>
+      <h2><span id="book-{{ forloop.index }}">{{ book.title | escape }}</span></h2>
       {% if book.original_title %}<p class="book-original">{{ book.original_title | escape }}</p>{% endif %}
       {% if book.description %}<p class="book-description">{{ book.description | escape }}</p>{% endif %}
       {% if book.credit %}<p class="book-meta">{{ book.credit | escape }}</p>{% endif %}
+      {% include tag-list.html tags=book.tags lang="zh-CN" %}
       <div class="book-links">
         {% if book.read_url %}<a href="{{ book.read_url }}">阅读译文 ↗</a>{% endif %}
         {% if book.publisher_url %}<a href="{{ book.publisher_url }}">{{ book.publisher_label | default: '图灵图书详情' | escape }} ↗</a>{% endif %}
@@ -42,13 +43,14 @@ alternate_url: /en/books/
   </div>
   <div class="book-list">
     {% for book in site.data.reviewed_books %}
-    <article class="book-card">
+    <article class="book-card" id="{{ book.id | escape }}">
       <div class="book-copy">
         <p class="eyebrow">{{ book.status | escape }}</p>
         <h2>{{ book.title | escape }}</h2>
         <p class="book-original">{{ book.original_title | escape }}</p>
         <p class="book-description">{{ book.description | escape }}</p>
         <p class="book-meta">{{ book.credit | escape }}</p>
+        {% include tag-list.html tags=book.tags lang="zh-CN" %}
         <div class="book-links"><a href="{{ book.publisher_url }}">图灵图书详情 ↗</a></div>
       </div>
       <figure class="book-cover">
