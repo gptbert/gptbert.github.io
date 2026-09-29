@@ -3,6 +3,9 @@ title: "从读一本书开始：taobook 的开发历程"
 description: "从 iOS 阅读器到 Android 与鸿蒙原生版，记录 taobook 如何处理多格式阅读、翻译与朗读。"
 date: 2026-09-29 17:00:00 +0800
 lang: zh-CN
+alternate_url: /en/posts/2026/09/29/taobook-development/
+search_id: taobook-development
+tags: [reading, ai, cross-platform]
 discussion_url: https://github.com/gptbert/gptbert.github.io/discussions/17
 ---
 
