@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Translated books
-description: Seven Python books translated by 陶俊杰 and collaborators.
+description: Python books translated and reviewed by 陶俊杰.
 lang: en
 permalink: /en/books/
 alternate_url: /books/
@@ -35,3 +35,24 @@ alternate_url: /books/
   <p class="book-description">The book list is being prepared.</p>
   {% endfor %}
 </div>
+
+<section class="section reviewed-section" aria-labelledby="reviewed-title">
+  <div class="section-heading">
+    <div><p class="eyebrow">EDITORIAL / REVIEW</p><h2 id="reviewed-title">Editorial review</h2></div>
+  </div>
+  <div class="book-list">
+    {% for book in site.data.reviewed_books %}
+    <article class="book-card">
+      <div class="book-cover" aria-hidden="true">{{ book.cover_text_en | default: book.cover_text | default: 'BOOK' | escape }}</div>
+      <div>
+        <p class="eyebrow">{{ book.status_en | escape }}</p>
+        <h2>{{ book.title_en | escape }}</h2>
+        <p class="book-original" lang="zh-CN">{{ book.title | escape }}</p>
+        <p class="book-description">{{ book.description_en | escape }}</p>
+        <p class="book-meta">{{ book.credit_en | escape }}</p>
+        <div class="book-links"><a href="{{ book.publisher_url }}">Publisher details ↗</a></div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
