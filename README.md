@@ -33,6 +33,7 @@ alternate_url: /en/posts/2026/09/29/slug/
 - `books/`、`_data/translated_books.yml`：译书目录与书目数据
 - `en/`：英文页面与英文 RSS
 - `projects/`、`about/`：项目与关于
+- `en/`：英文页面与英文 RSS
 - `feed.xml`、`sitemap.xml`：RSS 和站点地图
 - `privacy.html`、`support.html`：原有 App Store 审核页面，路径保持不变
 
