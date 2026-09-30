@@ -3,6 +3,7 @@ title: "从苦涩的教训到硬件彩票：AI 方法如何用好算力"
 description: "对照阅读 Sutton 与 Hooker 的两篇文章，从 Transformer、FlashAttention 到大模型 Agent，讨论计算扩展、基础设施与工程评价。"
 date: 2026-09-30 10:00:00 +0800
 lang: zh-CN
+alternate_url: /en/posts/2026/09/30/bitter-lesson-hardware-lottery/
 search_id: bitter-lesson-hardware-lottery
 tags: [machine-learning, ai, performance]
 ---
