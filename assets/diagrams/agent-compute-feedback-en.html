@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How Agents Turn Additional Compute into Verifiable Results</title>
+  <style>
+    body { margin: 0; background: #f8f9fb; }
+    svg { display: block; width: 100%; max-width: 960px; height: auto; margin: 0 auto; }
+  </style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="agent-compute-feedback-en-title agent-compute-feedback-en-desc">
+  <title id="agent-compute-feedback-en-title">An Agent Workflow for Candidates, Execution, Feedback, and Acceptance</title>
+  <desc id="agent-compute-feedback-en-desc">Define the task and budget, generate candidates, and gather execution evidence. Deliver results when checks pass; otherwise revise using evidence and retry within budget. When the budget is exhausted, retain the evidence and hand over to a human. Feedback within a task is not continual learning across tasks.</desc>
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Noto Sans CJK SC", sans-serif; fill: #202630; letter-spacing: 0; }
+      .heading { font-size: 32px; font-weight: 700; }
+      .label { font-size: 20px; font-weight: 600; }
+      .detail { font-size: 16px; fill: #626b78; }
+      .note { font-size: 16px; fill: #626b78; }
+      .node { fill: #ffffff; stroke: #dfe3e9; stroke-width: 2; }
+      .focal { fill: #edf2fc; stroke: #2459d3; stroke-width: 2; }
+      .flow { fill: none; stroke: #626b78; stroke-width: 2; }
+      .return { fill: none; stroke: #626b78; stroke-width: 2; stroke-dasharray: 8 4; }
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0 0 L8 3 L0 6 Z" fill="#626b78"/></marker>
+    <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0 0 L8 3 L0 6 Z" fill="#2459d3"/></marker>
+    <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0 0 L8 3 L0 6 Z" fill="#2459d3"/></marker>
+  </defs>
+  <rect width="960" height="600" fill="#f8f9fb"/>
+  <text class="heading" x="40" y="56">Turn compute into verifiable progress</text>
+  <text class="detail" x="40" y="92">Expand exploration while retaining feedback, acceptance checks, and budget limits.</text>
+
+  <path class="flow" d="M240 172 H312" marker-end="url(#arrow)"/>
+  <path class="flow" d="M576 172 H672" marker-end="url(#arrow)"/>
+  <path class="flow" d="M796 220 V248" marker-end="url(#arrow)"/>
+  <path class="flow" d="M672 328 H576" marker-end="url(#arrow)"/>
+  <path class="return" d="M444 284 V220" marker-end="url(#arrow)"/>
+  <path class="flow" d="M444 372 V424" marker-end="url(#arrow)"/>
+  <path class="flow" d="M796 408 V520 Q796 528 788 528 H148 Q140 528 140 520 V372" marker-end="url(#arrow)"/>
+
+  <rect x="592" y="292" width="64" height="24" fill="#f8f9fb"/>
+  <text class="note" x="624" y="312" text-anchor="middle">Fail</text>
+  <rect x="464" y="240" width="168" height="24" fill="#f8f9fb"/>
+  <text class="note" x="472" y="260">Retry within budget</text>
+  <rect x="464" y="388" width="156" height="24" fill="#f8f9fb"/>
+  <text class="note" x="472" y="408">Budget exhausted</text>
+  <rect x="816" y="436" width="64" height="24" fill="#f8f9fb"/>
+  <text class="note" x="824" y="456">Pass</text>
+
+  <rect class="node" x="40" y="124" width="200" height="96" rx="8"/>
+  <text class="label" x="140" y="164" text-anchor="middle">Task and budget</text>
+  <text class="detail" text-anchor="middle"><tspan x="140" y="188">Inputs / acceptance</tspan><tspan x="140" y="208">criteria</tspan></text>
+
+  <rect class="node" x="312" y="124" width="264" height="96" rx="8"/>
+  <text class="label" x="444" y="164" text-anchor="middle">Generate candidates</text>
+  <text class="detail" x="444" y="196" text-anchor="middle">Explore different solutions</text>
+
+  <rect class="node" x="672" y="124" width="248" height="96" rx="8"/>
+  <text class="label" x="796" y="164" text-anchor="middle">Execute and inspect</text>
+  <text class="detail" x="796" y="196" text-anchor="middle">Tests / logs / tools</text>
+
+  <path class="focal" d="M796 248 L920 328 L796 408 L672 328 Z"/>
+  <text class="label" x="796" y="336" text-anchor="middle">Pass checks?</text>
+
+  <rect class="focal" x="312" y="284" width="264" height="88" rx="8"/>
+  <text class="label" x="444" y="320" text-anchor="middle">Feedback and revision</text>
+  <text class="detail" x="444" y="352" text-anchor="middle">Evidence changes next actions</text>
+
+  <rect class="node" x="40" y="284" width="200" height="88" rx="8"/>
+  <text class="label" x="140" y="320" text-anchor="middle">Deliver result</text>
+  <text class="detail" x="140" y="352" text-anchor="middle">Record total cost</text>
+
+  <rect class="node" x="312" y="424" width="264" height="72" rx="8"/>
+  <text class="label" x="444" y="456" text-anchor="middle">Human handover</text>
+  <text class="detail" x="444" y="484" text-anchor="middle">Keep evidence and failure records</text>
+
+  <path d="M40 552 H920" stroke="#dfe3e9" stroke-width="2"/>
+  <text class="note" x="40" y="576">Dashed: retries within budget. Engineering illustration; not results reported by the essays.</text>
+  <text class="note" x="40" y="596">Task feedback is not continual learning; learning across tasks requires retained and reused experience.</text>
+</svg>
+</body>
+</html>
