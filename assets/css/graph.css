@@ -1,0 +1,63 @@
+.knowledge-graph { padding-bottom: 65px; }
+.graph-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 18px; padding: 22px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+.graph-controls label { display: grid; gap: 7px; font-size: 12px; color: var(--muted); }
+.graph-controls label:first-child { flex: 1; min-width: 180px; }
+.graph-controls input, .graph-controls select { min-height: 43px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); font: inherit; }
+.knowledge-graph button { cursor: pointer; border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px; color: var(--ink); background: var(--surface); font: inherit; font-size: 12px; }
+.knowledge-graph button:hover { border-color: var(--accent); color: var(--accent); }
+.knowledge-graph :is(button, input, select):focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.graph-controls > button { min-height: 43px; }
+.graph-status { color: var(--muted); font-size: 13px; margin: 22px 0 10px; }
+.graph-legend { display: flex; flex-wrap: wrap; gap: 22px; margin-bottom: 18px; font-size: 12px; }
+.knowledge-graph .topic { --node-color: var(--accent); }
+.knowledge-graph .post { --node-color: #a97820; }
+.knowledge-graph .book { --node-color: #278577; }
+.knowledge-graph .project { --node-color: #9471cb; }
+.graph-legend > span { color: var(--node-color); }
+.graph-layout { display: grid; grid-template-columns: minmax(0, 1fr) 285px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.graph-canvas { min-width: 0; overflow: auto; background: radial-gradient(var(--line) .7px, transparent .7px); background-size: 16px 16px; }
+.graph-canvas svg { display: block; width: 100%; height: auto; min-width: 640px; }
+.graph-edge { stroke: var(--muted); stroke-width: 1; opacity: .18; }
+.graph-edge.is-active { stroke: var(--accent); stroke-width: 2; opacity: .8; }
+.graph-edge.is-muted { opacity: .045; }
+.graph-node { cursor: pointer; }
+.graph-node circle { fill: var(--node-color); stroke: var(--surface); stroke-width: 3; }
+.graph-node text { fill: var(--ink); font-size: 12px; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.graph-node.topic text { font-weight: 650; }
+.graph-node.is-muted { opacity: .25; }
+.graph-node.is-selected circle, .graph-node:focus circle, .graph-node:hover circle { stroke: var(--ink); stroke-width: 3; }
+.graph-node:focus { outline: none; }
+.graph-details { border-left: 1px solid var(--line); padding: 26px 22px; max-height: 640px; overflow: auto; }
+.graph-details h2 { margin: 8px 0 14px; font-size: 22px; line-height: 1.5; overflow-wrap: anywhere; }
+.graph-details p { font-size: 13px; color: var(--muted); }
+.graph-details h3 { margin-top: 25px; font-size: 13px; }
+.graph-details ul { list-style: none; padding: 0; font-size: 13px; }
+.graph-details li { margin: 13px 0; }
+.graph-details .graph-kind { display: block; margin-bottom: 3px; }
+.graph-details .graph-open { color: var(--accent); font-size: 13px; }
+.graph-kind { color: var(--muted); font-size: 11px; }
+.graph-directory { margin-top: 24px; }
+.graph-directory summary { cursor: pointer; font-size: 15px; }
+.graph-content-list { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 26px; }
+.graph-content-list li { display: flex; align-items: baseline; gap: 10px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.graph-content-list .graph-kind { flex-shrink: 0; }
+.graph-content-list a { overflow-wrap: anywhere; }
+.graph-content-list button { margin-left: auto; flex-shrink: 0; font-size: 10px; }
+.graph-fallback { font-size: 13px; color: var(--accent); }
+@media (prefers-color-scheme: dark) {
+  .knowledge-graph .post { --node-color: #e9bd6a; }
+  .knowledge-graph .book { --node-color: #63c5af; }
+  .knowledge-graph .project { --node-color: #c3a0fa; }
+}
+@media (max-width: 850px) {
+  .graph-layout { grid-template-columns: 1fr; }
+  .graph-details { border-left: 0; border-top: 1px solid var(--line); max-height: 400px; }
+  .graph-content-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .graph-controls { padding: 16px; gap: 12px; }
+  .graph-controls label { min-width: 0; flex: 1; }
+  .graph-controls label:first-child { flex-basis: 100%; }
+  .graph-controls input, .graph-controls select { width: 100%; font-size: 16px; }
+  .graph-legend { gap: 16px; }
+}

@@ -1,0 +1,21 @@
+{% assign graph_lang = page.lang | default: site.lang %}
+{% if graph_lang == 'en' %}{% assign graph_prefix = '/en' %}{% else %}{% assign graph_prefix = '' %}{% endif %}
+<link rel="stylesheet" href="{{ '/assets/css/graph.css' | relative_url }}">
+<section class="knowledge-graph" data-lang="{{ graph_lang }}" data-index="{{ '/search-index.json' | relative_url }}">
+  <form class="graph-controls" role="search">
+    <label>{% if graph_lang == 'en' %}Find content{% else %}查找内容{% endif %}<input name="query" type="search" placeholder="{% if graph_lang == 'en' %}Title or topic{% else %}标题或主题{% endif %}"></label>
+    <label>{% if graph_lang == 'en' %}Content type{% else %}内容类型{% endif %}<select name="type"><option value="all">{% if graph_lang == 'en' %}All content{% else %}全部内容{% endif %}</option><option value="post">{% if graph_lang == 'en' %}Articles{% else %}文章{% endif %}</option><option value="book">{% if graph_lang == 'en' %}Books{% else %}图书{% endif %}</option><option value="project">{% if graph_lang == 'en' %}Projects{% else %}项目{% endif %}</option></select></label>
+    <label>{% if graph_lang == 'en' %}Topic{% else %}主题{% endif %}<select name="topic"><option value="">{% if graph_lang == 'en' %}All topics{% else %}全部主题{% endif %}</option></select></label>
+    <button type="reset">{% if graph_lang == 'en' %}Reset{% else %}重置{% endif %}</button>
+  </form>
+  <p class="graph-status" role="status">{% if graph_lang == 'en' %}Loading connections…{% else %}正在加载关联…{% endif %}</p>
+  <div class="graph-legend" aria-label="{% if graph_lang == 'en' %}Node types{% else %}节点类型{% endif %}"><span class="topic">● {% if graph_lang == 'en' %}Topic{% else %}主题{% endif %}</span><span class="post">● {% if graph_lang == 'en' %}Article{% else %}文章{% endif %}</span><span class="book">● {% if graph_lang == 'en' %}Book{% else %}图书{% endif %}</span><span class="project">● {% if graph_lang == 'en' %}Project{% else %}项目{% endif %}</span></div>
+  <div class="graph-layout">
+    <div class="graph-canvas"><svg viewBox="0 0 900 740" role="group" aria-label="{% if graph_lang == 'en' %}Content and topic connections. Select a node to explore.{% else %}内容与主题关联，选择节点查看详情。{% endif %}"></svg></div>
+    <aside class="graph-details" aria-label="{% if graph_lang == 'en' %}Selected node{% else %}选中节点{% endif %}"><h2>{% if graph_lang == 'en' %}Explore a connection{% else %}从一个节点开始{% endif %}</h2><p>{% if graph_lang == 'en' %}Select a topic or item. Its direct connections appear here. The list below offers the same navigation.{% else %}点击主题或内容，查看它的直接关联。也可以使用下方列表浏览。{% endif %}</p></aside>
+  </div>
+  <details class="graph-directory" open><summary>{% if graph_lang == 'en' %}Browse the content list{% else %}浏览内容列表{% endif %}</summary><ul class="graph-content-list"></ul></details>
+  <p class="graph-fallback"><a href="{{ graph_prefix | append: '/tags/' | relative_url }}">{% if graph_lang == 'en' %}Browse the topic index →{% else %}浏览标签索引 →{% endif %}</a></p>
+  <noscript><p>{% if graph_lang == 'en' %}Enable JavaScript for the interactive graph, or use the topic index above.{% else %}开启 JavaScript 后可使用交互图谱；也可通过上方标签索引浏览内容。{% endif %}</p></noscript>
+</section>
+<script type="module" src="{{ '/assets/js/graph.js' | relative_url }}"></script>

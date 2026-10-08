@@ -71,3 +71,11 @@ alternate_url: /en/posts/2026/09/29/slug/
 - `en/privacy.html`、`en/support.html`：上述页面的英文版本
 
 原有页面地址仍可用：[隐私政策](https://gptbert.github.io/privacy.html) · [技术支持](https://gptbert.github.io/support.html)。
+
+## 内容知识图谱
+
+`/graph/` 和 `/en/graph/` 从搜索索引生成交互图谱，内容节点与主题节点之间的边仅表示已有标签归属。中英文版本按稳定 ID 去重，优先当前语言；新增内容及标签后自动更新，无需数据库或第三方图谱服务。支持标题/简介/主题搜索、类型与主题筛选、键盘选择节点，以及等价内容列表。标签目录为不依赖 JavaScript 的备用入口。
+
+图谱不自动推断引用、因果或先修关系。图谱逻辑位于 `assets/js/graph-core.js`，页面位于 `graph/` 与 `en/graph/`，样式独立维护在 `assets/css/graph.css`。验证：`node --test tests/graph-core.test.mjs`。
+
+每次文章合并到 `main` 后，Cloudflare Pages 与 GitHub Pages 都会重新构建索引。图谱读取最新索引，无需另行维护节点或运行定时任务。新文章填写 `tags` 即可自动生成主题关联；没有标签的文章仍显示为独立节点。双语文章共用 `search_id`，新增标签先在 `_data/tags.yml` 中补齐中英文名称。
