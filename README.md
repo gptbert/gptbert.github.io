@@ -30,9 +30,9 @@ alternate_url: /en/posts/2026/09/29/slug/
 
 ## 添加翻译图书
 
-公开内容遵守用户指定的人名排除规则，具体规则见 `AGENTS.md`。图片中的署名也需要检查；包含受限署名的封面使用文字卡片替代，并保持在构建排除清单中。原作者、书名、ISBN 和出版社链接仍可展示。
+博客文章、首页介绍及其他非图书页面的文字遵守用户指定的人名排除规则，具体规则见 `AGENTS.md`。图片和图书页面内容保留；图书目录对应的搜索条目也保留书目信息。
 
-发布前运行 `node --test tests/content-policy.test.mjs`。构建后设置 `CONTENT_SITE_DIR` 为输出目录，再运行同一命令，检查全部公开文字产物与图片排除状态。GitHub 会检查每次 PR 和正式部署。
+发布前运行 `node --test tests/content-policy.test.mjs`。构建后设置 `CONTENT_SITE_DIR` 为输出目录，再运行同一命令，检查非图书公开文字内容。GitHub 会检查每次 PR 和正式部署。
 
 在 `_data/translated_books.yml` 为每本书添加一项。`title`、`status`、`credit`、`publisher_url` 应按可靠书目信息填写；英文展示另填 `title_en`、`status_en`、`description_en` 和 `credit_en`。非图灵图书可设置 `publisher_label` 和 `publisher_label_en`。没有公开译文时，省略 `read_url`。封面图片保存在 `assets/books/`，通过 `cover` 引用；如果展示原书封面，设置 `cover_note` 和 `cover_note_en` 明确标注。只添加已获准公开使用的封面图片。
 
