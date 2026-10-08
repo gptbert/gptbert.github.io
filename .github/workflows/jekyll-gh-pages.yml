@@ -35,6 +35,10 @@ jobs:
         with:
           source: ./
           destination: ./_site
+      - name: Check generated public content
+        env:
+          CONTENT_SITE_DIR: ./_site
+        run: node --test tests/content-policy.test.mjs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
