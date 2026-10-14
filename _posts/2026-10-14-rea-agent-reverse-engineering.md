@@ -4,6 +4,7 @@ description: "从 Electron 的 IPC 到原生二进制，REA 用 MCP 将专业逆
 date: 2026-10-14 00:00:00 +0800
 lang: zh-CN
 search_id: rea-agent-reverse-engineering
+alternate_url: /en/posts/2026/10/14/rea-agent-reverse-engineering/
 tags: [ai, open-source, cli]
 ---
 
