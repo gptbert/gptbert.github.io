@@ -1,0 +1,2467 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>物理人工智能系统 · 第四卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol4_zh/07_evaluation/07_evaluation.html" rel="next">
+<link href="../../vol4_zh/05_data/05_data.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6ab868a96f80aa23e8049a4baf7b30f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+
+<style id="zh-web-layout">#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">物理 AI · 第四卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/books/mlsys/"> 
+<span class="menu-text">三卷书架</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">本卷首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol4_zh/01_boundary/01_boundary.html"> 
+<span class="menu-text">因果边界</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol4_zh/06_training/06_training.html">策略训练</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/01_boundary/01_boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">因果边界</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/02_body/02_body.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理身体</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/03_brain/03_brain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认知脑</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/04_nervous/04_nervous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/05_data/05_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理数据</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/06_training/06_training.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">策略训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/07_evaluation/07_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">闭环评估</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/08_perception/08_perception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">传感器感知</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/09_memory/09_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">空间记忆</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/10_intent/10_intent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">立足物理世界的意图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/11_planning/11_planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹规划</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/12_enforcement/12_enforcement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">安全执行</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/13_placement/13_placement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硅片布局</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/14_intervention/14_intervention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">监督性干预</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/15_verification/15_verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">对抗性验证</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/16_release/16_release.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署发布</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/17_frontier/17_frontier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认识论前沿</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-training" id="toc-sec-training" class="nav-link active" data-scroll-target="#sec-training">策略训练</a>
+  <ul>
+  <li><a href="#sec-training-policy-synthesis" id="toc-sec-training-policy-synthesis" class="nav-link" data-scroll-target="#sec-training-policy-synthesis">策略综合</a></li>
+  <li><a href="#sec-training-synthesis-regimes" id="toc-sec-training-synthesis-regimes" class="nav-link" data-scroll-target="#sec-training-synthesis-regimes">策略合成机制</a>
+  <ul class="collapse">
+  <li><a href="#多模态情形下的失效与模式平均" id="toc-多模态情形下的失效与模式平均" class="nav-link" data-scroll-target="#多模态情形下的失效与模式平均">多模态情形下的失效与模式平均</a></li>
+  <li><a href="#动作分块改变了什么以及它仍未解决的问题" id="toc-动作分块改变了什么以及它仍未解决的问题" class="nav-link" data-scroll-target="#动作分块改变了什么以及它仍未解决的问题">动作分块改变了什么——以及它仍未解决的问题</a></li>
+  <li><a href="#解码器选择在运行时付出什么代价" id="toc-解码器选择在运行时付出什么代价" class="nav-link" data-scroll-target="#解码器选择在运行时付出什么代价">解码器选择在运行时付出什么代价</a></li>
+  <li><a href="#离线强化学习与动作分布偏移" id="toc-离线强化学习与动作分布偏移" class="nav-link" data-scroll-target="#离线强化学习与动作分布偏移">离线强化学习与动作分布偏移</a></li>
+  </ul></li>
+  <li><a href="#sec-training-learning-by-trial" id="toc-sec-training-learning-by-trial" class="nav-link" data-scroll-target="#sec-training-learning-by-trial">试错学习</a></li>
+  <li><a href="#sec-training-simulator-component" id="toc-sec-training-simulator-component" class="nav-link" data-scroll-target="#sec-training-simulator-component">仿真器作为系统组件</a>
+  <ul class="collapse">
+  <li><a href="#从仿真到现实的接触技巧" id="toc-从仿真到现实的接触技巧" class="nav-link" data-scroll-target="#从仿真到现实的接触技巧">从仿真到现实的接触技巧</a></li>
+  </ul></li>
+  <li><a href="#sec-training-sim-to-real-gap" id="toc-sec-training-sim-to-real-gap" class="nav-link" data-scroll-target="#sec-training-sim-to-real-gap">这个差距由什么构成</a></li>
+  <li><a href="#sec-training-real-machine-tuning" id="toc-sec-training-real-machine-tuning" class="nav-link" data-scroll-target="#sec-training-real-machine-tuning">在真实机器上的微调</a>
+  <ul class="collapse">
+  <li><a href="#残差策略架构与受限授权" id="toc-残差策略架构与受限授权" class="nav-link" data-scroll-target="#残差策略架构与受限授权">残差策略架构与受限授权</a></li>
+  </ul></li>
+  <li><a href="#sec-training-failure-modes" id="toc-sec-training-failure-modes" class="nav-link" data-scroll-target="#sec-training-failure-modes">训练选择如何出错</a></li>
+  <li><a href="#sec-training-policy-manifest" id="toc-sec-training-policy-manifest" class="nav-link" data-scroll-target="#sec-training-policy-manifest">策略清单</a></li>
+  <li><a href="#sec-training-fallacies-pitfalls" id="toc-sec-training-fallacies-pitfalls" class="nav-link" data-scroll-target="#sec-training-fallacies-pitfalls">谬误与陷阱</a></li>
+  <li><a href="#sec-training-summary" id="toc-sec-training-summary" class="nav-link" data-scroll-target="#sec-training-summary">摘要</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">策略训练</h1></header>
+
+
+<header>
+
+
+</header>
+
+
+<section id="sec-training" class="level1 page-columns page-full">
+<h1>策略训练</h1>
+<div class="{layout-narrow} page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
+
+</div></div><p><a href="images/webp/cover_training_blueprint_labeled.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/webp/cover_training_blueprint_labeled.webp" class="img-fluid" alt="等距蓝图，展示敏捷四足机器人的 sim-to-real 策略训练：仿真网格中的虚拟物理数字孪生，含随机化摩擦锥，中央域随机化棱镜，以及物理四足机器人位于带实时遥测的测力计跑台上。"></a></p>
+</div>
+<section id="目的" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="目的">目的</h2>
+<p><em>为什么一个在每次仿真试验中都成功的策略，会在其首次真实接触时损坏硬件？</em></p>
+<p>物理试验与试错既消耗硬件，也消耗计算资源。 探索性动作可能在策略获得有意义的奖励反馈之前，就使电机绕组过热、电池电压跌落或传动过载。 因此，物理策略合成主要转向离线演示与高吞吐物理仿真器。 然而，每种经验来源都会在学到的神经权重中留下各自独特且未被建模的归纳偏置。 演示仅覆盖名义访问过的轨迹；朴素的回归损失会把不同的多模态解平均成不可行的插值动作；仿真求解器则奖励硬件会立即惩罚的非物理接触捷径。</p>
+<p>这些差异都不会出现在离线训练指标中，但它们都会随权重一同带上机器。 安全部署学到的策略，需要选取与数据集支撑相匹配的训练方案，测量数值求解器在摩擦、柔顺性与延迟方面如何偏离真实世界被控对象动力学，并严格界定策略保持有效的范围。 软件中任何未被检验的未建模假设，最终都会在因果边界上得到裁决：指令在那里交付电磁能量和不可逆的机械功，而软件无法召回。</p>
+<div style="page-break-after: always;"></div>
+<div id="callout-learning-objectives*-1.1" class="callout callout-learning-objectives">
+<details class="callout-learning-objectives fbx-simplebox fbx-default" open=""><summary><strong>学习目标</strong></summary><div>
+<ul>
+<li>按各训练方案在权重中留下的依赖关系，以及它在硬件上产生的失败，来比较训练方案。</li>
+<li>解释为何克隆策略一旦离开已演示状态，其微小误差就会累积放大。</li>
+<li>解释平方误差损失如何把两条有效的演示变成两个演示者都没有采取的动作。</li>
+<li>通过在 sim-to-real 差距的动力学、感知、外观或时序通道中定位它，来诊断迁移失败。</li>
+<li>依据真实机器微调运行所付出的磨损，以及它所推翻的既有证据，来评估该运行。</li>
+<li>构建策略清单，使其声明的运行域排除数据不支持或仿真器未建模的每一个状态</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-training-policy-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="sec-training-policy-synthesis">策略综合</h2>
+<p>两个学习得到的控制器在标称条件下可以完成同一任务，但在同一台机器上却因不同原因而失败。 笼门闩锁任务 <strong><a href="../05_data/05_data.html#sec-data">物理数据</a></strong> 就有这样两个控制器。 第一个闩锁策略 <code>latch-bc-01</code> 是从闩锁任务演示的遥操作开门演示中克隆得到的。 第二个策略 <code>latch-sim-02</code> 从 <code>latch-bc-01</code> 出发，并在物理仿真器中经强化学习得到改进。</p>
+<p>在标称锁扣板与受保护的接近速度 0.03 m/s 下（示意；参见读者指南），两个策略都能开门。 一旦条件偏离该点，两者的失效模式便分道扬镳。 当门板下垂、锁扣板偏离标称位置几毫米时，克隆策略的首次修正落入了演示从未访问过的状态，因为演示采集中没有出现位移的锁扣板。 此后每条指令都在所选的 20 ms 设定周期发出，误差不断累积，直到夹爪卡死在锁扣板边缘。 模拟策略在标称锁扣板上失败。 其模拟器将接触建模为软惩罚弹簧，因此优化器发现以 0.10 m/s 接近毫无代价。 在真实锁扣板上，接触力与接近速度和接触时间成正比，在该接近速度下，接触力在接触后经过 2.5 ms 达到锁扣的 100 N 限值，仅比接触回路的 2 ms 响应时间略长（速度、限值与响应时间为示意值）。 这留给脱速的时间太少，于是猛冲使锁扣过载。 数据采集机制决定了策略所见的内容，而仿真器塑造了它对物理世界的假设。</p>
+<p>这两次闩锁失效具有相同的结构。 每种训练机制都在权重中留下了某种依赖。 克隆策略依赖于演示恰好覆盖的那些状态，而仿真策略则依赖于比板更软的接触模型；在这两种情况下，违反该依赖的部署条件都会产生训练分数未曾显现的失效。 因此，实际的选择是：哪种经验来源能在不掩盖执行器动力学的前提下教会所需的恢复动作，以及哪些物理证据必须先于执行器权限出现。 答案随检查点一同传递，作为它所可能进入的状态的记录。 无论采用何种训练机制，检查点只向许可路径(<strong><a href="../01_boundary/01_boundary.html#sec-boundary-machine-model">《五层机器》</a></strong>)提出动作片段，而从未建模该路径的训练，会产出这样的策略：其产生的扭矩尖峰必须由许可路径拒绝，或其提议会持续触发许可路径的限制。</p>
+</section>
+<section id="sec-training-synthesis-regimes" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-training-synthesis-regimes">策略合成机制</h2>
+<p>该闩锁任务可借助四类经验：<strong><a href="../05_data/05_data.html#sec-data">物理数据</a></strong> 的遥操作开门过程、不完美的或脚本化的开门记录、笼门的仿真器，以及机械臂本身。 每一种以不同的物理代价换取不同的能力，<a href="#tbl-06-regimes" class="quarto-xref">表&nbsp;1</a> 将它们并列呈现，并列出各自已知的失效模式与拦截该失效的检查。</p>
+<div id="tbl-06-regimes" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[16,16,18,18,16,16]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-06-regimes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: <strong>跨策略合成范式的对比权衡矩阵</strong>：所比较的四个范式为行为克隆、离线强化学习、仿真到真实强化学习，以及残差 RL/微调。 各列给出训练期间所购得的主要运行能力、代表性的样本与计算量预算、样本效率界、数据采集过程中承受的安全风险，以及主导失效特征及其对应的权限路径拦截器。
+</figcaption>
+<div aria-describedby="tbl-06-regimes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">策略合成机制</th>
+<th style="text-align: left;">核心购得能力</th>
+<th style="text-align: left;">数据与算力预算</th>
+<th style="text-align: left;">样本效率与规模</th>
+<th style="text-align: left;">硬件安全与磨损风险</th>
+<th style="text-align: left;">主导失效模式与拦截器</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>行为克隆（BC）</strong></td>
+<td style="text-align: left;">无需奖励工程或系统辨识，直接模仿演示轨迹</td>
+<td style="text-align: left;"><span class="math inline">\(10^2\)</span>–<span class="math inline">\(10^3\)</span> 遥操作轨迹（<span class="math inline">\(\sim 10\)</span>–<span class="math inline">\(50\text{ h}\)</span> 数据）；<span class="math inline">\(&lt;50\text{ GPU-h}\)</span> 计算量</td>
+<td style="text-align: left;">在专家演示上监督学习 <span class="math inline">\(\mathcal{O}(N)\)</span>；固定的 <span class="math inline">\(1\times\)</span> 实时数据吞吐量</td>
+<td style="text-align: left;">记录阶段探索风险最小；优化阶段零硬件探索</td>
+<td style="text-align: left;">通过协变量偏移产生二次累积误差（<span class="math inline">\(\mathcal{O}(T^2 \epsilon)\)</span>）；<em>拦截器</em>：核/马氏距离密度监控器、凸包边界钳制</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>离线 / 批量强化学习</strong></td>
+<td style="text-align: left;">在固定的、异构的次优日志上进行价值引导的策略优化；拼接多轨迹转移</td>
+<td style="text-align: left;"><span class="math inline">\(10^5\)</span>–<span class="math inline">\(10^7\)</span> 条具有状态-动作覆盖的日志转移；<span class="math inline">\(100\)</span>–<span class="math inline">\(500\text{ GPU-h}\)</span> 计算</td>
+<td style="text-align: left;">离线 <span class="math inline">\(\mathcal{O}(N)\)</span> 基于静态数据集；样本效率高，但要求较高的状态-动作重叠</td>
+<td style="text-align: left;">离线训练期间不存在主动探索风险；日志采集需要封闭实验装置或安全的脚本式控制器</td>
+<td style="text-align: left;">分布外动作外推与 Q 值高估。<em>拦截器</em>：保守 Q 学习（CQL）惩罚项界、动作支持集过滤</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>从仿真到现实的强化学习（RL）</strong></td>
+<td style="text-align: left;">通过数十亿次无约束 rollout 发现动态、非抓握式操作与敏捷运动</td>
+<td style="text-align: left;">零物理数据；在 <span class="math inline">\(10^3\)</span>–<span class="math inline">\(10^4\)</span> 个 GPU 环境中生成 <span class="math inline">\(10^7\)</span>–<span class="math inline">\(10^9\)</span> 次仿真转移；<span class="math inline">\(500\)</span>–<span class="math inline">\(5000\text{ GPU-h}\)</span></td>
+<td style="text-align: left;">较低的算法采样效率（<span class="math inline">\(10^7\)</span>–<span class="math inline">\(10^9\)</span> 步），由 <span class="math inline">\(10^3\times\)</span>–<span class="math inline">\(10^5\times\)</span> 的模拟加速抵消</td>
+<td style="text-align: left;">训练期间零硬件磨损或碰撞损伤；若实际被控对象的动力学与仿真存在偏差，则存在严重的部署风险</td>
+<td style="text-align: left;">对数值求解器伪影的利用（接触相互穿透、零延迟）。<em>拦截器</em>：成对轨迹差异预算、力导数（<span class="math inline">\(dF/dt\)</span>）钳制</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>残差 RL 与真实微调</strong></td>
+<td style="text-align: left;">直接针对物理接触柔顺性、齿轮箱迟滞和真实传感器噪声进行策略修正</td>
+<td style="text-align: left;"><span class="math inline">\(10^3\)</span>–<span class="math inline">\(10^5\)</span> 物理步数（<span class="math inline">\(0.5\)</span>–<span class="math inline">\(10\text{ h}\)</span> 墙钟时间）；<span class="math inline">\(&lt;20\text{ GPU-h}\)</span> 计算量</td>
+<td style="text-align: left;">需要高样本效率（SAC/TD3，或残差 delta-action 形式）；严格 <span class="math inline">\(1\times\)</span> 实时</td>
+<td style="text-align: left;">物理暴露高；重复冲击会劣化齿轮箱；探索阶段的电流抖动会抬高绕组温度</td>
+<td style="text-align: left;">对标称转运动作稳定性的灾难性遗忘、局部策略崩溃。<em>拦截器</em>：参数漂移界（<span class="math inline">\(\Vert\Delta \theta\Vert_2 \le \delta\)</span>）、冻结回归测试套件、热保护限幅器</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>四种方法中，<strong>行为克隆</strong> 是获得可用策略最廉价的路径，也是其失效模式最易理解的一种。 它将策略合成表述为对采集到的专家状态—动作对数据集上的监督回归或分类问题 <span class="math inline">\(\mathcal{D} = \{(\mathbf{o}_t, \mathbf{a}_t)\}\)</span>。 沿用 <strong><a href="../05_data/05_data.html#sec-data-action-label">哪个动作会成为标签</a></strong> 中定义的动作信号采集点，演示数据集将观测与操作者映射出的设定值，或许可路径放行的设定值配对： <span class="math display">\[\mathcal{D}_{\text{intent}} = \left\{ \left(\mathbf{o}_t, \mathbf{a}_{\text{cmd}, t:t+H-1}\right) \right\} \quad \text{versus} \quad \mathcal{D}_{\text{verified}} = \left\{ \left(\mathbf{o}_t, \mathbf{a}_{\text{enf}, t:t+H-1}\right) \right\}\]</span> 克隆映射出的设定值 <span class="math inline">\(\mathbf{a}_{\text{cmd}}\)</span>（即操作者在许可路径作用前的机器人自身坐标系中的意图），使模型训练于演示意图；而克隆许可路径放行的设定值 <span class="math inline">\(\mathbf{a}_{\text{enf}}\)</span>，则把其制动减速曲线直接烘焙进网络权重，使策略继承针对该特定路径限幅调优的减速量。 在其标准形式下，优化目标最小化从演示轨迹抽取的连续动作序列上的多步预测损失（经典回归形式见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-multimodal">Mode averaging and the decoders that avoid it</a></strong>）。<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 由于该损失仅惩罚指令动作与观测状态处所记录演示之间的差异，训练目标并不评估任务完成度、终端代价，也不评估闭环动力系统的稳定性。 仅将动作适配到观测。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 将区分意图与执行的四流动作信号采集点元组形式化于 <strong><a href="../05_data/05_data.html#sec-data-action-label">哪个动作会成为标签</a></strong>。</p>
+</div></div><section id="多模态情形下的失效与模式平均" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="多模态情形下的失效与模式平均">多模态情形下的失效与模式平均</h3>
+<p>当人类演示者执行一项物理任务时，其策略通常是多模态的。 考虑一个避障场景，其中移动底盘或机械臂必须绕开中央立柱。 人类演示者可能在半数演示中从立柱左侧绕行，在其余半数演示中从右侧绕行。 真实的演示数据包含不同的有效选择，但完全没有沿中央直线直行的示例。</p>
+<p>一个确定性的点回归行为克隆策略无法对同一观测表示两种选择。 在平方误差损失下，其最优输出是条件均值（推导见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-multimodal">Mode averaging and the decoders that avoid it</a></strong>），<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> 此处即“左转”与“右转”指令之间的中点。 策略输出零侧向速度，命令机器直接驶入障碍物，而该动作从未出现在演示数据集中。</p>
+<p>一座流程装置表明，模式平均无需几何结构。 假设某流量控制器的演示在两类示例阀门工况之间交替出现：一类是旁通工况，阀门开度为 10 percent，另一类是主进料工况，阀门开度为 90 percent，且两类工况数量相等。 平方误差克隆输出的是它们的均值，即阀门开度 50 percent，该流量既不受任一类工况控制，也从未针对该装置完成标定。 该中间流量可能使供给泵发生汽蚀，并错过任一类工况所调定的冷却时限。 此处不涉及任何障碍物，因此没有任何几何性检查能捕捉到该问题；只有针对已演示工况的检查才能做到。</p>
+<p>模式边界还会导致时序失效，即高频单步控制器中的时序不一致。 在一个示例性 <span class="math inline">\(50\text{--}100\text{ Hz}\)</span> 控制器中，传感器噪声使连续观测跨越该边界，而仅映射 <span class="math inline">\(o_t \to a_t\)</span> 的策略在 <span class="math inline">\(+10\text{ N}\cdot\text{m}\)</span> 与 <span class="math inline">\(-10\text{ N}\cdot\text{m}\)</span> 请求之间交替。 这种交替是否引发共振、磨损或绕组发热，取决于驱动装置与负载，因此它是一种需要检验的失效模式，而非每个单步策略的固有属性。</p>
+<p>模式平均是在单个观测上的失效。 行为克隆存在第二种失效，只有当策略闭环运行时才会显现。 其自身误差会使机器偏离演示所覆盖的状态，而损失函数在这些状态上并未提供训练信号，这正是 <code>latch-bc-01</code> 在下垂的门上发生卡滞的原因。 在原则 <a href="https://mlsysbook.ai/vol4/parts/teaching_principles.html#pri-vol4-endogenous-drift" title="英文原版参考内容">Endogenous data</a> 下，策略自身的动作决定了它接下来访问哪些状态，因此固定档案无法预判它们；对于仅由专家演示克隆的策略，最坏情况成本随执行时域（horizon）的平方增长（<strong><a href="../05_data/05_data.html#eq-data-quadratic-drift">equation</a></strong>，该结论由 <strong><a href="../05_data/05_data.html#sec-data-endogenous-experience">内生经验</a></strong> 给出）。 因此，留出验证集上的低验证损失只能度量演示者访问过的状态上的精度；它对策略一旦受到扰动后如何返回一无所知。 纠偏聚合会标注学习者自身的状态，并在其专家标注假设下将该增长降为线性（<strong><a href="../05_data/05_data.html#sec-data-intervention-recovery">干预与恢复数据</a></strong>），但在物理机器上，这些状态是通过运行一个未经验证的策略而达到的，可能在监督者介入之前撞击夹具或损坏传动机构。</p>
+<div id="dfn-training-compounding-rollout-error" class="callout callout-definition" title="轨迹误差累积">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.1: 轨迹误差累积</strong></summary><div>
+<p>（<strong><em>轨迹误差累积</em></strong>）是指开环监督策略在物理动力学被控对象上顺序执行时产生的闭环跟踪漂移的二次累积，其期望上界为： <span class="math display">\[J(\pi) - J(\pi^*) \le \mathcal{O}(T^2 \epsilon)\]</span> 其中 <span class="math inline">\(T\)</span> 为任务执行时域，<span class="math inline">\(\epsilon = \mathbb{E}_{\mathbf{s} \sim d_{\pi^*}} [\mathbb{I}(\pi(\mathbf{s}) \ne \pi^*(\mathbf{s}))]\)</span> 为在演示分布 <span class="math inline">\(d_{\pi^*}\)</span> 上的单步策略误差率。</p>
+<ol type="1">
+<li>（<strong>意义</strong>）：证明了最小化离线演示上的单步预测误差在根本上不足以保证闭环稳定性；任何非零误差率 <span class="math inline">\(\epsilon &gt; 0\)</span> 最终都会将物理状态推离演示支撑集。</li>
+<li><strong>区别</strong>：与静态监督学习（验证误差随样本数线性增长）不同，累积的 rollout 误差将策略错误与环境物理耦合起来，使微小的初始轨迹偏差演变为不可逆的状态发散。</li>
+<li><strong>常见误区</strong>：假定在留出演示划分上较低的离线验证损失，就意味着闭环任务成功率较高，却忽略了离线数据集在受到扰动后返回标称支撑集这一情形完全不存在任何示例。</li>
+</ol>
+</div></details>
+</div>
+</section>
+<section id="动作分块改变了什么以及它仍未解决的问题" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="动作分块改变了什么以及它仍未解决的问题">动作分块改变了什么——以及它仍未解决的问题</h3>
+<p>动作分块（<a href="../03_brain/03_brain.html#dfn-brain-action-chunking">时序动作分块</a>）能够提升时序连贯性，并降低生成式架构（如扩散策略与 Action Chunking with Transformers（ACT））的提案频率。 它同样可以缓解上文模式边界示例中的模式交替问题。 一次性预测 <span class="math inline">\(H\)</span> 个未来动作 <span class="math inline">\(\mathbf{a}_{t:t+H-1}\)</span> 的分块策略，通过三种机制改善执行：</p>
+<ol type="1">
+<li><strong>时序与动态一致性</strong>：与其生成彼此割裂且引发抖振的单步预测，模型预测的是一条完整的协调轨迹。</li>
+<li><strong>保持所选模式</strong>：单步马尔可夫策略容易陷入因果混淆，将一时的虚假相关误认为任务意图。 以轨迹历史为条件并提议一个片段，有助于在相邻动作之间保持所选模式。</li>
+<li><strong>滚动时域重规划与时间维集成</strong>：部署后的策略每隔几步查询一次新的片段，并融合重叠预测（<strong><a href="../03_brain/03_brain.html#sec-brain-cognitive-pipeline">供给、新鲜度与内存墙</a></strong>），从而在保留多步提议的同时实现周期性的反馈。</li>
+</ol>
+<p>这些机制均不改变行为克隆的支持界 <span class="math inline">\(\mathcal{O}(T^2 \epsilon)\)</span>。 正如 <a href="#fig-06-compounding-error" class="quarto-xref">图&nbsp;1</a> 在理论上和实验上所表明的那样，单步行为克隆随着 rollout 视界 <span class="math inline">\(T\)</span> 的增长而任务存活率急剧下降，在 <span class="math inline">\(50\text{ Hz}\)</span> 下于 250 个控制步内落入灾难性干预区间（存活率 <span class="math inline">\(&lt;18\text{ \%}\)</span>）。 尽管 BC-RNN 等时序架构推迟了发散的开始，但它们的二次误差累积在渐近意义上仍完全相同。 相比之下，在线交互式聚合（DAgger <span class="citation" data-cites="ross2011reduction">(<a href="#ref-ross2011reduction" role="doc-biblioref">Ross 等 2011年</a>)</span>）通过在学习者访问的状态上收集专家反馈，将误差增长线性地限制在 <span class="math inline">\(\mathcal{O}(T \epsilon)\)</span> 以内。 在没有交互式监督的情况下，现代生成式策略通过动作分块（<span class="math inline">\(K=16\)</span>）来抵消累积漂移，该分块将有效执行时域收缩至 <span class="math inline">\(T_{\text{eff}} = T/K\)</span>（ACT <span class="citation" data-cites="zhao2023learning">(<a href="#ref-zhao2023learning" role="doc-biblioref">Zhao 等 2023年</a>)</span>），以及连续的滚动时域扩散重规划 <span class="citation" data-cites="chi2024diffusionpolicy">(<a href="#ref-chi2024diffusionpolicy" role="doc-biblioref">Chi 等 2024年</a>)</span>，从而在扩展的 500 步操作时域上维持超过 <span class="math inline">\(80\text{ \%}\)</span> 的任务存活。</p>
+<div class="no-row-height column-margin column-container"></div><div id="fig-06-compounding-error" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="比较任务生存率（百分比）与 rollout 时域 T 的曲线图，T 从 0 到 500 个控制步，采样频率 50 Hz。 纯单步行为克隆的红色曲线呈现陡峭的二次型悬崖，到第 250 步时生存率降至 18% 以下，到第 450 步时接近零。 BC-RNN 的橙色虚线曲线推迟了悬崖，但遵循相同的二次型衰减。 DAgger 的琥珀色点划线曲线呈现线性复合，到第 500 步时生存率约为 40%。 动作分块（ACT，K=16）的紫色点线曲线和扩散策略的绿色实线曲线在第 500 步分别保持超过 70% 和 80% 的生存率。 来自 Robomimic Can、Push-T 与 Peg Insertion 的带注释的经验基准点验证了轨迹曲线。" data-fig-pos="htb" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-06-compounding-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-compounding-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;1: <strong>跨模仿学习范式的累积协变量偏移</strong>：任务存活率与包络内比例相对于闭环 rollout 时域 <span class="math inline">\(T\)</span> 在 <span class="math inline">\(50\text{ Hz}\)</span> 处（<span class="math inline">\(10\text{ 秒} = 500\text{ 步}\)</span>）。 单步行为克隆存在二次误差累积 <span class="math inline">\(\mathcal{O}(T^2 \epsilon)\)</span> <span class="citation" data-cites="ross2011reduction">(<a href="#ref-ross2011reduction" role="doc-biblioref">Ross 等 2011年</a>)</span>，在 250 步内跌入灾难性失败包络。 DAgger 通过在线交互式重新标注将误差累积线性地限制在 <span class="math inline">\(\mathcal{O}(T \epsilon)\)</span> 以内。 现代动作分块（ACT <span class="citation" data-cites="zhao2023learning">(<a href="#ref-zhao2023learning" role="doc-biblioref">Zhao 等 2023年</a>)</span>）将有效误差累积时域缩短 <span class="math inline">\(K=16\)</span> 倍，而滚动时域扩散策略 <span class="citation" data-cites="chi2024diffusionpolicy">(<a href="#ref-chi2024diffusionpolicy" role="doc-biblioref">Chi 等 2024年</a>)</span> 在 500 个执行步上实现了超过 80% 的生存率。
+</figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-ross2011reduction" class="csl-entry" role="listitem">
+Ross, Stéphane, Geoffrey Gordon, 和 Drew Bagnell. 2011年. <span>《A reduction of imitation learning and structured prediction to no-regret online learning》</span>. <em>Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics</em>, 627～35.
+</div><div id="ref-zhao2023learning" class="csl-entry" role="listitem">
+Zhao, Tony Z., Vikash Kumar, Sergey Levine, 和 Chelsea Finn. 2023年. <span>《Learning fine-grained bimanual manipulation with low-cost hardware》</span>. <em>Robotics: Science and Systems (RSS)</em>. https://doi.org/10.15607/RSS.2023.XIX.016.
+</div><div id="ref-chi2024diffusionpolicy" class="csl-entry" role="listitem">
+Chi, Cheng, Zhenjia Xu, Siyuan Feng, Eric Cousineau, Yilun Du, Benjamin Burchfiel, Russ Tedrake, 和 Shuran Song. 2024年. <span>《Diffusion policy: Visuomotor policy learning via action diffusion》</span>. <em>The International Journal of Robotics Research</em> 44 (10-11): 1684～704. https://doi.org/10.1177/02783649241273668.
+</div></div></figure>
+</div>
+<p>增大数据集规模、模型容量或调参，可以降低评估观测上的一步错误率，从而降低固定时域内首次策略错误的概率。 这一改进并不能刻画错误发生之后的情况。 外部扰动、未标定的载荷或电压跌落，也可能将机器带入支撑较弱的状态，而无需策略分歧。 恢复数据、测得的动力学以及独立的运行时限制，决定上述任一事件是否仍处于物理包络之内。</p>
+<p>偏离已演示状态不会自行触发告警，因此在其发生物理接触之前检测它，不能依赖离线训练损失。 它需要运行时遥测，直接跟踪状态空间的支撑情况，包括在特征空间中测量马氏距离、估计模型认识性不确定性，或在许可路径上施加显式的包络监控，当状态轨迹离开演示数据集的凸包时触发。</p>
+</section>
+<section id="解码器选择在运行时付出什么代价" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="解码器选择在运行时付出什么代价">解码器选择在运行时付出什么代价</h3>
+<p>点回归解码器将不同的有效动作平均成一个无效指令，而多个解码器族族避免了均值：混合密度网络、隐式能量模型克隆、条件扩散与流匹配、隐变量分块（如 ACT），以及视觉语言动作模型中的离散动作 词元。<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-multimodal">Mode averaging and the decoders that avoid it</a></strong> 与 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-diffusion">Continuous trajectory diffusion and flow matching</a></strong> 分别发展其损失函数与采样过程。 它们都没有提供缺失的恢复状态。 对机器而言，选择改变的是运行时成本，因为训练时固定的解码器决定了每个分块需要多少次网络求值。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/svg/margin_generative_inference_deadlines_envelope.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/svg/margin_generative_inference_deadlines_envelope.svg" class="img-fluid" style="width:100.0%" alt="仅计算量的分块推理时间与设定点截止期限比较：只需几次求值的流匹配采样器能在截止期限内完成，而需要多次求值的 DDIM 采样器则超出该期限。"></a></p>
+<p><em>去噪步数决定分块推理时间，只有少步采样器能同步满足设定点周期。</em></p>
+</div></div><p>步数即为达到控制截止时刻的成本。 扩散解码器通过反复去噪生成每个 chunk，每一步都要完整评估噪声预测动作头，因此推理时间随步数增长（即 chunk 延迟中的细化项 <strong><a href="../03_brain/03_brain.html#sec-brain-cognitive-pipeline">供给、新鲜度与内存墙</a></strong>）。 在 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-diffusion">Continuous trajectory diffusion and flow matching</a></strong> 所假设的步数与单步耗时下，同步运行的多步去噪扩散隐式模型（DDIM）采样器会超出 20 ms 设定的周期，而少步流匹配采样器则能适配该周期，前提是这些少步满足任务的动作质量准则。 无法同步满足周期的解码器以异步方式运行。 应用处理器以较低的速率刷新 chunk 缓冲区，授权路径则以自身速率读取最新 chunk，检查其新鲜度，并在过期时回退，因此执行动作永远不必等待提议方。 机器自身的 chunk 策略即为该异步情形。 它每 50 ms 刷新一次 chunk，因此其推理截止时间为该 chunk 周期，而 20 ms 设定周期仅用于调节 chunk 内设定值的播放节奏。</p>
+<p>如 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#fig-diffusion-policy-architecture">Diffusion policy architecture</a></strong>（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-diffusion">Continuous trajectory diffusion and flow matching</a></strong>）所述，策略依据由图像与关节状态构成的观测历史，从纯高斯噪声中迭代去噪出一个动作 chunk <span class="math inline">\(\mathbf{A}^0 \in \mathbb{R}^{K \times D_a}\)</span>。 而非执行整个预测时域，机器在滚动时域重新规划发生之前，先向实时微控制器下发执行时域。 该双速率流水线——将主机上的异步反向扩散与微控制器上的确定性样条插值、速率限制及安全性钳制耦合起来——在 <span class="citation" data-cites="algo-diffusion-policy-trajectory">(<a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#algo-diffusion-policy-trajectory">轨迹扩散策略算法（英文原版）</a>)</span>（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-diffusion">Continuous trajectory diffusion and flow matching</a></strong>）中展开。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 跨应用处理器与安全微控制器的多速率动作 chunk 缓冲区的硬件布局，在 <strong><a href="../13_placement/13_placement.html#sec-placement-two-paths-one-die">同一芯片上的两条路径</a></strong> 中完成工程化。</p>
+</div></div></section>
+<section id="离线强化学习与动作分布偏移" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="离线强化学习与动作分布偏移">离线强化学习与动作分布偏移</h3>
+<p>当物理演示数据集 <span class="math inline">\(\mathcal{D} = \{(s_t, a_t, r_t, s_{t+1})\}\)</span> 包含异质或次优轨迹（例如遥操作、脚本化程序与人类的自由探索性尝试的混合）时，行为克隆面临困难，因为它对所有演示赋予相同的监督权重。 在定义于马尔可夫决策过程（MDPs）<span class="citation" data-cites="sutton2018reinforcement">(<a href="#ref-sutton2018reinforcement" role="doc-biblioref">Sutton 和 Barto 2018年</a>)</span> 上的经典强化学习中，智能体优化策略以最大化期望折扣累计回报 <span class="math inline">\(J = \mathbb{E}\left[\sum_{t=0}^\infty \gamma^t r(s_t, a_t)\right]\)</span>。<strong>离线强化学习（Batch RL）</strong> 旨在无需主动硬件探索，直接基于日志化的状态转移存档优化策略，利用奖励信号将互不重叠的、不完美的演示拼接为高性能的复合轨迹 <span class="citation" data-cites="kumar2020conservative">(<a href="#ref-kumar2020conservative" role="doc-biblioref">Kumar 等 2020年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-sutton2018reinforcement" class="csl-entry" role="listitem">
+Sutton, Richard S., 和 Andrew G. Barto. 2018年. <em>Reinforcement Learning: An Introduction</em>. 2nd 版. MIT Press.
+</div></div><p>然而，将标准 Q-learning 应用于静态离线数据集会引发一种失效模式，称为<strong>分布外（OOD）动作高估</strong>。 在标准强化学习中，算法通过让价值网络预测从下一步起所能达到的最高可能回报，来估计未来状态的价值（关于形式化的贝尔曼方程，参见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-affordances">Value Functions and Affordance Grounding</a></strong>）。 该最大值在整个连续动作空间上取。 对于在日志数据集中从未执行过的动作，网络接收到的训练信号为零，并且由于泛化方差，往往输出错误偏大的价值估计，从而对一个未尝试过的物理动作预测出很高的回报。 该算法贪心地选取这些虚假峰值，并将过度乐观的价值误差向后传播。 部署时，策略会选取这些缺乏依据的动作，并可能下达会使关节卡滞或触及边界的运动指令。</p>
+<p>为在不查询物理环境的前提下降低价值高估，<strong>保守 Q 学习（CQL）</strong> 为离线 Bellman 目标添加了一个正则化项。<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> 它惩罚学习策略采样的动作相对于日志数据中的动作的高价值。 状态-动作覆盖有限与近似误差仍然存在，因此授权路径仍需检查最终策略提出的建议。</p>
+<p>克隆、分块与离线价值学习都仍位于已记录数据的支持集之内，保守 Q 学习使离线策略更为谨慎，而不会扩大该支持集。 当已记录的转移缺少动态操作或敏捷步态所需的高性能轨迹或恢复动作时，系统必须通过闭环试错采集新的经验。</p>
+</section>
+</section>
+<section id="sec-training-learning-by-trial" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-training-learning-by-trial">试错学习</h2>
+<p>克隆的闩锁策略在位移后的板件上失败，因为从未有演示向它展示过这一情形。 试错学习通过让策略在闭环中自行生成状态-动作轨迹，来弥合这一盲区。 诸如 Q-learning 或策略梯度之类的算法会根据其自身动作所获得的奖励来调整策略，因此，一个将抓取器推离其标称路径的探索性动作，会迫使优化器评估从该被扰动状态出发的恢复过程，其中也包括操作者从未出现的擦边情况和不稳定接触。 通过从当前权重所诱导的状态分布中采样转移，基于试次的学习针对策略实际到达的状态进行训练，从而消除了克隆误差二次最坏情况增长背后的协变量偏移。</p>
+<p>硬件上的闭环探索按日历时间计费，其成本取决于算法需要多少次试验、每次试验持续多久、一次复位需要多久，以及有多少台机器并行运行。 以开门任务本身为例，机械臂在主动时域 <span class="math inline">\(t_{\text{rollout}}\)</span> = 8 s 内调节接触力，即一次自主接触阶段，而非完整的遥操作尝试。 在高维感知输入上的强化学习可能需要约 <span class="math inline">\(N = 10^6\)</span> 次试验才能发现协调的力-速度剖面，其规模相当于 <a href="#fig-06-robot-arm-farm" class="quarto-xref">图&nbsp;2</a> 抓取试验的规模。 在单台物理机器（<span class="math inline">\(P = 1\)</span>）上，仅原始执行时间就占用了 8.0 × 10⁶ s，在计入任何重置开销之前，需要全天候连续运行约 92.6 days。</p>
+<p>计入复位阶段后，便揭示了物理实验真正的时序瓶颈。 若使用专用的自动化夹具，其复位快于采集架的重新上闩（<strong><a href="../05_data/05_data.html#sec-data-teleop-costs">遥操作演示成本</a></strong>），能在 <span class="math inline">\(t_{\text{reset,auto}}\)</span> = 4 s 内重新扣上门闩并让机械臂回到起始姿态，那么一百万次试验的总采集时间将扩展为 1.2 × 10⁷ s，即 138.9 days。 当探索性轨迹卡住闩锁凸轮或触发关节过流跳闸时，自动复位便无法实现，必须由人工操作员释放闩锁、重新装入门体并重新对准机械臂。 若每次试验都需要人工复位，平均耗时为 <span class="math inline">\(t_{\text{reset,manual}}\)</span> = 30 s，则总日历时间需求增长至 439.8 days。 将物理并行性扩展至 <span class="math inline">\(P = 14\)</span> 台同步机架（<a href="#fig-06-robot-arm-farm" class="quarto-xref">图&nbsp;2</a>），可将日历工期压缩到数周 <span class="citation" data-cites="levine2018learning">(<a href="#ref-levine2018learning" role="doc-biblioref">Levine 等 2018年</a>)</span>，但它会按比例放大物理占地、资本投入、供电需求和人工监督劳动。</p>
+<div class="no-row-height column-margin column-container"></div><div id="fig-06-robot-arm-farm" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="物理策略训练农场与硬件并行性。 由 14 台定制串联机械臂组成的大规模机器人数据采集集群，在数月内并行运行，采集超过 800,000 次基于视觉的手眼协调抓取尝试 [@levine2018learning]。 每个机器人工作站由一台 7-DoF 机械臂、一个双指柔性夹爪、一台从肩部上方观察的 RGB 相机，以及一个装有多样化家用物品的专用料箱组成。 将硬件并行性扩展至 P=14 可将墙钟日历时间 Twall = N(trollout + treset)/P 压缩，但需承担高昂的资本支出、齿轮箱与连杆轴承的持续机械磨损、电机绕组的热积聚，以及用于清除掉落物品和机械卡滞的大量监督开销。 署名：@levine2018learning。" data-fig-pos="t" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-06-robot-arm-farm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/png/fig06_real_robot_arm_farm.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="图&nbsp;2: 物理策略训练农场：十四台机械臂在数月内累计采集超过 800,000 次物理抓取尝试 [@levine2018learning]。 硬件并行性可以分摊日历时间，却无法分摊成本，因为每个工位都会增加资本投入、减速器与轴承磨损、电机绕组的热负荷，以及清除掉落物体和卡滞所需的一份监督劳动。 署名：@levine2018learning。"><img src="images/png/fig06_real_robot_arm_farm.png" class="img-fluid figure-img" style="width:85.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-robot-arm-farm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: <strong>物理策略训练农场</strong>：十四台机械臂在数月内累计采集超过 800,000 次物理抓取尝试 <span class="citation" data-cites="levine2018learning">(<a href="#ref-levine2018learning" role="doc-biblioref">Levine 等 2018年</a>)</span>。 硬件并行性可以分摊日历时间，却无法分摊成本，因为每个工位都会增加资本投入、减速器与轴承磨损、电机绕组的热负荷，以及清除掉落物体和卡滞所需的一份监督劳动。 署名：<span class="citation" data-cites="levine2018learning">Levine 等 (<a href="#ref-levine2018learning" role="doc-biblioref">2018年</a>)</span>。
+</figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-levine2018learning" class="csl-entry" role="listitem">
+Levine, Sergey, Peter Pastor, Alex Krizhevsky, Julian Ibarz, 和 Deirdre Quillen. 2018年. <span>《Learning hand-eye coordination for robotic grasping with deep learning and large-scale data collection》</span>. <em>The International Journal of Robotics Research</em> 37 (4-5): 421～36.
+</div></div></figure>
+</div>
+<p>时间往往并非约束性因素；磨损才是。 每扇门开启一次，每个臂关节便承受约 <span class="math inline">\(n_{\text{rev}} = 4\)</span> 次双向载荷反转，因此 <span class="math inline">\(N = 10^6\)</span> 次试验在传动系统中累计产生 4.0 × 10⁶ 次此类载荷反转。<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> 同样的一百万次接触事件会磨损锁扣凸轮与锁扣板，压溃夹爪的柔性垫，并使臂的导线在反复循环中逐渐接近疲劳断裂。</p>
+<p>在纯计算环境中，一条数值不稳定的探索分支除被丢弃的缓冲区外，几乎不产生任何成本。 而在运行中的机器上，探索是不可逆的。 不受约束的探索性扭矩将夹爪推入刚性夹具，使力传感器柔性件发生弯曲，造成谐波减速器轮齿被剪断，并将电机定子加热至超过其 <span class="math inline">\(155^\circ\text{C}\)</span> F 级绝缘阈值。<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 电机绕组热限值与扭矩-转速降额曲线推导于 <strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong>。</p>
+</div></div><p>此外，物理退化会在训练过程本身期间改变被控对象。 随着接触面抛光、齿轮齿隙增大（即齿轮齿间机械间隙或死区增加），以及结构紧固件在重复振动下松动，物理过渡分布 <span class="math inline">\(p(s_{t+1} \mid s_t, a_t)\)</span> 在第 <span class="math inline">\(n = 900{,}000\)</span> 次试验中，与第 <span class="math inline">\(n = 1\)</span> 次试验中的完好动力学相比，存在可测量的差异。 被控机器在其自身训练数据的采集物理成本下发生演化。</p>
+<p>奖励函数引入了第二重脆弱性。 在试错式学习中，标量奖励是工程师意图与优化器之间的接口规范，任何它未测量、未惩罚的约束，都是优化器将加以利用的自由度。 针对快速设定值跟踪、而对加加速度或绕组温度不施加惩罚的奖励，会趋向于在最大正向与反向出力之间进行 bang-bang 切换，从而引起支架振动并过热驱动电子器件。 当接触力未被测量时，策略可能学会以最大电流使关节顶靠机械止挡，因为这样做可以消除跟踪抖动。 网络满足的是被呈现给它的公式，而非设计者未言明的常识。</p>
+<p>对于低维系统、复位平凡、磨损可忽略且裕度充足的情形，直接在硬件上进行强化学习仍然可行。 当所需的样本数量超过装置的时间、预算、结构寿命或风险容忍度时，仿真便成为必需；而训练一个复杂电机策略所需的 <span class="math inline">\(10^6\)</span> 到 <span class="math inline">\(10^9\)</span> 之间的过渡，则需并行地推进到物理引擎运行中，跨越一个计算集群。</p>
+<p>这一替换改变了训练与现实之间的契约。 在模拟器中训练出的策略在探索过程中不会弯曲任何连杆，但它继承了奖励的遗漏以及仿真器对力学模型的描述；每一个未被建模的摩擦不连续点、理想化接触冲量以及未表征的延迟，都会变成它所依赖的假设。 在物理机器上，这些不准确性以未被建模的扰动和跟踪失败的形式回归。</p>
+</section>
+<section id="sec-training-simulator-component" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-training-simulator-component">仿真器作为系统组件</h2>
+<p>将仿真器视为外部开发工具是一种架构性错误。 编译器会从源代码生成机器指令，但生成的二进制在标准硬件上执行时，并不保留对编译器内部内存分配器的隐式依赖。 仿真器则不然。 它是一个上游策略生成组件，其物理假设、数值近似和边界简化会被永久嵌入到策略参数中。 当训练好的神经网络被复制到目标机器上时，仿真器并不在执行路径中，然而策略却表现得仿佛该仿真器中每一个未被建模的动态都依然成立。 仿真器是系统架构中的一个活跃组件，拥有自己的规范、容差和失效模式。</p>
+<div id="dfn-training-sim-real-reality-gap-vector" class="callout callout-definition" title="Sim-to-real 现实差距向量">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.2: Sim-to-real 现实差距向量</strong></summary><div>
+<p><strong><em>Sim-to-real 现实差距向量</em></strong> <span class="math inline">\(\boldsymbol{\Delta}_{\text{sim2real}} = [\Delta_{\text{dyn}}, \Delta_{\text{sens}}, \Delta_{\text{vis}}, \Delta_{\text{lat}}]\)</span> 是模拟环境与硬件环境之间物理差异的耦合、多通道分解，涵盖接触力学（<span class="math inline">\(\Delta_{\text{dyn}}\)</span>）、传感器转换与噪声（<span class="math inline">\(\Delta_{\text{sens}}\)</span>）、视觉外观（<span class="math inline">\(\Delta_{\text{vis}}\)</span>），以及异步传输延迟与抖动（<span class="math inline">\(\Delta_{\text{lat}}\)</span>）。</p>
+<ol type="1">
+<li><strong>意义</strong>：将“现实差距”视为标量难度指标或纯粹的视觉域不匹配，会使工程师忽视动力学与时间上的差异。 执行器反电动势、齿轮箱柔顺性或总线抖动方面的差异会在策略完成首个物理控制步之前耗尽相位裕量。</li>
+<li><strong>区别</strong>：不准确的参数值（例如连杆质量 10% 的误差）会保留运动因果微分方程，而遗漏的机制（例如零延迟通信或未建模的库仑粘滑）则会完全切断物理反馈路径，导致策略利用非物理的仿真器伪影。</li>
+<li><strong>常见误区</strong>：仅依赖极端的域随机化来弥合大差距。 在物理范围之外的区间随机化参数会稀释策略容量，导致过于保守、迟缓的行为，无法在真实硬件上完成精度任务。</li>
+</ol>
+</div></details>
+</div>
+<p>如同任何硬件子系统一样，仿真器需要一份形式化的接口契约，以可测量、可预算的量来表述。 该契约规定了观测维度、动作边界、仿真时间步 <span class="math inline">\(\Delta t\)</span>、从命令发出到物理执行之间的传输延迟、执行器力矩与电流限制、传感器噪声分布、重置分布以及终止条件。 如果仿真器规定观测循环以 <span class="math inline">\(100\text{ Hz}\)</span> 的速率运行，并假设零延迟传感器通道与方差为 <span class="math inline">\(\sigma^2 = 1.0 \times 10^{-4}\text{ (rad/s)}^2\)</span> 的高斯噪声，那么策略将学到针对这些精确信号统计量调优的反馈增益，而物理机上未建模的 <span class="math inline">\(15\text{ ms}\)</span> 总线传输延迟会使这些增益失效。 Dactyl 的双胞胎（<a href="#fig-06-sim2real-dactyl" class="quarto-xref">图&nbsp;3</a>）无法与真实手部完全匹配，因此其仿真器先针对真实手部进行标定，再围绕标定值进行随机化，而策略将未匹配的部分作为它已经训练过的变异来应对 <span class="citation" data-cites="andrychowicz2020learning">(<a href="#ref-andrychowicz2020learning" role="doc-biblioref"><span class="nocase">Andrychowicz 等</span> 2020年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"></div><p>随着仿真在训练中的作用日益增强，接口契约的重要性也愈发凸显。<a href="#fig-06-simulation-scaling" class="quarto-xref">图&nbsp;4</a> 展示了若干并行加速器所能达到的 rollout 吞吐量；对于需要大量试次的策略，仿真可能成为训练经验的主要来源。</p>
+<div id="fig-06-sim2real-dactyl" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="Sim-to-Real 机器人迁移设置与数字孪生仿真。 基于视觉的灵巧手内操作（OpenAI 的 Dactyl 项目）的真实实验装置 [@andrychowicz2020learning]。（左）装有 24-DoF 类人 Shadow Dexterous Hand 的物理实验笼，周围环绕 16 台 PhaseSpace 红外动捕相机和 3 台 Basler RGB 相机，用于真值状态校验与多视角视觉。（右）高吞吐量的 MuJoCo 仿真数字孪生环境，用于训练强化学习策略，跨越数十亿个合成状态转移样本。 鲁棒性仿真到现实的迁移通过对表面摩擦、关节阻尼、执行器力增益、连杆与物体质量、物体尺寸、视觉光照和相机参数进行广泛的域随机化来实现，并结合建模的电机回程间隙与动作延迟，迫使神经网络策略将未建模的物理变化视为噪声，同时在所支持的部署包络内运行。 归属：@andrychowicz2020learning。" data-fig-pos="t" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-06-sim2real-dactyl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/jpg/fig06_real_sim2real_dactyl.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="图&nbsp;3: Sim-to-real 迁移设置：OpenAI 的 Dactyl 装置，一只 24-DoF Shadow Hand 机械手位于动作捕捉笼内，紧邻其训练所用的 MuJoCo 数字孪生体 [@andrychowicz2020learning]。 转移通过摩擦、阻尼、执行器增益、质量、尺寸和光照上的域随机化来购买，并配合建模的间隙与动作延迟；其作用在于迫使策略将未建模的物理变化视为噪声，而不是通过提高仿真器的准确性来实现。 归因：@andrychowicz2020learning。"><img src="images/jpg/fig06_real_sim2real_dactyl.jpg" class="img-fluid figure-img" style="width:95.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-sim2real-dactyl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: <strong>Sim-to-real 迁移设置</strong>：OpenAI 的 Dactyl 装置，一只 24-DoF Shadow Hand 机械手位于动作捕捉笼内，紧邻其训练所用的 MuJoCo 数字孪生体 <span class="citation" data-cites="andrychowicz2020learning">(<a href="#ref-andrychowicz2020learning" role="doc-biblioref"><span class="nocase">Andrychowicz 等</span> 2020年</a>)</span>。 转移通过摩擦、阻尼、执行器增益、质量、尺寸和光照上的域随机化来购买，并配合建模的间隙与动作延迟；其作用在于迫使策略将未建模的物理变化视为噪声，而不是通过提高仿真器的准确性来实现。 归因：<span class="citation" data-cites="andrychowicz2020learning"><span class="nocase">Andrychowicz 等</span> (<a href="#ref-andrychowicz2020learning" role="doc-biblioref">2020年</a>)</span>。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div></figure>
+</div>
+<div id="ws-training-dactyl-tendon-snap" class="callout callout-war-story" title="仿真到现实硬件损坏（2018）">
+<p></p><details class="callout-war-story fbx-simplebox fbx-default" open=""><summary><strong>War Story 1.1: 仿真到现实硬件损坏（2018）</strong></summary><div><strong>上下文</strong>：OpenAI 在随机化的 MuJoCo 仿真中完全训练了一个强化学习策略，以在 24-DoF Shadow Dexterous Hand 中重新定向一个方块，其关节由底座中的电机通过肌腱驱动 <span class="citation" data-cites="andrychowicz2020learning">(<a href="#ref-andrychowicz2020learning" role="doc-biblioref"><span class="nocase">Andrychowicz 等</span> 2020年</a>)</span>。<p></p>
+<p><strong>机制</strong>：仿真中的手直接在关节处施加扭矩，而物理手为肌腱驱动，且存在较大的回程间隙。 作者对每个动作都使用指数移动平均进行平滑，在仿真中和在机器人上均如此，以避免动作信号出现可能损害物理手的突变。</p>
+<p><strong>影响</strong>：作者在物理实验中报告了机器人损坏，最常见的是腕部垂直关节，很可能因为它承受了最大的载荷。 每次修复都耗费时间，并且经常改变系统的一些方面，因此物理结果是在不同时间采集的，作者将硬件损坏计为该工作的关键挑战之一。</p>
+<p><strong>响应</strong>：团队还用腕部俯仰关节锁定的方式训练了第二个策略，该策略向物理手的迁移效果更好。</p>
+<p><strong>系统层面的教训</strong>：既不会磨损也不会损坏的仿真器，无法将硬件暴露计入奖励。 保护手部的那些限制——一个动作过滤器和一个锁定的关节——是在学习得到的策略之外施加的，而每次修复都改变了正在评估该策略的装置。</p>
+</div></details>
+</div>
+<div class="no-row-height column-margin column-container"></div><div id="fig-06-simulation-scaling" class="quarto-float quarto-figure quarto-figure-center anchored" alt="2012 至 2024 年间八个选定仿真吞吐量示例的 对数尺度散点图。 各点覆盖单核 CPU、多核 CPU、GPU 与 TPU 配置下的不同工作负载；未连接的标记避免暗示逐年直接可比的性能提升。" data-fig-pos="htb" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-simulation-scaling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="6969be71" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/7g/fkg91tq50f58kfmg7c65747r0000gn/T/ipykernel_91871/1653963227.py:42: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()</code></pre>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-simulation-scaling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;4: <strong>选定的仿真吞吐量示例</strong>：不同仿真器、任务、硬件和运行设置对应的示例性每秒步数。 这些点说明了并行加速器设计为何能够支撑较大的 rollout 预算；它们并非受控的纵向基准，也不是普适的扩展定律。
+</figcaption>
+</figure>
+</div>
+<p>当仿真器使用不准确的转子转动惯量时，若分配 <span class="math inline">\(J = 2.0 \times 10^{-3}\text{ kg}\cdot\text{m}^2\)</span> 而非真实的 <span class="math inline">\(2.5 \times 10^{-3}\text{ kg}\cdot\text{m}^2\)</span>，运动方程仍然会计算出一个与加速度相关的惯性力矩。 参数误差会改变响应的幅值，但因果结构依然完整。 当仿真器完全省略某个物理机制，例如传动系统的齿隙、结构柔性或通道间的通信抖动时，它并非仅仅将相应参数设为零。 它根本不提供任何因果机制。 被省略的延迟或柔性代表了一个未被建模的物理自由度。<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 省略关节柔性的仿真器允许瞬时力矩反向，而真实的传动系统会将其转化为齿轮齿面的载荷与结构共振的激发。</p>
+<p>最具影响力的遗漏，源于仿真器如何处理接触。 刚体接触是非光滑的。 法向力在物体分离时为零，一旦接触便取任意压缩值以防止相互穿插，而碰撞时速度发生跳变。 摩擦遵循库仑锥，而受库仑摩擦的刚体可能不存在唯一的正向解（Painlevé 悖论）。 物理引擎有两条数值路径之一（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-contact">Rigid Body Contact Mechanics</a></strong>）。 互补性求解器 以随接触数量增加而急剧增长的计算成本维持严格的非穿透，并且在几何体发生夹挤时可能卡死。 惩罚项与凸松弛以虚拟弹簧-阻尼器替换硬约束，它在高帧率下收敛很快，但会让刚体发生轻微相互穿插。 闩锁仿真器走的是第二条路径，而它的“柔软”正是 <code>latch-sim-02</code> 学会利用之处。</p>
+<section id="从仿真到现实的接触技巧" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="从仿真到现实的接触技巧">从仿真到现实的接触技巧</h3>
+<p>强化学习针对求解器呈现的物理进行优化，而非被控对象的物理。 在实现了软接触松弛或惩罚弹簧的仿真器中，优化器发现，通过 <span class="math inline">\(1.0\text{--}3.0\text{ mm}\)</span>（接触面之间的负号间隙 <span class="math inline">\(\phi(q) &lt; 0\)</span>）“陷入”表面，可以获得两项非物理的便利条件：</p>
+<ol type="1">
+<li>人工弹簧-阻尼器反作用力充当瞬时能量汇，在单个积分步内制止向下的动量，且不发生反弹或塑性变形。</li>
+<li>穿插增加了求解器中的有效接触面面积，产生非物理的侧向牵引力，从而在剧烈机动动作期间阻止打滑。</li>
+</ol>
+<p>机械臂以工具中心点处机器人侧等效质量 12 kg 将锁扣驱动至其击打板。 假设仿真器的惩罚性接触允许夹爪以快速接近速度 0.10 m/s 陷入板中，其下沉量为示意值 2.4 mm。 将接近动能与最大压缩量处的弹簧能量相等，得到峰值力 <span class="math inline">\(F_{\text{peak}} = v\sqrt{k\,m_{\text{eff}}}\)</span>；对于该仿真的弹簧，该力简化为 <span class="math inline">\(m_{\text{eff}}v^2/\delta_{\text{pen}}\)</span>，即 50 N，低于锁扣的 100 N 限值。 强化学习优化器记录零损伤惩罚、高任务速度以及最大奖励，并学会不减速地直接扎入板中。</p>
+<p>当策略转移到机器后，真实的击打板并不提供这种柔性， 其接触刚度为示意值 4.0 × 10⁵ N/m，同样的扎入峰值为 219.1 N，即 4.4× 的仿真力与 2.2× 的锁扣限值。 许可路径能否阻止该峰值，取决于时间。 接触力遵循 <span class="math inline">\(F = k\,\Delta x\)</span>（<strong><a href="../02_body/02_body.html#sec-body-actuator-limits">执行器传动限制</a></strong>），并且由于板体以接近速度发生压缩，<span class="math inline">\(\Delta x = vt\)</span> 与力自接触瞬间起随 <span class="math inline">\(F = kvt\)</span> 上升。 在快速接近时，闩锁限值在接触后 2.5 ms 到达，仅比接触回路响应所需的 2 ms 稍多；而在受保护的接近 0.03 m/s 中，它在 8.3 ms 之后到达。 因此，响应若以 0.5 ms 为余量开始，便无法在力越过限值前使机械臂减速，扎入运动将继续，使接触力朝该峰值上升。 因此，预防必须发生在接触之前。 独立强制的接近速度包络，例如 <span class="math inline">\(v_{\text{max}}(z) \le \sqrt{2 a_{\text{brake}} z}\)</span> 其中 <span class="math inline">\(z\)</span> 为距板面的剩余距离，<span class="math inline">\(a_{\text{brake}}\)</span> 为经验证的减速度，可限制接触时的速度；力触发线仅在其感知、制动响应和剩余压缩均已得到验证时，才能限制后续加载。 接触截止时间，而非训练奖励，才是将闩锁策略声明的 ODD 限制在受保护接近动作（<a href="#sec-training-policy-manifest" class="quarto-xref">节&nbsp;1.8</a>）的原因。</p>
+<p>因此，接触仿真保真度按可观测的机械量进行预算，即接触起始时刻、峰值法向力、传递冲量、滑移距离和释放延迟，而非求解器内部机制。 不匹配也可能取相反符号。 在一个积分步内解决碰撞的惩罚引擎，将动量传递集中为尖锐的尖峰，而硬件上的垫层变形与结构柔性则将其分散到许多毫秒。 积分冲量随后可以高度一致，而峰值力相差数倍；策略从模拟尖峰中学习检测接触起始时刻，却从未在机器上看到该尖峰，因此它会持续施力，直到驱动器达到其电流限值。</p>
+<div id="psp-training-contact-fidelity" class="callout callout-perspective" title="接触保真度不变量">
+<p></p><details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.1: 接触保真度不变量</strong></summary><div><em>永远不要信任一个模拟接触策略，其成功依赖于瞬时动量吸收或零延迟摩擦接合；依赖穿透数字表面的策略，会以仿真器从未显示的力加载物理工件。</em><p></p>
+</div></details>
+</div>
+<p>哪些遗漏是重要的，取决于任务。 只在高连续速度下运动的策略可能容忍粗糙的摩擦模型，因为它从不滞留在静摩擦阈值附近；而调节力并保持静态接触的策略，若仿真器遗漏了静摩擦、粘滑过渡和执行器死区，则会进入不受控的极限环振荡。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>⇄ <strong>对照：</strong> 2.4 mm 的惩罚弹簧穿透量是求解器凭空造出的柔度，而真实传动链的反向间隙与扭转柔度（见 <strong><a href="../02_body/02_body.html#sec-body-actuator-limits">执行器传动限制</a></strong> 分析）则是刚体求解器所遗漏的柔度。</p>
+</div></div><p>确立仿真器某个组件的有效性需要<strong>成对探测</strong>。 工程师对仿真器与物理硬件施加完全相同的开环指令序列，测量由此产生的状态轨迹之间的差异，并与显式的误差预算进行比较。 对于闩锁，这意味着将同一动作指令输入模拟板与真实板，并比较上述接触量，从而使差异以毫秒和牛顿为单位纳入预算。 当实测差异超出运行包络的容差时，该模拟器对该训练任务而言是缺陷的。</p>
+<p>由于模拟器的结构假设在优化过程中被冻结进神经网络的权重，模拟器规范因而构成策略配置与身份中不可变的一个要素。 每个训练后的策略产物都必须记录其完整的模拟器来源，即策略清单中的 <code>simulation_provenance</code> 字段（<a href="#sec-training-policy-manifest" class="quarto-xref">节&nbsp;1.8</a>）。 在没有该来源的情况下部署策略，就如同在未记录其编译所针对的目标架构的情况下发布固件。 审计这一来源所需的，不只是聚合通过率；它要求将现实差距分解为动力学、感知、外观和时间四个通道，而 <a href="#sec-training-sim-to-real-gap" class="quarto-xref">节&nbsp;1.5</a> 则逐个通道地对其进行量化。</p>
+</section>
+</section>
+<section id="sec-training-sim-to-real-gap" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-training-sim-to-real-gap">这个差距由什么构成</h2>
+<p>闩锁模拟器与真实笼门在两个彼此无关的方面存在差异：惩罚弹簧远比击打板柔软，且指令路径不存在传输延迟；因此，仅用一个距离来概括模拟轨迹与真实轨迹之间的差异，只会得到一个既无法指称其中任何一方的数值。 不同物理通道中的误差带有不同的量纲，在闭环中沿不同的路径传播，并导致不同的失效，因此该失配是一个跨越动力学、感知、外观与时间的耦合分量向量。 量化该失配向量的大小，就是对照任务容差核算物理误差，其数据来自在相同激励下记录的成对指令—响应轨迹；每个通道都需要各自的拦截器。<a href="#tbl-06-reality-gap" class="quarto-xref">表&nbsp;2</a> 列出动力学通道的拦截器，并将其拆分为执行器行与接触行，并列出感知与时间通道；外观失配则在下方正文及 <a href="#fig-06-sim2real-gap" class="quarto-xref">图&nbsp;5</a> 的 (d) 面板中予以量化。</p>
+<p>动力学失配衡量的是指令执行器出力与实际物理运动或接触力之间的差异，覆盖整个工作包络。 模拟一个零背隙、瞬时接触刚度的刚性连杆仿真器，预测出的力上升比传动系统更快——后者的齿轮箱柔顺性与驱动延迟引入了相位滞后；而将接触起始时刻对齐到模拟上升的政策，仍会持续向机器施力，这正是 <a href="#sec-training-simulator-component" class="quarto-xref">节&nbsp;1.4</a> 中所述的反向接触失配。</p>
+<p>感知失配衡量的是真实物理状态与提供给策略网络的观测向量之间的差异。 模拟的测距传感器是干净的、均匀量化的；物理测距传感器则带有校准偏差、噪声、热漂移，并在镜面反射期间出现丢包突发。 偏差会移动控制器从接近切换到力调节的时点，而丢包突发会使策略在下行过程中对表面视而不见。</p>
+<p>外观失配并非基于原始相机像素计算出的均方误差。 写实渲染与物理相机帧之间的图像差异，主要由高频背景纹理和可能不影响策略动作的细微传感器噪声模式所主导。 外观失配通过测量策略相关感知输出的偏差来度量，例如估计的表面法线、物体关键点或空间特征激活，均在匹配的几何、光照、材质和相机曝光设置下测量。</p>
+<p>时序失配决定观测采集、策略评估与执行之间的时间对齐。 发生在不同物理时刻的相同状态转移并不会产生等效的闭环动力学。 在每个离散步骤开始时瞬时执行观测、推理与执行的仿真器，省略了相机曝光、总线串行化、推理尾延迟和电机总线传输，并且省略了它们逐周期之间的抖动。 被省略的每毫秒延迟，都是机构在采取纠正动作之前未被观测到的行进距离，并且它会侵蚀闭环的阻尼与相位裕度。</p>
+<p><a href="#fig-06-sim2real-gap" class="quarto-xref">图&nbsp;5</a> 显示，在一根示意性直线驱动器上，四个通道全部发散，该驱动器独立于移动机械臂，以 0.20 m/s 接近刚性表面，并将接触力调节至 10 N。 一个未建模的 <span class="math inline">\(8\text{ ms}\)</span> 驱动器延迟和更软的表面，使力上升速率从 500 N/s 降至 250 N/s，因此目标力在 40 ms 才到达，而非 20 ms，驱动器过冲 <span class="math inline">\(3.0\text{ mm}\)</span> 直至触发限流停机。 一个 <span class="math inline">\(+3.2\text{ mm}\)</span> 测距偏差使力调节提前开始，而四帧镜面高光丢失则使下降过程致盲。 5.5 %的原始像素差异掩盖了接触区域估计中的 <span class="math inline">\(6.0\text{ mm}\)</span> 偏移，该偏移大于 <span class="math inline">\(2.0\text{ mm}\)</span> 的 倒角容差；而最迟在 49.5 ms 到达的 <span class="math inline">\(P_{99}\)</span> 执行，使驱动器 5.9 mm 超出了仿真器 20 ms 锁步同步所涵盖的范围，直到修正开始。 这些发散中的任何一项，在标量损失中都不会被反映出来。</p>
+<div id="fig-06-sim2real-gap" class="quarto-float quarto-figure quarto-figure-center anchored" alt="多维 Sim-to-Real 现实差距向量。 量化评估仿真到现实迁移中的现实差距，需要涵盖四路异构物理通道的配对轨迹遥测，而非聚合标量损失。(a) 动力学与接触失配（Deltadyn，单位 N、rad/N*m）：8 ms 定子驱动延迟与柔性柔顺性导致物理力以 250 N/s 上升，而非模拟的 500 N/s，从而产生 0.15 N*s 的过冲冲量，以及 3.0 mm 的过冲行程，进而触发过流保护。(b) 执行器与流水线延迟（Deltalat，单位 ms、mm）：分段硬件延迟（相机曝光 16.7 ms、总线串行化 4.2 ms、神经推理 12.0 ms，P99 尾部为 26.5 ms，电机总线传输 2.1 ms）形成 35.0 ms（P50）至 49.5 ms（P99）的延迟；在 P99 下，驱动器比 20 ms 模拟器锁步所涵盖的行程多出 5.9 mm，耗尽控制相位裕量。(c) 感知与转导（Deltasens，单位 mm、N）：+3.2 mm 的标定偏置会触发过早调节，而 4 帧（133 ms）的镜面高光丢失突发会使策略在下行过程中致盲。(d) 感知特征偏移（Deltavis，单位特征空间）：看似微不足道的 5.5% 原始像素差异，掩盖了 12 px（6.0 mm）的空间 词元 质心偏移，该偏移超出 2.0 mm 的 倒角容差，致使工具撞入夹具肩部。" data-fig-pos="t" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-sim2real-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig06_sim2real_gap.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="图&nbsp;5: Sim-to-real 现实差距向量：Sim-to-real 差距分解为四个物理通道，分别是动力学（a）、感知（c）、外观作为感知特征偏移（d）以及时序（b），每个通道均通过成对轨迹测量，而非通过聚合损失测量。 分解才是关键，因为四个通道以不同方式失效，而标量损失将它们平均成一个数，而这个数对其中任何一个都不作指称。 一个看似微不足道的 5.5% 像素差异，掩盖了一个超过装配容差的 6.0\text{ mm} 空间位移。"><img src="images/svg/fig06_sim2real_gap.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-sim2real-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;5: <strong>Sim-to-real 现实差距向量</strong>：Sim-to-real 差距分解为四个物理通道，分别是动力学（a）、感知（c）、外观作为感知特征偏移（d）以及时序（b），每个通道均通过成对轨迹测量，而非通过聚合损失测量。 分解才是关键，因为四个通道以不同方式失效，而标量损失将它们平均成一个数，而这个数对其中任何一个都不作指称。 一个看似微不足道的 5.5% 像素差异，掩盖了一个超过装配容差的 <span class="math inline">\(6.0\text{ mm}\)</span> 空间位移。
+</figcaption>
+</figure>
+</div>
+<div id="tbl-06-reality-gap" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[16,16,18,18,16,16]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-06-reality-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;2: <strong>多维 sim-to-real 现实差距分类法</strong>：对现实差距的动力学、感知和时序通道进行分解，其中动力学拆分为执行器与接触两类行；外观差距则在正文和 <a href="#fig-06-sim2real-gap" class="quarto-xref">图&nbsp;5</a> 的 (d) 面板中分别给出量级。 各列分别给出未建模的物理现象、代表性的定量差异、优化器所利用的隐式控制捷径、成对轨迹验证指标，以及硬件与权限路径缓解措施。
+</figcaption>
+<div aria-describedby="tbl-06-reality-gap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">现实差距维度</th>
+<th style="text-align: left;">未建模的物理机制</th>
+<th style="text-align: left;">名义仿真规范与 真实硬件</th>
+<th style="text-align: left;">隐式策略利用 / 行为失效</th>
+<th style="text-align: left;">配对轨迹诊断指标与容差</th>
+<th style="text-align: left;">硬件与权限路径拦截器</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>执行器与传动系统动力学</strong></td>
+<td style="text-align: left;">谐波减速器柔顺性、库仑静摩擦、速度相关的斯特里贝克摩擦，以及反电动势电压饱和</td>
+<td style="text-align: left;">理想化直接扭矩源（<span class="math inline">\(J_{\text{rotor}}=0\)</span>、<span class="math inline">\(\tau_{\text{latency}}=0\text{ ms}\)</span>）与物理谐波减速器（<span class="math inline">\(k_c=6.7\times 10^2\text{ N}\cdot\text{m/rad}\)</span>，背隙 <span class="math inline">\(\theta_b=0.08^\circ\)</span>，总线延迟 <span class="math inline">\(\tau=8\text{ ms}\)</span>）</td>
+<td style="text-align: left;">策略发出高频 bang-bang 扭矩反转（<span class="math inline">\(&gt;50\text{ Hz}\)</span>），引发机械颤振、齿轮疲劳，并将绕组驱动超过其降额阈值</td>
+<td style="text-align: left;">阶跃扭矩响应差异：相位滞后 <span class="math inline">\(\Delta \phi \le 5^\circ\)</span> 在 <span class="math inline">\(10\text{ Hz}\)</span> 处； 调节时间差异 <span class="math inline">\(\Delta t_{\text{settle}} \le 15\text{ ms}\)</span>；超调 <span class="math inline">\(\le 5\%\)</span></td>
+<td style="text-align: left;">低通动作滤波（<span class="math inline">\(f_{\text{cutoff}} \le 20\text{ Hz}\)</span>）、电机电流均方根热估计器，以及执行器扭矩变化速率限制器（<span class="math inline">\(d\tau/dt \le \tau_{\text{max}}/\Delta t\)</span>）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>接触力学与柔顺性</strong></td>
+<td style="text-align: left;">粘弹性表面变形、接触迟滞、非平滑的粘滑过渡以及持续时间有限的恢复阶段</td>
+<td style="text-align: left;">点质量刚体接触（LCP/罚弹簧(<span class="math inline">\(k_p=10^6\text{ N/m}\)</span>)，恢复(<span class="math inline">\(\Delta t_{\text{res}}=2\text{ ms}\)</span>)）对比物理接触垫(<span class="math inline">\(k=8.0\times 10^4\text{ N/m}\)</span>)（变形区间(<span class="math inline">\(\Delta t_{\text{def}}=18\text{ ms}\)</span>)）</td>
+<td style="text-align: left;">策略将接触起始时刻关联到尖锐的模拟力尖峰，在较慢的真实上升沿上看不到该尖峰，因而持续施力直至驱动达到其电流上限</td>
+<td style="text-align: left;">接触冲量误差(<span class="math inline">\(\Delta I \le 0.05\text{ N}\cdot\text{s}\)</span>)；峰值接触力差异(<span class="math inline">\(\Delta F_{\text{peak}} \le 15\text{ N}\)</span>)；接触起始上升时间误差(<span class="math inline">\(\Delta t_{\text{rise}} \le 5\text{ ms}\)</span>)</td>
+<td style="text-align: left;">接近速度包络调节器 (<span class="math inline">\(v_{\text{safe}}(z) \propto \sqrt{2 a_{\text{brake}} z}\)</span>)、力导数钳制 (<span class="math inline">\(dF/dt \le 1.0\times 10^4\text{ N/s}\)</span>)、柔性机械挠性件</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>传感器转导与噪声特性</strong></td>
+<td style="text-align: left;">光学镜面反射丢失、CMOS 卷帘快门失真、随环境照度变化的噪声，以及力与力矩传感器热漂移</td>
+<td style="text-align: left;">合成 RGB-D（零偏 Gaussian 噪声（<span class="math inline">\(\sigma = 0.5\text{ mm}\)</span>，零测量丢失））对比物理结构光深度（<span class="math inline">\(+3.2\text{ mm}\)</span> 偏差，连续 4 帧的突发测量丢失，漂移 <span class="math inline">\(0.4\text{ N}/10\,^\circ\text{C}\)</span>）</td>
+<td style="text-align: left;">策略在高于表面时过早减速，或在连续多帧丢失期间保持盲视，导致末端执行器越过刚性夹具边界进入堵转过流</td>
+<td style="text-align: left;">传感器分布的 Kolmogorov-Smirnov 距离 <span class="math inline">\(D_{\text{KS}} \le 0.05\)</span>；空间特征激活质心误差 <span class="math inline">\(\le 2.0\text{ mm}\)</span>；零持续丢失帧数 <span class="math inline">\(N_{\text{drop}} = 0\)</span></td>
+<td style="text-align: left;">多传感器融合（IMU/编码器 + 视觉）、光学信号丢失保持滤波器、热漂移自校准、独立接近式光闸</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>时间延迟与总线异步</strong></td>
+<td style="text-align: left;">可变相机曝光时间、PCIe/EtherCAT 总线串行化、神经推理尾延迟（<span class="math inline">\(P_{99}\)</span>），以及非确定性的操作系统调度</td>
+<td style="text-align: left;">同步离散时间锁步（<span class="math inline">\(\Delta t = 20.0\text{ ms}\)</span>，零传输延迟）与异步物理流水线（<span class="math inline">\(\tau_{\text{total}} = 35.0\text{ ms}\)</span> 在 <span class="math inline">\(P_{50}\)</span>，<span class="math inline">\(49.5\text{ ms}\)</span> 在 <span class="math inline">\(P_{99}\)</span>，抖动 <span class="math inline">\(\pm 6.2\text{ ms}\)</span>）</td>
+<td style="text-align: left;">严重的相位裕量劣化（<span class="math inline">\(&gt;30^\circ\)</span> 损失）；策略出现欠阻尼振荡、反复搜寻、往复调整的极限环振荡，以及在延迟尖峰期间发生未被观测到的移动（<span class="math inline">\(P_{99}\)</span> 下为 <span class="math inline">\(5.9\text{ mm}\)</span>，超出模拟锁步）</td>
+<td style="text-align: left;">端到端指令-响应延迟抖动 <span class="math inline">\(\Delta \tau_{\text{jitter}} \le 2.0\text{ ms}\)</span>；最坏情况观测年龄 <span class="math inline">\(\tau_{\text{obs}} \le 25\text{ ms}\)</span>；在 <span class="math inline">\(50\text{ Hz}\)</span> 处零期限超期</td>
+<td style="text-align: left;">实时 PREEMPT_RT / Xenomai 调度、仿真中的动作缓冲延迟队列注入、运动学外推（Smith 预测器）</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>域随机化常被当作消除 sim-to-real 差距的方法，但参数随机化受到严格的结构限制<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>。在 <span class="math inline">\(\mu = 0.2\)</span> 到 <span class="math inline">\(\mu = 0.8\)</span> 的均匀分布上采样摩擦系数，或在 <span class="math inline">\(\pm 20\)</span> 百分比的连杆质量范围内随机化，可扩展训练对仿真器已能表示的机制的覆盖范围。 它无法合成被遗漏的物理机制、缺失的状态相关性，或未建模的罕见事件。 如果仿真器的微分方程遗漏了齿轮箱背隙、电机绕组的热阻，或操作系统中的线程抢占，那么关于连杆质量的任何分布都无法迫使策略去学习对这些动力学的补偿。 向模拟观测中加入非结构化高斯噪声以掩盖未建模效应，可能损害性能，训练策略降低其控制增益并收窄其操作带宽，以避免激发未建模模态的动作。</p>
+<p>在仿真器所建模的机制内，随机化具有有用的宽度，即<strong>域随机化走廊</strong>。 分布过窄会使策略对实际设备所呈现的扰动过于脆弱，从而可能引发机械冲击或热保护跳闸；分布过宽则会使策略趋向保守的低增益控制，牺牲吞吐量。 将随机化限制在该走廊内，而不是通过试错调参，需要按固定顺序开展工作。 在物理实验台上进行系统辨识，首先测量标称质量、扭矩常数、延迟与摩擦。 随后，随机化边界建立在这些驱动上述参数的机制上，例如扭矩常数对应绕组温度、摩擦对应表面状态，而非经验性的区间。 训练从标称值附近的窄带开始，仅在策略达到其声明的成功阈值时才逐步放宽该带，这一调度称为自适应域随机化。 最后，成对轨迹会逐条审计每个通道是否落在其容差范围内；一旦偏差超出预算，仿真器在部署任何基于它的策略之前会被退回修订。</p>
+<p>随机化无法触及的部分，必须由授权路径加以约束。 每个提案在到达执行器之前都要先通过授权路径（<strong><a href="../01_boundary/01_boundary.html#sec-boundary-machine-model">《五层机器》</a></strong>），在那里，力率钳制、力矩变化速率限幅和速度限速器将其限制在已验证的感知与制动假设所覆盖的范围内。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-minimal-intervention">最小干预</a></strong> 给出了用于约束未经验证的策略提案的亚毫秒控制屏障函数滤波器的数学表述。</p>
+</div></div><p>将缺口分解为其构成的物理通道，可得到两项具体的工程产物，即一个受支持区域和一份显式的残余失配清单。 受支持区域是物理硬件与仿真在已验证容差范围内相互吻合的那些条件构成的集合。 残差失配清单逐项列出训练分布之外仍然存在的每一个未闭合差异。 对于闩锁仿真器，成对探针尚未闭合击板接触刚度——该刚度由比板软得多的惩罚弹簧设定——以及执行器传输延迟，因此二者均进入其残差清单，而受支持区域则排除由这两项偏离所支配的接触状态。 残差清单中的每一条都定义了对运行时监控器和安全过滤器的明确要求，二者必须检测物理执行何时漂出模拟策略仍然有效的边界。 这两份产物都汇入策略清单 <a href="#sec-training-policy-manifest" class="quarto-xref">节&nbsp;1.8</a>：残差清单进入其遗漏日志，而受支持区域之外的每个状态都以排除项形式录入其中。</p>
+<p>即便在仔细的域随机化和接触标定下，高精度、接触密集区域中仍会残留差异，闩锁仿真器的残差清单也尚未清空。 在某些局部失配中，在已部署的实体上吸收比建模更便宜，代价是磨损和证据损失。</p>
+</section>
+<section id="sec-training-real-machine-tuning" class="level2">
+<h2 class="anchored" data-anchor-id="sec-training-real-machine-tuning">在真实机器上的微调</h2>
+<p>真实笼门上的击板相对于仿真器中设定的击板位置存在较小的结构安装偏移，而仿真器并未对此建模。 这种局部的、可测量的失配，正是可以在物理硬件上进行微调所能够吸收的部分。 由物理轨迹采样计算出的梯度更新会将策略适配到机器的真实柔顺性、接触动力学与总线延迟，但它们并不测量这些机制；因此，仿真器的另外两处失配——柔顺接触弹簧与缺失的传输延迟——会一直留在遗漏清单中，直到成对探针将它们关闭。 这种自适应同样需要付出物理代价。 在仿真器中，采样接近稳定性边界的状态只需消耗计算周期，而在硬件上，每一次采样都会消耗部件寿命，并有可能将机器驱动至不可恢复的接触状态。</p>
+<p>在物理硬件上更新策略参数的成本会累积，因为那些用于求解局部接触误差的梯度步，同时也消耗有限的机械疲劳寿命、使电机绕组发热，并存在灾难性遗忘已验证的标称通过稳定性的风险。</p>
+<p>考虑移动操作机器人的机械臂将 <code>latch-sim-02</code> 调整为 <code>latch-res-03</code>，这是一个残差候选，它在冻结的 <code>latch-sim-02</code> 输出上叠加了门控学习到的校正，因为真实板件相对于仿真器中的放置位置偏移了 1.5 mm。 夹爪将弹簧驱动的卡扣引导越过其锁扣板，此处不光滑的库仑摩擦、凸轮面几何形状和弹簧预紧力共同产生尖锐的粘滑过渡。 策略的设定值每 20 ms 到达一次（50 Hz）。 为使其参数适应锁扣板的接触动力学，机器人上的微调流程采集了示例性的 20,000 交互步，相当于 400 s 的主动接触与近接触操作。 由于策略必须通过探索来改进，随机动作扰动会在低层安全控制器介入之前产生不可预测的力瞬变。 如果探索步中有 1.5 percent越过 15 N 接触触发线，并在许可路径钳制指令之前击中击打板的刚性肩部，则微调运行会向传动系注入 300 次冲击。</p>
+<p>上述每次冲击都会在齿轮齿与轴承中耗散机械臂的动能；若要估算这些冲击所消耗的服役寿命比例，就需要采用针对该驱动器的专用载荷谱与寿命模型（<strong><a href="../02_body/02_body.html#sec-body-actuator-limits">执行器传动限制</a></strong>）。 热是第二项约束。 探索抖动会提高电机线圈的均方根电流，由此产生的焦耳热可能在几分钟内就将绕组推至降额阈值（<strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong>），除非训练计划为冷却间隔预留了时间。</p>
+<p>除机械磨损之外，现实世界的自适应还会破坏部署前测试中建立的统计验证。 在仿真中，策略可经受 <span class="math inline">\(1.0\times 10^7\)</span> 个验证回合，覆盖随机扰动，从而建立有界的跟踪误差与尾部行为，直至 99.9 百分位（<span class="math inline">\(P_{99.9}\)</span>）。 一旦将权重更新 <span class="math inline">\(\Delta\theta\)</span> 应用到硬件上，所有以原始参数向量 <span class="math inline">\(\theta_0\)</span> 为条件得出的统计结论即告失效。 更新后的策略或许可以消除对目标夹具的稳态力误差，但梯度更新步骤可能同时损害自由空间的跟踪精度、在高速转移期间降低相角裕度（从而减少稳定性储备），或在紧急制动过程中扭曲响应特性。 由于硬件吞吐量受物理时间约束，机器无法执行数百万次物理试验来重新建立这些置信区间。 适配后的策略以比其所替代的仿真基线更窄的经验证据集进入生产环境。</p>
+<p>因此，在部署机器上进行微调，将策略从经过资格验证的冻结组件转变为一个持续演化的状态。 资格验证取决于配置控制：精确的参数哈希对应一份已记录的安全论证，因此每一次在线权重更新都会重新开启该记录。 防止失败的责任转移到许可路径的确定性监控器上，这些监控器必须拦截基线策略的误差，以及优化器在依据物理反馈进行更新过程中产生的中间行为。</p>
+<section id="残差策略架构与受限授权" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="残差策略架构与受限授权">残差策略架构与受限授权</h3>
+<p>残差策略可在不改变冻结基策略权重的情况下实现局部化适配。 所提出的控制输入为 <span class="math display">\[u_{\text{prop}}(s) = \pi_{\text{base}}(s) + g(s)\,\Delta\pi_\theta(s),\]</span> 其中 <span class="math inline">\(\pi_{\text{base}}\)</span> 是合格的标称控制器，<span class="math inline">\(\Delta\pi_\theta\)</span> 是学到的接触修正，而独立校验的门限 <span class="math inline">\(g(s)\in\{0,1\}\)</span> 仅在已验证的接触区域内才为 1。 门限在自由空间中及该区域之外将残差<em>精确</em>设为零；而缺失的奖励梯度不会做到这一点。 授权路径在动作之前检查测量到的状态与所提出的组合输入。</p>
+<p>一个幅值上限 <span class="math inline">\(\|g(s)\Delta\pi_\theta(s)\|\le\Delta_{\max}\)</span> 限制了控制权限的一个方面。 同一许可路径必须强制执行修正变化率限制与状态限制、确保执行器可行性，并在感知信息或提议过期时执行回退策略。 允许的残差集必须适配于所声称运行域内针对<em>组合</em>控制器的已验证鲁棒性裕度；将任意扭矩幅值与被动性或相位裕度相比较是不足的。 对于闩锁夹具，我们会只在实测的接触阶段允许修正，并采用零输出自由空间门限以及有界的扭矩变化率。 每次权重更新后，接触与自由空间的回归测试必须重新检查跟踪、停止、热负荷与冲击暴露，新检查点才能获得控制权限。 若上述条件不成立，截断后的残差仍可能激发振荡或使驱动器饱和。</p>
+<p>有界残差权限可以限制一项拟议的修正，但本身既不能防止硬件损坏，也不能消除早期训练选择所遗留的潜在失效模式。 策略合成的每个阶段，从演示数据摄取、经仿真接触求解器直至残差更新，都会在其控制器的闭环行为中留下各自的失效特征，而每个特征都可以追溯到产生它的训练假设。</p>
+</section>
+</section>
+<section id="sec-training-failure-modes" class="level2">
+<h2 class="anchored" data-anchor-id="sec-training-failure-modes">训练选择如何出错</h2>
+<p>学习策略中的物理失效很少是任意的。 驱动夹爪撞上锁扣板的指令，是在特定数据集、损失函数与仿真器上的优化结果，而该优化的假设会留下结构性的痕迹，可以在机器运行之前被追溯。 该<strong>策略漏洞推断链</strong> 以五个环节明确呈现这一轨迹（<span class="math inline">\(\text{Exposure} \to \text{Dependency} \to \text{Violated Assumption} \to \text{Observable Signature} \to \text{Permission-Path Interceptor}\)</span>，即“暴露 → 依赖 → 被违反的假设 → 可观测特征 → 许可路径拦截器”）。 训练暴露建立了一种学习依赖；部署条件违反该依赖，违反在指令或装置中产生特征，而该特征指出了权限路径所要求的拦截器。 三个闩锁检查点各自运行一次该链。</p>
+<p>对于 <code>latch-bc-01</code>，暴露是 <strong><a href="../05_data/05_data.html#sec-data">物理数据</a></strong> 的遥操作开门动作，依赖是这些演示的支持，而该支持仅覆盖受保护接近路径上的标称锁扣板，未覆盖失败尝试所达到的任何非标称状态，因为策略的模仿目标是被保留的成功开门（绊线失败保留在档案中作为标注失败，而非目标），且该轮次从未移动锁扣板。 门体下垂违反该条件。 特征是复合协变量偏移 。 每次修正每 20 ms 发出一次，都离演示状态更远，但每条指令在运动学上仍然合理，因此该提议在夹爪于锁扣板边缘卡住之前看起来都正常。 策略无法察觉自身的越界，因此拦截器必须是许可路径输入处的支持监控器，它把实测状态与受支持的单元格比对，并拒绝这些单元格之外的策略权限。 没有该监控器，故障首先在接触时显现。 预部署测试由这一依赖关系推出。 在刻意偏移的锁扣板上进行台架试验，可判断监控器是否在夹爪卡住之前触发；这种板件偏移所形成的状态族已在闩锁试验活动的占用数据关联结果中列为已知缺失（<strong><a href="../05_data/05_data.html#sec-data-policy-coverage">采集策略覆盖度</a></strong>）。</p>
+<p>对于 <code>latch-sim-02</code>，暴露的环节是模拟开门动作，配上一个无指令延迟的罚函数接触弹簧；依赖关系是快速下插不付出代价，因为软弹簧在 50 N 的模拟峰值处吸收了接近过程。 真实板件违反了这一前提。 以 0.10 m/s 的速度接近时，刚性板几乎立即把力驱动过 15 N 接触触发线，并推进到接触截止期限（推导见 <a href="#sec-training-simulator-component" class="quarto-xref">节&nbsp;1.4</a>）内的锁扣极限，即朝向 219.1 N 峰值。 该特征是一次过力瞬态，而任务奖励从未记录到它。 触发线能检测到它，但触发时机落在机械臂无法利用的时间窗内，因此拦截器采用接触前接近速度包络，并且这一依赖关系在部署前通过成对接触试验而非机器触发来揭示。</p>
+<p>对于 <code>latch-res-03</code>，暴露量是取自单一实验台上的窄幅接触步骤切片，而依赖则是这些近期转移的过度代表。 切片遗漏的任何状态都违反该约束，例如门前的自由空间转移，或偏离实验台轴线的接近动作。 该特征表现为回归 、调参接触状态邻近状态下的稳定性丧失；由于网络处处输出有效结果，其指令中没有任何内容会宣告这一损失。 拦截措施一部分在流程层面实施，另一部分在运行时实施。 冻结接触与自由空间回归套件必须在新的权重获得授权之前通过，而残差门限在测得的接触阶段之外将修正量保持为零。 实验台上的探索会留下任务奖励未记录的第二类特征，即 <a href="#sec-training-real-machine-tuning" class="quarto-xref">节&nbsp;1.6</a> 的机械冲击与电机绕组发热，因此授权路径也必须监控奖励所遗漏的可观测值，例如绕组温度、电流谱与加速度计能量。</p>
+<p>从 <code>latch-bc-01</code> 到 <code>latch-res-03</code> 的谱系并未消除这些失效，而是改变了占主导地位的失效。 在仿真中细化克隆策略以漂移换取求解器利用，而将结果在实验台上调优则会在接触时抑制该利用，同时冒着遗忘上游策略的风险。 较早的机制仍以潜在形式保留在权重中，只要条件离开末级所调优的包络，它们便会重新显现。</p>
+<p>因此，每条链路都留下三项义务。 每一条依赖关系都需要一次部署前测试，以压力测试训练与真实装置之间偏离的那一边界。 每一个出现在可测机械量中的特征，都必须在许可路径上以环周期率部署运行时检测器，无论其表现为跟踪偏差、力率还是电流谱。 当策略无法察觉自身的失效，例如在 <code>latch-bc-01</code> 脱离其已演示的状态时，权限路径需要配备支持监控器，清单必须将其声明的 ODD 排除监控器无法覆盖的状态，并且确定性联锁必须拒绝该处的策略权限。 满足这些义务，需要一份关于检查点如何构建的精确记录，从源数据与仿真器动力学一直延伸到奖励项以及此后发生的每一次修改。 该记录就是策略清单。</p>
+</section>
+<section id="sec-training-policy-manifest" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-training-policy-manifest">策略清单</h2>
+<p>一个训练得到的策略会在其训练机制、源演示或仿真器偏离物理现实之处失效，而三条闩锁链刚刚在每个检查点上定位出一条接缝。 训练得到的检查点带入评估的记录必须涵盖这三者。</p>
+<p><strong>策略清单</strong>记录了某个检查点是如何产生的：其训练阶段、从谱系记录继承的数据支撑、它们的模拟器版本，以及<strong>省略日志</strong>所记录的机制遗漏，以及配对探针尚未闭合的不一致，还包括适应过程中产生的磨损，以及它所声明的运行域 (<a href="#tbl-06-training-schema" class="quarto-xref">表&nbsp;3</a>)。</p>
+<p>清单将优化结果与策略可能被要求运行的条件分开。 <strong>声明的 ODD</strong>是策略清单所声称的来自 <strong><a href="../05_data/05_data.html#sec-data-policy-coverage">采集策略覆盖度</a></strong> 的 ODD 部分：数据连接所支撑的单元，减去省略日志排除的每一个状态。 高训练奖励或低离线损失并不能表明该策略在其之外是安全的，因此声明的 ODD 由连接与日志计算得出，绝不来自训练曲线；收敛的指标也不能替代在尚无人刻画的工况下运行所需的放行许可。</p>
+<div id="tbl-06-training-schema" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,18,22,40]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-06-training-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;3: <strong>策略清单模式</strong>：策略清单为其所消费的溯源记录添加的字段，记录策略合成阶段、按摘要提供的数据支持、物理引擎规格及其省略日志、硬件微调磨损，以及声明的 ODD。
+</figcaption>
+<div aria-describedby="tbl-06-training-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 18%">
+<col style="width: 22%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">记录模式字段</th>
+<th style="text-align: left;">物理／计算数据模态</th>
+<th style="text-align: left;">溯源与不可变性保证</th>
+<th style="text-align: left;">下游验证器与使用方式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>regime_sequence</code></strong></td>
+<td style="text-align: left;">优化阶段数组 <span class="math inline">\(\text{BC} \to \text{SimRL} \to \text{Residual}\)</span>、损失公式、奖励权重与停止准则哈希</td>
+<td style="text-align: left;">Git 提交 SHA、PyTorch/JAX 检查点 UUID、参数哈希 <span class="math inline">\(H(\theta_k)\)</span></td>
+<td style="text-align: left;">追踪是哪个阶段引入了潜在失效模式或高增益抖动</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>data_support_ledger</code></strong></td>
+<td style="text-align: left;">所消耗溯源记录的摘要，以及它们所依据的情景账本摘要；其占用连接（join）的 <code>supported_cells</code> 与 <code>known_absences</code></td>
+<td style="text-align: left;">按摘要逐条引用每个溯源记录；不复制任何数据集字段</td>
+<td style="text-align: left;">对声明的 ODD 给出上界；参数化分布外支撑度监控器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>negative_event_registry</code></strong></td>
+<td style="text-align: left;">引用训练与自适应执行轨迹中的每条干预记录 <strong><a href="../05_data/05_data.html#sec-data-intervention-recovery">干预与恢复数据</a></strong></td>
+<td style="text-align: left;">按摘要逐条引用每条干预记录；不复制其触发前的轨迹</td>
+<td style="text-align: left;">隔离物理失效边界，并防止被污染的漂移执行轨迹进入训练</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>simulation_provenance</code></strong></td>
+<td style="text-align: left;">物理引擎构建、积分器方法、步长 <span class="math inline">\(\Delta t\)</span>、接触求解器罚参数，以及域随机化范围 <span class="math inline">\(\mathcal{P}(\Xi)\)</span></td>
+<td style="text-align: left;">物理引擎二进制哈希、URDF/MJCF 资产树哈希</td>
+<td style="text-align: left;">复现训练物理并审计成对轨迹预算</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>omission_log</code></strong></td>
+<td style="text-align: left;">各仿真器省略的机制（齿隙、柔顺性、传输滞后）以及成对探针未能闭合的残余失配，以及各自影响的状态</td>
+<td style="text-align: left;">绑定到其所描述的仿真器构建；仅凭成对轨迹证据才视为闭合</td>
+<td style="text-align: left;">将其所影响的状态从声明的 ODD 中移除；并带入评估的覆盖缺口与故障清单</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>adaptation_wear_ledger</code></strong></td>
+<td style="text-align: left;">硬件个体序列编号、接触冲击计数、电机电流均方根热日志、被修改层的索引，以及回归套件哈希</td>
+<td style="text-align: left;">校准证书哈希、硬件寿命疲劳日志</td>
+<td style="text-align: left;">重新开启正式资格认定案件，并防止标称能力发生静默退化</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>declared_odd_boundary</code></strong></td>
+<td style="text-align: left;">声明的 ODD：受支持的单元减去省略日志排除的状态（针对闩锁策略，即受保护接近速度下的标称撞击板）</td>
+<td style="text-align: left;">不超出 <code>data_support_ledger</code> 中受支持单元组成的集合</td>
+<td style="text-align: left;">限定评估可采样的目标 ODD，以及许可路径允许策略提案的区域</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>对于移动操作机的笼门锁扣，一份紧凑清单将这些字段汇聚为一个决策：</p>
+<ul>
+<li><code>regime_sequence</code>: 演示检查点 <code>latch-bc-01</code> → 模拟接触细化 <code>latch-sim-02</code> → 门控残差候选 <code>latch-res-03</code>；保留每个检查点的哈希、损失或奖励规范，以及停止规则。</li>
+<li><code>data_support_ledger</code>: 按摘要引用锁扣战役的溯源记录及其场景台账；二者的连接支持受保护接近下的标称击打板，并列出被移位的板与更快的接近，其单元格不含演示，作为无恢复标签的已知缺失。</li>
+<li><code>simulation_provenance</code>: 记录实际的求解器构建与接触参数。</li>
+<li><code>omission_log</code>: 示例仿真器以远软于板的惩罚弹簧建模击打板接触，并省略执行器传输延迟，因此这两个偏离所主导的接触状态，对于在仿真中训练的检查点而言未经验证。</li>
+<li><code>negative_event_registry</code>: 按摘要引用干预记录及其触发前环形缓冲区轨迹，将每个夹具肩部击打、操作员否决或权限路径钳制作为带标签的失败证据，而不将不安全指令视为专家目标；并标记被操作员截断的回合，以免更新将中止的指令计为成功。</li>
+<li><code>adaptation_wear_ledger</code>: 将 <code>latch-res-03</code> 与具体的试验装置、累计接触冲击、电机电流历史、修改后的残差权重以及自由空间回归结果关联起来。</li>
+<li><code>declared_odd_boundary</code>：受支持的单元减去省略日志排除的状态，此处为 0.03 m/s 受保护接近处的标称板。 由这两处省略所管辖的接触状态，在每一次仿真精化的检查点中都保持在已声明的 ODD 之外，无论是 <code>latch-sim-02</code> 还是 <code>latch-res-03</code>，直到配对的探针将它们闭合。 被位移的板与 0.10 m/s 的接近位于其外，而且即使有演示，快速接近也会留在其外，因为其接触截止时间 (<a href="#sec-training-simulator-component" class="quarto-xref">节&nbsp;1.4</a>) 留给接触环响应的余量几乎为零；在那里，许可路径必须施加受保护的接近或拒绝策略授权。</li>
+</ul>
+<p>放行评审会否决 <code>latch-res-03</code>，直到配对的接触探针量化接触刚度误差和被省略的滞后，且组合控制器通过接触、自由空间、制动与磨损预算测试。 同一规则将 <code>latch-bc-01</code> 留作可能采样的唯一检查点评估，前提是它所属链的支持监视器在标称板 (<a href="#sec-training-failure-modes" class="quarto-xref">节&nbsp;1.7</a>) 之外拒绝策略授权。 未经仿真器训练，它不含省略日志的排除项，因此其声明的 ODD 将门的接触状态保持在标称板面与受保护的接近状态。 清单记录该决策及其证据，而不是将训练分数转换为授权。</p>
+<p>就数据支撑而言，清单在 <strong><a href="../05_data/05_data.html#sec-data-schema">数据集模式</a></strong> 的溯源记录中保留采集器、装置实例、标定与动作接口，并按摘要引用每条记录，而非复制其内容。 它同样引用了覆盖率所依据的情景台账的摘要，并沿用二者占用关系连接（<strong><a href="../05_data/05_data.html#sec-data-policy-coverage">采集策略覆盖度</a></strong>）的结果，即受支持的单元与已知的空缺席位。 由于引用方式是按摘要引用，任何数据集的改动都会改变连接结果；而一个命名了已被取代摘要的清单，也就不再描述其检查点。 处于受支持单元之外的状态，例如闩锁的错位板，随后在记录中表现为无依据的外推，而非已验证的能力。</p>
+<p>当策略权重在仿真中优化时，清单会记录物理引擎构建哈希、策略与仿真器之间的接口契约、奖励设定、数值积分方法以及求解器步长<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>，例如固定的 <span class="math inline">\(2.0\text{ ms}\)</span> 步长与 <span class="math inline">\(500\text{ Hz}\)</span>。 它记录了施加于连杆质量、表面摩擦系数、执行器响应延迟与传感器噪声分布上的域随机化分布。 已知的物理遗漏大多被排除在仿真图之外，以保持训练吞吐量，并与配对探测尚未消除的任何不一致一并记入遗漏日志（<a href="#sec-training-sim-to-real-gap" class="quarto-xref">节&nbsp;1.5</a>）。 在 <strong><a href="../02_body/02_body.html#sec-body-actuator-limits">执行器传动限制</a></strong> 所确立的作动器动力学基础上，若刚体仿真器遗漏了谐波减速器的齿合柔顺性、在 <span class="math inline">\(5.0\text{ kg}\)</span> 载荷下的结构挠度，或电机绕组的热阻变化，则该记录将这些遗漏列为未经验证的动态假设。 当由此得到的策略在物理台架的高负载接触过程中表现出极限环振荡时，遗漏日志将诊断指向关节柔顺性，而非缺乏依据的参数漂移。 该日志与仿真器描述分开保存，因为每条条目都具有下游后果：将其所影响的态从声明的 ODD 中移除，并转化为评估与故障注入必须处理的覆盖缺口。</p>
+<p>下游工程团队在设计、评估和发布全生命周期中消费该清单。 评估记录 <strong><a href="../07_evaluation/07_evaluation.html#sec-evaluation-logs">评估日志</a></strong> 直接消费它。 其目标 ODD 取自已声明的 ODD 内部，其覆盖缺口目录继承已知缺失与省略日志，因此评估套件会针对每种训练机制所预测的具体失效模式进行探测。 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement">安全执行</a></strong> 的授权路径以已声明的 ODD 作为其采纳策略提案的区域外边界，并借助所记录的支撑度对分布外检测器进行参数化。 验证环节 <strong><a href="../15_verification/15_verification.html#sec-verification">对抗性验证</a></strong> 与安全性论证 <strong><a href="../16_release/16_release.html#sec-release">部署发布</a></strong> 均依托该清单，以确立每次参数更新的来源，并确认每项省略均受到独立的物理联锁约束。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 策略清单的省略日志为 <strong><a href="../15_verification/15_verification.html#sec-verification-deriving-fault-list">推导故障清单</a></strong> 中的对抗性故障注入实验台提供参数化依据。</p>
+</div></div><div id="chk-training-provenance-record" class="callout callout-checkpoint" title="策略清单与声明的 ODD">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 1.1: 策略清单与声明的 ODD</strong></summary><div>
+<p>在向物理验证发布训练好的策略检查点之前，先核实你对策略清单、其省略日志以及声明的 ODD 的理解：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>补全闩锁记录</strong>：在采用软惩罚接触且无执行器延迟的条件下训练 <code>latch-res-03</code> 后，出现了夹具肩部撞击。 哪一个被省略的机制应纳入 <code>omission_log</code>，以及清单必须记录哪项配对探测和哪项放行决定？</label></li>
+<li><label><input type="checkbox"><strong>限定所声明的 ODD</strong>：假设演示数据是在快速接近条件下采集的，且每一条遗漏日志条目都通过成对探针予以关闭。 为什么闩锁策略的声明 ODD 仍会排除快速接近，是什么时间比较决定这一点，以及该速度下到达的提案必须让放行路径施加什么？</label></li>
+<li><label><input type="checkbox"><strong>负面事件日志</strong>：为什么清单将操作者否决或夹具撞击的触发前轨迹标记为带标签的失败证据，而不是模仿目标？</label></li>
+<li><label><input type="checkbox"><strong>声明的运行边界</strong>：<code>latch-bc-01</code> 提议在击打板偏离其标称安装位置时开门。 许可路径如何借助数据支撑台账将该状态归类为无支撑的外推，而非已验证的能力，以及为什么自信的策略输出不会改变这一分类？</label></li>
+</ul>
+</div></details>
+</div>
+<p>清单将一段训练历史转化为一条带有明确限定的主张，而锁存记录则展示了该主张所支持的决策，将 <code>latch-bc-01</code> 送入评估，并在配对探针关闭其遗漏之前，将 <code>latch-res-03</code> 保持在非服务状态。 常见的出错方式都让训练分数替代了该证据。</p>
+</section>
+<section id="sec-training-fallacies-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="sec-training-fallacies-pitfalls">谬误与陷阱</h2>
+<p>在离线演示划分上最小化损失，或在仿真中最大化回报，衡量的是对训练环境的合规性，而非机器上的能力。 当目标奖励那些利用数据筛选或仿真近似的行为时，训练阶段确立的候选策略排序会在部署时发生反转 <a href="#fig-06-policy-ranking-inversion" class="quarto-xref">图&nbsp;6</a>，因为虚拟环境会宽恕真实硬件无法承受的动作。 在训练好的策略获得执行器权限之前，必须对其训练指标与物理结果之间的因果假设进行压力测试。</p>
+<div id="fig-06-policy-ranking-inversion" class="quarto-float quarto-figure quarto-figure-center anchored" alt="模拟基准与物理硬件结果之间的策略排序反转。(a) 排序反转斜率图：按模拟基准分数排名的候选策略，在由物理硬件产额评估时发生反转，其中 策略 exploit 从第一名跌至失败，而 策略 robust 保持较高的硬件产额。(b) 三种未建模的物理失效机制，导致排序翻转：数据清洗引起的分布外状态漂移、刚性接触求解器产生的瞬态力冲击尖峰，以及高频谐振扭矩抖动引起的电机绕组热保护跳闸。" data-fig-pos="t" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-policy-ranking-inversion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig06_policy_ranking_inversion.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="图&nbsp;6: 策略排序在硬件上的反转：(a) 一张平行坐标斜率图，用于说明仿真基准分数与物理硬件产出之间的排序反转：投机性策略\pi_{\text{exploit}} 通过博弈未被建模的现象而在仿真中得分最高，但在硬件上却崩溃；而稳健策略\pi_{\text{robust}} 则保持物理产出。(b) 导致排序翻转的因果失效机制：数据清洗引起的分布外漂移\mathbf{s} \notin \mathcal{S}_{\text{demo}}、刚性接触求解器引起的冲击力尖峰F_{\text{peak}} > F_{\text{limit}}，以及执行器共振扭矩抖动f_{\text{act}} \approx \omega_{\text{res}}。"><img src="images/svg/fig06_policy_ranking_inversion.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-policy-ranking-inversion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;6: <strong>策略排序在硬件上的反转</strong>：(a) 一张平行坐标斜率图，用于说明仿真基准分数与物理硬件产出之间的排序反转：投机性策略<span class="math inline">\(\pi_{\text{exploit}}\)</span> 通过博弈未被建模的现象而在仿真中得分最高，但在硬件上却崩溃；而稳健策略<span class="math inline">\(\pi_{\text{robust}}\)</span> 则保持物理产出。(b) 导致排序翻转的因果失效机制：数据清洗引起的分布外漂移<span class="math inline">\(\mathbf{s} \notin \mathcal{S}_{\text{demo}}\)</span>、刚性接触求解器引起的冲击力尖峰<span class="math inline">\(F_{\text{peak}} &gt; F_{\text{limit}}\)</span>，以及执行器共振扭矩抖动<span class="math inline">\(f_{\text{act}} \approx \omega_{\text{res}}\)</span>。
+</figcaption>
+</figure>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱</strong>: <em>为降低离线验证损失而清洗恢复轨迹。</em></p>
+<p>假设闩锁档案同样包含恢复运行，且两个笼门闩锁策略分别基于其不同版本进行训练。 其中一个保留恢复运行，其中操作员将抓手退开并在闩锁凸轮卡住击打板后重新定位；另一个则移除这些运行，并在其自身留出划分上取得更低的损失。 当凸轮在实际机器上卡住时，第一个策略退开并重新定位，而第二个策略则沿演示路径继续推进，直到许可路径的接触触发线使机械臂停止。 由于清洗后的数据集缺少从错误中恢复的示例，较低的损失仅仅反映了人为简化的测试集，而非更好的物理扰动处理。 对恢复数据的清洗使数学预测任务变得更容易，代价是直接抹除了部署控制器在物理上真正需要的纠正行为。 候选策略必须面对相同的运行扰动，其训练分数才能支持部署选择。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>从人类演示转向仿真强化学习，会移除训练遗留于策略中的失败。</em></p>
+<p>装配团队用仿真强化学习替代行为克隆，以纠正垫片安装过程中的侧向漂移。 新策略消除了漂移，却以 <span class="math inline">\(65\text{ Hz}\)</span> 的扭矩抖动将机构装上了位，仿真器因其无质量转子假设而放过了它，因为它忽略了电机必须反转的转动惯量。 在物理机器上， 扭矩抖动激发传动系共振，并通过 <span class="math inline">\(I^2R\)</span> 损耗（<strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong>）将定子绕组加热至降额阈值，因此驱动器降额，大多数就位操作无法完成。 该训练改动针对一种失效机制，却暴露了另一种，因此评估必须贯穿完整任务直至接触与重复运行，并像对待它所取代的数据限制那样，仔细检验新训练方式引入的假设。</p>
+</div>
+</section>
+<section id="sec-training-summary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-training-summary">摘要</h2>
+<p>每一种训练机制都换来一种能力，同时在权重中留下一种依赖。 行为克隆依赖于其演示者恰好访问过的状态，并在使用点解码器时对他们所做的选择取平均；仿真依赖于其接触模型、时序，以及它所省略的机制；在机器上的微调则依赖于近期经验中的一小片，并抹去了为它所替换的权重而收集的证据。 这些依赖中的任何一种都不会出现在训练分数中。 每一种都会在部署违反它时表现为可预测的失效特征，这就是训练最终形成一份记录而非一个指标的原因——一份策略清单，其中声明的 ODD 没有任何训练曲线可以扩大。 原则 <a href="https://mlsysbook.ai/vol4/parts/teaching_principles.html#pri-vol4-endogenous-drift" title="英文原版参考内容">Endogenous data</a> 已经要求该记录标注出被克隆策略自身的修正所达到、但无演示覆盖的状态，而仿真则补充了第二种缺失，即求解器所省略的机制，没有任何针对该求解器的优化能够提供。</p>
+<div id="callout-takeaways*-1.2" class="callout callout-takeaways" title="策略综合与 sim-to-real 迁移">
+<details class="callout-takeaways fbx-simplebox fbx-default" open=""><summary><strong>要点回顾: 策略综合与 sim-to-real 迁移</strong></summary><div>
+<ul>
+<li><strong>每一种体制都留下一个训练分数无法显示的依赖：</strong>离线损失与仿真回报会奖励符合数据与求解器的行为。 候选排名因此在硬件上可能反转，而违反依赖关系的部署条件会产生可预测的失效特征，指明许可路径所需的检测器。</li>
+<li><strong>克隆在已演示状态之外、已演示模式之间失效：</strong> 微小误差会把机器带入演示从未访问过的状态，此时应对漂移采取恢复数据或经核实的支撑监控，而非动作切分。 平方误差损失输出条件均值，可能引导机器从两条有效路径之间穿行，撞入两条路径都避开的障碍物；以模式表示的解码器避开均值，但扩散解码器的步数决定其推理时间，须满足切分所要求的截止时间。</li>
+<li><strong>随机化覆盖参数，而非缺失机制：</strong> 域随机化在仿真器已经建模的动力学上拓宽训练，成对探针按通道量化剩余的缺口。 被遗漏的机械间隙、柔顺性或传输延迟仍保持遗漏，并记入遗漏清单。</li>
+<li><strong>在硬件上微调会消耗磨损与证据：</strong> 基于物理系统上采样轨迹的梯度步吸收局部接触误差，同时消耗部件寿命，并使针对先前权重的所有统计性论断失效。 它们并未补上这一遗漏，冻结的回归套件必须通过，新检查点才获得权威。</li>
+<li><strong>声明的 ODD 从未超出数据的支持范围：</strong> 策略清单按其摘要引用数据，将遗漏日志作为自身字段保留，并仅声明“受支持的单元格减去日志中的排除项”，无论策略在训练中得分多好。</li>
+</ul>
+</div></details>
+</div>
+<div id="callout-chapter-connection*-1.3" class="callout callout-chapter-connection" title="从策略清单到闭环证据">
+<p></p><details class="callout-chapter-connection fbx-simplebox fbx-default" open=""><summary><strong>后续内容: 从策略清单到闭环证据</strong></summary><div>有限次干净试验能对一个检查点确立多少结论，而该清单已限定其可被信任的范围？<strong><a href="../07_evaluation/07_evaluation.html#sec-evaluation">闭环评估</a></strong> 以策略清单作为输入。 将其刷写到移动操作臂后，<code>latch-bc-01</code> 即清单允许进入评估的检查点，随后完成二十次连续的开门运行，问题便成为这些运行揭示了关于机器的什么，以及声明的失败率还需要多少次运行。<p></p>
+</div></details>
+</div>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a><div id="quarto-appendix" class="default page-columns page-full"><section id="footnotes" class="footnotes footnotes-end-of-document page-columns page-full" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">脚注</h2>
+
+<ol>
+<li id="fn1"><p><strong>ALVINN 道路透视形变</strong>：Pomerleau 的神经网络自动驾驶车辆（ALVINN）<span class="citation" data-cites="pomerleau1989alvinn">(<a href="#ref-pomerleau1989alvinn" role="doc-biblioref">Pomerleau 1989年</a>)</span>，在 <strong><a href="../05_data/05_data.html#sec-data-collection-sources">物理数据的来源</a></strong> 的叙述中，因其人类驾驶员从未演示过从中恢复，而漂移到了车道边缘。 为在不进行不安全驾驶的前提下提供恢复示例，Pomerleau 使用了合成透视形变，渲染出横向偏移并旋转的道路图像，并配之以变换后的转向修正，这是以名义轨迹之外的恢复数据对演示进行增广的早期案例。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>L2 损失下的模态平均</strong>: 在 <span class="math inline">\(L_2\)</span> 回归损失下，期望风险 <span class="math inline">\(\mathcal{R}(\hat{a}) = \int \|\hat{a} - a\|_2^2 p(a \mid o) da\)</span> 关于 <span class="math inline">\(\hat{a}\)</span> 是严格凸的。 对 <span class="math inline">\(\hat{a}\)</span> 求导并令梯度为零，可得 <span class="math inline">\(2 \int (\hat{a} - a) p(a \mid o) da = 0 \implies \hat{a}^* = \int a p(a \mid o) da = \mathbb{E}[a \mid o]\)</span>。 对于非线性被控对象 <span class="math inline">\(f_{\text{plant}}\)</span>，<span class="math inline">\(\mathbb{E}[f_{\text{plant}}(a)]\)</span> 通常不同于 <span class="math inline">\(f_{\text{plant}}(\mathbb{E}[a])\)</span>；在特定分布下可以相等。 对于凸动作代价 <span class="math inline">\(c(a)\)</span>，Jensen 不等式给出 <span class="math inline">\(c(\mathbb{E}[a]) \le \mathbb{E}[c(a)]\)</span>，但它并未确立平均动作的物理安全性。 在障碍物示例中，均值位于已演示的有效轨迹集合之外。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><strong>CQL 界定的范围</strong>：在其数据覆盖、优化和函数近似假设下，CQL 构造了一个保守估计，该估计<em>针对某一策略的期望值</em>构成该策略真实价值的下界。<span class="citation" data-cites="kumar2020conservative">(<a href="#ref-kumar2020conservative" role="doc-biblioref">Kumar 等 2020年</a>)</span> 这并非针对每一对状态-动作或每个数据集的逐点界，期望回报也不构成对物理安全的认证。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><strong>轴承寿命与指令反转次数</strong>：ISO 281 估算滚动轴承在给定载荷与转速下的疲劳寿命。 齿轮单元目录可能以额定工况下的工作小时数给出其波发生器轴承的 <span class="math inline">\(L_{10}\)</span>；但在没有针对具体规格的载荷循环模型的情况下，这两个数值都无法将指令反转次数换算为已消耗的减速器。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><strong>绕组温度限值</strong>：<strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong> 给出了该阈值背后的 IEC 60085 F 级评级。 来自未正则化奖励函数的 bang-bang 扭矩指令，可能将电流维持在足够高的水平，从而加速绝缘老化。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><strong>OpenAI Dactyl 域随机化</strong>: 在物理手上，<span class="citation" data-cites="andrychowicz2020learning"><span class="nocase">Andrychowicz 等</span> (<a href="#ref-andrychowicz2020learning" role="doc-biblioref">2020年</a>)</span> 发现，未进行物理随机化、或没有加入仿真器所省略的效应模型（例如齿隙与动作延迟）的策略，所实现的连续旋转次数远少于在全部机制下训练的策略。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><strong>域随机化的有界支撑域</strong> ：域随机化针对参数变化 <span class="math inline">\(\xi \sim \mathcal{P}(\Xi)\)</span> 优化期望回报。 任何泛化结论仅覆盖 <span class="math inline">\(\mathcal{P}(\Xi)\)</span> 的支撑域，并未涉及运动方程中被略去的动力学。 对于存在未建模传动柔顺性或总线抖动的机构，策略将这些动力学视为无法解释的噪声，并可能陷入高频极限环。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><strong>选择罚接触时间步</strong> ：所需步长取决于有效接触质量、罚刚度与阻尼、积分器以及求解器容差。 特征接触时间尺度随约 <span class="math inline">\(\sqrt{m_{\text{eff}}/k_{\text{eff}}}\)</span> 变化；将时间步细化，直至接触起始、峰值力与冲量收敛到任务所要求的精度。<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><div id="ref-pomerleau1989alvinn" class="csl-entry" role="listitem">
+Pomerleau, Dean A. 1989年. <span>《<span>ALVINN</span>: An Autonomous Land Vehicle in a Neural Network》</span>. <em>Advances in Neural Information Processing Systems (NeurIPS)</em> 1: 305～13.
+</div><div id="ref-kumar2020conservative" class="csl-entry" role="listitem">
+Kumar, Aviral, Aurick Zhou, George Tucker, 和 Sergey Levine. 2020年. <span>《Conservative Q-Learning for Offline Reinforcement Learning》</span>. <em>Advances in Neural Information Processing Systems (NeurIPS)</em> 33: 1179～91.
+</div><div id="ref-andrychowicz2020learning" class="csl-entry" role="listitem">
+<span class="nocase">Andrychowicz, Marcin, Bowen Baker, Maciek Chociej, Rafał J’ozefowicz, 等</span>. 2020年. <span>《Learning Dexterous In-Hand Manipulation》</span>. <em>The International Journal of Robotics Research</em> 39 (1): 3～20.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8084\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol4_zh/05_data/05_data.html" class="pagination-link" aria-label="第5章 · 物理数据">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第5章 · 物理数据</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol4_zh/07_evaluation/07_evaluation.html" class="pagination-link" aria-label="第7章 · 闭环评估">
+        <span class="nav-page-text">第7章 · 闭环评估</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《物理人工智能系统》第四卷 · 简体中文本地版 · 仅17章正文</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

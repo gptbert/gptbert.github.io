@@ -1,0 +1,2574 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>物理人工智能系统 · 第四卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol4_zh/17_frontier/17_frontier.html" rel="next">
+<link href="../../vol4_zh/15_verification/15_verification.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6ab868a96f80aa23e8049a4baf7b30f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+
+<style id="zh-web-layout">#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">物理 AI · 第四卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/books/mlsys/"> 
+<span class="menu-text">三卷书架</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">本卷首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol4_zh/01_boundary/01_boundary.html"> 
+<span class="menu-text">因果边界</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol4_zh/16_release/16_release.html">部署发布</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/01_boundary/01_boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">因果边界</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/02_body/02_body.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理身体</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/03_brain/03_brain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认知脑</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/04_nervous/04_nervous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/05_data/05_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理数据</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/06_training/06_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">策略训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/07_evaluation/07_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">闭环评估</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/08_perception/08_perception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">传感器感知</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/09_memory/09_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">空间记忆</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/10_intent/10_intent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">立足物理世界的意图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/11_planning/11_planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹规划</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/12_enforcement/12_enforcement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">安全执行</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/13_placement/13_placement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硅片布局</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/14_intervention/14_intervention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">监督性干预</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/15_verification/15_verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">对抗性验证</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/16_release/16_release.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">部署发布</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/17_frontier/17_frontier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认识论前沿</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-release" id="toc-sec-release" class="nav-link active" data-scroll-target="#sec-release">部署发布</a>
+  <ul>
+  <li><a href="#sec-release-decision-to-deploy" id="toc-sec-release-decision-to-deploy" class="nav-link" data-scroll-target="#sec-release-decision-to-deploy">关于部署决策</a></li>
+  <li><a href="#sec-release-question" id="toc-sec-release-question" class="nav-link" data-scroll-target="#sec-release-question">发布问题</a></li>
+  <li><a href="#sec-release-safety-cases-claims" id="toc-sec-release-safety-cases-claims" class="nav-link" data-scroll-target="#sec-release-safety-cases-claims">安全论证与主张</a>
+  <ul class="collapse">
+  <li><a href="#将安全论证与机器相匹配" id="toc-将安全论证与机器相匹配" class="nav-link" data-scroll-target="#将安全论证与机器相匹配">将安全论证与机器相匹配。</a></li>
+  </ul></li>
+  <li><a href="#sec-release-three-verdicts" id="toc-sec-release-three-verdicts" class="nav-link" data-scroll-target="#sec-release-three-verdicts">三种裁决</a></li>
+  <li><a href="#sec-release-standing-conditions" id="toc-sec-release-standing-conditions" class="nav-link" data-scroll-target="#sec-release-standing-conditions">“裁决”的常设条件</a></li>
+  <li><a href="#sec-release-case-worked-full" id="toc-sec-release-case-worked-full" class="nav-link" data-scroll-target="#sec-release-case-worked-full">完整展开的一个案例</a></li>
+  <li><a href="#sec-release-adversarial-review" id="toc-sec-release-adversarial-review" class="nav-link" data-scroll-target="#sec-release-adversarial-review">对抗性评审</a></li>
+  <li><a href="#sec-release-manifest" id="toc-sec-release-manifest" class="nav-link" data-scroll-target="#sec-release-manifest">《发布清单》</a></li>
+  <li><a href="#sec-release-fallacies-pitfalls" id="toc-sec-release-fallacies-pitfalls" class="nav-link" data-scroll-target="#sec-release-fallacies-pitfalls">谬误与陷阱</a></li>
+  <li><a href="#sec-release-summary" id="toc-sec-release-summary" class="nav-link" data-scroll-target="#sec-release-summary">摘要</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">部署发布</h1></header>
+
+
+<header>
+
+
+</header>
+
+
+<section id="sec-release" class="level1 page-columns page-full">
+<h1>部署发布</h1>
+<div class="{layout-narrow} page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
+
+</div></div><p><a href="images/webp/cover_release_blueprint_labeled.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/webp/cover_release_blueprint_labeled.webp" class="img-fluid" alt="等距蓝图，展示部署发布与安全论证：透明玻璃片中的目标结构化记法论证金字塔、祖母绿物理证据管线、金色部署授权印章，以及带撤销联锁的深红认证运行包络阈值。"></a></p>
+</div>
+<section id="目的" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="目的">目的</h2>
+<p><em>在何种可审计的物理证据链下，自主机器才被允许在人类之间移动？</em></p>
+<p>释放自主机器，即授予软件在不受约束的环境中在人类身旁施加物理力的授权。 该部署授权要求一份可审计的安全论证，将运行主张直接连接到集成物理装置的经验证据。 较高的验证准确率并不能保证机器人能在可用净空包络内停下，无事故测试日志同样不能确认应急回退在关键传感器发生静默硬件故障时依然可靠。</p>
+<p>一项发布决策必须精确指明支持每项论证依据的经验测量，并明确划出界定其有效性的环境假设。 未建模的载荷偏移、地面磨损或热漂移可能瞬间使安全论证失效，即使神经权重未作任何改动；当证据无法裁定运行前提时，拒绝是唯一可接受的工程结论。 在治理包络内，部署发布将 Brain 的提议、Nervous System 的许可路径与 Body 的物理极限整合为一份可审计清单，并在证据失效的瞬间撤销运动授权。</p>
+<div style="page-break-after: always;"></div>
+<div id="callout-learning-objectives*-1.1" class="callout callout-learning-objectives">
+<details class="callout-learning-objectives fbx-simplebox fbx-default" open=""><summary><strong>学习目标</strong></summary><div>
+<ul>
+<li>构建一个“主张—论证—证据”案例，将受限运行包络与可审计的物理证据相连接。</li>
+<li>评估每项主张的前提属于实测、示意还是未知，并选择其所支持的结论</li>
+<li>识别能够解除拒绝决定的测量项，以及条件性结论所保留的限制</li>
+<li>规定在磨损、漂移或配置变更使发布失效时撤回运行授权的条件</li>
+<li>通过对抗性审查发布论证，诊断缺乏支持的推理论证依据与复合反驳理由</li>
+<li>设计发布清单，使其按摘要绑定上游记录，并在任何不匹配时拒绝运动</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-release-decision-to-deploy" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-release-decision-to-deploy">关于部署决策</h2>
+<p>一份通过测试的记录目录与硬件故障轨迹本身并不能决定自主机器是否可以在人群中移动。 在一个网络服务中，新构建版本的回归需要回滚，并会损坏部分记录。 在物理人工智能中，发布授权对质量、力和速度的控制。 验证已经针对注入故障下的机器时序、竞争与感知假设施加了压力，而它交付的是其故障记录，每条都带有预先声明的预言机，以及它们留下的缺口。 因此，工程任务从寻找缺陷转向界定证据所许可的范围。 验证准确率（<strong><a href="../07_evaluation/07_evaluation.html#sec-evaluation-closed-loop-dynamics">闭环动力学</a></strong>）或一连串干净的演示（<strong><a href="../15_verification/15_verification.html#sec-verification-fault-injection">为何运行本身不构成证据</a></strong>）都无法完成这一任务，而决定部署并非一种统计预测。 这是对“在某个指定领域中运行证据是否限定了物理风险”的工程学裁决。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 支撑发布声明的经验验证证据产生于 <strong><a href="../15_verification/15_verification.html#sec-verification-hardware-fault-injection">硬件故障注入</a></strong>。</p>
+</div></div><p>本章所梳理的发布 是仓库移动操作臂在某一站点的服务：沿仓库通道行驶，经过可能有人站立的货架末端，打开弹簧插销的笼门，并将从出料传送带上取下的陶瓷杯递给打包站点的同事。 每项任务都自带其判据：底盘的净空距离与机械臂的接触力；模型精度无法确立其中任何一项。 因此，发布取决于预接触净距、测得的制动能力、有界的完整响应路径，以及 <strong><a href="../15_verification/15_verification.html#sec-verification-fault-manifest">故障清单</a></strong> 的带签署故障记录。</p>
+<p>发布结论是一个有界的、可撤销的判断。 该章节从运行包络、主张—论证—证据树、三项经签署的裁决、一旦不再满足便会导致裁决被撤销的既定条件、一项完整裁决及其必须经受的对抗性审查，以及一份拒绝放行运动（当运行中的机器不再与其经签署的证据相符时）的发布清单，构建这一判断。</p>
+</section>
+<section id="sec-release-question" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-release-question">发布问题</h2>
+<p>对于移动操作臂，发布问题在于：证据是否在其限定的包络内满足其三项任务各自的物理判据。 论证指明物理边界、规定故障集，以及经验证的授权与回退路径。 在这些条件成立时，它可以支持可撤销的跟踪授权；它不能从有限测试推断出对每一种可能故障的保护（<a href="#dfn-release-goal-structured-safety-case">1.1</a>）。</p>
+<div id="dfn-release-goal-structured-safety-case" class="callout callout-definition" title="主张—论证—证据安全论证">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.1: 主张—论证—证据安全论证</strong></summary><div>
+<p><strong><em>Claim-argument-evidence 安全论证</em></strong> 是针对指定物理机器、运行包络、危害判据和故障模型的、可审计的结构化保证论证，通过明确的工程推理论证依据将顶层安全主张与具体实证证据联系起来。</p>
+<ol type="1">
+<li><strong>意义</strong>：将主观、非正式的部署信心转化为可审计、可证伪的工程论证，从而在整个物理栈上把高层安全目标与具体实证证据连接起来。</li>
+<li><strong>区别</strong>：与软件单元测试套件或静态模型验证记分卡不同，物理安全论证明确关联运行设计域边界、硬件故障注入日志和运行时强制器触发线，以证明残余风险处于有界范围内。</li>
+<li><strong>常见误区</strong>：把安全论证当作开发完成后补做的回顾性合规检查表，而不是约束功能集成与发布门禁的活的架构契约。</li>
+</ol>
+</div></details>
+</div>
+<p>发布案例的范围由运行包络界定，即目标 ODD 与机器自身内部条件的组合。 无条件（<code>UNCOND</code>）判定授权整个运行包络（<strong><a href="../15_verification/15_verification.html#sec-verification-operating-envelope">运行包络</a></strong>），条件式（<code>COND</code>）判定授权其中被指定的部分，而拒绝（<code>REFUSE</code>）则不授权其中的任何部分。 对于移动操作臂，运行包络允许以不超过 1.3 m/s 的速度在通道内行驶（已选定；参见读者指南），在装载不超过 50 kg 的周转箱的情况下，经过货架末端时至少保留 1.10 m 的净距，并在经勘测确认摩擦系数至少为 0.204 的地面上行驶。 它允许以 0.03 m/s 的速度接近门，并允许以 0.10 m/s 的速度向同事交接物品。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 运行设计域及其已知缺失已在 <strong><a href="../05_data/05_data.html#sec-data-policy-coverage">采集策略覆盖度</a></strong> 中定义。</p>
+</div></div><p>在这些边界之内，学习得到的策略可以在名义任务包络范围内提出动作，但每个动作仍需独立授权。 被监控维度的条件状态（<a href="#tbl-16-odd-invariants" class="quarto-xref">表&nbsp;1</a>）会收窄该包络；例如，机器在请求进入环内接管之前会减速至 1.2 m/s。 <code>COND</code> 判定的受限模式会进一步收窄该包络，因此，在仅通过站点检查制度而知的地板上，机器以 1 m/s 运行，低于 1.09 m/s 的受检地板上限。</p>
+<p>如 <a href="#tbl-16-odd-invariants" class="quarto-xref">表&nbsp;1</a> 所形式化，每个受监控维度被划分为标称、条件与拒绝三种状态。 条件状态限制了可受理的提案。 拒绝状态撤回跟踪许可，并选择一个经验证的回退方案（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong>）。 该表列出了运行时监控器或站点程序在其中保持机器处于受控状态的维度；<strong><a href="../15_verification/15_verification.html#sec-verification-operating-envelope">运行包络</a></strong> 的内部条件，例如环境温度、轨电压和计算负载，通过在这些内部条件下开展试验所得的故障记录进入。</p>
+<div id="tbl-16-odd-invariants" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[16,16,18,18,16,16]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-16-odd-invariants-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: <strong>仓库移动操作手操作包络</strong>：每个列出的维度均具有互不重叠的标称、条件与拒绝区间。 条件操作要求每个维度都保持在经签署批准的容许区间内；测量缺失或无效则拒绝。 传感器速率与制动响应属于受控物理系统的验证义务。
+</figcaption>
+<div aria-describedby="tbl-16-odd-invariants-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Envelope Dimension / Invariant 运行包络维度 / 不变量</th>
+<th style="text-align: left;">名义包络 (<span class="math inline">\(\mathcal{S}_{\mathrm{nom}}\)</span>)</th>
+<th style="text-align: left;">条件边界 (<span class="math inline">\(\mathcal{S}_{\mathrm{cond}}\)</span>)</th>
+<th style="text-align: left;">硬性拒绝 (<span class="math inline">\(\mathcal{S}_{\mathrm{refuse}}\)</span>)</th>
+<th style="text-align: left;">运行时监控与速率</th>
+<th style="text-align: left;">强制执行机制的动作与延迟</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>通道速度</strong></td>
+<td style="text-align: left;"><span class="math inline">\(v\le\)</span> 1.3 m/s</td>
+<td style="text-align: left;">在循环内接管请求之前使用 1.2 m/s；在循环外接管请求之前使用 0.3 m/s</td>
+<td style="text-align: left;">高于经签署批准的1.3 m/s（上限1.39 m/s）测得的速度，或无效的速度估计</td>
+<td style="text-align: left;">编码器与 IMU，每个1 ms许可节拍</td>
+<td style="text-align: left;">钳制被许可的速度；拒绝高于经签署批准的速度的情况</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>地面摩擦</strong></td>
+<td style="text-align: left;">经勘测确认<span class="math inline">\(\mu\ge\)</span> 0.204（干燥混凝土的摩擦系数约为0.60）</td>
+<td style="text-align: left;">检查制度仅（<span class="math inline">\(\mu\ge\)</span> 0.12）：受限1 m/s，低于1.09 m/s 上限</td>
+<td style="text-align: left;">未勘察的地板或已报告存在的膜层；透明油膜（<span class="math inline">\(\mu\approx\)</span> 0.05）对相机不可见</td>
+<td style="text-align: left;">地板勘察与现场溢油处置程序；无车载测量</td>
+<td style="text-align: left;">按地面状况分区限制速度；拒绝通过通道</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>周转箱架载荷</strong></td>
+<td style="text-align: left;"><span class="math inline">\(0\le m\le\)</span> 50 kg，有效载荷估计（总量至多368 kg）</td>
+<td style="text-align: left;">载荷估计自上次拣取后已过期：仅允许机器静止时的机械臂任务</td>
+<td style="text-align: left;">装载量超过容量或估算无效</td>
+<td style="text-align: left;">料架称重传感器，每次拣取时监测</td>
+<td style="text-align: left;">在重新称重前拒绝通道通行</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>料架末端净空</strong></td>
+<td style="text-align: left;">在每个料架末端均经勘测确认 <span class="math inline">\(D_{\text{clear}}\ge\)</span> 1.10 m</td>
+<td style="text-align: left;">较短的已测绘净空：以相同预算获得更低的经签署批准的速度</td>
+<td style="text-align: left;">未测绘的机架端部，或净空距离内的障碍物</td>
+<td style="text-align: left;">现场测绘；激光雷达与导航相机以帧率运行</td>
+<td style="text-align: left;">每个机架端的限速；检测到障碍物时停车</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>门闩接近</strong></td>
+<td style="text-align: left;"><span class="math inline">\(v\le\)</span> 0.03 m/s，门锁扣板处于其标称位置</td>
+<td style="text-align: left;">无；演示不覆盖其他闩锁条件</td>
+<td style="text-align: left;">0.10 m/s 接近或门锁扣板移位</td>
+<td style="text-align: left;">2 ms 接触回路中的臂接触力感知</td>
+<td style="text-align: left;">在 15 N 触发；拒绝缺乏验证或示范依据的接近工况</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>同事交接</strong></td>
+<td style="text-align: left;">在获得 <code>accept_item</code> 授权时，TCP 速度 <span class="math inline">\(\le\)</span> 0.10 m/s</td>
+<td style="text-align: left;">同事在场且无 <code>accept_item</code>：提前于交接点停止</td>
+<td style="text-align: left;">TCP 速度高于签署的 0.10 m/s（上限 0.118 m/s），或接触发生在所评估情形之外</td>
+<td style="text-align: left;">每个授权周期更新关节编码器；臂部接触力传感</td>
+<td style="text-align: left;">钳制 TCP 速度；超过签署的速度上限则拒绝</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>可辩护的发布主张会说明其受控物理系统、接触几何与故障集合<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。本机器案例采用三项准则。 基座在到达已走出料架端部的行人之前，于 1.10 m 净距内停车；机械臂开门时不超过 100 N 门闩作用力限值；交接过程对同事施加的峰值接触力不超过所选的 50 N（针对已评估的接触情形）。 基座的主张保护静止人员；仍在走向机器的行人属于另一前提，由场地穿越规则 (<strong><a href="../09_memory/09_memory.html#sec-memory-belief-through-occlusion">遮挡下的信念</a></strong>) 承载。 发布论证必须说明：哪些人类接触在碰撞发生前被排除、模型覆盖了哪些已检测接触，以及独立回退处理哪些单一故障。 接触后的停车本身并不直接限制首个力峰值<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。</p>
+<p>考虑机械臂在其自由空间速度上限 1 m/s 处运行，工具中心点处的机器人侧等效质量为 12 kg。 在与同事的手发生无制动弹性接触时，采用等效组织刚度 <span class="math inline">\(k_h\)</span> 为 15,000 N/m 的模型，峰值接触力遵循 <a href="#eq-release-unbraked-force" class="quarto-xref">公式&nbsp;1</a>： <span id="eq-release-unbraked-force"><span class="math display">\[F_{\text{unbraked}} = v\,\sqrt{k_h\,m_{\text{eff}}} \tag{1}\]</span></span> 在自由空间极限下，该理想弹性模型预测 424 N，即为 50 N 判据限值的 8.5×；因此，机械臂在该速度下无法进入未分离接触，除非给出更强、经实测的保护性论证。 同一方程限定了执行记录所封顶的物件交接速度 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-telemetry">执行记录</a></strong>、<strong><a href="../14_intervention/14_intervention.html#sec-intervention-human-authority">人类对执行机构的权威</a></strong>，因为该判据至多允许 0.118 m/s。 在选定的 0.10 m/s 下，模型预测 42.4 N，处于判据之内。</p>
+<p>该基座的主张是一项预算，而非单一力；本章必须提供证据的延迟分量是其所称的租约路径与观测年龄。 在 1.3 m/s 的通道速度下，最终预算（<strong><a href="../12_enforcement/12_enforcement.html#tbl-enforcement-stopping-budget">仓库移动操作臂的停车预算</a></strong>）为 997.4 mm，相对于 1.10 m 的清空距离，余量为 102.6 mm。 该余量即为预算输入中全部误差的容许额度。 一项未纳入预算的延迟 78.9 ms，即 <strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-transitions">权威权移交</a></strong> 中的交接期限 <span class="math inline">\(T_{\text{latest}}\)</span>，会将其耗尽；同样，比预算所假设的 2 m/s² 低 14 percent 的满载减速度 也会将其耗尽。 对于输入未经测量的停止声明，无法证明其余量能够承受这些误差。</p>
+<p>移动操作机器人的发布问题归结为三条有界准则：底座在净距内停止，机械臂在锁止限值内开门，且物品交接保持在接触准则之内。 没有任何一次计算单独解决其中任何一条，因为每条都继承了关于减速、延迟与接触的前提，而这些前提本身也必须得到证据支持；并且每条前提在服务过程中都可能失效，例如刹车磨损、地面污染与传感器漂移（<a href="#sec-release-standing-conditions" class="quarto-xref">节&nbsp;1.5</a>）。 将每一条主张连接到其前提，并将每一个前提连接到其证据，是安全论证（safety case）的工作。</p>
+</section>
+<section id="sec-release-safety-cases-claims" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-release-safety-cases-claims">安全论证与主张</h2>
+<p>对移动操作臂的任何检查都无法确认其负载底座会在到达料架末端的人员之前停下来。 该主张必须被分解，直到每个分支都落实到实际测量结果；安全论证就是记录这一分解过程的结构化论证。 在 Stephen Toulmin 的论证结构 <span class="citation" data-cites="toulmin1958uses">(<a href="#ref-toulmin1958uses" role="doc-biblioref">Toulmin 1958年</a>)</span>、目标结构化记法（GSN）<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <span class="citation" data-cites="kelly1998arguing kelly2004goal">(<a href="#ref-kelly1998arguing" role="doc-biblioref">Kelly 1998年</a>; <a href="#ref-kelly2004goal" role="doc-biblioref">Kelly 和 Weaver 2004年</a>)</span> 以及 UL 4600 自主性评估标准 <span class="citation" data-cites="koopman2020how">(<a href="#ref-koopman2020how" role="doc-biblioref">Koopman 2020年</a>)</span> 的基础上，本章构建了 <a href="#dfn-release-goal-structured-safety-case">1.1</a> 的主张—论证—证据安全论证。 其根节点是一项主张，断言一个可测量的物理属性，例如底座在净距内停止。 由于该主张无法直接验证，策略会依据运行域、危害类别或子系统对其进行切分，每个子主张最终或归结为更细的子主张，或归结为证据，其成立范围受限于其关联所依赖的上下文与假设。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-toulmin1958uses" class="csl-entry" role="listitem">
+Toulmin, Stephen E. 1958年. <em>The Uses of Argument</em>. Cambridge University Press.
+</div><div id="ref-koopman2020how" class="csl-entry" role="listitem">
+Koopman, Philip. 2020年. <em>How Safe Is Safe Enough? Measuring and Predicting Autonomous Vehicle Safety</em>. BookBaby.
+</div></div><p>该结构的效力取决于区分证据与演示。 一个 <strong>演示</strong> 是任务在未经表征的测试分布上成功执行的记录，例如一连串干净的开门动作，门扣板始终处于其标称位置。 它衡量平均性能，但既不约束尾部，也不覆盖采样轨迹之外的失效模式。 证据是可证伪、经过校准的产物，并带有量化界限，例如来自硬件执行轨迹的最坏情况时延分布、跨越减速区间的加载停车试验，或驱动机器逼近其包络边界的故障注入试验。 缺少量化不确定性的产物，或从未测试边界的产物，仍然只是演示，无法支撑推断性关联。</p>
+<p>将证据连接到主张需要一条 <strong>论证依据</strong>，即陈述数据为何支持该断言的推断规则。 对于学习得到的策略，论证依据是归纳性的，即从无失败测试集段推理至未来服务；而 <strong><a href="../07_evaluation/07_evaluation.html#sec-evaluation-trial-limits">物理试验极限</a></strong> 的暴露墙展示了为何该关联单独无法承载高后果主张。 没有任何零事件试验，无论在一台机器上还是在整个机队中，都能够在任何实际排程内达到这些主张所命名的风险率。 因此，论证必须补充一条架构性论证依据，将主张锚定在一条独立的授权路径 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement">安全执行</a></strong> 上，该路径对执行器扭矩施加界限，并在学习得到的指令离开许可集合时撤回运动。 该论证只是收窄了主张，而非绕开这道墙，因为许可路径仅针对其能够检测到且能够及时制止的危险改变主张（<strong><a href="../17_frontier/17_frontier.html#sec-frontier-method-limits">该方法无法确立的内容</a></strong>）。</p>
+<p>这种归纳式车队证据与安全性关键保障之间的张力，向加州机动车辆管理局报送的十年自动驾驶车辆脱手数据所体现（<a href="#fig-release-decade-california-dmv-disengagements" class="quarto-xref">图&nbsp;1</a>）。 在 2015 至 2025 年间，开发者在加州道路上累计登记了数千万英里公开测试里程。 在这十年间，脱手里程（MPI）跨越三个不同的阶段：</p>
+<ol type="1">
+<li><strong>第一时期：早期高速公路与郊区测试（2015–2018）</strong>：系统主要在标线清晰的主干道和高速公路上运行。 开发者建立了基线自动驾驶节奏，从每人类干预数百英里扩展到数千英里。</li>
+<li><strong>第二时期：密集城市核心区过渡（2018–2021）</strong>：车队迁入密集的大都会环境，最典型的是旧金山复杂的路网。 这一环境域偏移暴露出此前未被刻画好的边缘情况——行人从双排停放的车辆之间穿行、施工绕行手势、以及动态遮挡——使报告出的 MPI 暂时停滞或下滑（例如，Waymo 的指标从 2020 年的 <span class="math inline">\(29{,}945\)</span> 英里降至 2021 年的 <span class="math inline">\(7{,}965\)</span> 英里，随后才恢复）。</li>
+<li><strong>第三时期：商用无人驾驶规模化与分化（2021–2025）</strong>：车内安全员被取消，导致战略上出现急剧分化。 Waymo 将仅搭载乘客的商用运营规模扩大，2025 年每发生一次自动驾驶脱离事件的行驶里程超过 <span class="math inline">\(63{,}000\)</span> 英里，测试里程超过五百万英里。 Aurora 将其加州乘用车业务转向德克萨斯州的商用 Class 8 货运走廊。 Apple 在 2024 年初取消了 Project Titan 项目，此前该项投入了数十亿美元的研发，且在早期介入敏感性方面一直存在困难。 最具启发性的是，Cruise 在加州申报文件中的每起脱手事件平均里程突破了 <span class="math inline">\(80{,}000\)</span> 英里；此后不久，2023 年 10 月旧金山发生的一起拖拽行人碰撞导致其自动驾驶测试与部署许可被立即吊销。</li>
+</ol>
+<p>《<a href="#fig-release-decade-california-dmv-disengagements" class="quarto-xref">图&nbsp;1</a>》所揭示的根本性系统教训是：仅基于车队总里程归纳得出的论证，无法支撑“灾难性风险”这一主张。 较高的 MPI 表明系统在标称条件下具备运行成熟度，但它并不能约束未建模物理交互下尾事件失败的严重性或概率。 物理人工智能的安全论证必须将经验性暴露与在架构层面强制实施安全约束的确定性机制相结合，后者在所学策略遭遇新的分布偏移时依然有效。</p>
+<p>工程安全论证并非存在于制度真空中。 在开发团队内部，主张—论证—证据树确立了物理风险受到约束的技术信心；在团队之外，它构成法定监管授权与法律责任的证据基础。 当自主系统从实验室走向商业部署时，其安全主张与三大主要治理支柱相互交织：</p>
+<ol type="1">
+<li><strong>欧盟人工智能法案（高风险分类）：</strong> 根据欧盟《人工智能法案》，作为物理机械、协作机器人或自主运输的安全部件部署的人工智能系统，被归类为<em>高风险人工智能系统</em>。 法定合规要求一套可审计的风险管理系统，覆盖运行全生命周期，包括记录训练与评估分布的经验证的数据治理@sec-data-schema、具备实时干预能力的人类监督接口@sec-intervention-human-authority，以及可显露篡改痕迹的事件日志@sec-intervention-trustworthy-logs，以确保在发生任何异常接触后具备取证级可重构性。</li>
+<li><strong>领域专用法定认证：</strong> 除横向人工智能法规外，具身系统还必须满足行业特定的安全要求：美国 食品药品监督管理局（FDA） 上市前路径（510(k) 与 De Novo），适用于自主手术机器人，要求符合 ANSI/AAMI HE75 的人因验证以及 IEC 62304 的软件生命周期控制；美国联邦航空管理局（FAA） 适航认证（第 107/135 部），适用于自主空中物流；以及联合国欧洲经济委员会/美国国家公路交通安全管理局（UNECE/NHTSA）标准（如 UN R157 关于自动驾驶车辆转向），规范自动驾驶系统。</li>
+<li><strong>法律责任的重新分配：</strong> 在机器人于互锁围栏内作业的经典工厂自动化场景（<strong><a href="../03_brain/03_brain.html#fig-industrial-welding">工业点焊工作站</a></strong>）中，物理事故主要依据 <em>operator negligence</em>（操作人过失）这一法律原则进行裁决——评估地面人员是否违反了安全规程或绕过了互锁装置。 当自主机器在没有物理围栏的情况下于共享的人类空间中作业时，法律责任会根本性地转向 <em>制造商严格产品责任</em>。 一次未被建模的感知失效或跟踪超调已不再是操作人错误；它属于设计、制造或未尽告知义务方面的所谓缺陷。 在这一法律体系中，一份经密码学签名的安全论证与发布清单不仅属于良好的工程实践——它更是确立工程团队在公开发布之前将残余风险限定于最先进水平标准的那份决定性证据记录。</li>
+</ol>
+<div id="fig-release-decade-california-dmv-disengagements" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="htb" alt="对数坐标轴折线图，展示 2015 至 2025 年五个自动驾驶车辆开发者的脱离间隔里程。 背景呈现三个着色时代，从早期高速测试到商用无人驾驶规模化。 Waymo 与 Cruise 均表现出高于 40,000 英里人类驾驶员基线的多数量级改善，并配有关键徽章，标注监管吊销、城市过渡与公司项目转向。" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-release-decade-california-dmv-disengagements-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="3">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-release-decade-california-dmv-disengagements-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/7g/fkg91tq50f58kfmg7c65747r0000gn/T/ipykernel_92026/2303944659.py:189: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()</code></pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-release-decade-california-dmv-disengagements-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a)
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig">
+图&nbsp;1: <strong>向加州 DMV 报告的十年自动驾驶车辆控制脱离趋势（2015–2025）</strong>：主要自动驾驶车辆开发方（Waymo、Cruise、Zoox、Apple Project Titan 与 Aurora）在三个历史运行时期内的按年度统计的自动驾驶系统控制脱离间隔里程（MPI，对数刻度）。 水平虚线标示人类驾驶员基准，即每次警方报告的碰撞之间约 40,000 英里（NHTSA）。 里程碑凸显了 Waymo 2021 年向密集城市环境过渡期间的指标下降、Cruise 于 2023 年 10 月因严重碰撞被吊销许可、Zoox 持续的城市自动驾驶出租车运行态势、Apple 的项目取消，以及 Waymo 在 2025 年达到每次脱离 63,415 英里。（数据来源：加州 DMV 年度自动驾驶车辆脱离报告，2015–2025 年）。）
+</figcaption>
+</figure>
+</div>
+<p>每条链路也都依赖着上下文假设，而未言明的假设仅受其下游碰巧存在的某个检查的保护。 停止主张的论证依据除其他条件外，还假设通道始终保持足够明亮，以满足导航相机的标称曝光。 假如一条昏暗的通道将该曝光时间加倍，从 16 ms 延长到 32 ms。 由于图像的年龄自曝光中段起计时，每个观测到达时的实际年龄都比预算计入的年龄大 8 ms，若不加检查，会使基座以 1.3 m/s 的通道行驶速度额外行进 10.4 mm，该额外距离约占预算剩余余量 102.6 mm 的 10 percent。 许可路径的年龄检查反而拒绝这些帧，于是基座停在了案例假定它能够通过的通道中。 团队遇到的照明假设问题表现为原因不明的服务损失，也唯有那个从未与照明绑定的检查，才使它没有沦为通行余量的无声损失。 没有任何运行时检查会看到的那条假设，没有这样的兜底机制，正如复合故障中 <a href="#sec-release-adversarial-review" class="quarto-xref">节&nbsp;1.7</a> 的定位余量所示。 因此，一个可靠的论证会把每一条物理依赖都表述为带界定的上下文元素，并配备运行时监控器来检测其违反。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 内嵌于安全论证保证中的认识论假设，在 <strong><a href="../17_frontier/17_frontier.html#sec-frontier-epistemic-limits">认识论边界</a></strong> 中受到严格审视。</p>
+</div></div><p>最薄弱环节支配着每一棵“主张—论证—证据”树。 安全论证并非一个聚合体，其中一个分支的超性能可以弥补另一分支的不足。 识别基准上的高准确率并不能抵消 CAN 总线上未表征的延迟尾部，同样，广泛的策略仿真也不能弥补缺失的制动磨损数据。 若基座停止论证可分解为制动、驱动器热防护(<strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong>)与轨迹约束三项子主张，则任一分支上的论证失效都会使根主张失效。 负责裁定该案的评审者因此关注的不是支持性工件的数量，而是那个一旦失效便允许危害发生的唯一最薄弱环节。</p>
+<section id="将安全论证与机器相匹配" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="将安全论证与机器相匹配">将安全论证与机器相匹配。</h3>
+<p>对于移动操作机器人的手臂，ISO 10218-1 与 ISO 10218-2 界定机器人及集成评估，而 ISO/TS 15066 在论证指明接触部位区域、压力、几何形状与测量方法后，为协作接触情形提供依据 <span class="citation" data-cites="isots15066">(<a href="#ref-isots15066" role="doc-biblioref"><em>ISO/TS 15066</em> 2016年</a>)</span>。 关于基座的主张构成该案例的大部分，其论证依据是基座的实测制动预算与现场勘察。 道路车辆标准 ISO 26262 与 ISO 21448 为论证提供了其关于故障与预期功能极限的区分，但对本机不作出任何认证 <span class="citation" data-cites="iso26262 iso21448">(<a href="#ref-iso26262" role="doc-biblioref"><em>ISO 26262</em> 2018年</a>; <a href="#ref-iso21448" role="doc-biblioref"><em>ISO 21448</em> 2022年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-iso26262" class="csl-entry" role="listitem">
+<em>ISO 26262: Road Vehicles, Functional Safety</em>. 2018年. International Organization for Standardization.
+</div><div id="ref-iso21448" class="csl-entry" role="listitem">
+<em>ISO 21448: Road Vehicles, Safety of the Intended Functionality</em>. 2022年. International Organization for Standardization.
+</div></div><p><a href="#tbl-16-cae-scorecard" class="quarto-xref">表&nbsp;2</a> 中的主张—论证—证据记分卡列出六项主张，并将每项物理依据与其在本书证据下的裁定配对。 主张 C3 展示了该决策：油膜可破坏制动牵引，因此标称模型精度不足以支撑无限制结论。 以这种方式使依据失效的物理可实现条件称为其 <strong>反例</strong> ，而 <a href="#sec-release-adversarial-review" class="quarto-xref">节&nbsp;1.7</a> 将反例搜寻转化为评审方法。 主张 C6 仅以检验 <strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-log">《控制权限日志》</a></strong> 所交付的四条权限规则（A1–A4）的故障记录为依据。</p>
+<div id="tbl-16-cae-scorecard" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[14,58,28]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-16-cae-scorecard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;2: <strong>针对仓库移动操作机器人的“主张—论据—证据”评审</strong>：本书证据下对六项主张及其裁决。 失效或未知的分支无法由标称模型精度予以补偿。
+</figcaption>
+<div aria-describedby="tbl-16-cae-scorecard-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 57%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">主张</th>
+<th style="text-align: left;">机器上的担保与运行假设</th>
+<th style="text-align: left;">对本书证据的裁决</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">C1. 接触与停止</td>
+<td style="text-align: left;">基座：以 1.3 m/s 行驶时的停止预算为 997.4 mm（<strong><a href="../12_enforcement/12_enforcement.html#tbl-enforcement-stopping-budget">仓库移动操作臂的停车预算</a></strong>），停车所需距离小于到站在货架末端人员之间的 1.10 m 净空距离，载荷质量为 368 kg 时尚未经过测试，这仍是一个未验证的前提；门：在制动指令下的锁紧力为 39 N，机械臂在 0.15 mm（约 3 m/s²）的范围内进一步停止，满足 100 N 的限值；马克杯：在 1 m/s 的 TCP 速度限值下从传送带上抓取（基于已追踪的意图），并以 0.10 m/s 的速度交给同事，处于推导出的 0.118 m/s 上限之下，接触力为 42.4 N，满足 50 N 的判据，且被抓取的物体被认定为任务所命名的马克杯</td>
+<td style="text-align: left;"><code>REFUSE</code>：可信减速度、制动起始、跟踪与定位误差、臂减速与组织刚度均为示意值；语义落地前提未知。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C2. 权限时序</td>
+<td style="text-align: left;">制动起始不晚于最后一次有效续期后 82 ms；权限约束执行机制的最坏情况执行时间 250 μs 位于 400 μs 时限之内；声明的假设：该主张涵盖权限路径能够承受的故障，锁步诊断覆盖路径自身的故障（<strong><a href="../13_placement/13_placement.html#sec-placement-two-paths-one-die">同一芯片上的两条路径</a></strong>），且回退梯子的抑制层级未配置预算（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong>）。</td>
+<td style="text-align: left;"><code>REFUSE</code>：最坏情况执行时间是声明的，而非在负载下实测的。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C3. 制动牵引力</td>
+<td style="text-align: left;">每个通道至少 0.204 的地板摩擦系数；透明油膜是反驳条件</td>
+<td style="text-align: left;"><code>REFUSE</code>；开放前提传递至 <strong><a href="../17_frontier/17_frontier.html#sec-frontier-residual-claims-register">残余主张登记表</a></strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C4. 观测年龄</td>
+<td style="text-align: left;">导航相机观测数据的时龄为 51.6 ms，在预算之内，并带有陈旧数据回退</td>
+<td style="text-align: left;"><code>REFUSE</code>：时龄链仅为示意</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C5. 权限独立性</td>
+<td style="text-align: left;">部署记录中在负载下测得的最大执行时间保持在声明的 250 μs WCET 之内，因而低于截止期限，共因失效因素已进行测试（<strong><a href="../13_placement/13_placement.html#sec-placement-hardware-allocation">硬件分配</a></strong>）</td>
+<td style="text-align: left;"><code>REFUSE</code> 直到放置测试台账存在</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C6. 权威移交</td>
+<td style="text-align: left;">每个执行器通道对应一名写入者；没有任何信息源可以绕过更高权限层级或权限检查；未获确认的移交须在 <strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-transitions">权威权移交</a></strong> 中由净空距离推导出的 <span class="math inline">\(T_{\text{timeout}}\)</span> 期限内回退（环内接管前降速至 1.2 m/s 时，接管时间界限为 174.7 ms；以 1.3 m/s 的速度行驶时发出请求所适用的超时期限为 78.9 ms）；无效的身份认证会使该通道锁定（<strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-log">《控制权限日志》</a></strong>）</td>
+<td style="text-align: left;">若 A1–A4 中任一者缺少 <code>PASS</code> 故障记录，则判为 <code>REFUSE</code>（<strong><a href="../15_verification/15_verification.html#sec-verification-fault-manifest">故障清单</a></strong>）；若仅远程通道情形失败，则限制为本地操作</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<div id="chk-release-claim-argument-evidence-and-inductive-warrants" class="callout callout-checkpoint" title="主张—论证—证据分解与归纳性保证">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 1.1: 主张—论证—证据分解与归纳性保证</strong></summary><div>
+<p>在提交待裁决的安全性论证之前，先检验其结构：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>顶层主张可证伪性</strong>：你能否将顶层主张表述为可证伪的物理命题，例如“在净空距离内停车”，而不是某种理想目标？</label></li>
+<li><label><input type="checkbox"><strong>保证有效性</strong>：你能否指出连接每个测试台与其在论证结构中所对应的上层主张的论证依据，以及该保证成立的前提条件？</label></li>
+<li><label><input type="checkbox"><strong>反驳者枚举</strong>：你能否指出诸如镜头污染或总线仲裁冲突之类的反驳者在论证图中出现的位置？</label></li>
+<li><label><input type="checkbox"><strong>证据溯源</strong>：你能否将每个终端证据节点追溯到带签名的测试轨迹和当前的校准？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+</section>
+<section id="sec-release-three-verdicts" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-release-three-verdicts">三种裁决</h2>
+<p>每一行 <a href="#tbl-16-cae-scorecard" class="quarto-xref">表&nbsp;2</a> 都以裁定收尾，发布决定将整个决策树归结为三种结论之一：<strong>无条件运行</strong>、<strong>有条件运行</strong>，以及<strong>拒绝运行</strong>。 第一种结论，即无条件运行，授予签署发布案例中所列明的完整包络，前提是其常设条件仍然成立。 该案例中的每一项风险主张都需要针对指定的机组、载荷、运行设计域和故障集提供证据，且制动热容量、停车净空距离和跟踪误差界限须通过针对该运行包络的合格性验证（<strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong>），同时在已学提案可能触及执行器之处设置独立的授权检查（<strong><a href="../01_boundary/01_boundary.html#sec-boundary-causal-boundary">因果边界</a></strong>）。 裁定并不消除残余风险或新发现的风险；它授权在经评估的主张下运行，并要求在其前提失效时予以撤销。</p>
+<p>第二种结论，即有条件运行，适用于证据表明该机器在受限运行子集内是安全的，但缺少支撑完整运行包络的论证依据的情形。 此时，放行方案须落实物理、运动学或环境边界，以排除未经验证的危险状态，例如降额后的关节速度、受限的照明范围，或把人挡在机械臂工作范围之外的护栏。 当共存的未分离情况无法对接触力给出界限时，受限情形可能需要评估围栏并验证访问联锁（<a href="#fig-16-real-robot-safety-cell" class="quarto-xref">图&nbsp;2</a>），并通过测试确认保护性停止在人员到达危险工作区之前完成。</p>
+<div id="fig-16-real-robot-safety-cell" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" alt="黄色工业机器人手臂和金属设备位于由黄色网格围栏面板和门构成的工厂隔间内。 蓝色升降机位于前景围栏之外。 布线、互锁等级和停止行为均不可见。" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16-real-robot-safety-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/jpg/fig16_real_robot_safety_cell.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="图&nbsp;2: 物理分离示例：黄色工业机械臂在黄色网状围栏后方工作。 当经验证的访问联锁和停止测试予以支持时，围栏可以是受限发布的一个条件。 图片来源：美国 陆军化学材料活动 / PEO ACWA。"><img src="images/jpg/fig16_real_robot_safety_cell.jpg" class="img-fluid figure-img" style="width:85.0%" alt="黄色工业机器人手臂和金属设备位于由黄色网格围栏面板和门构成的工厂隔间内。 蓝色升降机位于前景围栏之外。 布线、互锁等级和停止行为均不可见。"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16-real-robot-safety-cell-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: <strong>物理分离示例</strong>：黄色工业机械臂在黄色网状围栏后方工作。 当经验证的访问联锁和停止测试予以支持时，围栏可以是受限发布的一个条件。 图片来源：美国 陆军化学材料活动 / PEO ACWA。
+</figcaption>
+</figure>
+</div>
+<p>附加于放行判定（release verdict）的每一项条件都是一份具有约束力的契约，且每一项都指定了许可路径所强制执行的数值，而非物理所允许的上限。 物品交接展示了这一差异。 该契约签署的 TCP 速度低于接触准则在 <a href="#eq-release-unbraked-force" class="quarto-xref">公式&nbsp;1</a> 下所容许的上限，而这两个速度之间的差值，就是监视器在其采样瞬间无法观测到的余量：采样之间的速度增长、编码器误差，以及驱动器对速度钳制指令的响应。 以上限签署的契约无法为这些条款留出余地，因此放行情形需要在签署速度成立之前，先对每一项测得一个上界。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 支持条件放行判定的确定性回退覆盖，建立在 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong> 之上。</p>
+</div></div><p>受检地面条件遵循同一规则。 当该场地的检查体系仅认证出 0.12 的摩擦系数时，可信的减速能力仅能达到该摩擦所能支撑的水平，而允许在已勘察地面上使用 1.39 m/s 的预算，仅能容纳 1.09 m/s。 该合同仅在前提成立时具有约束力。</p>
+<p>第三种结论——拒绝运行——是安全论证中存在缺失的论证依据、未表征的尾部延迟、不完整的故障注入覆盖，或未监控的失效模式时，必须得出的结论。 如果执行方在部署负载下的最坏情况从未针对其 400 μs 期限接受测量，或者故障集遗漏了部署所指定的共因测试，则该风险仍未量化，因而无法支撑发布。 当测量结果与预算项背后的模型相矛盾时，同样需要拒绝，例如带载停车试验的减速度低于预算所假设的 2 m/s²。</p>
+<p>拒绝判定是一项工程交付物，而非行政性失败。 它通过将论证树中失效的环节隔离出来，把关于进度与安全之间的争议转化为证据问题。 若因加载状态下的制动试验与制动项相矛盾而拒绝放行，团队便不争论风险容忍度，而是在加载质量下重复试验，直至已知减速度的低尾端，再依据该低尾端重新推导制动项，并仅在通道预算按实测值闭合时返回重新裁定。 拒绝判定界定了重新裁定发生前必须通过的精确证据检验。</p>
+<p>放行决策的责任必须归属于一个可识别的 <strong>首席系统裁定人</strong>，而非分散于各开发团队。 当视觉团队对检测分数签字放行、执行器供应商对扭矩曲线签字放行、学习团队对策略收敛性签字放行时，各方都假定另一层提供了余量。 裁决者单独证明该集成系统满足安全论证，且该证明将结论绑定为一组不可变技术工件，包括已验证策略权重的密码学哈希、机械臂接触力传感的标定日志、制动起始试验，以及单独论证的最坏响应界，和带载质量下的制动试验，后者确立了可信的减速度。 签署记录的是裁决者针对该证据与规定运行域所作的有界判断。</p>
+<p>裁决者在 <a href="#tbl-16-verdicts-taxonomy" class="quarto-xref">表&nbsp;3</a> 中的三个决定之一上签名。 条件性结论需要单独有证据支持的受限包络；名义论证中已知的缺口不能简单改称为安全限制。 没有任何结论会移动提案边界。 在 <code>UNCOND</code> 与 <code>COND</code> 两种情形下，策略都只提出动作，而许可强制执行机制仍然逐一审核准入每个动作，正如原则 <a href="https://mlsysbook.ai/vol4/parts/running_principles.html#pri-vol4-proposal-permission" title="英文原版参考内容">Proposal is not permission</a> 所要求的那样；因此，放行所设定的包络由许可路径强制执行，放行也绝不会赋予策略独立的许可权。</p>
+<div id="tbl-16-verdicts-taxonomy" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[14,32,32,22]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-16-verdicts-taxonomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;3: <strong>移动操作臂的三项签署发布结论</strong>：完整操作与受限模式均保留各自独立的逐动作许可。 拒绝是一项可执行的工程结果。
+</figcaption>
+<div aria-describedby="tbl-16-verdicts-taxonomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 32%">
+<col style="width: 32%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">签署结论</th>
+<th style="text-align: left;">所需证据</th>
+<th style="text-align: left;">权限与运行时限制</th>
+<th style="text-align: left;">失效或拒绝触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>UNCOND</code></td>
+<td style="text-align: left;">完整运行包络声明、实测装置与时间边界、独立验证的权限与回退</td>
+<td style="text-align: left;">策略在完整的 <em>经签署确认的</em> 任务包络内提出动作；每个动作均须通过许可强制执行机制的审核</td>
+<td style="text-align: left;">证据、配置、校准或既有前提失效</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>COND</code></td>
+<td style="text-align: left;">受限运行包络声明及其自身的证据、限值与故障覆盖</td>
+<td style="text-align: left;">策略仅在经签署确认的缩减限值范围内提出动作；每个动作均须通过许可强制执行机制的审核</td>
+<td style="text-align: left;">任何受限前提变为假或未知</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>REFUSE</code></td>
+<td style="text-align: left;">关键证据缺失、相互矛盾、已过期或未通过认证</td>
+<td style="text-align: left;">没有自主跟踪许可；执行所评估的停止或保持动作，即放行论证为受控装置验证的回退阶梯中的相应一级（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong>）</td>
+<td style="text-align: left;">依据修复后的证据重新裁定</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>三项结论中没有任何一项是永久授权。 连杆会产生间隙，摩擦面会磨损，镜头表面会积累附着膜层，环境分布也会变化，因此，在 <code>UNCOND</code> 或 <code>COND</code> 条件下运行，须承担整个部署周期的义务。 如果制动磨损使带载减速度下降的幅度恰好耗尽通道预算的余量（<a href="#sec-release-question" class="quarto-xref">节&nbsp;1.2</a>），预算就无法再容纳任何其他输入误差。 这种磨损必须在机器重新进入通道之前使一项常设条件检验（一次定期制停试验或一次已验证的制动自检）判定不通过，因为若等到运行中制停才发现问题，首次暴露它的位置就会是货架端部。 每一项此类义务都由前提、检测器与响应配对而成，因此它属于裁决所承载的常设条件之一。</p>
+</section>
+<section id="sec-release-standing-conditions" class="level2">
+<h2 class="anchored" data-anchor-id="sec-release-standing-conditions">“裁决”的常设条件</h2>
+<p>一次放行结论取决于具有不同观测节奏的物理前提。 移动操作臂的制动主张依赖于至少为 0.204 的地面摩擦系数，干燥混凝土的摩擦系数约为 0.60，高于这一最低要求，但一次性巡检无法覆盖液体洒漏或表面磨损。 该情形需要地面巡检计划，以及污染发生后的停止或排除规则，如配备车载牵引力监测装置，则须对其另行规定。 操作臂的接触力标定按已记录的时间间隔重新建立。 每个前提都必须在其物理失效模式所要求的节奏下持续有效。 依据原则 <a href="https://mlsysbook.ai/vol4/parts/governing_principles.html#pri-vol4-evidence-bounds-authority" title="英文原版参考内容">Evidence bounds authority</a>，该结论按运行工况授予授权，而该授权仅在支撑各前提的证据保持时效时才有效。</p>
+<p>每个受监控的前提条件，既需要确定性的运行时检测器，也需要预先分配好的响应。 如果案例声称导航相机的观测年龄始终不超过预算中已计入的限值 51.6 ms，但软件缺少用于逐帧测量该年龄的硬件时间戳比较器，那么该前提条件就并未受到监控。 它已经悄然退化为一种假设。 托架负载受其 50 kg 容量上限约束，仅在机械臂放置或移除托箱时才会发生变化，因此每次抓取检查一次就足够了；而速度与租约有效性则在每次 1 ms 权限心跳时进行检查。</p>
+<p>在运行时评估受监控的前提条件，会揭示 <strong>包络归属</strong> (<a href="#dfn-release-envelope-trichotomy">1.2</a>) 中的三态结构。 二元检查假定没有故障标志时即为正常运行，但包络归属存在三种状态：已知为真、已知为假，以及未知。 当遥测经验核验、时间戳满足其时限、且估计器以有界协方差收敛时，状态属于已知为真。 当物理极限被突破，例如基座跟踪误差超出 40 mm 界限，而停止包络正是按该界限向内收缩的时，状态属于已知为假。 当光学编码器通信中断、相机帧出现循环冗余校验（CRC）不匹配，或扩展卡尔曼滤波发散时，机器无法判断自身处于其经签署确认的运行包络之内还是之外。 当存在运动质量时，未知状态被当作位于包络之外，因为在认知缺口 期间假定安全、而机器处于盲目运动，会使动能在未受测量的情况下累积。</p>
+<div id="dfn-release-envelope-trichotomy" class="callout callout-definition" title="包络三分法">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.2: 包络三分法</strong></summary><div>
+<p><a href="images/svg/dfn_envelope_trichotomy.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/svg/dfn_envelope_trichotomy.svg" class="img-fluid" style="width:100.0%" alt="三种证据状态：已知为真对应经验验证的新鲜测量，未知对应不足或陈旧测量，已知为假对应测得的边界突破。 未知与已知的假状态仍属于不同的记录原因，但两者都拒绝跟踪授权，并选择经验证的停止或保持。"></a></p>
+<p><strong><em>包络三态分类</em></strong> 是对信息物理系统健康状态相对于其认证运行包络的三态认识论分类：<em>已知为真</em>（包络边界内具有有界遥测协方差的已验证状态），<em>已知为假</em>（已验证的边界违规，触发确定性硬件拒绝），以及<em>未知</em>（由于传感器信号中断、帧损坏或估计器发散而产生的认识论状态不确定性）。</p>
+<ol type="1">
+<li><strong>意义</strong>：未知状态并非边界违规的证据，但也同样不支持继续跟踪。 授权决策在未知与已知假两种状态下均为拒绝；所记录的原因保持区分，而响应取决于被控对象的经验证停止或保持能力。</li>
+<li><strong>区别</strong>：与二值布尔状态检查（<code>is_safe == true</code>）不同，包络三分类将认识论盲区与主动违规隔离开来，确保遥测丢失永远不会被误判为安全放行。</li>
+<li><strong>常见误区</strong>：在通信失败时默认采用“故障时仍放行”策略或保持最后已知指令。 在存在未建模动力学时，冻结的指令会迅速导致机械碰撞。</li>
+</ol>
+</div></details>
+</div>
+<p>同样的三种状态支配着每个前提背后的证据。 在 <strong><a href="../15_verification/15_verification.html#sec-verification-oracles-acceptance">故障预言机与验收</a></strong> 中标记为 <code>UNOBSERVABLE</code> 或 <code>INVALID</code> 的试验不提供任何证据，因此其本应检验的前提仍然未知；而未知前提会拒绝依赖它的那条主张；只有 <code>PASS</code> 记录计入裁决，而 <code>FAIL</code> 记录使该前提成为已知为假。</p>
+<p>对不可评估前提的回应，源于继续运动而无遥测的物理后果，而非严重性标签。 当移动机械臂满载托盘架以 1.3 m/s 的速度通过通道时，其 368 kg 满载总质量携带 311 J 的动能。 若其激光雷达停止发送更新，则每毫秒的盲行都会使机器 1.3 mm 更接近一个未建图的障碍物。 安全论证预先确定了三种应对。 其中两种仅存在于经签署的安全论证所覆盖的范围之内：一种 <strong>降级模式</strong>，在冗余传感器仍约束位置不确定性时继续运行，例如回退到车轮里程推算并将通道速度减半至 0.65 m/s；另一种是 <code>COND</code> 判定 的受限模式，它会钳制扭矩或将提议限制在预计算通道内。 第三种，即回退梯子的 STOP 环节（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong>），无需此类覆盖，在可观测性丧失时采用配置的驱动与制动序列；其能否在净空范围内停下，取决于当前速度、响应延迟和实测制动能力。</p>
+<p>即使所有受监控前提始终已知为真、且周期性重新校准均通过，<strong>放行判定</strong> 仍带有有效期时间戳与周期预算。 运行小时数与机械循环次数可能以运行时遥测无法完全观测的方式改变设备状态。 齿轮齿面可能产生点蚀，<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> 弹性体密封件会变硬，结构紧固件会丧失夹紧预紧力。 载荷特定的疲劳数据与检验方案确定了签署的运行小时数与循环限值；达到任一限值时，须重新裁定，方可继续运动。</p>
+<p>影响运动的常设条件需要一条具备经实测的检测与响应时间预算的强制路径。 在 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement">安全执行</a></strong> 的架构中，独立的强制器 先检查提案与受监控前提，再签发执行器许可<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>。该机器许可路径的决策以 1 ms 为节拍。 其 82 ms 时限自最后一次有效续期覆盖到制动启动，涵盖一个停止续期的提案者。 对于强制器自身监控的前提，只需节拍、总线传输与制动启动三项，22 ms 计入预算，且放行安全论证必须分别测量这三项。 当前提未知或为假时，强制器撤销跟踪并命令适配于装置状态的回退梯级 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong>，带签名的放行安全论证必须包含该停止选择及其实测时序。</p>
+<p>因此，一个裁决只有在它的全部常设条件均为已知为真、按其失效模式设定的节奏进行检查、并由该案例已测得的响应时序支撑时，才成立。 在定义主张、裁决以及撤销它们的条件之后，裁决者可以逐一处理移动操作手的六项主张，并依据本书所持有的证据决定是否准予其运行。</p>
+</section>
+<section id="sec-release-case-worked-full" class="level2">
+<h2 class="anchored" data-anchor-id="sec-release-case-worked-full">完整展开的一个案例</h2>
+<p>裁判者逐一考察 <a href="#tbl-16-cae-scorecard" class="quarto-xref">表&nbsp;2</a> 中的六项主张，找出支撑其论证依据的前提，并追问是什么类型的数值支持该前提。 C1 的门分支完整展示了这一过程。</p>
+<p>机械臂以受保护的接近速度 0.03 m/s 接触刚度为 4.0 × 10⁵ N/m 的挡板时，接触力随挡板压缩而增大，直至 15 N 绊线触发；随后 2 ms 接触环路的响应又进一步增加了压缩量，直到制动指令开始（<strong><a href="../10_intent/10_intent.html#sec-intent-handoff">意图交出什么</a></strong>）： <span id="eq-release-trip-indentation"><span class="math display">\[F_{\text{cmd}} = F_{\text{trip}} + k_{\text{latch}}\,v_{\text{latch}}\,T_c \tag{2}\]</span></span> 对 <a href="#eq-release-trip-indentation" class="quarto-xref">公式&nbsp;2</a> 求值，得到制动指令下的 39 N，明显位于 100 N 闩锁限值之内。 限值仍然约束着随后的停车，因为挡板仍在继续压缩，而摆臂正在减速： <span id="eq-release-coupled-indentation"><span class="math display">\[x_{\max} = \frac{F_{\text{cmd}}}{k_{\text{latch}}} + \frac{v_{\text{latch}}^2}{2a_{\text{arm}}} \le \frac{F_{\text{lim}}}{k_{\text{latch}}} \tag{3}\]</span></span> <a href="#eq-release-coupled-indentation" class="quarto-xref">公式&nbsp;3</a> 中的制动项忽略了本会缩短摆臂行程的弹簧做功，因而该界限是保守的。 低于该极限，板件最多只能再压缩 0.15 mm，因此机械臂必须以约 3 m/s² 的减速度减速，并在约 10 ms 内停止。<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 在缺乏证据支持的 0.10 m/s 接近速度下，同样的两个方程给出发出制动指令时的接触力 95 N，并要求 400 m/s²。 该需求与操作包络 <a href="#tbl-16-odd-invariants" class="quarto-xref">表&nbsp;1</a> 仅允许受保护接近方式的两个原因相一致。 在更快的速度下，接触截止时间仅略大于接触回路的响应时间 <strong><a href="../06_training/06_training.html#sec-training-policy-synthesis">策略综合</a></strong>，且演示中没有任何实例（<strong><a href="../05_data/05_data.html#sec-data-failure-modes">《数据集为何出错》</a></strong>）。</p>
+<p>两个结果在算术上都没有疑问。 门分支在其前提上失败。 机械臂带着其接近动量，能否在不到一毫米的行程内达到该减速，取决于其驱动与制动机构，而本书中的任何记录都没有测量它。 该减速是示意性的，因此前提未知，该分支被拒绝。</p>
+<p>其余分支以同样的方式失败。 基座继承的 997.4 mm 预算采用了可信减速、制动启动、跟踪误差和定位的示意值，而其 102.6 mm 余量相对于其中任何一项的合理误差都显得很小。 C1 的杯体分支基于两条前提被否决。 其交接力仅在采用示意性组织刚度时满足该判据，而其对象指称对应前提——即机械臂握持的物体是任务所命名的杯子——是未知的，因为将对象指称高置信度地对应到同色玻璃罐通过了全部几何检查(<strong><a href="../10_intent/10_intent.html#sec-intent-request-to-proposal">从请求到到期的几何提议</a></strong>)，而本书中没有任何记录确定机械臂握持的是哪个物体。 C2 的授权时序依赖于声明为 250 μs 的 WCET，同时给出的空载计时值为 135 μs，但从未在该部署的最坏负载条件下测量。 C4 的 51.6 ms 观测年龄由数据手册给出的读出耗时与示意性流水线时间项相加得到。 C5 与 C6 引用了本书描述但不包含的记录：部署测试台账，以及 A1–A4 各自的 <code>PASS</code> 记录。 C3 在性质上有所不同。 其前提——每条通道至少 0.204 的地板摩擦——可在干燥地板上检验，但透明的油膜在摄像头看来如同干燥混凝土，而机器上的任何测量都无法将其排除。</p>
+<p>因此，每一项主张都至少依赖一个该书证据无法确定的前提，裁决者据此签署 <code>REFUSE</code>。 该裁决并未认定机器不安全。 其输入具有示意性，因此该决策同样具有示意性。 它展示了将如何对本次机器放行作出裁决，但不能为该机器背书。 依据第四条法则（<strong><a href="../01_boundary/01_boundary.html#sec-boundary-bedrock-laws">四条基石定律</a></strong>），证据无法判定的前提必须限制运行；就本证据而言，每一项主张都携带一个这样的前提。 拒绝本身也是本章最有用的成果，因为它指出了能够改变它的测量。<a href="#tbl-16-cond-measurements" class="quarto-xref">表&nbsp;4</a> 列出了这些测量，并说明每项所解决的先决条件，以及一项支持性结果所能解除的限制。</p>
+<div id="tbl-16-cond-measurements" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,30,8,42]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-16-cond-measurements-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;4: <strong>那些会使结论朝 <code>COND</code> 方向移动的测量</strong>：每一行都指明该测量能在仓库移动操作机器人上判定的前提，以及所支持的结果将解除的限制；推理轨迹仅涉及服务可用性。
+</figcaption>
+<div aria-describedby="tbl-16-cond-measurements-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 30%">
+<col style="width: 8%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">测量</th>
+<th style="text-align: left;">它所解决的先决条件（本书中的取值）</th>
+<th style="text-align: left;">主张</th>
+<th style="text-align: left;">支持性结果所能解除的限制</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">在承载质量条件下进行停止试验</td>
+<td style="text-align: left;">低尾可信减速(2 m/s²)</td>
+<td style="text-align: left;">C1</td>
+<td style="text-align: left;">底座的预算及其1.39 m/s上限，因此可以签发通道速度</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">制动起始试验</td>
+<td style="text-align: left;">制动起始(20 ms)</td>
+<td style="text-align: left;">C1、C2</td>
+<td style="text-align: left;">从最近一次有效续期到制动启动之间的 82 ms 边界</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">端到端年龄轨迹</td>
+<td style="text-align: left;">观测年龄（51.6 ms）</td>
+<td style="text-align: left;">C4</td>
+<td style="text-align: left;">预算的年龄项与陈旧数据阈值</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">跟踪误差与定位误差尾部</td>
+<td style="text-align: left;">跟踪界 (40 mm) 与定位界 (50 mm)</td>
+<td style="text-align: left;">C1</td>
+<td style="text-align: left;">预算的内缩量项与额外开销项</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">现场勘测</td>
+<td style="text-align: left;">机架端净距 (1.10 m)</td>
+<td style="text-align: left;">C1</td>
+<td style="text-align: left;">每个勘测机架端处经签署批准的速度</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">地面勘测</td>
+<td style="text-align: left;">干燥地面的摩擦系数（0.60）与所需值（0.204）</td>
+<td style="text-align: left;">C3</td>
+<td style="text-align: left;">仅限已勘测通道；油膜仍不可观测，因此在受检地面上、速度低于 1.09 m/s 上限时，通道结论最多可达 <code>COND</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">推理轨迹</td>
+<td style="text-align: left;">第 99 百分位处的分块推理（40 ms）</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">服务可用性：每个分块在其 60 ms 租约期内续期；无需它，C2 界仍成立</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">负载下的强制执行组件计时</td>
+<td style="text-align: left;">强制执行组件最坏情况执行时间（250 μs，声明值）</td>
+<td style="text-align: left;">C2、C5</td>
+<td style="text-align: left;">该部署的最坏负载下的 400 μs 期限</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">机械臂停止试验</td>
+<td style="text-align: left;">机械臂从受保护接近的减速（约需 3 m/s²）</td>
+<td style="text-align: left;">C1</td>
+<td style="text-align: left;">以受保护的接近速度开门</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">交接力试验</td>
+<td style="text-align: left;">交接速度下的峰值接触力（42.4 N 推导；组织刚度为示意值）</td>
+<td style="text-align: left;">C1</td>
+<td style="text-align: left;">以 0.10 m/s 的速度、在 <code>accept_item</code> 条件下将咖啡杯递给同事</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">操作员试验</td>
+<td style="text-align: left;">接管与授权移交时序</td>
+<td style="text-align: left;">C6</td>
+<td style="text-align: left;">远程接管：仅在 A1–A4 各自拥有一条 <code>PASS</code> 记录时可行；否则仅限本地操作。</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>一个 <code>COND</code> 情形需要表中除仅涉及可用性的推理轨迹和操作人员试验之外的每一行，并且它只能通过在本地保留权限来省去操作人员试验，因为远程信道的权限情形并不存在。 本地操作若要行使每一种权限情形，仍需 <code>PASS</code> 记录；C5 仍需包含共因试验的部署测试台账。 两者都不是表中的一行。</p>
+<p>即便所有证据都支持其前提，结果所能支持的至多也只是运行包络中明确指定的一部分。 底座可在受限的 1 m/s 下沿通道行驶，仅在已检查的地面上行驶，且行驶速度低于 1.09 m/s 这一受检地面速度上限，强制执行组件处于受限构型 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-telemetry">执行记录</a></strong>，每个货架端点均适用通行规则。 机械臂可以受保护的接近速度打开门，此时挡板处于其标称位置、底座处于停止状态；它可取走杯子，并在 <code>accept_item</code> 条件下以 0.10 m/s 的速度完成交接，同时该站点的供料被限制在其声明的物品清单内，并具备单件拣选窗口。 该对象指称对应前提根本没有对应行，因为用机器当前的传感器无法通过任何试验加以判定，而供料清单与单件化约束只是限制了它，并未闭合它。 无论结果如何， 1.3 m/s 的正常模式都保持未签署状态，因为油膜使其摩擦前提仍然开放。 承载这些前提的限制，以及能够闭合它们的证据，都归属于 <strong><a href="../17_frontier/17_frontier.html#sec-frontier-residual-claims-register">残余主张登记表</a></strong> 的剩余主张登记册（ <a href="#chk-release-refusal-and-path-to-cond">1.2</a> ）。</p>
+<div id="chk-release-refusal-and-path-to-cond" class="callout callout-checkpoint" title="拒绝与有条件放行之路">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 1.2: 拒绝与有条件放行之路</strong></summary><div>
+<p>在批准对某台机器进行条件性放行之前，先核实你理解的是：一个前提（而非一次计算）如何决定了一个论断：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>前提与算术</strong>：你能解释为什么制动指令下的锁紧力不在怀疑之列，而 C1 的门分支仍被拒绝吗？</label></li>
+<li><label><input type="checkbox"><strong>缺乏依据的方法</strong>：你能用 <a href="#eq-release-trip-indentation" class="quarto-xref">公式&nbsp;2</a> 和 <a href="#eq-release-coupled-indentation" class="quarto-xref">公式&nbsp;3</a> 来说明为什么工作包络只允许受保护的接近门的方式吗？</label></li>
+<li><label><input type="checkbox"><strong>拒绝本身即成果</strong>：你能针对一条被拒绝的论断，指出能够解除该项拒绝的测量，以及支持性结果出现后仍然保留的限制吗？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-release-adversarial-review" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-release-adversarial-review">对抗性评审</h2>
+<p>假设 <a href="#tbl-16-cond-measurements" class="quarto-xref">表&nbsp;4</a> 的测量结果到来并支持移动操作臂的 <code>COND</code> 情形。 在裁决者签署之前，该情形必须经受一位以推翻它为己任的评审者的检验。 一次<strong>对抗性评审</strong> 是一种结构化审计，它将安全论证视为需要被攻击的论证，而非部署说明书。 确认偏倚会使论证自身的证据采集偏向于所学模型表现良好的条件，而评审者则反转这一姿态，寻找缺乏支撑的推理依据、未表征的物理过渡，以及破坏发布契约的边缘条件。 一项在对抗者试图迫使发生物理违规时于纸面上失败的论证，没有理由让人预期机器能够经受住服役。</p>
+<p>评审以四项探针评估论证树中的每一个证据节点。 首个挑战是<strong>经验充分性</strong>，即试验是否覆盖了运行包络的物理极限。 在干燥混凝土上以加载后的底座停止试验，摩擦接近 0.60，支持底座在该处达到其可信减速度的这一推理依据。 然而，受限模式允许在该场站巡检规程仅能认证其摩擦水平达到 0.12 的地面上运行，例如经车辆碾压抛光的车道，底座可按 <strong><a href="../15_verification/15_verification.html#sec-verification-operating-envelope">运行包络</a></strong> 规定的受限速度 1 m/s 运行，低于 1.09 m/s 的上限。 若试验集不包含在此类地面上以该速度进行的满载制动停车试验，则受限模式的依据不成立，而覆盖度审计会在复核中发现该缺口——即服务本应会在货架末端发现之处。 油膜不属于本探针的任何部分，因为包络直接拒绝它，而 C3 将其视为反驳者。 第二个探针考察 <strong>域迁移</strong> ，即仿真替代硬件测量的情形 。 人员检测器可能在渲染出的通道上表现良好，却仍会漏掉在场地自身照明下被缠绕膜托盘部分遮挡的人员。 其基准召回率只是 代理指标，用于对精选帧打分，而非从漏检人员到发出停车指令的链路；因此，评审者要求提供来自真实货架末端、成对硬件在环试验中该链路的证据。</p>
+<p>第三项探针针对<strong>结构独立性</strong>、，追问学习得到的模型与安全执行器是否共享某个资源<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>，其争用可能延迟传感器数据的送达。 对于这种移动操作机器人，这样的延迟会进入 C4 的 51.6 ms 观测年龄链中，而没有任何单个组件的时序测试能够显现它。 必须在该部署方案的最恶劣负载条件下进行压力测试与时序分析，以确立干扰上界；空闲总线单元测试做不到。 第四项探针识别出<strong>未被监控的状态漂移</strong>、。 磨损可能改变减速器<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>的柔度，以及电机电流与连杆运动之间的响应关系。 因此，评审人要求在接受 C1 门分支的臂停前提(<a href="#sec-release-case-worked-full" class="quarto-xref">节&nbsp;1.6</a>)之前，提供成对的磨损状态制动与接触轨迹。 仅电机电流跳闸本身，并不能确立磨损后的被控对象仍处于该安全论证中经测量确定的力限值和停车限值之内。</p>
+<p>评审者通过将每个论据的显式反驳构造出来，将这些漏洞操作化为可执行的形式。 最难察觉的反驳条件由多个各自仍处于自身容差带内的轻微异常组合而成，即 <strong><a href="../15_verification/15_verification.html#sec-verification-deriving-fault-list">推导故障清单</a></strong> 从共同原因推导出的复合故障。</p>
+<p>考虑移动机械臂的导航相机：镜头上有一层薄薄灰尘，安装座在紧固件松弛后发生了容许范围内的位移，如今当基座越过地面接缝时便会抖动；还有一条线束，在越过这些接缝时发生挠曲，使其串行器/解串行器（SerDes）链路的误码率升高。 每一项检查读数都正常。 相机报告可见度充足，安装座检查读数落在容差范围内，SerDes 误码计数器 仍低于告警阈值。 这些异常无法在时序上叠加，因为权限路径会拒绝任何上界年龄超过预算年龄加时钟换算界（<strong><a href="../08_perception/08_perception.html#sec-perception-observation-contract">观测契约</a></strong>）的观测；因此，因重传而延迟超过该阈值的帧损失的是可用性，而非放行。 它们在位置维度上叠加。 降低对比度会使特征匹配器在较弱的匹配上工作。 抖动中的安装座会模糊它所匹配的帧，并以标定仍然接受的某个角度偏移每一处匹配。 线束因重传而损失的帧会延长两次定位之间的间隔，其间里程计漂移不断累积。 每个误差都保持在各自的容差之内，但三者都落在制动预算中那一项定位余量之内，而没有任何运行时检查直接测量该余量。 该余量依据定位误差的实测尾部（<a href="#tbl-16-cond-measurements" class="quarto-xref">表&nbsp;4</a>）来设定，而非各贡献因素容差的最坏情况之和；后者会在每个贡献者同时处于其容差带边缘时，为覆盖全部贡献者而降低经签署批准的运行速度。 试验使用洁净镜头、紧固安装座和完好的线束 时，从未采样到这种巧合，因此三项误差合起来可以超过该余量。 超出的部分来自余量中的富余（<a href="#sec-release-question" class="quarto-xref">节&nbsp;1.2</a>），于是基座继续驶向机架末端，其余量小于已签署的安全论证所假设的水平，而每一项诊断都报告正常运行。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>⇄ <strong>对比：</strong> 算法能力主张与 <strong><a href="../02_body/02_body.html#sec-body-actuator-limits">执行器传动限制</a></strong> 中确立的物理执行器饱和限幅相互对照。</p>
+</div></div><p>评审还审计了权限路径的执行完整性，即推理或后台服务能否绕过、损坏或饿死执行器 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement">安全执行</a></strong> 或人工覆盖 <strong><a href="../14_intervention/14_intervention.html#sec-intervention">监督性干预</a></strong>，后者由 <a href="#tbl-16-cae-scorecard" class="quarto-xref">表&nbsp;2</a> 的 C6 覆盖。 在提案边界 <strong><a href="../01_boundary/01_boundary.html#sec-boundary-machine-model">《五层机器》</a></strong> 之下，安全执行机制与人工覆盖两者都保持高于学习模型的不可抢占优先权，而对抗方则追问：失控的策略线程、加速器运行时异常或遥测洪泛，能否使内存通道饱和、锁死内核自旋锁，或使某条供电轨陷入欠压状态。 评审接受 <strong>权限路径</strong> 的独立性，以及移动操作臂上为该路径供电且具有供电保持能力的电源轨，但仅限于物理故障注入，包括总线饱和、馈电移除和提案任务被终止（F1），因为 C2 只声称权限路径能够承受这些故障。 这些试验是故障账本中的条目，即 <strong><a href="../15_verification/15_verification.html#sec-verification-fault-manifest">故障清单</a></strong> 的经签署确认的故障记录集合。 若权限路径以用户态软件实现，而非隔离的硬实时线程和专用硬件中断线，则评审将链路标记为已断开。</p>
+<p>当攻击成功时，无法通过修改声明描述或插入任意裕量来挽救该案例。 失效的推理依据可追溯至其系统失效，即未表征的物理边界、不充分的数据集或未建模的延迟，缺陷随之返回至所属子系统。 在齿轮箱柔性下失效的电机电流观测器，返回机械规范，表现为磨损极限与运行时柔度估计；而导致安全执行机制延迟的总线争用问题，则交回计算架构处理，表现为内存划分与实时调度。 该案例连同其已明确指出的失效推理依据返回工程团队，只有边界更新、重新推导的制动距离以及重启的验证，才能重新开启仲裁。</p>
+<p>复核也必须反复进行，因为一个曾被接受的案例可能在服务过程中逐渐侵蚀，而没有任何一次会触发新复核的单独变更。 <em>偏差常态化</em> 指称的就是这种侵蚀：那些不会造成危害的异常，最终被解读为可接受的操作噪声，而非反驳安全论证依据的证据<span class="citation" data-cites="leveson2011engineering vaughan1996challenger">(<a href="#ref-leveson2011engineering" role="doc-biblioref">Leveson 2011年</a>; <a href="#ref-vaughan1996challenger" role="doc-biblioref">Vaughan 1996年</a>)</span>（<a href="#ws-release-challenger-experience-base-as-boundary">1.1</a>）。<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> 在移动操作臂上，它会呈现为上文复合反驳在数月间蔓延：定位残差逐渐逼近其容差边缘，因时效问题而拒绝运行被当作扰人的停机而忽视，停机时长略长于试验，以及约束强制执行机制触发在没有追溯复核的情况下被清除。 当阈值被放宽、为吞吐量而削减余量、并在尚未出问题时抑制告警时，签署包络与机器行为之间的差距会不断拉大，直至一次常规扰动耗尽了剩余余量。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-leveson2011engineering" class="csl-entry" role="listitem">
+Leveson, Nancy. 2011年. <em>Engineering a safer world: Systems thinking applied to safety</em>. MIT Press.
+</div><div id="ref-vaughan1996challenger" class="csl-entry" role="listitem">
+Vaughan, Diane. 1996年. <em>The Challenger Launch Decision: Risky Technology, Culture, and Deviance at NASA</em>. University of Chicago Press.
+</div></div><div id="ws-release-challenger-experience-base-as-boundary" class="callout callout-war-story" title="挑战者号与经验作为边界（1986 年）">
+<p></p><details class="callout-war-story fbx-simplebox fbx-default" open=""><summary><strong>War Story 1.1: 挑战者号与经验作为边界（1986 年）</strong></summary><div><strong>背景</strong>：航天飞机的固体火箭发动机由分段组成，其现场装配接头由主 O 型环和次 O 型环密封 <span class="citation" data-cites="rogers1986challenger">(<a href="#ref-rogers1986challenger" role="doc-biblioref">Presidential Commission on the Space Shuttle Challenger Accident 1986年</a>)</span>。 该链条中未出现任何学到的模型。 它所记录的裁决失败，正是本章的裁决所要防止的那一种：在证据并未覆盖的条件下批准发射。<p></p>
+<p><strong>机制</strong>: 发射时的环境温度为 <span class="math inline">\(36^\circ\text{F}\)</span>，比任何一次此前的发射低 15 华氏度。 O 形环的回弹能力随温度降低而下降，而冷态 O 形环恢复形状的速度过慢，无法跟上点火压力张开时接头间隙的变化。 发射前夕，该发动机承包商莫顿·索科洛（Morton Thiokol）的工程师建议，不要低于 <span class="math inline">\(53^\circ\text{F}\)</span> 的温度发射，该温度是此前最冷一次飞行中 O 形环的温度，其接头迄今表现出最严重的泄漏。 这一限值来自飞行经验，而非经过验证的定量界限。 NASA 管理者则援引适用于推进剂整体温度而非密封件温度的鉴定温度条件予以反驳。</p>
+<p><strong>影响</strong>：右助推器后部现场装配接头发生燃烧气体泄漏，始于点火或点火稍后，削弱或穿透了外部贮箱。 飞行器在发射约 73 秒后解体，七名机组人员全部遇难。</p>
+<p><strong>响应</strong>：委员会将失败归因于“一项对若干因素不可接受地敏感的有缺陷设计”，温度头位列于这些因素之首。 它建议更换该接头，并要求新设计通过“覆盖全部运行条件（包括温度）”的试验予以认证。</p>
+<p><strong>系统教训</strong>：Thiokol 管理层在 NASA 马歇尔航天飞行中心（Marshall Space Flight Center）的敦促下，推翻了其工程师的建议。 Thiokol 工程副总裁作证称：“我们必须向他们证明我们尚未做好准备。”举证责任已从在证据范围内证明接头安全，转移到在证据范围外证明其不安全，而那里并无数据存在。 发布裁决将举证责任保留在包络三分法所置之处。 证据范围之外的条件，例如低于全部飞行经验的密封温度，属于未知，而裁决拒绝它。</p>
+</div></details>
+</div>
+<div class="no-row-height column-margin column-container"></div><p>Tempe 的接管前提（<strong><a href="../01_boundary/01_boundary.html#sec-boundary-when-fails">当边界失效时</a></strong>）属于同一种条件，而 <strong><a href="../14_intervention/14_intervention.html#sec-intervention-failure-modes">交接出错</a></strong> 提出了它所引发的操作者监控问题。 依赖此类前提的发布，必须将其响应（拒绝或采用受限案例）与其经过测试的物理极限绑定在一起。</p>
+</section>
+<section id="sec-release-manifest" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-release-manifest">《发布清单》</h2>
+<p>发布裁决需要一份签署的制品，记录该决定、物理条件与有效期。 该制品即 <strong>发布清单</strong>，是不可变记录，它将验证账本绑定到首席系统裁决者的签署裁决，并在运行镜像或证据与其摘要不再一致时拒绝运动。<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> 它通过根摘要消费故障账本，并将三条进一步记录作为签署论证图的证据叶：<strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-log">《控制权限日志》</a></strong> 的权威记录、<strong><a href="../13_placement/13_placement.html#sec-placement-hardware-allocation">硬件分配</a></strong> 的部署记录，以及 <strong><a href="../07_evaluation/07_evaluation.html#sec-evaluation-logs">评估日志</a></strong> 的评估记录。 除此之外，它还加入主张根、论证摘要、镜像摘要、校准参考、裁决、其持续条件、漂移预算与有效期。 镜像摘要涵盖策略权重、约束强制执行机制在其两种执行记录配置（普通配置与 <code>COND</code> 情形下加载的受限配置）（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-telemetry">执行记录</a></strong>）中的逻辑，以及实时内核。 运行小时数与循环次数的生命周期预算与日历到期日并列，裁决者的签名覆盖整条记录。 证据链接必须在授予权限之前解析到已审查的记录版本。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>字节布局：</strong> 发布清单的字段、类型与摘要见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems-wire-release">Release manifest</a></strong>。</p>
+</div></div><p><a href="#fig-16-release-record" class="quarto-xref">图&nbsp;3</a> 将认证与物理状态检查置于任何运行许可之前，并在电机驱动功率级通电前以固定顺序执行这些检查。 每项检查都只能拒绝。 它首先验证裁决者的密钥链（由硬件根锚定）及其撤销状态，然后验证清单签名、有效期与生命周期预算，以及每个活动镜像的摘要，因此任何被修改的权重文件或约束强制执行机制的比特流都会拒绝授权。 它接着对完整的故障账本进行认证，该账本中逐条签名的记录以单一根摘要进入清单，同时还包括校准参考。 仅凭摘要既不能确立记录有效性，也不能确立测试充分性，因此该门控还会逐一核验各条记录的签名，以及账本相对于已复核证据索引的完整性。 常设条件排在最后：已知为假的或未知的前提，会像签名不良一样坚决拒绝，同时保留其自身记录的成因。 只有当所有检查全部通过时，门控才会加载已签署的运行包络；即便如此，约束强制执行机制仍会逐一检查每个拟议动作。<a href="#tbl-16-release-authorization" class="quarto-xref">表&nbsp;5</a> 给出了结果。 校准过期是区分二者的情形，因为它拒绝整个用例，而仅在另有单独签署的受限用例恰好覆盖该状态时，才支持 <code>COND</code>。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>协议：</strong> 门控的分步授权协议见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems-release-protocol">Release-gate protocol</a></strong>。</p>
+</div></div><div id="fig-16-release-record" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" alt="自左向右的发布路径：签署用例、对密钥链、镜像和故障账本的认证，然后是当前物理有效条件检查。 认证失败，或前提为虚假或未知，将导致 REFUSE、关闭授权，并采用经评估的兜底方案。 有效用例将导致 UNCOND 或 COND，并附带已签署的运行包络以及对每个提议动作的独立检查。 过期的校准需要一份单独认证的受限用例。" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16-release-record-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig16_release_record.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="图&nbsp;3: 失效闭合发布管线：已签判决与证据根通过密钥、镜像和完整故障账本认证，随后依次进行当前校准、制动和运行包络检查。 任一检查环节均可拒绝授权。 仅有效的签名完整案例，或单独签名的受限案例，才能进入逐动作强制。 署名：教材制作团队（CC BY-NC-ND 4.0）。"><img src="images/svg/fig16_release_record.svg" class="img-fluid figure-img" style="width:100.0%" alt="自左向右的发布路径：签署用例、对密钥链、镜像和故障账本的认证，然后是当前物理有效条件检查。 认证失败，或前提为虚假或未知，将导致 REFUSE、关闭授权，并采用经评估的兜底方案。 有效用例将导致 UNCOND 或 COND，并附带已签署的运行包络以及对每个提议动作的独立检查。 过期的校准需要一份单独认证的受限用例。"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16-release-record-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: <strong>失效闭合发布管线</strong>：已签判决与证据根通过密钥、镜像和完整故障账本认证，随后依次进行当前校准、制动和运行包络检查。 任一检查环节均可拒绝授权。 仅有效的签名完整案例，或单独签名的受限案例，才能进入逐动作强制。 署名：教材制作团队（CC BY-NC-ND 4.0）。
+</figcaption>
+</figure>
+</div>
+<div id="tbl-16-release-authorization" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-16-release-authorization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;5: <strong>发布授权真值表</strong>: 受限模式是一种独立的认证声明，绝不可作为对完整情形的未签名降级。
+</figcaption>
+<div aria-describedby="tbl-16-release-authorization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 42%">
+<col style="width: 20%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">签署用例</th>
+<th style="text-align: left;">证据与状态检查</th>
+<th style="text-align: left;">涵盖陈旧校准的受限情形</th>
+<th style="text-align: left;">门控结果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>UNCOND</code></td>
+<td style="text-align: left;">全部有效且当前</td>
+<td style="text-align: left;">不需要</td>
+<td style="text-align: left;">受执行机制约束的完整<em>提议</em>包络；<code>UNCOND</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>COND</code></td>
+<td style="text-align: left;">所有受限证据均有效且为最新</td>
+<td style="text-align: left;">若校准已过期则纳入</td>
+<td style="text-align: left;">受执行机制约束的已签署受限包络；<code>COND</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>UNCOND</code> 或 <code>COND</code></td>
+<td style="text-align: left;">故障账本根/签名不匹配、过期、镜像不匹配，或存在未知物理前提</td>
+<td style="text-align: left;">任何</td>
+<td style="text-align: left;">运行许可关闭；<code>REFUSE</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>UNCOND</code></td>
+<td style="text-align: left;">校准已过期</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">运行许可关闭；<code>REFUSE</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">单独签署的 <code>COND</code></td>
+<td style="text-align: left;">仅所述校准已过期；受限证据与限值有效</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">受限包络；<code>COND</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>REFUSE</code></td>
+<td style="text-align: left;">任意</td>
+<td style="text-align: left;">任意</td>
+<td style="text-align: left;">运行许可关闭；<code>REFUSE</code></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>每个证据叶节点都需要标识符，用于其原始轨迹、仪器、校准、配置和测试脚本。 测得的时序尾部以分位数形式进入，而硬性响应主张需要单独论证的 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-deterministic-fieldbuses">按时移动指令</a></strong> 界限。 同事的交接准则需要针对指定人体区域代理与几何的载荷传感器时间序列。 关联记录使审计者能够重复测试，并识别出主张停止适用的位置。</p>
+<p>发布清单指明其结论所适用的配置与物理极限。 变更后的策略权重文件、实时优先级、驱动器或未经验证的组件修订，都需要新的安全论证，或经明确批准的等效论证。 对于移动操作臂，关节间隙与制动衬片厚度的经签署的磨损限值，来自实测的制动与载荷证据。 运行包络的拒绝条件包括超出其容量的托架负载，由托架载荷传感器监测；以及未经勘察的地面，由现场程序强制(<a href="#tbl-16-odd-invariants" class="quarto-xref">表&nbsp;1</a>)。 清单还将权限路径的隔离、保持供电的电源轨作为常设条件签署，其尺寸依据 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong> 给出，并以保持供电存储的容量自检在每次上电时门控放行。 当实测条件越过经签署的限值时，权限路径在其规定的检测与响应时间内撤销跟踪，并下达评估后的回退指令。</p>
+<p>现场遥测记录扭矩残差、回路时序与安全约束强制执行机制的保护触发，用于漂移审查；而权限路径按工厂要求的节奏检查经签署的实时阈值。 在计划检查中测得的制动响应超出已签署的安全净空距离预算，或校准数据过期，都会撤销当前结论；重新安装较早的已签署映像也无法恢复磨损的制动。 除非另有单独签署的 <code>COND</code> 案例覆盖该物理状态，否则工厂采用其评估出的停车结果，并等待维护与重新裁决（<a href="#tbl-16-release-authorization" class="quarto-xref">表&nbsp;5</a>）。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 发布清单中尚未解决的前提，会成为 <strong><a href="../17_frontier/17_frontier.html#sec-frontier-residual-claims-register">残余主张登记表</a></strong> 的残余主张登记册中的条目。</p>
+</div></div><p>本章中的每一次拒绝都以评估出的停车告终，而这预设了“停车的机器是安全的”，这一预设对一台在停车时坠落的机器（<a href="#capstone-release-humanoid-crucible">1.1</a>）而言并不成立。</p>
+<div id="capstone-release-humanoid-crucible" class="callout callout-perspective" title="当移除扭矩导致损害时">
+<details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.1: 当移除扭矩导致损害时</strong></summary><div>
+<p><strong>问题</strong>：当移除扭矩导致损害时，适用哪一结论？</p>
+<p>静止的制动底座不储存任何可能传递到同事处的能量，而直立的人形机器人则把危险藏在自己的姿态里。 没有任何结论——甚至不是 <code>REFUSE</code>——能在不声称其坠落防护响应有效的前提下，代表该人形机器人。</p>
+<ul>
+<li><strong>直立双足机器人上的安全力矩关闭，本身就是一次坠落。</strong> 移除电机力矩的驱动系统功能（<strong><a href="../04_nervous/04_nervous.html#sec-nervous-actuation-authority">执行权限</a></strong>）会使机器人的质量从站立高度坠落，因此没有任何经签署的结论可以将其力矩移除认定为该人形机器人的评估停止。</li>
+<li><strong>坠落防护响应本身就是一种执行动作。</strong> 下蹲、迈步，或在动力驱动下将机器人降至地面，都属于需要自身主张、自身证据，并在故障集合中占有一席之地的指令运动。 一个 <code>REFUSE</code> 结论仍然依赖于使机器人保持站立的那部分机器。</li>
+<li><strong>磨损撤销了行走许可。</strong> 鞋底摩擦与关节间隙漂移超出了坠落防护证据所假定的限值，而跨越经签署的磨损限值会在该许可所依赖的防护响应失效之前，先行撤回行走许可。</li>
+</ul>
+</div></details>
+</div>
+<div id="chk-release-student-verdict" class="callout callout-checkpoint" title="从你自己的测量中推导结论">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 1.3: 从你自己的测量中推导结论</strong></summary><div>
+<p><a href="#tbl-16-cond-measurements" class="quarto-xref">表&nbsp;4</a> 不含任何实测值，因为本书没有。 填入你自己的数值，来自你可以测试的机器上的试验，或来自你选定的数字，并推导它们所支持的结论：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>分级数值</strong>：对每一行，记录你的数值及其来源，并将前提分级为实测、数据手册、示意或未知。 你选定的数字分级为示意，制造商的额定值分级为数据手册；实测意味着你自己的试验，或你引用的已发表测量。</label></li>
+<li><label><input type="checkbox"><strong>结论推导</strong>：<code>COND</code> 情形要求其依赖的每一个前提都分级为实测，因此任何依赖前提被分级为其他级别的表格仍然只支持<code>REFUSE</code>。 重新根据你自己的数值计算基座预算与余量。 如果所有依赖的前提都已测量，请指明该 <code>COND</code> 论证所签署的运行包络，以及使常规模式保持未签署的前提。 如果其中任何一项未测量，请推导出若这些数值已测量，表格<em>将会</em>支持的结论，并将该结论标注为假设性。</label></li>
+<li><label><input type="checkbox"><strong>制品标签</strong>：将已填写的表格标记为你的作品，其数值不授权任何机器。</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-release-fallacies-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="sec-release-fallacies-pitfalls">谬误与陷阱</h2>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>统计覆盖度替代了确定性的架构依据。</em></p>
+<p>一个团队以数百万模拟小时和数千次无事故循环作为其发布论据。 该记录提供了关于受测条件的证据，但要证明发布主张所命名的灾难性故障率，可能需要超过任何排期所能提供的物理暴露量（<strong><a href="../07_evaluation/07_evaluation.html#sec-evaluation-trial-limits">物理试验极限</a></strong>）。 模拟还保留了其物理模型的假设，例如理想化的库仑摩擦或无限刚性的齿轮箱。 发布论证必须说明架构性强制（例如一条独立的权限路径，用于撤销运动并命令经校验的停止）如何约束有害的策略行为，并且必须为该机制在其所声明的假设下提供证据。 经验性能与架构性保证回答的是不同问题；较大的试验次数无法替代连接执行器权限与物理极限之间缺失的论证。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>发布裁决是对安全性的永久认证。</em></p>
+<p>机器通过验证并在签署的安全论证下进入生产。 随着时间的推移，刹车片磨损使制动距离变长，运动学标定因热循环而漂移，光学污染会劣化感知。 软件可以保持不变，而支撑该发布的物理假设却失效。 发布清单需要维护要求和失效触发条件，并与相关生命周期计数器或实测漂移绑定，并规定这些条件失效时的限制。 签名记录了对一次有界发布决策的责任；它并不使被测对象的硬件能力永久有效。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱</strong>：<em>依赖未明确陈述的环境假设来支撑安全主张</em>。</p>
+<p>团队在光线充足的通道、洁净的地面上验证了移动底座的制动性能，其安全论证说明了地面的摩擦系数，却从未说明照明条件。 昏暗通道则会因运行时检查恰好看到的图像陈旧度（<a href="#sec-release-safety-cases-claims" class="quarto-xref">节&nbsp;1.3</a>）而损失服务，又因定位误差未被任何检查捕捉的较弱特征匹配而损失安全余量，相对于由光线充足条件下的试验所确定的余量（<a href="#sec-release-adversarial-review" class="quarto-xref">节&nbsp;1.7</a>）。 机械制动完全按测试表现，所有诊断读数均正常，而制动距离预算中的剩余余量却在缩小。 安全论证必须说明其主张所依赖的环境条件，并解释运行如何始终处于这些条件之内。 当监控能够检出违规时，必须触发已定义的限制或回退；未声明的假设既不提供可测试的放行条件，也不提供可用的运行时边界。</p>
+</div>
+</section>
+<section id="sec-release-summary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-release-summary">摘要</h2>
+<p>生产性发布将 主张—论证—证据安全论证 与实测运行包络、签名化配置以及可撤销运动权限的路径绑定在一起。 签名确立了经授权的安全论证；运行时检查则判定其物理前提是否仍然成立。</p>
+<div id="callout-takeaways*-1.2" class="callout callout-takeaways" title="部署发布与可辩护的安全论证">
+<details class="callout-takeaways fbx-simplebox fbx-default" open=""><summary><strong>要点回顾: 部署发布与可辩护的安全论证</strong></summary><div>
+<ul>
+<li><strong>包络限定了主张的范围：</strong> 发布主张仅涵盖已收集证据所对应的速度、载荷、地面、净空和接触情形；并且，包络的每一个维度都需要一个运行时监控器，或一套使机器保持在包络之内的现场规程。</li>
+<li><strong>最弱的分支决定结论：</strong> 主张—论证—证据树并非取平均。 单一分支的高精度无法抵消另一分支缺失的论证依据，因此裁决者寻找的是：其失效将允许危害发生的唯一前提。</li>
+<li><strong>未知前提会被拒绝：</strong> 未知的包络归属被视为包络之外，而标记为 <code>INVALID</code> 或 <code>UNOBSERVABLE</code> 的试验不提供任何证据。 在本书的示例输入中，每个主张都带有此类前提，因此移动操作臂的裁决结果为 <code>REFUSE</code>。</li>
+<li><strong>拒绝是一项可交付成果：</strong> 拒绝会指明能够解除该拒绝的测量，例如带载停车试验和最不利负载下的强制约束机制时序，以及每项结果所留下的限制，包括机器上没有任何测量能够闭合的润滑油膜。</li>
+<li><strong>没有任何结论会移动提案边界：</strong> 在 <code>UNCOND</code> 和 <code>COND</code> 下，策略只提出动作，强制约束机制才准入每个动作。 受限模式需要其自身经签署的安全论证，绝不以未签署降级替代。</li>
+<li><strong>清单随其证据一同失效：</strong> 发布清单通过摘要绑定评估、部署、授权和故障记录，任何一处不匹配即拒绝运动。 磨损与漂移会撤销该授权，而软件回滚无法恢复已改变的被控对象。</li>
+</ul>
+</div></details>
+</div>
+<p>第四条法则（<strong><a href="../01_boundary/01_boundary.html#sec-boundary-bedrock-laws">四条基石定律</a></strong>），以原则 <a href="https://mlsysbook.ai/vol4/parts/governing_principles.html#pri-vol4-evidence-bounds-authority" title="英文原版参考内容">Evidence bounds authority</a> 表述，依据已记录证据授予授权，并使其随该证据一同失效，而现行条件正是该失效转化为机制之处。 每项持续有效条件都将一个前提与一个检测器、一项检查频率和一项响应措施配套，因此，可能支持对移动操作臂作出有条件裁决的带载制动试验，一旦签署，便成为授权所依据的证据，而该证据失效将终止该裁决的效力。 在这本书的记录中，授予从未到来，因为六项主张中的每一项都建立在一个仍属示例性或未知的前提上。 手动操作授权租约使操作者的权限受其所依据证据的时效约束（<strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-transitions">权威权移交</a></strong>），而预先承诺则将一次试验的结论绑定到证据到来之前确定的规则（<strong><a href="../15_verification/15_verification.html#sec-verification-oracles-acceptance">故障预言机与验收</a></strong>）。 发布是本书给予的最宽授权，即便如此，准入仍低于提案边界。</p>
+<div id="callout-chapter-connection*-1.3" class="callout callout-chapter-connection" title="从被拒绝的发布，到证据所支持的内容">
+<p></p><details class="callout-chapter-connection fbx-simplebox fbx-default" open=""><summary><strong>后续内容: 从被拒绝的发布，到证据所支持的内容</strong></summary><div>哪些前提没有任何证据可以关闭？ 命题 C3 是最为平直的情形。 对机器的任何测量都无法排除其背后的油膜，用同样的传感器增加试验次数也无法改变这一点；只有新的换能器、地面油膜探测器才可能做到。 因此，条件性放行把该条件留在了签署包络之外，而非予以了结。 结论 <strong><a href="../17_frontier/17_frontier.html#sec-frontier">认识论前沿</a></strong> 回到本书开篇提出的问题，以证据支持的内容作答，并逐条纳入本次发布遗留未决的前提，其中油膜居首，并附可将其关闭的检验，登记于剩余安全主张登记表中。<p></p>
+</div></details>
+</div>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a><div id="quarto-appendix" class="default page-columns page-full"><section id="footnotes" class="footnotes footnotes-end-of-document page-columns page-full" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">脚注</h2>
+
+<ol>
+<li id="fn1"><p><strong>ISO/TS 15066 生物力学限值</strong>: 该规范给出与身体区域和接触类型相关的力与压强数据 <span class="citation" data-cites="isots15066">(<a href="#ref-isots15066" role="doc-biblioref"><em>ISO/TS 15066</em> 2016年</a>)</span>。 现场评估必须选定适用的身体区域、接触几何形状和测量方法。 此处采用的交接判据是保守情形判据，而非通用的 ISO/TS 15066 阈值或伤害边界。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>接触力学力模型</strong>: 弹性动力学模型将平动动能、有效运动惯量与接触界面刚度耦合起来，以确定未缓解碰撞过程中的瞬态峰值撞击力。 撞击刚性边界会将储存的动能集中为亚毫秒级的冲量，并产生严重的力放大；而弹性顺应性则延长变形时间，并在更长的行程中耗散能量。 关于形式化的弹性动力学推导和单侧接触公式，参见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-contact">Rigid Body Contact Mechanics</a></strong>。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><strong>Goal Structuring Notation</strong>：由约克大学 Tim Kelly 开发，GSN 为构建与审计安全保证论证提供了明确的图形语法<span class="citation" data-cites="kelly1998arguing kelly2004goal">(<a href="#ref-kelly1998arguing" role="doc-biblioref">Kelly 1998年</a>; <a href="#ref-kelly2004goal" role="doc-biblioref">Kelly 和 Weaver 2004年</a>)</span>。 该记号将顶层安全目标分解为语境性子主张、论证策略，以及基于测试工件的解决方案。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><strong>机械疲劳预算</strong>：Miner 规则之类的累积损伤模型（<span class="math inline">\(\sum_i n_i/N_i\)</span>）可将实测载荷谱与部件特定的疲劳数据组织起来；它只是一种近似，而非普遍失效期限。 评估载荷、不确定性、检验证据与停机后果，共同决定任何签署的载荷降额与循环限值。 一项已失效的限值撤销适用的放行安全论证，而不是静默地延长服务。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><strong>硬件看门狗互锁</strong>: 看门狗可以检测错过的配置心跳。 一条独立接线的监督器随后请求已验证的驱动器停止；检测器、接线、驱动器、制动器和负载响应全部进入时序与故障分析。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><strong>反射转子转动惯量于碰撞动力学</strong>：齿轮关节可将转子转动惯量近似地以 <span class="math inline">\(N^2J_{\rm rotor}\)</span> 的形式反射到关节坐标。 其在接触点的贡献还取决于连杆几何与柔顺性。 理想的一维计算排除了该贡献与制动扭矩上升；机器放行案例在将其力结果视为物理最大值之前，需要先给出实测或建模的界限。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><strong>片上系统资源共享</strong>: 片上系统（SoC）将处理器核心、加速器、内存控制器和外围总线集成在一块芯片上，因此共享其互连与缓存的神经推理与实时监控器会相互争夺这些资源，除非通过布局分区将它们分开。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><strong>摆线轮系动力学</strong>: 摆线减速器利用偏心凸轮和滚动销，以很小的背隙实现高减速比。 滚动接触磨损会提高其扭转柔度，并在电机与连杆之间引入相位滞后，从而延迟制动响应并抬高峰值接触力。<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p><strong>反复侵蚀被接受为风险</strong>: 总统航天飞机挑战者号事故调查委员会 <span class="citation" data-cites="rogers1986challenger">(<a href="#ref-rogers1986challenger" role="doc-biblioref">Presidential Commission on the Space Shuttle Challenger Accident 1986年</a>)</span> 发现，O 型环侵蚀和燃气窜漏现象在更早的飞行中已经反复出现，并且 NASA 与发动机承包商“接受了不断升级的风险，似乎是因为他们‘上次没有为此付出代价’”。<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><strong>密码学清单与硅片认证</strong>：OTP/eFuse 存储可以锚定验证密钥或其摘要。 可变签名清单与镜像哈希位于受保护存储中；TPM PCRs 累积实测启动状态，而非直接存储结论。 验证失败时，撤销授权并执行已评估的停止。 第二个软件存储分区仅在具备其自身有效签名、发布案例和当前物理状态条件时，才是合格的备用方案。<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><div id="ref-isots15066" class="csl-entry" role="listitem">
+<em>ISO/TS 15066: Robots and Robotic Devices, Collaborative Robots</em>. 2016年. International Organization for Standardization.
+</div><div id="ref-kelly1998arguing" class="csl-entry" role="listitem">
+Kelly, Timothy Patrick. 1998年. <span>《Arguing Safety: A Systematic Approach to Managing Safety Cases》</span>. Phdthesis, Department of Computer Science, University of York.
+</div><div id="ref-kelly2004goal" class="csl-entry" role="listitem">
+Kelly, Tim, 和 Rob Weaver. 2004年. <span>《The Goal Structuring Notation: A Safety Argument Notation》</span>. <em>Proceedings of the Dependable Systems and Networks Workshop on Assurance Cases</em>.
+</div><div id="ref-rogers1986challenger" class="csl-entry" role="listitem">
+Presidential Commission on the Space Shuttle Challenger Accident. 1986年. <em>Report of the Presidential Commission on the Space Shuttle Challenger Accident</em>. U.S. Government Printing Office.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8084\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol4_zh/15_verification/15_verification.html" class="pagination-link" aria-label="第15章 · 对抗性验证">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第15章 · 对抗性验证</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol4_zh/17_frontier/17_frontier.html" class="pagination-link" aria-label="第17章 · 认识论前沿">
+        <span class="nav-page-text">第17章 · 认识论前沿</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《物理人工智能系统》第四卷 · 简体中文本地版 · 仅17章正文</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

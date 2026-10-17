@@ -1,0 +1,2410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>物理人工智能系统 · 第四卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol4_zh/10_intent/10_intent.html" rel="next">
+<link href="../../vol4_zh/08_perception/08_perception.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6ab868a96f80aa23e8049a4baf7b30f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+
+<style id="zh-web-layout">#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">物理 AI · 第四卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/books/mlsys/"> 
+<span class="menu-text">三卷书架</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">本卷首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol4_zh/01_boundary/01_boundary.html"> 
+<span class="menu-text">因果边界</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol4_zh/09_memory/09_memory.html">空间记忆</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/01_boundary/01_boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">因果边界</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/02_body/02_body.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理身体</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/03_brain/03_brain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认知脑</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/04_nervous/04_nervous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/05_data/05_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理数据</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/06_training/06_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">策略训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/07_evaluation/07_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">闭环评估</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/08_perception/08_perception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">传感器感知</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/09_memory/09_memory.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">空间记忆</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/10_intent/10_intent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">立足物理世界的意图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/11_planning/11_planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹规划</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/12_enforcement/12_enforcement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">安全执行</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/13_placement/13_placement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硅片布局</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/14_intervention/14_intervention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">监督性干预</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/15_verification/15_verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">对抗性验证</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/16_release/16_release.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署发布</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/17_frontier/17_frontier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认识论前沿</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-memory" id="toc-sec-memory" class="nav-link active" data-scroll-target="#sec-memory">空间记忆</a>
+  <ul>
+  <li><a href="#sec-memory-preserving-belief" id="toc-sec-memory-preserving-belief" class="nav-link" data-scroll-target="#sec-memory-preserving-belief">保留空间信念</a></li>
+  <li><a href="#sec-memory-handoff" id="toc-sec-memory-handoff" class="nav-link" data-scroll-target="#sec-memory-handoff">记忆所交接的内容</a></li>
+  <li><a href="#sec-memory-state-epoch" id="toc-sec-memory-state-epoch" class="nav-link" data-scroll-target="#sec-memory-state-epoch">状态具有纪元</a></li>
+  <li><a href="#sec-memory-reference-frames" id="toc-sec-memory-reference-frames" class="nav-link" data-scroll-target="#sec-memory-reference-frames">变换如何失效</a></li>
+  <li><a href="#sec-memory-scene-attention-buffers" id="toc-sec-memory-scene-attention-buffers" class="nav-link" data-scroll-target="#sec-memory-scene-attention-buffers">场景记忆能够证明什么</a></li>
+  <li><a href="#sec-memory-belief-through-occlusion" id="toc-sec-memory-belief-through-occlusion" class="nav-link" data-scroll-target="#sec-memory-belief-through-occlusion">遮挡下的信念</a></li>
+  <li><a href="#sec-memory-state-estimation-bounds" id="toc-sec-memory-state-estimation-bounds" class="nav-link" data-scroll-target="#sec-memory-state-estimation-bounds">当估计器无法知晓时</a></li>
+  <li><a href="#sec-memory-failure-modes" id="toc-sec-memory-failure-modes" class="nav-link" data-scroll-target="#sec-memory-failure-modes">信念如何出错</a></li>
+  <li><a href="#sec-memory-spatial-state-schema" id="toc-sec-memory-spatial-state-schema" class="nav-link" data-scroll-target="#sec-memory-spatial-state-schema">空间状态模式</a></li>
+  <li><a href="#sec-memory-fallacies-pitfalls" id="toc-sec-memory-fallacies-pitfalls" class="nav-link" data-scroll-target="#sec-memory-fallacies-pitfalls">谬误与陷阱</a></li>
+  <li><a href="#sec-memory-summary" id="toc-sec-memory-summary" class="nav-link" data-scroll-target="#sec-memory-summary">摘要</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">空间记忆</h1></header>
+
+
+<header>
+
+
+</header>
+
+
+<section id="sec-memory" class="level1 page-columns page-full">
+<h1>空间记忆</h1>
+<div class="{layout-narrow} page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
+
+</div></div><p><a href="images/webp/cover_memory_blueprint_labeled.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/webp/cover_memory_blueprint_labeled.webp" class="img-fluid" alt="等距蓝图展示持久空间记忆：分层八叉树 3D 体素网格，含新鲜观测更新、磨砂玻璃遮挡分隔面、悬浮空间信念衰减不确定性光晕、圆柱形时间租赁账本，以及深红色陈旧 词元 淘汰盆地。"></a></p>
+</div>
+<section id="目的" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="目的">目的</h2>
+<p><em>传感器失去对物体的视线后，空间信念多久会演变为危险的虚构？</em></p>
+<p>障碍物一旦移动到遮挡屏障之后，仍长期构成关键物理约束。 机器必须记住障碍物的存在，但其记录状态随时间推移，可靠性迅速衰减。 将过期观测当作真值，风险在于规划轨迹穿过已被占用的物理空间；而立即丢弃该记录，则会抹去真实存在的危险。 因此，空间记忆必须同时跟踪状态估计，以及显式的不确定性增长模型。 传感器捕获年龄、里程计漂移和坐标系标定，决定了被记住的实体是否仍然有效、可以授权运动。</p>
+<p>软件故障（如冻结的坐标系变换或静默的跟踪丢失）可能欺骗性地呈现过期估计为新鲜数据。 稳健的记忆系统必须强制实施有界的信念过期：在不确定性扩张超出可用净空包络之前撤回提案授权，同时不得错误地假定未被观测的区域是自由空间。 在物理人工智能架构中，记忆在提议边界之上填充大脑的世界模型，而边界之下的确定性许可路径则验证每条轨迹都严格依赖未过期、已认证的空间边界。</p>
+<div style="page-break-after: always;"></div>
+<div id="callout-learning-objectives*-1.1" class="callout callout-learning-objectives">
+<details class="callout-learning-objectives fbx-simplebox fbx-default" open=""><summary><strong>学习目标</strong></summary><div>
+<ul>
+<li>指定信念记录，将证据年龄与估计年龄分开，并包含参考坐标系、不确定性与有效区域</li>
+<li>依据有界的误差增长与任务的物理容差设定信念过期时间</li>
+<li>通过各表示能够认证的空隙信息来比较空间表示</li>
+<li>设计空间更新，以保留证据年龄，并区分缺失观测与已验证的自由空间</li>
+<li>诊断那些通过新鲜度与新息检查的冻结变换、幽灵轨迹与不可观测漂移</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-memory-preserving-belief" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-memory-preserving-belief">保留空间信念</h2>
+<p>记忆寄存器可以在它所描述的世界发生移动时，精确地保留记录。 当仓库移动操作臂逼近存储货架末端时，货架会遮挡导航相机所见的横向通道，而相机此前在那里所见的一切如今仅存于记忆中。 一个已离开视野、位于货架末端之外的人可以走进该记录所称的“空”空间，而用新的软件时间戳重新发布该记录，也无法恢复已经丢失的物理证据。 因此，空间记忆必须把最后一次测量时间和误差增长规则带入运动许可决策。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 观测年龄与校准后的空间协方差在 <strong><a href="../08_perception/08_perception.html#sec-perception-observation-contract">观测契约</a></strong> 中生成。</p>
+</div></div><p>物理机器不能仅依赖原始感官观测或静态记忆寄存器。 它需要一个 <strong>信念状态</strong>，即由历史感官证据向前传递的物理状态估计，并与不断扩张的不确定性模型显式耦合。<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 感知提供带时间戳、经过标定的观测（如 <strong><a href="../08_perception/08_perception.html#sec-perception-handoff">感知交付的内容</a></strong> 所述）。 空间记忆必须确定该观测结合动态运动模型后，还能继续授权物理动作多长时间，直到不确定性耗尽机器的剩余裕度。</p>
+<p>作为第三部分四个提案侧阶段中的第二个，位于感知与意图之间，<strong>空间记忆</strong> 将几何与物理状态估计跨越传感器中断、遮挡和可变处理延迟向前传递。 它位于提案边界之上（<strong><a href="../01_boundary/01_boundary.html#sec-boundary-machine-model">《五层机器》</a></strong>），因此被记住的状态可以影响一个提案，却无法证明其自身的新鲜度；许可路径会依据其自身时钟检查证据的年龄。</p>
+<p>在软件系统中，数据年龄通常以消息被序列化、经由进程间总线发布，或更新在共享内存表中的时刻为基准计算。 在物理人工智能系统中，这一惯例是危险的。 通过扩展卡尔曼滤波在 <span class="math inline">\(1\text{ kHz}\)</span> 处传播一个状态估计，或以 <span class="math inline">\(200\text{ Hz}\)</span> 的频率重新发布一个属于 <span class="math inline">\(SE(3)\)</span> 的运动学变换，都会产生一串新鲜软件时间戳，但它并不会刷新其背后的物理信息。 一个信念的真实年龄，严格由约束它的最后一次物理测量的证据时刻 <span class="math inline">\(t_0\)</span> 决定。 下游追踪回路若读取由航位推算或策略 rollout 生成的位置估计，可能只观察到一条距当前仅 <span class="math inline">\(2\text{ ms}\)</span> 的发布时间戳，而物理误差界却仍以未观测漂移的速度持续放宽。 对推理输出或缓存查找进行时间戳记录，只记录了计算发生的时间，却未告诉接收方现实世界最后一次被检查的时间。</p>
+<p>仅凭记忆完整性无法确立几何有效性<span class="citation" data-cites="durrant2006simultaneous">(<a href="#ref-durrant2006simultaneous" role="doc-biblioref">Durrant-Whyte 和 Bailey 2006年</a>)</span>。 为防止机器依据过期数据采取行动，记忆系统必须将过期视为显式的接口事件。 每个信念都带有一个截止时间（在 <a href="#sec-memory-belief-through-occlusion" class="quarto-xref">节&nbsp;1.6</a> 中推导），即其声明的误差界达到任务物理余量的时刻。 在该截止时间，该信念不再支持运动，许可路径会拒绝任何仍依赖它的提议，并选择一个可行的回退方案。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-durrant2006simultaneous" class="csl-entry" role="listitem">
+Durrant-Whyte, Hugh, 和 Tim Bailey. 2006年. <span>《Simultaneous Localization and Mapping: Part <span>I</span>》</span>. <em>IEEE Robotics &amp; Automation Magazine</em> 13 (2): 99～110. https://doi.org/10.1109/MRA.2006.1638022.
+</div></div><p>一个必须自行声明失效时间的信念，必须携带的不仅是它的数值，因此第一个交接问题是：当传感器失去对物体的观测后，消费者需要哪些信息来评估一个已存储的数值。</p>
+</section>
+<section id="sec-memory-handoff" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-memory-handoff">记忆所交接的内容</h2>
+<p>一个未经标注的向量，例如 <span class="math inline">\([0.142, -0.051, 0.812]\)</span>，经由实时总线传输时，无法传达它所描述的物理实体是什么、所表示的物理维度是什么，以及该量采用了何种标度。 因此，交给消费者的信念不能是一组裸露的浮点数数组。 它是对物理输入的一种衰减性解释，必须携带其时间戳、物理不确定性与参考系，才能保持可用。 一个接收原始坐标的下游控制器，若缺少元数据，就必须依赖在编译时确立的隐式约定。 若估计器输出以米为单位的位置，而执行器控制器却期望毫米，或者角速度被误当作绝对姿态，那么由此产生的指令将以千倍量级的跟踪误差被记录，进而将电机电流推至执行器热极限，即 <strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong> 所述的热极限。 为避免在 <strong><a href="../01_boundary/01_boundary.html#sec-boundary-causal-boundary">因果边界</a></strong> 所确立的因果边界两侧产生误读，一条信念记录必须先给出实体标识、物理量以及测量单位。 消费者必须能够核实该数值表示某个工件的质心（单位为米），或指尖上的法向接触力（单位为牛顿），才能将该数值送入控制律。</p>
+<p>仅指定物理量与单位仍属不完整，除非将该数值绑定到具体的参考系。 相同的空间坐标，依据坐标系的原点和取向不同，所描述的物理现实可能截然不同。 同一个笛卡尔位置 <span class="math inline">\([0.142, -0.051, 0.812]\text{ m}\)</span>，在机器人基坐标系 下表示悬浮于自由空间中的某一点，而在工具法兰坐标系 下则表示位于刚性夹具内部数百毫米处的某一点。 由于运动学连杆会弯曲、关节会移动，且坐标变换以不同速率更新，信念记录必须携带显式的坐标系标识。 携带坐标系后，接收节点可以查找对应的空间变换树，并将存储的几何量投影到执行器所需的局部坐标系中，从而避免控制器依据运动学链移动造成的几何错位而动作。</p>
+<p>几何与身份描述的是某一时刻的物理状态，但记忆还必须捕捉该状态的时间锚点。 该记录承载了约束该估计的物理交互或光学曝光的最近证据纪元 <span class="math inline">\(t_0\)</span>。 在分布式架构中，中间节点常常转发数据、执行卡尔曼滤波预测步骤，或运行正向运动学传播以维持高更新频率控制流，但这些都不构成物理证据。 因此，该字段必须原样通过每一个转发、滤波和预测环节，使消费者依据物理世界而非本地计算机的调度频率来衡量信息的年龄。</p>
+<p>生成这一锚定信念依赖于 <strong>多传感器状态估计</strong>——无论是通过递归扩展卡尔曼滤波（EKF）、无迹卡尔曼滤波（UKF）<span class="citation" data-cites="kalman1960new">(<a href="#ref-kalman1960new" role="doc-biblioref">Kalman 1960年</a>)</span>，还是非线性因子图优化（平滑与映射，SAM）来实现——这是一门成熟的数学学科，其运行角色是将异步、异构的传感器观测（例如高采样率惯性测量单元加速度、车轮编码器脉冲和低更新率视觉观测）映射为被控对象的潜在物理状态的最小充分统计量。 物理人工智能架构将这一融合管线内部的数值机制，抽象在空间信念契约之后。 下游轨迹规划与安全约束不会重算传感器创新协方差，也不会重新求解因子图；它们只要求状态估计器提供无偏状态向量 <span class="math inline">\(\hat{\mathbf{x}}\)</span>、物理上诚实的不确定性界 <span class="math inline">\(\mathbf{\Sigma}\)</span>，以及约束该状态的测量所对应的真实证据时刻 <span class="math inline">\(t_0\)</span>。 基础的系统性要求并非滤波算法的选择，而是估计器模型必须诚实地跨越盲区间进行过程噪声扩张（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-covariance">Continuous Covariance Propagation and Observability</a></strong> 导出连续误差协方差传播），并在物理可观测性秩塌缩时撤销其有效性状态（<a href="#sec-memory-state-estimation-bounds" class="quarto-xref">节&nbsp;1.7</a>）。</p>
+<div class="no-row-height column-margin column-container"></div><p>知道证据时刻 <span class="math inline">\(t_0\)</span> 可以确定经过时间 <span class="math inline">\(\Delta t = t - t_0\)</span>，但仅凭经过时间无法判定某个信念对给定动作是否有效。 两个年龄相同的估计，其发散速率依物理约束而不同。 机架末端本身固定在地面上，因此无论相机盲视多久，其被记住的位置都保持在机器定位误差范围内；而藏在机架后的人可以以步行速度移动，并在几十毫秒内消耗掉同样的净空。</p>
+<p>消费者评估一个已存储状态所需的最小记录字段，可以直接从“约束当前误差”这一要求推导出来。 设 <span class="math inline">\(E(\Delta t)\)</span> 表示经过时间 <span class="math inline">\(\Delta t = t - t_0\)</span> 后，存储值与真实物理状态之间的差异上界。 若估计器在时间 <span class="math inline">\(t_0\)</span> 给出状态及其初始不确定度上界 <span class="math inline">\(E_0\)</span>，且外部扰动或未建模速度使真实状态以最大速率 <span class="math inline">\(r\)</span> 发散，则当前时间 <span class="math inline">\(t\)</span> 的误差上界服从线性展开 <span class="math inline">\(E(\Delta t) = E_0 + r\,\Delta t\)</span>。 在机架末端，<span class="math inline">\(E_0\)</span> 是机器的定位误差，<span class="math inline">\(r\)</span> 是机架可能隐藏的人的步行速度；<a href="#sec-memory-belief-through-occlusion" class="quarto-xref">节&nbsp;1.6</a> 用于评估该定律。 省略其中任一项，消费者都无法计算 <span class="math inline">\(E(\Delta t)\)</span>，因此初始边界与扩张率都是该记录的结构必需字段。</p>
+<p>通过物理边界与扩张率来表达不确定性，与概率置信度分数相区别，从而区分物理人工智能的信念。 目标检测网络可能输出类别置信度 <span class="math inline">\(0.94\)</span>，但该 softmax 分数并非经过校准的证据（<strong><a href="../03_brain/03_brain.html#sec-brain-cognitive-vulnerabilities">认知脆弱性</a></strong>），下游位置控制器也无法将无量纲概率转换为安全的执行器位移余量（即机械臂在造成碰撞风险之前能够实际移动的距离）。 置信度分数 <span class="math inline">\(0.94\)</span> 不提供关于障碍物边界不确定程度是 <span class="math inline">\(2.0\text{ mm}\)</span> 还是 <span class="math inline">\(200\text{ mm}\)</span> 的任何信息，也无法表明该边界在发生遮挡时移动得有多快。 物理记忆记录必须以具体的物理量纲表达其初始边界 <span class="math inline">\(E_0\)</span> 与扩张率 <span class="math inline">\(r\)</span>，例如米、弧度或牛/秒。 此外，这些扩张率仅在已声明的有效区域内有效，例如最大假设加速度或已验证的接触摩擦系数。 若物理运行条件超出该区域，则扩张率不再成立，信念记录必须被视为无效。</p>
+<p>当记忆移交一个包含值、参考系、证据时刻 <span class="math inline">\(t_0\)</span>、初始界限 <span class="math inline">\(E_0\)</span> 和增长率 <span class="math inline">\(r\)</span> 的元组时，使用方 在将数据应用于物理控制之前执行一个确定性的验证步骤。 使用方拥有一项由物理任务规定的任务容差 <span class="math inline">\(E_{\max}\)</span>。 例如，当机械臂将 夹爪手指引导至笼门锁闩释放槽口时，该槽口的间隙决定 <span class="math inline">\(E_{\max}\)</span>，而位置不确定性必须低于该值。 在读取当前时刻 <span class="math inline">\(t_{\text{now}}\)</span> 的信念记录后，使用方 计算已历时 <span class="math inline">\(\Delta t = t_{\text{now}} - t_0\)</span>，评估当前的误差界限 <span class="math inline">\(E(\Delta t) = E_0 + r \Delta t\)</span>，并将结果直接与 <span class="math inline">\(E_{\max}\)</span> 比较。 若 <span class="math inline">\(E(\Delta t) \le E_{\max}\)</span> 成立，则信念通过该失效检查，可以进入独立的运动许可检查。 否则，从属提案会被拒绝；控制器仅在所选响应仍然可行时，才选择已验证的保持、搜索或停止响应。</p>
+<div id="dfn-memory-spatial-belief-contract" class="callout callout-definition" title="空间信念记录">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.1: 空间信念记录</strong></summary><div>
+<p><strong><em>空间信念记录</em></strong> 是一种带类型的记录，它将已识别的物理量与 SI 单位绑定到参考系、证据和估计时刻、时钟换算、初始误差、增长律、有效区域、失效时间、来源以及生命周期状态。 这些字段使消费者可以在单独的移动权限检查之前评估新鲜度。</p>
+<ol type="1">
+<li><strong>意义</strong>：没有误差界和增长率的状态无法被下游控制器安全评估。 随着时间推移（<span class="math inline">\(\Delta t = t_{\text{now}} - t_0\)</span>），未被观测到的运动或传感器漂移会使空间误差界（<span class="math inline">\(E(\Delta t) = E_0 + r \Delta t\)</span>）变宽。 当该界限超过任务容差（<span class="math inline">\(E(\Delta t) &gt; E_{\max}\)</span>）时，该记录即失效，需要走权限路径来拒绝相关依赖提议并选择可行的已验证响应。</li>
+<li><strong>区别</strong>：与无量纲的分类概率（如 <span class="math inline">\(P(\text{object}) = 0.94\)</span>）不同，空间信念记录提供具有物理依据的度量单位（米、弧度），并具备显式的时间衰减机制。</li>
+<li><strong>常见误区</strong>：依赖外部发布方在遮挡发生时广播失效信号。 若通信通道中断或传感器驱动挂起，下游消费者会在冻结的信念上继续执行开环运动，除非它独立评估该记录的失效。</li>
+</ol>
+</div></details>
+</div>
+<p>评估空间信念记录取决于以物理现实为依据计算经过时间 <span class="math inline">\(\Delta t = t_{\text{now}} - t_0\)</span>。 若消费者无法核实能量转换发生的确切物理时刻，则计算出的误差界限 <span class="math inline">\(E(\Delta t)\)</span> 便成为无锚点的虚构，将软件计算周期误认为物理证据。 定义中提到的估计纪元与时钟换算旨在保护该锚点；而该记录的其余字段，即溯源信息与生命周期状态，将在 <a href="#sec-memory-spatial-state-schema" class="quarto-xref">节&nbsp;1.9</a> 中随模式一同展开说明。</p>
+</section>
+<section id="sec-memory-state-epoch" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-memory-state-epoch">状态具有纪元</h2>
+<p>一个离开物体检测器的位姿，描述的是工件在相机曝光该帧时的位置，而非消息到达时的位置。 因此，每个状态都对应一个特定时刻，即其 <strong>纪元</strong>；一个状态穿越物理流水线时，控制器采取行动之前会携带其中的三个。 <strong>采集纪元</strong> (<span class="math inline">\(t_0\)</span>) 是观测契约 (<strong><a href="../08_perception/08_perception.html#sec-perception-observation-contract">观测契约</a></strong>) 的捕获纪元，即因果边界处能量转换的瞬间，例如光子击中光电二极管阵列，或数字寄存器锁存编码器计数；而信念记录则以该纪元作为其证据纪元。<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> 记忆补充了其后两个纪元。 <strong>估计纪元</strong> (<span class="math inline">\(t_{\text{est}}\)</span>) 标记状态估计器或神经网络完成对这批测量的推理、并将其解析为具体状态主张的瞬间。 <strong>发布纪元</strong> （<span class="math inline">\(t_{\text{pub}}\)</span>）标记序列化消息被提交至传输总线以供分派给下游消费者的时刻。</p>
+<p>将这些三个时间戳折叠为单一接收或传输时间戳，会破坏状态本身的物理有效性。 用发布时刻为位姿打标签，会掩盖其之前全部毫秒级的曝光、读出、推理与调度过程，而重力、动量与接触力在此期间持续作用于物理系统，从未停歇。 该隐藏的数据时龄在运动速度下对应位移量，这一点由 <strong><a href="../08_perception/08_perception.html#sec-perception-photons-to-claims">光子到空间主张</a></strong> 确立；对于基座以驱动速度上限运行时的导航相机，仅发送时刻的年龄就已相当于数厘米的行程，而这一切对只读取发布戳的消费者而言均不可见。 仅记录数据变为可用的时刻的状态，无法告知消费者该测量所代表的物理时刻，因而无法实现时间对齐。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 跨现场总线的硬件时间戳同步已在 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-deterministic-fieldbuses">按时移动指令</a></strong> 中确立。</p>
+</div></div><p>即使系统记录了真实的采集时刻，物理人工智能架构仍依赖分布式的处理节点，其本地振荡器时钟各自独立漂移。 通过标准总线网络同步这些分布式时钟会引入有界的同步误差，该时间不确定性在记录所描述对象的相对速度下转化为空间不确定性。<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <strong><a href="../08_perception/08_perception.html#sec-perception-observation-contract">观测契约</a></strong> 的观察记录已将其作为时钟换算误差携带，由该观察构建的信念也保留这一误差。 每个消费者在判断新鲜度之前，都会将该误差界加到证据年龄上；误差预算则在记录的相对速度下分配该误差界所覆盖的距离，并同时考虑传感器分辨率与结构挠度。</p>
+<p>真实的物理系统永远不会同时采样所有相关状态变量。 在一个示例周期中，触觉阵列可能在 <span class="math inline">\(t_1 =\)</span> 12 ms 锁存法向力读数，光学跟踪相机可能在 <span class="math inline">\(t_2 =\)</span> 18.5 ms 完成传感器积分，关节光学编码器可能在 <span class="math inline">\(t_3 =\)</span> 21 ms 采样角位置。 这些观测发生在不同的时刻，无法通过直接的代数运算合并。 将 <span class="math inline">\(t_2\)</span> 处的相机观测与 <span class="math inline">\(t_3\)</span> 处的编码器观测融合，需要消费者利用显式运动学模型和受限速度，将其中一个状态沿时间间隔 <span class="math inline">\(\Delta t = |t_3 - t_2| =\)</span> 2.5 ms 外推（例如，沿关节速度向量传播历史相机观测，以与瞬时编码器读数相协调）。 若缺少每个信号各自的真实采集时刻，对齐计算就无法确定 <span class="math inline">\(\Delta t\)</span> 的符号或量级。 在无准确时刻的情况下外推状态，会使融合算法基于虚构的时间基线计算空间偏移，从而在每一个融合周期中累积误差。</p>
+<p>结合记录于 <a href="#sec-memory-handoff" class="quarto-xref">节&nbsp;1.2</a> 中的这些 epoch 与钟同步界，消费者计算证据 epoch 与执行截止时刻之间的经过时长，评估误差界的 最坏情况下的扩张，并判定状态是否仍处于任务容差之内。 若脱离其采集 epoch 而移交状态，消费者便无法察觉传输延迟与调度抖动，致使确定性控制沦为开环猜测。 由于物理几何也会随物体在空间中移动而改变，参考系之间的空间变换同样面临这一时间衰减，并各自带有独立的证据 epoch。</p>
+</section>
+<section id="sec-memory-reference-frames" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-memory-reference-frames">变换如何失效</h2>
+<p>一个参考系绑定了一个坐标，但在机器中参考系本身也在运动。<strong><a href="../08_perception/08_perception.html#sec-perception-handoff">感知交付的内容</a></strong> 为每个观测赋予了具名参考系，并通过变换树将传感器、机器本体、里程计与地图参考系关联起来。 变换树并未展示的是：变换如何失效。 <a href="#fig-09-robot-transform-tree" class="quarto-xref">图&nbsp;1</a> 中树的每条边都在 <span class="math inline">\(SE(3)\)</span> 中存储一个刚体位姿，该位姿由关节角参数化 <span class="citation" data-cites="lynch2017modern craig2005introduction">(<a href="#ref-lynch2017modern" role="doc-biblioref">Lynch 和 Park 2017年</a>; <a href="#ref-craig2005introduction" role="doc-biblioref">Craig 2005年</a>)</span>，并且该位姿仅在其几何被测量时的那个时刻描述该机器。 当机载计算机将不同时刻测量的变换串联起来时，由于传输延迟、异步采样或丢帧，乘积是一个机器从未占据过的混合位姿（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-kinematics">Forward kinematics and singularities</a></strong> 推导运动学链）。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-lynch2017modern" class="csl-entry" role="listitem">
+Lynch, Kevin M, 和 Frank C Park. 2017年. <em>Modern Robotics: Mechanics, Planning, and Control</em>. Cambridge University Press.
+</div></div><p>一个变换还跨越多个机器字，因此与写入方并发竞争的读取方可能看到旧的旋转与新的平移配对。 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong> 的 seqlock 邮箱在不阻塞控制线程的情况下消除了该竞态，因为每个读者在每个 tick 中只尝试一次有界操作且从不等待；撕裂读取会被丢弃，而上次校验通过的变换则被保留以供继续使用，其数据年龄持续增长。</p>
+<div id="fig-09-robot-transform-tree" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="操作臂运动学帧树与时间杠杆臂动力学。(a) 串联操作臂的物理几何，包含基座连杆、关节连杆、腕部相机与工具中心点（tool0），标示杠杆臂 ℓ 与角偏转误差 e_tool ≈ ℓ · Δθ。(b) 空间变换树（DAG），连接世界参考系、基座连杆、运动学链连杆 link1 至 link6、腕部坐标系、腕部相机、tool0 TCP 与目标物体，突出显示一条异步过期变换边。（改编自 Craig 2005 与 Foote 2013）。" data-fig-env="figure" data-fig-pos="t">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-09-robot-transform-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig09_canonical_robot_frame_tree.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="图&nbsp;1: 操作器运动学帧树与时间动力学：串联操作器几何（a）以及 ROS  中对应的有向无环坐标变换树（b）。 每条有向边存储一个由关节状态参数化的齐次变换矩阵。 跨不同采集时刻的变换组合会引入杠杆臂定位误差 e_{\text{tool}} \approx \ell\,\Delta\theta，而未补偿的异步边则引用了过期坐标（改编自 Craig 2005 与 Foote 2013 [@craig2005introduction; @foote2013tf]）。"><img src="images/svg/fig09_canonical_robot_frame_tree.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-09-robot-transform-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;1: <strong>操作器运动学帧树与时间动力学</strong>：串联操作器几何（a）以及 ROS 中对应的有向无环坐标变换树（b）。 每条有向边存储一个由关节状态参数化的齐次变换矩阵。 跨不同采集时刻的变换组合会引入杠杆臂定位误差 <span class="math inline">\(e_{\text{tool}} \approx \ell\,\Delta\theta\)</span>，而未补偿的异步边则引用了过期坐标（改编自 Craig 2005 与 Foote 2013 <span class="citation" data-cites="craig2005introduction foote2013tf">(<a href="#ref-craig2005introduction" role="doc-biblioref">Craig 2005年</a>; <a href="#ref-foote2013tf" role="doc-biblioref">Foote 2013年</a>)</span>）。
+</figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-craig2005introduction" class="csl-entry" role="listitem">
+Craig, John J. 2005年. <em>Introduction to Robotics: Mechanics and Control</em>. 3rd 版. Pearson Prentice Hall.
+</div><div id="ref-foote2013tf" class="csl-entry" role="listitem">
+Foote, Tully. 2013年. <span>《tf: The transform library》</span>. <em>IEEE International Conference on Technologies for Practical Robot Applications (TePRA)</em>, 1～6.
+</div></div></figure>
+</div>
+<p>一个已过期变换的代价是直接的空间位移（<a href="#fig-frame-staleness-error" class="quarto-xref">图&nbsp;2</a>）。 将 <strong><a href="../08_perception/08_perception.html#sec-perception-photons-to-claims">光子到空间主张</a></strong> 的“年龄—位移”关系应用于运动学，未补偿的延迟便通过连杆的杠杆臂直接转化为几何定位误差。 关于本运动学误差传播的严格叉乘推导，参见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-spatial">Spatial coordinate frames and lever-arm kinematics</a></strong>。</p>
+<p>在手腕相机仍能看见闩锁释放槽时，该槽处的情况表明，仅很小的陈旧程度就足以耗尽任务容差。 每 16.7 ms 一次手腕相机帧，都会更新槽在相机坐标系中的姿态，并随之更新控制器所依据的槽位到手指的变换边；手指必须始终保持在槽的公差 <span class="math inline">\(E_{\max}\)</span> 之内，该公差为 1 mm。 假设该变换边错过一帧。 从初始误差 0.1 mm 出发，若以示意性取值 12 mm/s 作为手指未被观测到的横向速度上界，且该速度上界已针对机械臂的工作区域验证，则手指的横向漂移距离至多为 <span class="math inline">\(e_{\text{trans}} = v_{\text{drift}}\,\Delta t\)</span>，即 0.20 mm。 当指尖位于手腕前方 <span class="math inline">\(\ell\)</span> = 0.15 m（示意性取值）且手腕以示意性角速度 <span class="math inline">\(\omega\)</span> = 0.30 rad/s 转动以对齐手指时，力臂会引入 <span class="math inline">\(e_{\text{rot}} \approx \ell\,\omega\,\Delta t\)</span>，即 0.75 mm。 关节编码器测得了该转动，但陈旧的变换边仍将槽定位到上一帧，而与之组合的手腕姿态是当前的，因此树返回一个混合姿态，即机械臂从未握持过的手指位置。 仅将槽位与该槽位观测采集时刻的腕部位姿串联，或使变换边过期，才能消除该弧段。 若该陈旧变换边保留在链中，则手指的总错位量为 1.05 mm，比槽位允许的偏差高出 5 percent，且其中更多的误差来自力臂而非漂移。 由于变换树无差错地求值，没有任何环节标记该陈旧位姿，控制器因而持续将手指对准位置误差大于净空的槽位位置；在不利接近条件下，手指会抵到槽位旁的击板。</p>
+<div id="fig-frame-staleness-error" class="quarto-float quarto-figure quarto-figure-center anchored" alt="在闩锁释放槽位处转换陈旧度。 一条虚线幽灵手臂按 t0 处的陈旧边显示手腕与手指，虚线圆标出围绕手指的槽位容差 E_max。 t0 + Δt 处的当前手臂显示手腕沿横向偏移 e_trans = v_drift Δt，长度 ℓ 的连杆转过 Δθ = ω Δt，使手指摆动 e_rot ≈ ℓ Δθ。 一条自陈旧手指位置指向当前手指的红色矢量，标注为 e_tool ≈ E_0 + e_trans + ℓ Δθ，末端明显落在 E_max 圆之外。" data-fig-env="figure" data-fig-pos="t">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-frame-staleness-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig09_frame_staleness_error.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="图&nbsp;2: 闩锁释放槽位处的变换陈旧与力臂误差：当槽位到手指的变换边错过持续时间为 \Delta t 的一帧腕部相机帧时，手指的误差。 在速度上限 v_{\text{drift}} 处的侧向漂移使手指移动 e_{\text{trans}} = v_{\text{drift}}\,\Delta t，而腕部以角速度 \omega 转动时，距腕部的力臂长度为 \ell 的指尖摆动 e_{\text{rot}} \approx \ell\,\omega\,\Delta t。 将陈旧变换边与当前腕部位姿合成，会将横向漂移误差和旋转误差都叠加到初始误差 E_0 上，因此手指误差 e_{\text{tool}} \approx E_0 + e_{\text{trans}} + \ell\,\Delta\theta 超过槽位容差 E_{\max}。"><img src="images/svg/fig09_frame_staleness_error.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-frame-staleness-error-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: <strong>闩锁释放槽位处的变换陈旧与力臂误差</strong>：当槽位到手指的变换边错过持续时间为 <span class="math inline">\(\Delta t\)</span> 的一帧腕部相机帧时，手指的误差。 在速度上限 <span class="math inline">\(v_{\text{drift}}\)</span> 处的侧向漂移使手指移动 <span class="math inline">\(e_{\text{trans}} = v_{\text{drift}}\,\Delta t\)</span>，而腕部以角速度 <span class="math inline">\(\omega\)</span> 转动时，距腕部的力臂长度为 <span class="math inline">\(\ell\)</span> 的指尖摆动 <span class="math inline">\(e_{\text{rot}} \approx \ell\,\omega\,\Delta t\)</span>。 将陈旧变换边与当前腕部位姿合成，会将横向漂移误差和旋转误差都叠加到初始误差 <span class="math inline">\(E_0\)</span> 上，因此手指误差 <span class="math inline">\(e_{\text{tool}} \approx E_0 + e_{\text{trans}} + \ell\,\Delta\theta\)</span> 超过槽位容差 <span class="math inline">\(E_{\max}\)</span>。
+</figcaption>
+</figure>
+</div>
+<div id="psp-memory-leverage-of-staleness" class="callout callout-perspective" title="陈旧度的杠杆效应">
+<p></p><details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.1: 陈旧度的杠杆效应</strong></summary><div><em>变换的允许陈旧时长由其所服务的空间点决定，而非由其所测量的关节决定。 工具点以约 <span class="math inline">\(v + \ell\omega\)</span> 的速度漂移，因此杠杆臂越长，变换边越早过期；而仍然新鲜到足以定位手腕的变换边，也可能因过于陈旧而无法定位工具中心点。</em><p></p>
+</div></details>
+</div>
+<p>变换树为机器自身的几何关系标记时间，而一条数据陈旧的变换树边会使工具位置发生其未能捕捉的运动所导致的偏差，该偏差再被杠杆臂放大。 机器周围的世界以同样的方式老化，但它没有关节编码器来报告自身的运动，因此记忆也必须保存周围的表面以及这些表面之间的空间，并且必须记录传感器实际观测到了该空间中的哪一部分。</p>
+</section>
+<section id="sec-memory-scene-attention-buffers" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-memory-scene-attention-buffers">场景记忆能够证明什么</h2>
+<p>一台将范围传感器扫过一条走廊的机器人，扫完后会留下三种空间：它看到被占据的空间、它看到为空的空间，以及它从未看到的空间。 只有第二种空间才可能为一条路径的畅通作证，而且只在其证据仍然新鲜时才能作证。 每个场景表示都存储这三种状态中的某种版本，它们之间的差异在于存储了什么以及代价是什么。 一个 <strong>占据栅格</strong> <span class="citation" data-cites="elfes1989using">(<a href="#ref-elfes1989using" role="doc-biblioref">Elfes 1989年</a>)</span>，或其稀疏八叉树形式 <span class="citation" data-cites="hornung2013octomap">(<a href="#ref-hornung2013octomap" role="doc-biblioref">Hornung 等 2013年</a>)</span>，为每个单元存储一个占据估计。 一个 <strong>截断符号距离场（TSDF）</strong> <span class="citation" data-cites="curless1996volumetric">(<a href="#ref-curless1996volumetric" role="doc-biblioref">Curless 和 Levoy 1996年</a>)</span> 沿每条感知射线保留到观测表面的截断投影距离。<strong>3D 高斯泼溅</strong> <span class="citation" data-cites="kerbl20233d">(<a href="#ref-kerbl20233d" role="doc-biblioref">Kerbl 等 2023年</a>)</span> 保留用于渲染新相机视角的优化原语。 密集栅格的存储量随其每维单元数的立方增长，而八叉树、TSDF 的表面带块以及高斯图仅存储已分配的结构，其大小取决于观测几何与精度目标；<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-voxels">Log-odds occupancy and signed-distance fusion</a></strong> 与 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-3dgs">3D Gaussian splatting parameters</a></strong> 给出了这些代价背后的更新。 在运动许可方面，它们共享同一个上限。 投影距离并非 净空决策所需的最近表面欧氏距离，而高斯密度也不能识别被占据的空间，因此它们中没有任何一种能够单独证明净空满足要求。 每一项都必须先转换为经验证的占用栅格层或欧氏有符号距离场（ESDF），并明确未知空间的策略，之后许可路径才能查询它。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-elfes1989using" class="csl-entry" role="listitem">
+Elfes, Alberto. 1989年. <span>《Using Occupancy Grids for Mobile Robot Perception and Navigation》</span>. <em>Computer</em> 22 (6): 46～57. https://doi.org/10.1109/2.30720.
+</div><div id="ref-hornung2013octomap" class="csl-entry" role="listitem">
+Hornung, Armin, Kai M Wurm, Maren Bennewitz, Cyrill Stachniss, 和 Wolfram Burgard. 2013年. <span>《Octo<span>M</span>ap: An efficient probabilistic <span>3D</span> mapping framework based on octrees》</span>. <em>Autonomous Robots</em> 34 (3): 189～206.
+</div><div id="ref-curless1996volumetric" class="csl-entry" role="listitem">
+Curless, Brian, 和 Marc Levoy. 1996年. <span>《A volumetric method for building complex models from range images》</span>. <em>Proceedings of the 23rd Annual Conference on Computer Graphics and Interactive Techniques (SIGGRAPH ’96)</em>, 303～12.
+</div><div id="ref-kerbl20233d" class="csl-entry" role="listitem">
+Kerbl, Bernhard, Georgios Kopanas, Thomas Leimk"uhler, 和 George Drettakis. 2023年. <span>《<span>3D</span> <span>G</span>aussian splatting for real-time radiance field rendering》</span>. <em>ACM Transactions on Graphics</em> 42 (4): 139:1～14.
+</div></div><p>度量表示方式的选择，定义了体积内存占用与空间碰撞查询延迟之间的经验性 Pareto 权衡（<a href="#fig-09-memory-3d-representation-pareto" class="quarto-xref">图&nbsp;3</a>）。 连续轨迹优化与运行于 1 kHz 控制周期（<span class="math inline">\(1{,}000\ \mu\text{s}\)</span> 周期）的实时反射控制器，需要在数十个机器人身体关节点上以严格小于 <span class="math inline">\(10\ \mu\text{s}\)</span> 的延迟完成空间净空与梯度查询。 隐式神经表示（如坐标 MLP，NeRF、iMAP）虽可实现最低的内存密度（<span class="math inline">\(\sim 0.08\ \text{MB/m}^3\)</span>），但查询有符号距离或占用需要执行深度神经网络的完整前向传播，带来巨大的计算延迟（<span class="math inline">\(&gt;650\ \mu\text{s}\)</span> 每个查询点），因而只能用于 慎思式离线规划器。 分层八叉树（OctoMap <span class="citation" data-cites="hornung2013octomap">(<a href="#ref-hornung2013octomap" role="doc-biblioref">Hornung 等 2013年</a>)</span>）将未观测的自由空间压缩至 <span class="math inline">\(0.18\text{--}1.25\ \text{MB/m}^3\)</span>，但递归树遍历中的指针间接寻址会引发 CPU 缓存缺失，将查询速度限制在 <span class="math inline">\(24\text{--}38\ \mu\text{s}\)</span>。 反过来，动态哈希截断符号距离场（Voxblox TSDF <span class="citation" data-cites="oleynikova2017voxblox">(<a href="#ref-oleynikova2017voxblox" role="doc-biblioref">Oleynikova 等 2017年</a>)</span>）仅在观测到的表面带周围分配内存（<span class="math inline">\(4.1\ \text{MB/m}^3\)</span>），从而支持 <span class="math inline">\(1.8\ \mu\text{s}\)</span> 射线查询，而传播欧氏符号距离场（ESDF）则使内存开销增加到 <span class="math inline">\(28.5\ \text{MB/m}^3\)</span>，以提供亚微秒级（<span class="math inline">\(0.85\ \mu\text{s}\)</span>）的距离评估与解析连续梯度。 与此同时，3D 高斯泼溅原语 <span class="citation" data-cites="kerbl20233d">(<a href="#ref-kerbl20233d" role="doc-biblioref">Kerbl 等 2023年</a>)</span> 处于中间区间（<span class="math inline">\(1.6\text{--}5.2\ \text{MB/m}^3\)</span>、<span class="math inline">\(5.8\text{--}8.2\ \mu\text{s}\)</span>），既支持摄影级辐射度渲染，也支持由包围体层次结构加速的碰撞检测。</p>
+<div id="fig-09-memory-3d-representation-pareto" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="体积分量内存占用（兆字节/立方米）与空间点距离及碰撞查询延迟（微秒）的双对数散点图。 经验帕累托前沿从 iMAP NeRF（0.08 MB/m³，650 us）出发，依次经过 OctoMap 5cm（0.18 MB/m³，24 us）、3DGS 压缩支架（Compressed Scaffold）（1.6 MB/m³，8.2 us）、Voxblox TSDF（4.1 MB/m³，1.8 us）、Voxblox ESDF（28.5 MB/m³，0.85 us），最终下降至稠密占据数组（Dense Occupancy Array）（125 MB/m³，0.45 us）。 绿色阴影区域标示 10 us 以下的实时 1 kHz 控制预算，红色阴影区域标示 100 us 以上的慎思式区域。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-09-memory-3d-representation-pareto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-09-memory-3d-representation-pareto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: <strong>3D 场景表示前沿：内存占用与空间查询延迟之间的权衡</strong>：隐式神经场、分层八叉树、3D 高斯泼溅与哈希体素网格之间的经验 Pareto 权衡。 虽然隐式坐标 MLP 将房间压缩为兆字节级权重，但多层前向传播超过了实时碰撞查询的延迟上限（<span class="math inline">\(&gt;100\ \mu\text{s}\)</span>）。 哈希体素网格（Voxblox TSDF/ESDF <span class="citation" data-cites="oleynikova2017voxblox">(<a href="#ref-oleynikova2017voxblox" role="doc-biblioref">Oleynikova 等 2017年</a>)</span>）消耗 <span class="math inline">\(4.1\text{--}28.5\ \text{MB/m}^3\)</span>，却提供了服务 1 kHz 反应式控制回路所需的亚微秒查询延迟（<span class="math inline">\(&lt;2\ \mu\text{s}\)</span>）。
+</figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-oleynikova2017voxblox" class="csl-entry" role="listitem">
+Oleynikova, Helen, Zachary Taylor, Marius Fehr, Roland Siegwart, 和 Juan Nieto. 2017年. <span>《Voxblox: Incremental <span>3D</span> <span>E</span>uclidean signed distance fields for on-board <span>MAV</span> planning》</span>. <em>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</em>, 1366～73.
+</div></div></figure>
+</div>
+<p>地图能够证实什么，取决于测距回波如何更新它。 从传感器沿射线行进至回波 <span class="citation" data-cites="amanatides1987fast">(<a href="#ref-amanatides1987fast" role="doc-biblioref">Amanatides 和 Woo 1987年</a>)</span>，地图在射线穿过的每个单元中给出 <strong>负证据</strong>，在射线终止的单元中给出正证据；<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_ml.html#sec-appendix-ml-voxels">Log-odds occupancy and signed-distance fusion</a></strong> 给出对数几率更新。 负证据使地图在观察到同一区域为空时即可退役幽灵障碍物，而无需等待超时；它同时也标出了地图能够断言的界限。 它只覆盖有效射线实际穿过的单元。 它不涉及回波后方区域的体积，而沿通道的新扫描无法更新被机架遮挡的单元，因此被遮挡的横通道仍保持未知，仍需过期处理。 每个回波都会触及沿其射线上的每个单元，因此稀疏分配节省了容量，但并未节省遍历开销；该流量仅以证据年龄增加的形式 (<strong><a href="../13_placement/13_placement.html#sec-placement-resource-contention">共享资源争用</a></strong>) 形式到达许可路径。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-amanatides1987fast" class="csl-entry" role="listitem">
+Amanatides, John, 和 Andrew Woo. 1987年. <span>《A fast voxel traversal algorithm for ray tracing》</span>. <em>Eurographics ’87</em>, 3～10.
+</div><div class="">
+<p><a href="images/svg/margin_active_negative_evidence_chain.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="images/svg/margin_active_negative_evidence_chain.svg" class="img-fluid" style="width:100.0%" alt="显示射线投射穿过自由空间并命中表面的因果链，从而淘汰幽灵障碍物。"></a></p>
+<p><em>沿视线方向的主动负证据可清除幽灵障碍物，无需等待超时衰减。</em></p>
+</div></div>
+<p>由于负证据只会刷新射线穿过的单元，地图的发布时刻不对任何单元定年，因此 <a href="#tbl-09-schema-volumetric-belief" class="quarto-xref">表&nbsp;1</a> 中的清单逐单元携带证据时刻。 这些时刻并非免费，因为每个已分配单元都在其占用估计旁存储自己的时间戳，这些时间戳与占用估计值一样，也必须计入地图的内存预算。 运动消费方会检查其路径所使用每个单元的证据年龄与状态，包括标记为未知的单元，并从单独验证的层推导出保守安全距离。</p>
+<div id="tbl-09-schema-volumetric-belief" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[26,22,52]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-09-schema-volumetric-belief-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: <strong>体积信念清单与单元证据</strong>：地图头部描述布局与更新时间，而单元级采集时刻决定该特定路径区域是否新鲜。 消费者将未观测或已过期单元视为未知，除非另有经独立验证的策略允许穿越。
+</figcaption>
+<div aria-describedby="tbl-09-schema-volumetric-belief-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 22%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">地图字段</th>
+<th style="text-align: left;">单位或类型</th>
+<th style="text-align: left;">含义与消费检查</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>voxel_grid_origin</code>, <code>voxel_resolution_m</code></td>
+<td style="text-align: left;">m；m</td>
+<td style="text-align: left;">空间锚点与间距；匹配当前使用的坐标系与校准</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>map_update_epoch</code></td>
+<td style="text-align: left;">捕获时钟 ns</td>
+<td style="text-align: left;">最近一次地图发布/更新的时刻；<strong>并不代表</strong>每个单元的新鲜度</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cell_evidence_epoch</code></td>
+<td style="text-align: left;">捕获时钟：每格 ns</td>
+<td style="text-align: left;">该格最后一次物理观测；不会被预测或无关的地图更新刷新</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>free_space_sweep_epoch</code></td>
+<td style="text-align: left;">捕获时钟：每格占用格 ns</td>
+<td style="text-align: left;">穿过该格最后一次有效的观测自由射线</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>clock_conversion</code>, <code>sync_error_ns</code></td>
+<td style="text-align: left;">映射；ns</td>
+<td style="text-align: left;">将采集时刻转换到消费方的单调时钟，误差有界</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>语义记忆位于度量层之上，并继承其限制。 除原始度量体积与辐射场之外，由基础模型驱动的物理人工智能需要空间记忆，将空间组织为语义层级。 <strong>3D 动态场景图（DSG）</strong>，由 <span class="citation" data-cites="rosinol2021kimera">Rosinol 等 (<a href="#ref-rosinol2021kimera" role="doc-biblioref">2021年</a>)</span> 在 Kimera 中提出、并由 <span class="citation" data-cites="hughes2022hydra">Hughes 等 (<a href="#ref-hughes2022hydra" role="doc-biblioref">2022年</a>)</span> 在 Hydra 中扩展，通过把空间记忆组织为五层分层图（<a href="#fig-09-dynamic-scene-graph" class="quarto-xref">图&nbsp;4</a>）来连接度量 SLAM 与符号推理：</p>
+<div class="no-row-height column-margin column-container"></div><ol type="1">
+<li><em>度量-语义网格（第 1 层）：</em> 高分辨率三角网格，捕捉精细表面几何并带有顶点语义标签。</li>
+<li><em>物体与智能体节点（第 2 层）：</em> 具有朝向包围盒的有界三维几何实体、视觉嵌入与跟踪的动态轨迹。</li>
+<li><em>场所与自由空间拓扑（第 3 层）：</em> 三维 Voronoi 拓扑与可通行的自由空间净空球（<span class="math inline">\(p_i\)</span>），用于规划无碰撞路径。</li>
+<li><em>房间与结构围护（第 4 层）：</em> 由语义墙体与门洞划分的功能建筑分区。</li>
+<li><em>建筑与全局拓扑（第 5 层）：</em> 支配长视界任务分配的最高层语义图。</li>
+</ol>
+<div id="fig-09-dynamic-scene-graph" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" alt="五层三维动态场景图架构。 自下而上：第 1 层为度量网格曲面几何，第 2 层为物体与智能体及其支撑关系，第 3 层为场所与 Voronoi 自由空间净空球，第 4 层为通过门洞连接的房间，第 5 层为建筑及其全局拓扑。 侧向箭头表示跨层级的向上抽象与向下语义落地。" data-fig-env="figure" data-fig-pos="t">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-09-dynamic-scene-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig09_dynamic_scene_graph_hierarchy.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="图&nbsp;4: 分层三维动态场景图架构：五层时空记忆组织，衔接度量 SLAM 与符号基础推理。 第 1 层捕获三角度量网格几何；第 2 层提取三维物体与动态智能体；第 3 层通过 Voronoi 自由空间净空球（p_i）建模拓扑场所；第 4 层组织建筑房间与门洞；第 5 层建立全局建筑任务拓扑。 垂直层间边协调向上的抽象（将度量曲面压缩为符号实体）与向下的语义落地（将任务词元转换为度量坐标）（改编自 Rosinol 等 [@rosinol2021kimera] 与 Hughes 等 [@hughes2022hydra]）。"><img src="images/svg/fig09_dynamic_scene_graph_hierarchy.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-09-dynamic-scene-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;4: <strong>分层三维动态场景图架构</strong>：五层时空记忆组织，衔接度量 SLAM 与符号基础推理。 第 1 层捕获三角度量网格几何；第 2 层提取三维物体与动态智能体；第 3 层通过 Voronoi 自由空间净空球（<span class="math inline">\(p_i\)</span>）建模拓扑场所；第 4 层组织建筑房间与门洞；第 5 层建立全局建筑任务拓扑。 垂直层间边协调向上的抽象（将度量曲面压缩为符号实体）与向下的语义落地（将任务词元转换为度量坐标）（改编自 Rosinol 等 <span class="citation" data-cites="rosinol2021kimera">(<a href="#ref-rosinol2021kimera" role="doc-biblioref">Rosinol 等 2021年</a>)</span> 与 Hughes 等 <span class="citation" data-cites="hughes2022hydra">(<a href="#ref-hughes2022hydra" role="doc-biblioref">Hughes 等 2022年</a>)</span>）。
+</figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-rosinol2021kimera" class="csl-entry" role="listitem">
+Rosinol, Antoni, Andrew Violette, Marcus Abate, Nathan Hughes, Yun Chang, 和 Luca Carlone. 2021年. <span>《Kimera: From <span>SLAM</span> to Hierarchical 3D Dynamic Scene Graphs》</span>. <em>The International Journal of Robotics Research</em> 40 (12–14): 1410～44. https://doi.org/10.1177/02783649211056674.
+</div><div id="ref-hughes2022hydra" class="csl-entry" role="listitem">
+Hughes, Nathan, Yun Chang, 和 Luca Carlone. 2022年. <span>《Hydra: A Real-time Spatial Perception Engine for <span>3D</span> Scene Graph Construction and Optimization》</span>. <em>Proceedings of Robotics: Science and Systems (RSS)</em>.
+</div></div></figure>
+</div>
+<p>这一双向层级结构的计算优势，在于它如何化解边缘 SoC 上的内存—计算张力。 向上的抽象将数 GB 的密集三角面网格压缩为 KB 量级的符号子图，使基础推理器能够在不耗尽 LPDDR5 带宽、也不以数百万个原始几何词元塞满 KV 缓存的前提下，评估长视界任务规划。 相反，向下的语义落地机制使高层空间目标能够触及局部的几何证据。 规划者查询空间时并不遍历每个格子，但每个节点的证据新鲜度都不能优于其下方的度量单元，而将符号目标进行语义落地最终仍归结为对已验证度量层的净空查询。</p>
+<p>学习得到的策略的上下文是另一种形式的记忆。 自回归策略将近期观测保存在键值缓存中，其增长规律由 <strong><a href="../03_brain/03_brain.html#sec-brain-cognitive-pipeline">供给、新鲜度与内存墙</a></strong> 推导，并由 <strong>流式窗口</strong> 通过淘汰最旧的 词元 加以约束 <span class="citation" data-cites="xiao2024streamingllm">(<a href="#ref-xiao2024streamingllm" role="doc-biblioref">Xiao 等 2024年</a>)</span>，无论其物理后果是否已经结束。 机器仍须遵守的物理事实因此存在于带有自身证据时刻的信念记录中，而不会仅存在于策略的上下文中。 在窗口开始之前被看到正走到货架后方的行人，已从上下文中消失，但并未从通道中消失。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-xiao2024streamingllm" class="csl-entry" role="listitem">
+Xiao, Guangxuan, Yuandong Tian, Beidi Chen, Song Han, 和 Mike Lewis. 2024年. <span>《Efficient Streaming Language Models with Attention Sinks》</span>. <em>International Conference on Learning Representations (ICLR)</em>.
+</div></div><p>因此，就运动授权而言，一个不含时间戳的表示是一种未经核实的断言，其误差界超过任务容差的估计必须在运动提案中排除，然后才由授权路径考虑执行器指令。 然而，机器无法一出现丢帧就中止所有操作。 将动作跨越短暂的感知间隙延伸，需要借助估计器将信念向前传播，直到新的测量到来以确认或修正状态。</p>
+</section>
+<section id="sec-memory-belief-through-occlusion" class="level2">
+<h2 class="anchored" data-anchor-id="sec-memory-belief-through-occlusion">遮挡下的信念</h2>
+<p>当直接感知失效时，物理人工智能系统会使用内部状态转移模型来更新其状态估计。 卡尔曼滤波 利用系统动力学更新状态估计<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>，而一个学习得到的策略可能使用自回归网络预测下一个相对位姿。 无论采用何种方式，预测都是将旧证据向前外推，而不再更新它，这一点由 <a href="#sec-memory-preserving-belief" class="quarto-xref">节&nbsp;1.1</a> 确立；预测通过补偿预期的物理运动来保留观测的效用，但它并不会重置底层测量的年龄。</p>
+<p>预测状态与观测状态之间的差异，决定了机器在机架末端获准执行的动作。 人可以走到那里，进入示意性的 1.10 m 净空距离 <span class="math inline">\(D_{\text{clear}}\)</span>，而停止预算所保障的正是这一距离；一旦机架遮挡了横通道，问题就在于：被记住的视角最多能证明横通道仍然空置多长时间。</p>
+<p>每一个物理模型都会对现实进行简化，导致投影状态与物理世界之间的误差在盲区内持续扩大。 在状态估计 中，这种弥散由 <strong>遮挡协方差扩张</strong> 所支配，即传感器视线中断期间不确定性按物理规律持续增宽。 该扩张由随机模型在数学上形式化（例如连续的 Lyapunov/Riccati 协方差传播方程，详见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-covariance">Continuous Covariance Propagation and Observability</a></strong>），它量化了关于物体实际位置的日益增长的怀疑，并在传感器重新获得可见性之前，约束了由未知漂移速度和非预期物理扰动所导致的未被观测到的发散。 对于一个确定性的算例模型，假设传感器特性与扰动限幅给出了遮挡开始时刻（<span class="math inline">\(\Delta t = 0\)</span>）的初始位置误差界 <span class="math inline">\(E_0\)</span>。 两个有界项随后会劣化预测。 模型未知的运动引入一个由 <span class="math inline">\(v_{\text{drift}}\)</span> 限定的漂移速度，模型未建模的力产生一个由 <span class="math inline">\(a_{\text{dist}}\)</span> 限定的扰动加速度。 在遮挡时长 <span class="math inline">\(\Delta t\)</span> 内，误差界 <span class="math inline">\(E(\Delta t)\)</span> 随后遵循二次展开：</p>
+<p><span id="eq-mem-occlusion-expansion"><span class="math display">\[E(\Delta t) = E_0 + v_{\text{drift}}\Delta t + \frac{1}{2}a_{\text{dist}}(\Delta t)^2 \tag{1}\]</span></span></p>
+<p>在机架末端，这些项就是机器自身的。 初始误差是定位界 <span class="math inline">\(\delta_{\text{loc}}\)</span>、50 mm，因为机器只知道机架末端位于该界之内。 容差是防护净距 <span class="math inline">\(\delta_{\text{margin}}\)</span>、100 mm，即预算在停稳的机器与人员之间预留的部分。 隐藏在机架后方的行人可能侵占这一防护净距，其速度最高可达安全距离计算为接近行人所假设的步行速度上界 <span class="math inline">\(v_h\)</span>，即 1.6 m/s。 由于 <span class="math inline">\(v_h\)</span> 直接界定了速度，<a href="#eq-mem-occlusion-expansion" class="quarto-xref">公式&nbsp;1</a> 仅保留其线性项，其中取 <span class="math inline">\(v_{\text{drift}} = v_h\)</span> 与 <span class="math inline">\(a_{\text{dist}} = 0\)</span>；关于机架末端已清空这一信念，在 <span class="math inline">\((\delta_{\text{margin}} - \delta_{\text{loc}})/v_h\)</span> 之后失效，该时间量折合为 31.25 ms。 导航相机每 16.7 ms 输出一帧，因此该信念在两帧之内即告失效，而展示空无一人的横通道的帧，在感知调度它（<strong><a href="../08_perception/08_perception.html#sec-perception-transduction-calibration">传感器转导与标定</a></strong>）时已经 51.6 ms 陈旧。</p>
+<p>没有任何软件环节标记失效时刻。 地图仍显示横通道空闲，估计器仍发布格式良好的记录，但预测已不再作为证据发挥作用。 因此，记忆无法证明被遮挡的机架末端净空，为记忆提供依据的图像帧也无法证明这一点，该区域因而保持未知。 停止预算保护一个位于距离 <span class="math inline">\(D_{\text{clear}}\)</span> 处的静态障碍物，例如已经走出并站在过道里的人，或者一个掉落的提包；而记忆会为这一预算增加一个截止时间，但不增加距离。 在驱动极限处的累计值保持在 912.9 mm 处，即 <strong><a href="../08_perception/08_perception.html#sec-perception-transduction-calibration">传感器转导与标定</a></strong> 留下的值。</p>
+<p>在整个停车过程中持续走向机器的行人属于另一种障碍物。 安全距离计算将该接近过程计为 <span class="math inline">\(v_h(\tau_{\text{delay}} + T_{\text{stop}})\)</span>，即从检测到完全停止的整个时间内应用的行走速度。 在 1.5 m/s 的驱动极限处，恒定减速停车耗时 <span class="math inline">\(T_{\text{stop}} = v/a_{\text{brake}}\)</span>，仅这一项就达到 1.41 m，在尚未计入预算中的其他任何距离之前，就已超过全部 1.10 m 净距。 因此，该场地通过由场地运营负责的穿越规则、地面标线穿越区和机架末端存在传感器这三项措施来处理接近的行人。<strong><a href="../17_frontier/17_frontier.html#sec-frontier-residual-claims-register">残余主张登记表</a></strong> 记录了该规则所依据的前提。 无论站点采用何种穿越规则，许可路径都必须拒绝任何在信念失效期限之后仍依赖空置记忆来判定净空的提案。</p>
+<div id="dfn-memory-belief-invalidation-horizon" class="callout callout-definition" title="信念状态失效时域">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.2: 信念状态失效时域</strong></summary><div>
+<p><strong><em>信念状态失效时域</em></strong>（<span class="math inline">\(t_{\mathrm{exp}}\)</span>）是指自最后一次物理观测起，信念的验证误差界<span class="math inline">\(E(\Delta t)\)</span>首次达到任务容差<span class="math inline">\(E_{\max}\)</span>所经历的时长： <span id="eq-mem-invalidation-horizon"><span class="math display">\[t_{\mathrm{exp}} = \inf \{ \Delta t \ge 0 : E(\Delta t) \ge E_{\max} \} \tag{2}\]</span></span> 其中<span class="math inline">\(E(\Delta t)\)</span>为有界扰动增长律，例如@eq-mem-occlusion-expansion 或校准后的误差分位数；而证据基准时刻为<span class="math inline">\(t_0\)</span>的信念，将在<span class="math inline">\(t_0 + t_{\mathrm{exp}}\)</span>时停止支撑运动。</p>
+<ol type="1">
+<li><strong>意义</strong>：形式化地界定前向传播的状态估计不再构成有效物理证据的硬性数学边界，要求许可路径在几何净空被突破之前拒绝依赖性的运动提案。</li>
+<li><strong>区别</strong>：与监控软件进程心跳间隔的开环超时看门狗不同，失效时域源自连续物理运动学、有界扰动动力学与机械净空约束。</li>
+<li><strong>常见陷阱</strong>：允许神经规划器或卡尔曼滤波在长时间传感器中断期间持续外推状态估计，而不限制误差扩张，将平滑的数学外推误认为物理真值。</li>
+</ol>
+</div></details>
+</div>
+<p>当传感器管线重新获得视线时，系统既不能简单地将传播后的状态用新测量覆盖，也不能盲目地将原始测量直接送入下游控制器。 遮挡后不久获得的传感器读数常受到瞬时灯光反射、部分边缘可见性或对应关系误差的影响。 在混合或重置状态之前，估计器必须计算<strong>新息</strong>，即新测量与内部模型预测的位姿之间的差异，这是一种数学层面的合理性检验。 如果新测量落在计算出的误差界<span class="math inline">\(E(\Delta t)\)</span>之内，则该测量确认了模型的漂移假设，允许估计器收缩不确定性并重置证据时钟。 如果来测量落在该界之外，则要么物理对象发生了意外移动，要么传感器返回了离群值。 直接将坐标框吸附到错误的离群点，会让规划器认为机器人发生了跳变，从而在轨迹中引入瞬时位置跳变。 该跳变要求驱动器无法提供的加速度，使执行器同时逼近 <strong><a href="../02_body/02_body.html#sec-body-actuator-limits">执行器传动限制</a></strong> 的电流上限与 <strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong> 的热极限。 估计器必须分离出该差异，评估测量是否有效，并在更新执行目标之前拒绝不连续跳变。</p>
+<p>模型预测充当跨越缺失或延迟观测的临时桥梁，而该桥梁仅在累积模型误差小于任务机械公差时成立。 它何时失效取决于误差的来源。 在机架末端，仅速度约束决定了速率。 笼门处，闩锁释放槽的宽度设定了必须进入其中的抓取器手指的容差 <span class="math inline">\(E_{\max}\)</span>，而未建模的力会引入比任何速度上界增长更快的项。 在两次传感器更新之间，估计器通过其被控对象的模型积分指令力来传播状态，其间没有反馈确认。</p>
+<p>驱动该传播的随机模型将衰减机制区分为三类。 遮挡开始时的未测速度误差以 <span class="math inline">\(\sigma_v^2(0)(\Delta t)^2\)</span> 的比例增长位置方差，而未建模的随机力（如扭矩脉动或结构振动）经两次积分后以 <span class="math inline">\(\frac{1}{3}q_c(\Delta t)^3\)</span> 的比例增长它；这些方差项正是经过校准的分位数必须吸收的部分。 一个受 <span class="math inline">\(|a_{\text{dist}}|\)</span> 界定的未建模恒定力，例如拖曳电缆或持续的滑动摩擦，反而至多使物体偏转 <span class="math inline">\(\frac{1}{2}a_{\text{dist}}(\Delta t)^2\)</span>，即 <a href="#eq-mem-occlusion-expansion" class="quarto-xref">公式&nbsp;1</a> 中的确定性项。<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>在笼门处，手指此刻在无视觉观测的情况下进入槽口。 在最后接近阶段，手指会遮住腕部相机所见的槽口，且手指必须保持在槽口中线 1 mm 之内，任务容差为 <span class="math inline">\(E_{\max}\)</span>（<a href="#fig-uncertainty-growth" class="quarto-xref">图&nbsp;5</a>）。 机械臂经验证的运行区域提供了在槽口参考系遗漏问题中已计入的界限（见 <a href="#sec-memory-reference-frames" class="quarto-xref">节&nbsp;1.4</a>），初始位置误差 <span class="math inline">\(E_0\)</span> 至多 0.1 mm，未观测到的速度误差 <span class="math inline">\(v_{\text{drift}}\)</span> 至多 12 mm/s，遮挡再加一项，即一个示例性的加速度扰动 <span class="math inline">\(a_{\text{dist}}\)</span> 至多 50 mm/s²。 由于 <a href="#eq-mem-occlusion-expansion" class="quarto-xref">公式&nbsp;1</a> 的增长律不含力臂弧，因为信念将槽口与该槽口观测采集时刻的腕部位姿串联起来，这正是对丢失帧的补救，所以位置误差仅通过漂移与扰动增长。</p>
+<p>用上述参数评估该增长上界可得 <span class="math inline">\(E(\Delta t) = 0.1 + 12\,\Delta t + 25\,(\Delta t)^2\)</span>，其中 <span class="math inline">\(\Delta t\)</span> 以秒为单位，<span class="math inline">\(E(\Delta t)\)</span> 以毫米为单位。 设定 <span class="math inline">\(E(\Delta t) = E_{\max}\)</span> 可得二次方程 <span class="math inline">\(25\,(\Delta t)^2 + 12\,\Delta t - 0.9 = 0\)</span>。 其唯一的正实根为 66 ms，因此依赖该信念的提案必须在此之前失效。 若槽口加工至间隙为 0.30 mm，则允许的未观测时长缩短为 16.1 ms（<span class="math inline">\(25\,(\Delta t)^2 + 12\,\Delta t - 0.2 = 0\)</span>）。 将机械公差收紧 3.3×，允许的未观测时长随之缩短 4.1×，需要在该更短的窗口内重新采集传感器数据或采用顺应性阻抗保持。 相比之下，若估计器天真地假设速度恒定（<span class="math inline">\(a_{\text{dist}} = 0\)</span>），则其预测的有效时域为 <span class="math inline">\((E_{\max} - E_0)/v_{\text{drift}}\)</span>，即 75 ms。 在该经过时间，模型化边界达到 1.141 mm，超出间隙 14.1 percent。 仅采用恒定速度准入规则将把该估计继续接受 9 ms，超过有界模型截止时间；是否发生接触取决于轨迹与几何。</p>
+<div id="fig-uncertainty-growth" class="quarto-float quarto-figure quarto-figure-center anchored" alt="信念不确定性增长与失效时域曲线图。 空间误差界 E(Δt) 对自上次测量以来的时间 Δt 作图。 二次曲线由 E0 = 0.1 mm 展开，在失效时域 t_exp = 66 ms 处与任务净空 E_max = 1 mm 相交。 一条虚线表示的恒定速度线上升得更慢；误差界曲线越过净空后，曲线上的红色标记点表示该估计仍判定为有效的信念。" data-fig-env="figure" data-fig-pos="t">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uncertainty-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="f93ab24d" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/7g/fkg91tq50f58kfmg7c65747r0000gn/T/ipykernel_91898/3339434524.py:73: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()</code></pre>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uncertainty-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;5: <strong>信念不确定性与失效时域</strong>：抓取器手指进入笼门锁扣释放槽的空间误差界<span class="math inline">\(E(\Delta t)\)</span>，在未被观测的前向传播下呈二次增长，直至与槽口净空<span class="math inline">\(E_{\max} = 1\text{ mm}\)</span>相交于失效时域<span class="math inline">\(t_{\text{exp}} = 66\text{ ms}\)</span>。 一条虚线绘制的恒定速度估计增长得更慢，红色标记显示该估计在误差界越过净空后仍允许该信念通过。 信念具有由物理扰动动力学决定的保质期，只有传感器重新获取才能重置证据时钟。
+</figcaption>
+</figure>
+</div>
+<p>估计器的内部<strong>协方差矩阵</strong>反映的是其随机模型，而非一个实测的硬上限。 安全性论证可以建立在两种界限之一之上。 <strong>有界扰动</strong>增长律要求初始误差、速度、加速度、时钟换算和模式切换具有可论证的界限；然后，31.25 ms 机架末端根值与 66 ms 闩锁槽位根值是该区域内有条件的最坏情况截止时间。 或者，分阶段丢包和外部真值可以在指定的测试分布下校准某个指定的残差分位数（例如 <span class="math inline">\(P_{99}\)</span> 或 <span class="math inline">\(P_{99.9}\)</span>）。 这给出一个概率性准入限幅，其尾部为百分之一或 0.1 百分之一，且尚未计入其他模型误差和覆盖误差。 记录方与消费方必须声明适用的是哪种机制，监控其有效区域，并在证据超出该区域时拒绝相关运动，或选择经验证的可行回退方案。</p>
+<p>两种情形都给出同一类截止时间，因为 <a href="#dfn-memory-belief-invalidation-horizon">1.2</a> 的失效视距只追问声明的界何时首次达到任务容差，而不论该界由哪个模型产生。 因此，失效既不是任意的通信看门狗定时器，也不是为调度方便而固定的 <span class="math inline">\(100\text{ ms}\)</span> 启发式规则。 它是一个由任务几何、执行器控制能力和扰动动力学共同决定的物理截止时间；越过 <span class="math inline">\(t_0 + t_{\mathrm{exp}}\)</span> 之后，下游回路便不能再假定估计位姿处于所需净空之内。</p>
+<p><a href="#eq-mem-invalidation-horizon" class="quarto-xref">公式&nbsp;2</a> 的视距并非整台机器的单一标量。 载荷、速度与接触状态会改变扰动界，因此状态接口为当前运行工况选择生效的失效时刻；而从自由运动转入接触、在数毫秒内改变速度的情形，会直接使平滑漂移模型失效。 同一台机器上的三种信念分别在不同的时钟上失效（<a href="#tbl-09-belief-decay-horizons" class="quarto-xref">表&nbsp;2</a>）。 闩槽式手指信念的有效期限受漂移和扰动引起的误差增长所限制，其容差为毫米量级。 机架末端的人与手臂旁的一位同事都以相同的行走速度为限，但由于各自的误差从不同的初始值增长，并逼近不同的容差阈值，他们的信念会在不同的时刻失效。</p>
+<div id="tbl-09-belief-decay-horizons" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,28,14,12,26]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-09-belief-decay-horizons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;2: <strong>机器上的信念到期根</strong>：每个根针对该信念的误差模型与任务限值求解<span class="math inline">\(E(t)=E_{\max}\)</span>。 同事的初始误差具有说明性，其容差是选定的，而它的速度等于机架端行走速度上界，因此两行人员均线性增长。 最后一列给出根会触发的响应。 <strong><a href="../10_intent/10_intent.html#sec-intent">立足物理世界的意图</a></strong> 所使用的杯柄信念记录在 <a href="#sec-memory-spatial-state-schema" class="quarto-xref">节&nbsp;1.9</a> 中填写。
+</figcaption>
+<div aria-describedby="tbl-09-belief-decay-horizons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 28%">
+<col style="width: 14%">
+<col style="width: 12%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">信念</th>
+<th style="text-align: left;">误差界 <span class="math inline">\(E(t)\)</span>（毫米；<span class="math inline">\(t\)</span> 为秒）</th>
+<th style="text-align: right;">任务上限（毫米）</th>
+<th style="text-align: right;">根</th>
+<th style="text-align: left;">到期响应</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">人员越过机架末端</td>
+<td style="text-align: left;"><span class="math inline">\(50+1600t\)</span></td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">31.25 ms</td>
+<td style="text-align: left;">将横向通道视为未知；拒绝依赖性的推进</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">锁槽手指</td>
+<td style="text-align: left;"><span class="math inline">\(0.1+12t+25t^2\)</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">66 ms</td>
+<td style="text-align: left;">拒绝插入；柔顺保持或重新获取槽位</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">机械臂旁的同事</td>
+<td style="text-align: left;"><span class="math inline">\(15+1600t\)</span></td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">84 ms</td>
+<td style="text-align: left;">撤销依赖该信念的机械臂运动；仅在制动净距仍满足时停车</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>本节的每个根都信任其计算所依据的增长律。 增长律的好坏，完全取决于机器捕捉其失败的能力，可通过重捕获时的残差或人为安排的观测中断测试实现；而有些误差根本不会产生任何残差，因为机器上的任何传感器都无法观测到它们。</p>
+</section>
+<section id="sec-memory-state-estimation-bounds" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-memory-state-estimation-bounds">当估计器无法知晓时</h2>
+<p>机器人末端执行器上的一个示例应变片读出恒定的 5 N，该读数在允许存在未知偏置后，与任何真实接触力都相容。 一个以置信度预测该力的估计器，或一个学习得到的模型，并不能表明该力是可观测的。 在状态估计中，状态轨迹在有限时间窗口内，当且仅当可得传感器输出的历史唯一地确定了该机器机的初始状态时，是 <strong>可观测的</strong>，即不同的物理轨迹产生不同的传感器轨迹，而不是无法区分的测量序列。 当两个不同的物理状态历史产生完全相同的传感器读数序列时，机器中任何位置运行的数学运算、滤波器或神经网络都无法判定该身体实际遵循了哪条物理轨迹。 机器从传感器接口接收的比特流在两种现实中完全相同。</p>
+<p>要弄清为何可预测性不同于可观测性，可跟踪该末端执行器，观察它如何调节接触力以对抗刚性表面。 设真实的法向接触力为 <span class="math inline">\(x(t)\)</span>，应变片调理电路引入一个未知的、缓慢变化的传感器偏置 <span class="math inline">\(b(t)\)</span>。 在每个采样间隔内交付给估计器的原始测量值为 <span class="math inline">\(y(t) = x(t) + b(t)\)</span>。 假设传感器输出一个恒定数据流 <span class="math inline">\(y(t) =\)</span> 5 N。 该观测可由一个真实的物理力 <span class="math inline">\(x(t) =\)</span> 5 N 与零偏置 <span class="math inline">\(b(t) =\)</span> 0 N 满足。 它同样可由一个真实力 <span class="math inline">\(x(t) =\)</span> 2 N 与传感器偏置 <span class="math inline">\(b(t) =\)</span> 3 N 满足，或由 <span class="math inline">\(x(t) =\)</span> 0 N 与偏置 <span class="math inline">\(b(t) =\)</span> 5 N 满足。 对于任意偏移轨迹 <span class="math inline">\(\Delta(t)\)</span>，状态对 <span class="math inline">\((x(t) - \Delta(t), b(t) + \Delta(t))\)</span> 产生完全相同的测量序列 <span class="math inline">\(y(t)\)</span>。 真实力与传感器偏置之间的差异，存在于测量系统的<strong>不可观测子空间</strong>中，即物理变化在传感器数据中完全相互抵消的结构盲点。</p>
+<p>由于测量流无法区分物理载荷与传感器漂移，估计器必须依赖关于各状态如何演化的先验假设。 若卡尔曼滤波或学习得到的循环估计器被配置为相信传感器偏置<span class="math inline">\(b(t)\)</span>是静态的、方差接近零，那么它会将其在<span class="math inline">\(y(t)\)</span>中的每一次变化都归因于真实接触力<span class="math inline">\(x(t)\)</span>的变化。 随着新样本到达1,000<span class="math inline">\(\text{Hz}\)</span>，滤波器会纳入这些传入数据，并反复更新其内部状态。 由于 传入测量与状态动力学的前向投影相吻合，计算得到的状态协方差收缩，估计器报告一个越来越窄的不确定度界，并在<span class="math inline">\(P_{99}\)</span>概率水平下发布对5 N$<span class="math inline">\(0.05 N的估计。 与此同时，关节定子线圈中的焦耳热（\)</span>I^2 R$，见 <strong><a href="../02_body/02_body.html#sec-body-thermal-duty-cycles">热工作占空比</a></strong>）会加热传感器电桥（金属随膨胀而改变其电阻），使物理偏置 <span class="math inline">\(b(t)\)</span> 以热弹性速率 0.2 <span class="math inline">\(\text{N/min}\)</span> 发生漂移。 在 15 <span class="math inline">\(\text{min}\)</span> 内，<span class="math inline">\(b(t)\)</span> 的偏移量为 3 N。 表面上真实的力已从 5 N 降至 2 N，然而估计器却对漂移量已达其名义值的 60 %的状态报告了高置信度。</p>
+<p>下游控制策略以这种虚假的确定性作出响应，命令电机扭矩以维持其认为的 5 N 预紧力。 由于真实力仅为 2 N，接触面上的摩擦力低于工件的剪切载荷，导致工件从夹爪滑脱并落入工装夹具。 该故障发生而未触发任何内部软件诊断。 估计器监控其新息序列 ，即在每个采样点计算传入测量 <span class="math inline">\(y(t)\)</span> 与预测测量 <span class="math inline">\(\hat{y}(t)\)</span> 之间的新息，如 <a href="#sec-memory-belief-through-occlusion" class="quarto-xref">节&nbsp;1.6</a> 所述。 在本漂移场景中，估计器预测了 <span class="math inline">\(\hat{y}(t) = \hat{x}(t) + \hat{b}(t) =\)</span> 5 N，而物理传感器返回 <span class="math inline">\(y(t) =\)</span> 5 N。 新息在每个时间步均为零。 新息检验仅测量物理传感器是否与内部状态的前向投影不一致。 它无法揭示不可观测误差模式，因为在不可观测流形上，传感器输出对漂移是不变的。</p>
+<p>恢复可观测性要求系统架构提供额外的约束，以打破不可观测子空间中的对称性。 一种工程设计通过以下三种方式之一实现这一点。 首先，独立的传感可能引入第二条测量通道，其失效机理不同，例如监测关节电机电流，或使用不共享应变片热敏特性的光学偏转传感器。 其次，机器可以主动施加物理激励，命令夹爪短暂脱离工件接触 40 <span class="math inline">\(\text{ms}\)</span>，从而构造出已知的边界条件 <span class="math inline">\(x(t) =\)</span> 0 N，此时测得的传感值直接暴露出 <span class="math inline">\(b(t)\)</span>。 第三，机器可以依赖周期性的外部标定锚定，在计划中的换刀周期中将工具与经过标定的参考力传感器接触，以重置偏置估计。</p>
+<p>当某个物理状态无法由互补传感或主动激励加以约束时，估计器必须将该状态视为不可观测，并拒绝发布虚假精度。 估计层必须将对应的状态维度标记为不可用，或者依据底层硬件的最坏情况物理漂移率放宽其误差界，而不是依据滤波算法的收缩协方差。 线性与非线性动态系统的形式可观测性分析是控制理论的既定基础，由 <span class="citation" data-cites="kalman1960new">Kalman (<a href="#ref-kalman1960new" role="doc-biblioref">1960年</a>)</span> 对线性状态空间、由 <span class="citation" data-cites="hermann1977nonlinear">Hermann 和 Krener (<a href="#ref-hermann1977nonlinear" role="doc-biblioref">1977年</a>)</span> 通过 <strong>Lie 导数</strong>（参见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-covariance">Continuous Covariance Propagation and Observability</a></strong>）对非线性系统进行了严格处理。 系统工程师不会在运行时重新推导这些秩条件。 工程任务是识别在当前传感器配置下哪些物理状态缺乏完全可观测性秩，并强制状态接口永不对未受约束的自由度报告统计收敛。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-hermann1977nonlinear" class="csl-entry" role="listitem">
+Hermann, Robert, 和 Arthur J. Krener. 1977年. <span>《Nonlinear controllability and observability》</span>. <em>IEEE Transactions on Automatic Control</em> 22 (5): 728～40.
+</div></div><p>状态估计的可观测性与收敛性结果源自控制理论，且仅在四个明确假设下成立。 首先，传感器前向模型必须捕捉全部物理耦合，且不引入未建模的代数依赖。 其次，物理参数（如部件刚度与热系数）必须保持在预标定范围内。 第三，传感器噪声必须保持零均值，且与执行器指令不相关。 第四，机器的运行轨迹必须避免使<strong>可观性矩阵</strong> 降秩的奇异构型，这是一种数学上的坍缩，表明某些物理状态暂时对传感器不可见。 估计器在运行过程中通过交叉校验冗余测量通道、检查环境温度传感器，并在信念过期之前强制执行主动重零化流程来验证这些假设。 当运行条件违反上述假设时，例如当光学传感器被遮挡，或运动学构型达到奇异对齐，估计器将撤回该估计的有效状态，下游控制器则回退到保守的速度与力矩限值。 估计器通过撤回自身的有效性声明，使其失效显露出来；更严重的失败是那些没有任何东西撤回的情况。</p>
+</section>
+<section id="sec-memory-failure-modes" class="level2">
+<h2 class="anchored" data-anchor-id="sec-memory-failure-modes">信念如何出错</h2>
+<p>摄像机停止输出帧，但传输节点仍持续以当前时间重新发布其最后一次变换，下游控制器的5 <span class="math inline">\(\text{ms}\)</span> 发布时刻新鲜度检查对每一副本均通过。 该故障与摄像机仅仅静默失效在性质上不同，这一区别将各类估计失败划分为两种形式。 在<strong>显性故障</strong> 中，组件停止执行、丢弃通信数据包、清空输出缓冲区，或置位显式错误位。 下游消费者立即观察到数据缺失或有效性标志被清空，从而在仍可行时启用经校验的降级策略，例如保持、停止或柔顺模式。 在<strong>静默故障</strong> 中，记忆层继续发布一份完整且数值格式良好的状态记录，其状态位有效、方差指标较低且时间戳连续，而记录内部的数值与机器的实际物理构型相背离。 下游控制回路在未抛出异常的情况下消费这些被污染的记录，依据虚构的几何构型计算反馈修正。 由于物理执行器会执行源自这些看似有效记录的命令，例如驱动机械臂驶向如今已与墙壁相交的目标，静默的状态损坏可能在任何软件监控器登记异常之前，就跨越 <strong><a href="../01_boundary/01_boundary.html#sec-boundary-causal-boundary">因果边界</a></strong> 所述的因果边界传递力。<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p><a href="#sec-memory-preserving-belief" class="quarto-xref">节&nbsp;1.1</a> 的重新发布风险有一个名称，即 <strong>冻结变换（frozen transform）</strong>，它是最具欺骗性的静默故障，因为一张过时的空间快照被配上当前时间戳重新发布，从而掩盖了失效的传感器。 在一个示例时间线中，光学跟踪节点在时间戳 <span class="math inline">\(t_0 = 0\text{ ms}\)</span> 计算变换矩阵 <span class="math inline">\(T_{\text{camera}}^{\text{object}}\)</span>。 若光学传感器在 <span class="math inline">\(t =\)</span> 10 <span class="math inline">\(\text{ms}\)</span> 处断开、丢帧或遭受线程饥饿，则底层跟踪算法将停止产生新的空间证据。 如果消息传递中间件或某个中间传输节点将最后一次计算出的矩阵保留在未过期的缓冲区中，并以 1,000 <span class="math inline">\(\text{Hz}\)</span> 的循环速率重新发布，生成新的传输时间戳 <span class="math inline">\(t_k = t_0 + k\,T_{\text{rep}}\)</span>，其中 <span class="math inline">\(T_{\text{rep}} =\)</span> 1 <span class="math inline">\(\text{ms}\)</span>，那么该测量的时间溯源信息即被抹除。 下游跟踪控制器通过计算数据年龄 <span class="math inline">\(\Delta t = t_{\text{now}} - t_{\text{msg}}\)</span> 来校验新鲜度。 由于发布方使用系统当前时钟为消息打上了时间戳，<span class="math inline">\(\Delta t\)</span> 小于 1 <span class="math inline">\(\text{ms}\)</span>，满足严格的新鲜度阈值 <span class="math inline">\(\tau_{\text{max}} =\)</span> 5 <span class="math inline">\(\text{ms}\)</span>。 控制器将该变换接受为当前证据。 若物理对象以速度 0.5 <span class="math inline">\(\text{m/s}\)</span> 运动而变换保持不变，控制器将在 100 <span class="math inline">\(\text{ms}\)</span> 内累积 50 <span class="math inline">\(\text{mm}\)</span> 的空间跟踪误差，却报告零估计跟踪发散。</p>
+<p><strong>“幽灵物体跟踪”</strong> 出现于估计器将空间坐标的寿命与存在性证据的寿命相分离的情形。 感知模块维护一条物体轨迹，包含运动学状态向量 <span class="math inline">\(\mathbf{x} = [p, v]^T\)</span>（编码空间位置与速度）以及存在概率 <span class="math inline">\(p_{\text{exist}} \in [0, 1]\)</span>（编码物体在物理上真实存在的置信度）。 当物理物体被移出工作空间，或遮挡开始时，原始检测器命中数降至零。 若估计层继续依据过程动力学将 <span class="math inline">\(\mathbf{x}\)</span> 前向传播，而存在概率衰减由较长的时间常数决定（例如，一个示意性衰减过程，使得 <span class="math inline">\(p_{\text{exist}}\)</span> 在 <span class="math inline">\(1500\text{ ms}\)</span> 内无强化输入的情况下仍高于工作阈值），则跟踪器会维持一个持续的幽灵实体。 路径规划器使机械臂绕行于空区域，或自动抓取程序在空坐标上合拢手指。 检测幽灵轨迹不能依赖被动的测量缺失。 它需要负证据（<a href="#sec-memory-scene-attention-buffers" class="quarto-xref">节&nbsp;1.5</a>），即视线传感器扫过该体积并确认预期占据区域为空，或接触预期未被满足——当力传感器在预测的接触边界处测得零载荷时。<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>坐标系的错误归属在语法与语义之间大致沿同一分界呈现。 当发布方在变换树图中为变换标注了无效或未定义的坐标系标识符时，即发生 <strong>可由模式检测出的坐标系不匹配（schema-detectable frame mismatch）</strong>。 具有静态模式强制的消息总线会在序列化边界处拒绝该数据包，因为所命名的坐标系无法解析为已知的父级链路。 相比之下，<strong>语义错误的坐标系分配</strong> 发生在工程师或配置文件分配了一个有效且类型正确的坐标系标识符，但该标识符代表的是错误的物理链路。 例如，使用裸安装法兰 <span class="math inline">\(T_{\text{flange}}\)</span> 的变换来指令工具中心点轨迹，而不是使用延伸工具尖端 <span class="math inline">\(T_{\text{tool}}\)</span>，可满足所有模式校验检查、类型断言和树遍历测试。 在一个示例性设置中，工具尖端沿工具 <span class="math inline">\(z\)</span> 轴超出法兰 <span class="math inline">\(150\text{ mm}\)</span>，法兰当尖端处理这一错误会使预期的接触点偏移该偏移量。 接触是否发生取决于夹具几何与允许的路径。 检测语义帧错误需要物理一致性检查，例如，将测得的电机扭矩与机械臂的分析动力学模型进行校验，或交叉核对多相机光学跟踪器观测与关节编码器运动学。</p>
+<p>当传感器更新丢失时，估计器完全依赖其预测前向模型，在盲区间推进状态估计。 一个良好构造的滤波器会更新均值状态估计 <span class="math inline">\(\hat{\mathbf{x}}(t)\)</span>，同时以单调方式扩大估计协方差 <span class="math inline">\(\mathbf{\Sigma}(t)\)</span>，以反映无约束过程噪声的增长。 一个<strong>过度自信的预测器</strong> 会低估过程方差 <span class="math inline">\(\mathbf{Q}\)</span>，使 <span class="math inline">\(\mathbf{\Sigma}(t)\)</span> 在超过 <span class="math inline">\(200\text{ ms}\)</span> 的较长预测时长内被人为地压缩得过于紧凑。 当新的传感器测量最终到来时，人为偏小的协方差会导致滤波器折价接收的观测；它如此倚重其内部推算，以至于将有效的测量判定为统计离群点并予以拒绝。 工程师通过在系统合格性验证中执行分阶段合成遮挡来识别过度自信，即在<span class="math inline">\(50\text{ ms}\)</span>与<span class="math inline">\(500\text{ ms}\)</span>之间的时间间隔内系统性丢弃传感器帧，并在重新获取时评估创新量<span class="math inline">\(y(t) - \hat{y}(t)\)</span>。 若该残差在五十次分阶段试验中始终超过预测的<span class="math inline">\(3\sigma\)</span>协方差边界，则过程噪声模型无效。 沿不可观测自由度的漂移，例如柔性夹爪垫内的工件打滑，不会产生任何重新获取残差（<a href="#sec-memory-state-estimation-bounds" class="quarto-xref">节&nbsp;1.7</a>）。 在车辆尺度上，地形信念会一直维持，直到车轮本身与之相矛盾。</p>
+<div id="ws-memory-spirit-rover-troy-entrapment" class="callout callout-war-story" title="一辆被困在沙中的火星车（2009 年）">
+<p></p><details class="callout-war-story fbx-simplebox fbx-default" open=""><summary><strong>War Story 1.1: 一辆被困在沙中的火星车（2009 年）</strong></summary><div><strong>上下文</strong>：<em>Spirit</em> 的车轮于第 1886 个火星日（Sol 1886）在 Troy <a href="https://www.jpl.nasa.gov/images/spirits-view-from-troy">开始陷入</a> 松软土壤，到第 1899 个火星日（Sol 1899）时，火星车已陷住；<a href="https://www.jpl.nasa.gov/images/pia12140-spirit-close-to-troy-sol-1871/">JPL 导航相机记录</a> 为接近与陷入过程提供了时间依据。 一层较暗的表层覆盖着这处陷车地点；车轮击穿表层，进入了其下方的较亮物质。<p></p>
+<p><strong>机制</strong>：车轮的转动并未产生预期的平移，因为漫游车正在下陷。 JPL 报告称，车辆下方可能有一块岩石 <a href="https://www.jpl.nasa.gov/news/mars-rover-yielding-new-clues-while-lodged-in-martian-soil/">可能接触到了其底部</a>；接触只是一种可能性，而非已确立的机制。 仅凭地表外观无法确定地下承力状态。</p>
+<p><strong>影响</strong>：救援团队测试了脱困机动，但 <em>“Spirit”</em> 未能恢复移动能力。 该事件揭示了一个地形信念的局限：物理交互提供了证据，表明此前的可通行性估计无法安全保留。</p>
+<p><strong>响应与经验教训</strong>：JPL 在 <em>“Opportunity”</em> 陷入 Purgatory Ripple 之后，已研制出 Slip Check 模式（<a href="https://www-robotics.jpl.nasa.gov/media/documents/visual_odometry_thinking_while_driving_final.pdf">JPL 技术记录</a>），因此基于视觉里程计的打滑检查在 Troy 之前便已存在。 控制器应比较车轮转动与已验证的运动，在证据与该假设冲突时使地形假设失效，并仅通过可行的许可检查才允许继续行驶。</p>
+</div></details>
+</div>
+<p>冻结的变换、幽灵轨迹、错误归属的帧以及过度自信的预测者都会跨越估计与控制之间的边界，而 <a href="#sec-memory-handoff" class="quarto-xref">节&nbsp;1.2</a> 的空间信念记录正是必须在此处捕捉它们的结构，因为一个临时的值与矩阵字典无法区分活动证据与缓存动量。 因此，空间记忆的每个元素都必须位于一条显式的状态记录中，该记录将数值与其基准坐标帧、传感器来源、增长上界以及硬性失效截止时间耦合起来，后者迫使下游消费者在该截止时间过后拒绝该记录。</p>
+</section>
+<section id="sec-memory-spatial-state-schema" class="level2">
+<h2 class="anchored" data-anchor-id="sec-memory-spatial-state-schema">空间状态模式</h2>
+<p><a href="#sec-memory-belief-through-occlusion" class="quarto-xref">节&nbsp;1.6</a> 中关于闩锁槽手指的信念如今承载了消费者判断它所需的一切，而 <a href="#dfn-memory-spatial-belief-contract">1.1</a> 的空间信念记录正是这些量共同传递的结构。 从 <strong><a href="../08_perception/08_perception.html#sec-perception-observation-contract">观测契约</a></strong> 的观察契约中，该记录保留了每次观察的捕获时刻、时钟标识符与换算上界，因此权限控制器可以在评估年龄之前，以有界的误差将捕获时钟换算为其自身的单调时钟。 记忆自身贡献四个字段。 估计纪元记录最近一次计算，并与证据纪元相区分，后者记录最后一次物理测量；不确定性增长界说明在没有新证据的情况下误差累积的速率；有效性区域说明该界在何处成立；失效期则说明信念何时不再可采纳。 当新鲜观测仍对该记录构成约束时，该记录为 <code>VALID</code>。 观测一旦停止，预测只能将其向前推进，即在界仍保持在容差之内时推进至 <code>DEGRADED</code>，并在该界达到容差或机器离开有效性区域时推进至 <code>EXPIRED</code>；只有新鲜观测才能将其恢复到 <code>VALID</code>。 当传感器完全无法约束该量时，该记录为 <code>UNOBSERVABLE</code>（<a href="#sec-memory-state-estimation-bounds" class="quarto-xref">节&nbsp;1.7</a>）。<a href="#tbl-09-invalidation-epochs" class="quarto-xref">表&nbsp;3</a> 则为手指填充该记录，形成带扰动界的信念。</p>
+<div id="tbl-09-invalidation-epochs" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[23,39,38]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-09-invalidation-epochs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;3: <strong>完整的空间信念记录</strong>：数值、单位、实体、坐标系、两个时刻、时钟换算、误差模型、有效区域、有效期、来源以及生命周期共同传递。 较晚的估计纪元用于标注一次计算，而非一次测量，且不能将过期时间延长到 <span class="math inline">\(t_0 + t_{\text{exp}}\)</span> 之后。
+</figcaption>
+<div aria-describedby="tbl-09-invalidation-epochs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 39%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">字段</th>
+<th style="text-align: left;">示例记录值</th>
+<th style="text-align: left;">消费者检查</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">实体与数量</td>
+<td style="text-align: left;">夹爪手指相对锁扣释放槽的横向偏移，相对于槽中心线</td>
+<td style="text-align: left;">匹配目标实体与任务数量</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">数值与 SI 单位</td>
+<td style="text-align: left;">横向偏移以米存储；下表中的界限以毫米显示以便阅读</td>
+<td style="text-align: left;">解码为米，而不是毫米或力</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">框架</td>
+<td style="text-align: left;"><code>latch_slot</code> 坐标系，以及手腕相机校准的变换修订版</td>
+<td style="text-align: left;">解析一条时间有效的变换链</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">证据时刻</td>
+<td style="text-align: left;"><span class="math inline">\(t_0\)</span>，即手指遮挡插槽之前手腕相机的最后一次捕获，以手腕相机的捕获时钟计</td>
+<td style="text-align: left;">跨预测与重新发布保持一致</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">估计历元</td>
+<td style="text-align: left;">同一采集时钟下最近一次偏移量传播计算的时刻</td>
+<td style="text-align: left;">为传播后的估计确定日期；不要更新证据</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">时钟换算</td>
+<td style="text-align: left;">版本化 <span class="math inline">\(t_{\text{MCU}}=a t_{\text{capture}}+b\)</span>，误差至多 0.2 ms（<strong><a href="../08_perception/08_perception.html#sec-perception-observation-contract">观测契约</a></strong>）</td>
+<td style="text-align: left;">若转换已过期则拒绝；将错误加入上界年龄</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">初始误差</td>
+<td style="text-align: left;"><span class="math inline">\(E_0\)</span> = 0.1 mm</td>
+<td style="text-align: left;">将初始边界与校准值比对</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">增长规律</td>
+<td style="text-align: left;"><span class="math inline">\(E(t) = 0.1\text{ mm} + (12\text{ mm/s})\,t + \tfrac12(50\text{ mm/s}^2)\,t^2\)</span></td>
+<td style="text-align: left;">在证据年龄处与槽位容差比较</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">有效区域</td>
+<td style="text-align: left;">机械臂加速度与接触模式自 <span class="math inline">\(t_0\)</span> 起保持不变；该区域内漂移与扰动上界已验证</td>
+<td style="text-align: left;">在模式或残差上界违规时立即失效</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">失效时间</td>
+<td style="text-align: left;"><span class="math inline">\(t_0\)</span> + 66 ms，即增长律达到 1 mm 槽位容差时</td>
+<td style="text-align: left;">失效后拒绝依赖提案；较晚的估计时间戳不会延长该失效时间</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">来源信息</td>
+<td style="text-align: left;">腕部摄像头观测 ID、校准修订号、估计器构建哈希</td>
+<td style="text-align: left;">匹配已批准来源；哈希属于版本溯源，而非载荷完整性</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">生命周期</td>
+<td style="text-align: left;"><code>VALID</code> 在捕获时、<code>DEGRADED</code> 在手指遮挡插槽后、<code>EXPIRED</code> 在 <span class="math inline">\(t_0\)</span> + 66 ms</td>
+<td style="text-align: left;">没有新的物理证据，不得恢复 <code>VALID</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">在适用时，映射单元证据</td>
+<td style="text-align: left;">本记录不使用；机架端横通道之类的地图信念带有每格捕获纪元与空闲/占用/未知状态</td>
+<td style="text-align: left;">检查候选路径使用的<strong>每一个</strong>单元格；未知保持未知</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>同一形式承载着 <strong><a href="../10_intent/10_intent.html#sec-intent">立足物理世界的意图</a></strong> 所依托的信念，即茶杯把手的姿态，当茶杯随取餐传送带驶向机械臂时。 其坐标系为机器人基坐标系，其证据时点为腕部相机最后一次捕捉杯柄的时点，并依据同一 0.2 ms 时钟约束进行换算，其初始误差为 3 mm。 其增长规律与手指的在性质上有所不同。 传送带以不超过 0.20 m/s 的速度承载杯子，这是对速度的约束而非对力的约束，因此误差从其初始值线性增长，并在 <span class="math inline">\(t_0\)</span> + 60 ms 时达到 15 mm 抓取容差。 其有效区域为在该速度下向前运行的传送带，且杯子安放在其上；因此，任何使杯子倾倒或抬起的碰撞，或使传送带超速或反向的传送带，都会立即使该记录失效，无论剩余时间多少。 一个在每个帧上续写记录的合格跟踪器，以传送带的残余滑移 <strong><a href="../10_intent/10_intent.html#sec-intent-goals-expire">会过期的目标</a></strong> 为界的规律取代了上述传送带漂移规律。</p>
+<p>任一记录的消费方将捕获时刻换算为自身时钟，把时钟误差余量加到年龄上，再检查生命周期状态与有效区域，然后才将 <span class="math inline">\(E(t)\)</span> 与拟议运动的容差进行比较。 通过上述检查即允许该信念进入 <strong>独立的授权决策</strong>；它并不驱动机器人。 在过期或不可观测时，控制器拒绝相关提议，并选择一个经过验证的备选方案，其制动、保持或搜索行为仍保持物理可行。</p>
+<div id="chk-mem-observability-state-schema" class="callout callout-checkpoint" title="信念过期、可观测性与信念记录">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 1.1: 信念过期、可观测性与信念记录</strong></summary><div>
+<p>在转向“有效记录被过度信任”时产生的谬误之前，先核实你对证据时刻、信念过期、可观测性限制以及信念记录的理解：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>时刻分类</strong>：你能区分证据（采集）时刻 <span class="math inline">\(t_0\)</span>、估计时刻 <span class="math inline">\(t_{\text{est}}\)</span> 与发布时刻 <span class="math inline">\(t_{\text{pub}}\)</span> 吗？并请解释，为何用发布时间给估计打戳会掩盖自采集以来累积的位移？</label></li>
+<li><label><input type="checkbox"><strong>物理失效视界</strong>：你能解释为什么遮挡期间空间信念的保质期由任务所需的空间净空和有界扰动决定，而不是由软件超时决定，以及为什么恒定速度外推会使信念越过其失效期限？</label></li>
+<li><label><input type="checkbox"><strong>不可观测流形危害</strong>：你能解释为什么零新息（<span class="math inline">\(y - \hat{y} = 0\)</span>）无法检测由电机焦耳发热（<span class="math inline">\(I^2 R\)</span> 焦耳热）引起的传感器偏置漂移，该漂移发生在不可观测自由度上吗？</label></li>
+<li><label><input type="checkbox"><strong>状态生命周期状态机</strong>：你能追踪 <code>VALID</code>、<code>DEGRADED</code>、<code>EXPIRED</code> 与 <code>UNOBSERVABLE</code> 之间的确定性转移，并解释为什么状态记录在缺少新的硬件证据采集时刻 <span class="math inline">\(t_0\)</span> 的情况下，绝不可回退到 <code>VALID</code> 吗？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-memory-fallacies-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="sec-memory-fallacies-pitfalls">谬误与陷阱</h2>
+<p>单个有效的记录未必构成对作业空间的一致描述。 控制器必须在联合使用这些记录授权运动之前，先协调各记录的时间及其背后的证据。</p>
+<div class="fallacy-pitfall">
+<p><strong>易错点</strong>: <em>使用异步时间戳评估运动物体之间的空间净空。</em></p>
+<p>移动基座以其行驶速度上限 1.5 m/s 驶向货架端部，而同事以 1.6 m/s 步行速度上限向其走来，因此两者以 3.1 m/s 的相向接近速度靠近。 它们的位置记录在采集时间上相差 20 ms，且都落在 31.25 ms 有效期窗口内。 直接比较它们，等于将从未描述同一瞬间的位置合并在一起。 在间隔中，两物体以 62 mm 的距离接近，超过定位边界与保护间距之间的 50 mm。 单独的时新性检查无法确立联合间距。 控制器必须将两个估计值传播到共同的评估时刻，把各自的生长界带到该时刻，或者依据相向接近速度与净空量限制允许的偏斜。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>有界的空间协方差证明了物理实体仍然存在于工作空间中。</em></p>
+<p>这是机架末端处 <a href="#sec-memory-failure-modes" class="quarto-xref">节&nbsp;1.8</a> 的幽灵轨迹。 一个人走出，被检测到，然后回到机架后方，而跟踪器仍沿横通道预测该人，其协方差低于拒绝阈值。 随后，规划器让基座绕开预测出的那个人，并把横通道的其余部分视为已处理。 即使该人确实存在，第二个结论依然不成立，因为遮挡区域内检测的缺失既不是存在性的证据，也不是空旷的证据，而对一条轨迹的精确外推对其周围空间不证明任何内容。 追踪器必须将存在性证据与空间协方差分开保存，只有来自具备该横通道观测能力的传感器的负证据，才能确认轨迹周围的空间为空。</p>
+</div>
+</section>
+<section id="sec-memory-summary" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-memory-summary">摘要</h2>
+<p>空间记忆在无传感器对其施加约束的区间内承载估计。 将估计前推并不等于更新它。 预测器、滤波器或重新发布桥将状态的时间戳推进到当前周期，但该状态背后的证据仍锚定于最后一次物理测量的捕获时刻。 因此，空间信念记录将两个相隔的纪元分开，即标注测量时间的证据纪元与标注计算时间的估计纪元，并将二者绑定到同一坐标系、初始误差、增长律、有效区域和有效期。 无论该估计被重算得多么频繁，只有新的观测才能恢复记录的合法状态。 坐标系绑定之所以重要，是因为变换本身也是一种信念，拥有自己的证据时点；一条陈旧的边可以通过树能够运行的全部检查，而由它定位的工具点却已漂出安全净空范围。</p>
+<p>状态估计的有效期不能由便利的软件超时机制来规定，例如操作系统看门狗，或设置为整数的传输缓冲区 <span class="math inline">\(100\text{ ms}\)</span>。 过期是一个物理计算，由任务容差与未观测误差的验证增长率共同决定。 在机架末端，关于横通道为空的信念会在最后一次观测到它的帧之后 31.25 ms 过期，此时感知甚至都还没有发出该帧，无论软件消息队列是否仍然健康。 因此，记忆无法证明被遮挡的横通道是畅通的。 它给机器的停止预算增加了截止时间，却没有增加距离；预算仅保护静态障碍物，而仍在走向机器的人则由场地穿越规则承载。 负证据对空间表征进行排序。 只有有效射线所见过的空区域才为净空背书，且仅在证据仍然新鲜时；因此，渲染出的视图或地图的发布时间都不构成净空界限。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 已过期空间变换的取证记录会填充 <strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-log">《控制权限日志》</a></strong> 中的权威日志。</p>
+</div></div><p>两类错误会躲开消费者能够执行的检查。 冻结的变换或幽灵轨迹会发布完整、看似新鲜的记录，这比显式缺失帧更具危害性，因为缺失帧会触发经校验的降级处理，而伪装成新鲜的陈旧记录则通过不足的时效性检查。 不可观测误差藏得更深。 当可用传感器无法区分两种物理状态时，新息保持为零，协方差收缩，而真实误差却在增长，就像那个随绕组发热而漂移的传感器偏置造成的力估计。 只有具有不同失效机理的第二个通道、刻意的激励，或外部参考，才能恢复传感器看不到的东西。</p>
+<div id="callout-takeaways*-1.2" class="callout callout-takeaways" title="证据年龄与信念过期">
+<details class="callout-takeaways fbx-simplebox fbx-default" open=""><summary><strong>要点回顾: 证据年龄与信念过期</strong></summary><div>
+<ul>
+<li><strong>预测推进状态，而非证据</strong>：前向传播将估计的时间戳推进到当前时刻，但其证据时标仍停留在最后一次物理测量。 年龄从该时标起算，因此重新发布或外推的状态，恰好与支撑它的观测一样旧。</li>
+<li><strong>过期是一个物理期限</strong>：当某个信念的验证误差界<span class="math inline">\(E(\Delta t)\)</span>达到任务容差<span class="math inline">\(E_{\max}\)</span>时，该信念即过期，无论该误差界是有界扰动增长律还是校准分位数。 为调度便利而选定的软件超时，对两者都不作说明。</li>
+<li><strong>记忆加入的是期限，而非距离</strong>：机架端的信念在31.25 ms处失效，这一时长小于两个相机帧周期，因此记忆无法确认被遮挡区域内无障碍物。 停止预算从记忆处获得一个期限，但不含距离项，且仍然只保护静态障碍物。 未知空间始终保持未知，而地图的发布时刻也永远不会刷新任何传感器未曾再次访问的栅格。</li>
+<li><strong>陈旧记录看起来比缺失记录更健康</strong>：冻结的变换、幽灵轨迹，或跨不匹配时间戳比较的两条记录，都会通过缺失帧本会失败的时新性检查。 存在性、跨记录偏斜与变换历元各自都需要针对证据时进行独立的检查。</li>
+<li><strong>不可观测误差会躲过新息检查</strong>：在传感器无法区分的自由度上，残差保持为零，协方差收缩，而误差却在增长。 独立的感知、刻意的激励或外部锚定必须提供缺失的约束，估计器才可能报告收敛。</li>
+</ul>
+</div></details>
+</div>
+<p>第三定律要求许可路径依据状态作出每个动作决策，而该状态的年龄是已知的（原则 <a href="https://mlsysbook.ai/vol4/parts/running_principles.html#pri-vol4-proposal-permission" title="英文原版参考内容">Proposal is not permission</a>）；空间记忆为其年龄提供了定义，从最后一次物理测量的证据历元起算，而不是从最近一次计算的估计历元起算。 没有任何有效光线穿越过的空间根本不存在证据历元，因此它以未知状态进入许可路径，无论其年龄如何，都不能据此判定该空间内无障碍物。 已知的年龄仍然不是一张通行证。 它只有通过转化为误差界的生长律才有意义；无论年龄已知得多么精确，许可路径都必须在该界达到任务容差的那一刻拒绝状态。</p>
+<div id="callout-chapter-connection*-1.3" class="callout callout-chapter-connection" title="从有效信念到有界目标">
+<p></p><details class="callout-chapter-connection fbx-simplebox fbx-default" open=""><summary><strong>后续内容: 从有效信念到有界目标</strong></summary><div>一个有效信念可以授权什么？ 记忆只对有效性作出判定。 它可以说，某个被记住的物体在某个规定的截止时间之前位于某个规定的界限之内，但它不能说机器应当如何处置该物体。 在 <strong><a href="../10_intent/10_intent.html#sec-intent">立足物理世界的意图</a></strong> 中，一个人类目标“从传送带上取走杯子”会转化为一份意图租约：它消耗杯子把手的信念记录，继承该信念原有的证据时点，作为自身的证据时间，将其失效时间上限设为该信念的时域，并为其授予一个带控制作用量限制的有界目标，而非一条路径，且其存续时间不得超过其下方证据所能支撑的时长。<p></p>
+</div></details>
+</div>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a><div id="quarto-appendix" class="default page-columns page-full"><section id="footnotes" class="footnotes footnotes-end-of-document page-columns page-full" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">脚注</h2>
+
+<ol>
+<li id="fn1"><p><strong>信念状态表述</strong>：在部分可观测马尔可夫决策过程（POMDP）中，信念表示对隐状态的概率分布。 物理状态接口还携带一个误差界。 缺少该数值、参考坐标系、证据时刻和适用的不确定性模型，下游优化器就无法在传感器中断期间评估裕度。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>硬件定时器输入捕获</strong>: 微控制器定时器的输入捕获通道在外部信号跳变时，将计数器值锁存到专用影子寄存器中，从而绕过操作系统中断延迟。 在不与定时器溢出标志进行原子同步的情况下读取捕获寄存器，会导致 16 位计数器别名，注入等于回卷周期（<span class="math inline">\(65.5\text{ ms}\)</span> 在 <span class="math inline">\(1\text{ MHz}\)</span> 定时器上）的人为时间戳跳变。 在下游视觉惯性里程计中，这种时间不连续性会引入虚假加速度尖峰，从而 使平台姿态滤波器失稳。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><strong>现场总线时钟同步抖动</strong> ：现场总线架构表现出不同的硬件时钟同步误差界：以太网上的 IEEE 1588 PTP 达到 <span class="math inline">\(\delta t &lt; 1.0\,\mu\text{s}\)</span>，EtherCAT 分布式时钟的硬件 SYNC0 抖动达到 <span class="math inline">\(&lt;100\text{ ns}\)</span>，CAN-FD 比特相位同步则给出 <span class="math inline">\(\pm 10\text{--}50\,\mu\text{s}\)</span>。 由于空间不确定性随目标相对速度(<span class="math inline">\(e_{\text{sync}} = v_{\text{rel}} \delta t\)</span>)而增大，微秒级同步对于将时序误差控制在微米级机械预算范围内至关重要。 分布式传感器与电机节点之间的未校准时钟漂移会劣化多轴工具协同，在关节扭矩回路中诱发高频颤振。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><strong>贝叶斯状态估计的来龙去脉</strong>: <span class="citation" data-cites="kalman1960new">Kalman (<a href="#ref-kalman1960new" role="doc-biblioref">1960年</a>)</span> 为线性动态系统提出了递归最小均方误差状态估计。<span class="citation" data-cites="moravec1985high">Moravec 和 Elfes (<a href="#ref-moravec1985high" role="doc-biblioref">1985年</a>)</span> 将这些递归贝叶斯更新推广到空间占用栅格，通过显式的距离-方位分布刻画传感器波束的不确定性。 在具身系统中，跨长时传感器中断的未补偿传播会导致贝叶斯信念分布弥散，因而需要显式设置失效时域，以防止开环控制发散。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><strong>非光滑接触动力学</strong>：物理表面的接触会引入集合值库仑摩擦和非光滑的粘滑过渡，从而破坏线性协方差传播模型。 在黏滑模式之间切换会注入不连续的位移速度阶跃，使连续运动学漂移界失效。 管理这些接触模式转换需要混合状态估计器，在检测到法向力阈值时切换不同的误差增长矩阵。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><strong>AMR 安全标准</strong>：ISO 3691-4 规定了无人驾驶工业车辆及其系统的安全要求。 遮挡与制动距离针对每种设计的工作域及其传感器和执行器配置进行评估，而非作为普适数值直接采用。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><strong>自主安全标准</strong>: UL 4600 涉及自主产品的安全评估，ISO 26262 涉及汽车功能安全。 本章中的数据时效性、跟踪轨迹失效处理和变换检查，是其工作架构的设计要求，而非上述两项标准中的条款。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><div id="ref-kalman1960new" class="csl-entry" role="listitem">
+Kalman, Rudolph Emil. 1960年. <span>《A new approach to linear filtering and prediction problems》</span>. <em>Journal of Basic Engineering</em> 82 (1): 35～45.
+</div><div id="ref-moravec1985high" class="csl-entry" role="listitem">
+Moravec, Hans, 和 Alberto Elfes. 1985年. <span>《High resolution maps from wide angle sonar》</span>. <em>IEEE International Conference on Robotics and Automation</em> 2: 116～21.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8084\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol4_zh/08_perception/08_perception.html" class="pagination-link" aria-label="第8章 · 传感器感知">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第8章 · 传感器感知</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol4_zh/10_intent/10_intent.html" class="pagination-link" aria-label="第10章 · 立足物理世界的意图">
+        <span class="nav-page-text">第10章 · 立足物理世界的意图</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《物理人工智能系统》第四卷 · 简体中文本地版 · 仅17章正文</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>智能体机器学习系统 · 第三卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol3_zh/appendices/app_c_failure_taxonomy.html" rel="next">
+<link href="../../vol3_zh/appendices/app_a_reference_architecture.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c3df12ea3ad0b9d55867f258fc566956.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-77e4780d3a3e3b6bb5092d0b1032ff40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-c3df12ea3ad0b9d55867f258fc566956.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="智能体机器学习系统 · 第三卷">
+<meta property="og:description" content="Vol3 简体中文修订版：模型、记忆、工具、运行时、学习与规模化。">
+<meta property="og:image" content="https://gptbert.com/books/mlsys/vol3/vol3_zh/appendices/vol3_zh/covers/cover-hardcover-book-vol3.png">
+<meta property="og:site_name" content="智能体机器学习系统 · 第三卷">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:title" content="智能体机器学习系统 · 第三卷">
+<meta name="twitter:description" content="Vol3 简体中文修订版：模型、记忆、工具、运行时、学习与规模化。">
+<meta name="twitter:image" content="https://gptbert.com/books/mlsys/vol3/vol3_zh/appendices/vol3_zh/covers/cover-hardcover-book-vol3.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<style id="vol3-zh-layout-fixes">#quarto-document-content table > caption { display: table-caption !important; width: auto !important; caption-side: top; } [id] { scroll-margin-top: 90px; } figure > img { max-width: 100%; height: auto; }</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">智能体系统 · 第三卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol3_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">《智能体系统基础》</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol3_zh/appendices/app_a_reference_architecture.html">附录</a></li><li class="breadcrumb-item"><a href="../../vol3_zh/appendices/app_b_tool_design.html">附录 B：工具设计与类型化 ABI</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献辞</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">符号说明</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">《智能体系统基础》</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/model_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第一部分：模型</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/02_foundation_model/02_foundation_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基座模型</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/03_test_time_compute/03_test_time_compute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">测试时计算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/memory_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第二部分：智能体记忆</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/04_context_engineering/04_context_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">上下文工程</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/05_kv_cache/05_kv_cache.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">KV 缓存管理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/06_long_term_memory/06_long_term_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">长期记忆</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/tool_use_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第三部分：工具使用</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/07_tool_calling/07_tool_calling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">工具调用</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/08_sandboxes/08_sandboxes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体沙箱</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/runtime_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第四部分：智能体运行时</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/09_agent_harness/09_agent_harness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体运行框架</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/10_durable_execution/10_durable_execution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">持久执行</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/11_failure_recovery/11_failure_recovery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">故障恢复</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/12_evaluation/12_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体评估</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/learning_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第五部分：从轨迹中学习</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/13_trajectory_curation/13_trajectory_curation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹整理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/14_fine_tuning/14_fine_tuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹微调</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/15_rlvr/15_rlvr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可验证奖励强化学习</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/scale_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第六部分：规模化智能体</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/16_multi_agent/16_multi_agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">多智能体协同</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/17_agent_economics/17_agent_economics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体经济学</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/synthesis_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第七部分：综合</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/18_conclusion/18_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结语</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">附录</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_a_reference_architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 A：参考架构</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_b_tool_design.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">附录 B：工具设计与类型化 ABI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_c_failure_taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 C：故障分类</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/appendix_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">推理与系统硬件基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/appendix_math.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数学基础</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-vol3-app-b-tool-design" id="toc-sec-vol3-app-b-tool-design" class="nav-link active" data-scroll-target="#sec-vol3-app-b-tool-design">类型化工具接口</a>
+  <ul>
+  <li><a href="#如何使用本附录" id="toc-如何使用本附录" class="nav-link" data-scroll-target="#如何使用本附录">如何使用本附录</a></li>
+  <li><a href="#sec-vol3-app-b-json-schema" id="toc-sec-vol3-app-b-json-schema" class="nav-link" data-scroll-target="#sec-vol3-app-b-json-schema">工具定义的模式规则</a>
+  <ul class="collapse">
+  <li><a href="#工具定义参考示例" id="toc-工具定义参考示例" class="nav-link" data-scroll-target="#工具定义参考示例">工具定义参考示例</a></li>
+  <li><a href="#模式反模式" id="toc-模式反模式" class="nav-link" data-scroll-target="#模式反模式">模式反模式</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-app-b-logit-masking" id="toc-sec-vol3-app-b-logit-masking" class="nav-link" data-scroll-target="#sec-vol3-app-b-logit-masking">何时约束解码</a></li>
+  <li><a href="#sec-vol3-app-b-idempotency-leases" id="toc-sec-vol3-app-b-idempotency-leases" class="nav-link" data-scroll-target="#sec-vol3-app-b-idempotency-leases">幂等键与能力</a>
+  <ul class="collapse">
+  <li><a href="#推导键" id="toc-推导键" class="nav-link" data-scroll-target="#推导键">推导键</a></li>
+  <li><a href="#端点记录" id="toc-端点记录" class="nav-link" data-scroll-target="#端点记录">端点记录</a></li>
+  <li><a href="#能力检查" id="toc-能力检查" class="nav-link" data-scroll-target="#能力检查">能力检查</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-app-b-deep-vs-shallow" id="toc-sec-vol3-app-b-deep-vs-shallow" class="nav-link" data-scroll-target="#sec-vol3-app-b-deep-vs-shallow">少量通用工具构成的目录</a>
+  <ul class="collapse">
+  <li><a href="#目录的-token-成本" id="toc-目录的-token-成本" class="nav-link" data-scroll-target="#目录的-token-成本">目录的 token 成本</a></li>
+  <li><a href="#编码智能体的参考目录" id="toc-编码智能体的参考目录" class="nav-link" data-scroll-target="#编码智能体的参考目录">编码智能体的参考目录</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol3_zh/appendices/app_a_reference_architecture.html">附录</a></li><li class="breadcrumb-item"><a href="../../vol3_zh/appendices/app_b_tool_design.html">附录 B：工具设计与类型化 ABI</a></li></ol></nav></header>
+
+
+
+
+
+<section id="sec-vol3-app-b-tool-design" class="level1 page-columns page-full">
+<h1>类型化工具接口</h1>
+<p><span id="sec-vol3-app-tool-design"></span></p>
+<p><strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling">工具调用</a></strong> 解释了为什么每次工具调用都必须经过运行时的验证和授权才能生效，<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes">智能体沙箱</a></strong> 则解释了已获授权的调用在运行后如何受到约束。本附录汇集了工程师构建这一边界所需的可复用材料：模式规则与工具定义参考示例、将输出约束为符合模式的盈亏平衡分析、用于幂等键和端点结算的参考代码、用于能力检查及其衰减的参考代码，以及采用小型通用工具目录背后的计算分析。本附录是构建工具接口的工作台，每一节都指向论证相应设计的章节。</p>
+<section id="如何使用本附录" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="如何使用本附录">如何使用本附录</h2>
+<p>根据你在工具边界处遇到的故障，查阅相应章节。</p>
+<ul>
+<li><strong>当工具调用未通过验证、编造参数或混淆单位时</strong>，使用 <a href="#sec-vol3-app-b-json-schema" class="quarto-xref">节&nbsp;1.1</a> 中的模式规则和定义参考示例。</li>
+<li><strong>当模型生成格式错误调用的频率高到使修复轮次的成本超过预防成本时</strong>，使用 <a href="#sec-vol3-app-b-logit-masking" class="quarto-xref">节&nbsp;1.2</a> 中的盈亏平衡分析，判断是否应约束解码。</li>
+<li><strong>当超时、连接中断或模型重试可能导致副作用重复发生时</strong>，使用 <a href="#sec-vol3-app-b-idempotency-leases" class="quarto-xref">节&nbsp;1.3</a> 中的键派生方法和端点记录。</li>
+<li><strong>当工具调用或受委派的子智能体需要有界权限时</strong>，使用 <a href="#sec-vol3-app-b-idempotency-leases" class="quarto-xref">节&nbsp;1.3</a> 中的能力检查和衰减代码。</li>
+<li><strong>当工具目录占据每次上下文的很大一部分，或模型选错工具时</strong>，使用 <a href="#sec-vol3-app-b-deep-vs-shallow" class="quarto-xref">节&nbsp;1.4</a> 中的词元计算分析。</li>
+</ul>
+</section>
+<section id="sec-vol3-app-b-json-schema" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-app-b-json-schema">工具定义的模式规则</h2>
+<p>工具模式会被读取两次。模型将其中的名称和描述作为上下文的一部分来读取，并据此提出参数；运行时则读取其中的类型和边界，在授权之前验证每个拟议调用（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-schemas">工具接口模式</a></strong>）。只服务于其中一方的模式会无法满足另一方的需要。以下五条规则可使模式兼顾双方。</p>
+<ol type="1">
+<li><strong>封闭属性集合（<code>additionalProperties: false</code>）。</strong> 如果模式允许，模型就会提出看似合理、但工具并不接受的参数，例如 <code>dry_run</code>、<code>verbose</code> 或 <code>user_id</code>。封闭模式使运行时拒绝未声明的输入，而不是默默将其传递下去，也使受语法约束的解码器能够在生成这些输入之前将其排除（<strong><a href="../02_foundation_model/02_foundation_model.html#sec-vol3-foundation-model-grammar-constrained">文法引导解码</a></strong>）。</li>
+<li><strong>在 <code>required</code> 中列出所有必填字段。</strong> 在描述中说明某个参数为必填项，只是给模型的建议；<code>required</code> 数组才是验证器强制执行的规则。</li>
+<li><strong>为每种类型设定边界。</strong> 使用 <code>minimum</code> 和 <code>maximum</code> 约束数值，使用 <code>pattern</code>、<code>enum</code> 或 <code>maxLength</code> 约束字符串，使用 <code>minItems</code> 和 <code>maxItems</code> 约束数组。不设边界的输入可能使一次调用携带的参数超出工具或记录该参数的上下文所能容纳的大小。</li>
+<li><strong>在名称和描述中明确单位与约定。</strong> 使用 <code>timeout_ms</code> 而非 <code>timeout</code>，说明行号是否从 1 开始，并说明可选字段缺失时的含义。</li>
+<li><strong>为每个联合类型添加标签。</strong> 缺少判别字段的 <code>anyOf</code> 或 <code>oneOf</code> 会让模型只能猜测自己正在填充哪个分支，也使验证器无法报告哪个分支未通过验证。</li>
+</ol>
+<p>同一模式还承载副作用标注，告知运行时如何处理调用（只读、幂等或破坏性）；该标注映射到权限级别 <span class="math inline">\(A_0\)</span> 至 <span class="math inline">\(A_3\)</span>，并决定调用是否需要幂等键、补偿器或审批（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-schemas">工具接口模式</a></strong>）。</p>
+<section id="工具定义参考示例" class="level3">
+<h3 class="anchored" data-anchor-id="工具定义参考示例">工具定义参考示例</h3>
+<p><a href="#lst-vol3-app-b-golden-schema" class="quarto-xref">代码&nbsp;1</a> 定义了一个遵循上述全部五条规则的精确替换编辑工具。</p>
+<div id="lst-vol3-app-b-golden-schema" class="listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-vol3-app-b-golden-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+列表&nbsp;1: <strong>Reference Tool Definition</strong>: A JSON Schema (Draft 2020-12) for an exact string replacement tool with a closed property set, bounded strings, and failure behavior stated in the description.
+</figcaption>
+<div aria-describedby="lst-vol3-app-b-golden-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"$schema"</span><span class="fu">:</span> <span class="st">"https://json-schema.org/draft/2020-12/schema"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"file_edit"</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Replaces an exact block of text in an existing file. old_str must match exactly one contiguous block unless allow_multiple is true; if it matches zero blocks, or more than one when allow_multiple is false, the file is left unchanged and the call returns an error naming the match count."</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"parameters"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"path"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Absolute path to the target file, inside the workspace root."</span><span class="fu">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"pattern"</span><span class="fu">:</span> <span class="st">"^/([a-zA-Z0-9_.-]+/)*[a-zA-Z0-9_.-]+$"</span><span class="fu">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"maxLength"</span><span class="fu">:</span> <span class="dv">1024</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"old_str"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"The exact block to replace, including indentation and newlines."</span><span class="fu">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"minLength"</span><span class="fu">:</span> <span class="dv">1</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"new_str"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"The replacement text. May be empty to delete old_str."</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">},</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"allow_multiple"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"boolean"</span><span class="fu">,</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"If true, replace every match; if false, fail unless exactly one match exists."</span><span class="fu">,</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"default"</span><span class="fu">:</span> <span class="kw">false</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"required"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"path"</span><span class="ot">,</span> <span class="st">"old_str"</span><span class="ot">,</span> <span class="st">"new_str"</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"additionalProperties"</span><span class="fu">:</span> <span class="kw">false</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>手工编写模式容易导致模型所见的模式与实际运行的代码之间出现偏离。基于参数的类型化模型生成模式，可以使二者保持一致。<a href="#lst-vol3-app-b-pydantic-schema" class="quarto-xref">代码&nbsp;2</a> 以 Python 数据验证库为例，展示了一种实现方式；任何类型化模式生成器都能达到同样的目的。</p>
+<div id="lst-vol3-app-b-pydantic-schema" class="listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-vol3-app-b-pydantic-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+列表&nbsp;2: <strong>Generating a Schema from Typed Arguments</strong>: A typed argument model that forbids extra fields and exports the JSON Schema the runtime publishes to the model and validates against.
+</figcaption>
+<div aria-describedby="lst-vol3-app-b-pydantic-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Annotated</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel, ConfigDict, Field, StringConstraints</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> FileEditInput(BaseModel):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Arguments for the exact-replacement edit tool."""</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    model_config <span class="op">=</span> ConfigDict(extra<span class="op">=</span><span class="st">"forbid"</span>, frozen<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    path: Annotated[</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">str</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        StringConstraints(strip_whitespace<span class="op">=</span><span class="va">True</span>, max_length<span class="op">=</span><span class="dv">1024</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                          pattern<span class="op">=</span><span class="vs">r"</span><span class="dv">^</span><span class="vs">/</span><span class="kw">(</span><span class="pp">[a-zA-Z0-9_.-]</span><span class="op">+</span><span class="vs">/</span><span class="kw">)</span><span class="op">*</span><span class="pp">[a-zA-Z0-9_.-]</span><span class="op">+</span><span class="dv">$</span><span class="vs">"</span>),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        Field(description<span class="op">=</span><span class="st">"Absolute path to the target file, inside the workspace root."</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    old_str: Annotated[<span class="bu">str</span>, StringConstraints(min_length<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                       Field(description<span class="op">=</span><span class="st">"Exact block to replace."</span>)]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    new_str: Annotated[<span class="bu">str</span>, Field(description<span class="op">=</span><span class="st">"Replacement text; may be empty."</span>)]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    allow_multiple: Annotated[<span class="bu">bool</span>, Field(default<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                              description<span class="op">=</span><span class="st">"Replace every match instead of exactly one."</span>)]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tool_descriptor() <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""The descriptor the runtime publishes to the model and validates against."""</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: <span class="st">"file_edit"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="st">"description"</span>: <span class="st">"Replaces an exact block of text in an existing file."</span>,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"inputSchema"</span>: FileEditInput.model_json_schema(),</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+</section>
+<section id="模式反模式" class="level3">
+<h3 class="anchored" data-anchor-id="模式反模式">模式反模式</h3>
+<p>从现有服务接口改造而来的工具，往往保留了适合程序员从代码中调用的模式，却会误导根据描述提出调用的模型。<strong><a href="app_b_tool_design.html#tbl-vol3-app-b-anti-patterns">工具模式反模式</a></strong> 列出了常见的此类模式。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-app-b-anti-patterns" style="display:table-caption!important;width:auto!important;position:static!important"><strong>工具模式反模式</strong>：误导模型或使验证器失效的常见模式、各自的加固形式，以及它们对边界的影响。</caption>
+<colgroup>
+<col style="width: 18%">
+<col style="width: 30%">
+<col style="width: 25%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">反模式</th>
+<th style="text-align: left;">问题所在</th>
+<th style="text-align: left;">加固形式</th>
+<th style="text-align: left;">效果</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>无类型参数包</strong>（<code>args: dict</code>）</td>
+<td style="text-align: left;">模型凭空生成键；验证器无从检查</td>
+<td style="text-align: left;">使用 <code>additionalProperties: false</code> 的显式类型化字段</td>
+<td style="text-align: left;">无效调用被拒绝，或在约束解码下根本不会生成</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>无界输入</strong>（<code>string</code>，不设限制）</td>
+<td style="text-align: left;">单次调用携带的参数超过工具或上下文所能容纳的大小</td>
+<td style="text-align: left;"><code>maxLength</code>、<code>maxItems</code> 和显式窗口参数</td>
+<td style="text-align: left;">在分发之前限制参数大小</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>无标签联合类型</strong>（<code>anyOf</code>，不设判别字段）</td>
+<td style="text-align: left;">模型混用多个分支的字段；错误信息无法指明所属分支</td>
+<td style="text-align: left;">设置判别字段，例如 <code>"kind"</code>，其值为 <code>"file"</code> 或 <code>"dir"</code></td>
+<td style="text-align: left;">每次调用显式选择一个分支</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>隐式单位</strong>（<code>timeout: 30</code>）</td>
+<td style="text-align: left;">秒、毫秒和分钟相互混淆</td>
+<td style="text-align: left;">在名称中标明单位（<code>timeout_ms</code>），并设定取值范围</td>
+<td style="text-align: left;">单位错误转化为验证错误</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>整文件重写</strong>（<code>content: str</code>）</td>
+<td style="text-align: left;">输出长度随文件增长，长文件被截断，无关行发生改动</td>
+<td style="text-align: left;">精确替换一个文本块（<code>old_str</code>、<code>new_str</code>）</td>
+<td style="text-align: left;">输出 token 数随改动规模增长，而非随文件大小增长</td>
+</tr>
+</tbody>
+</table></div>
+<p>最后一行对延迟的影响最大，因为在智能体的关键路径上，输出 token 的成本很高（<strong><a href="../02_foundation_model/02_foundation_model.html#sec-vol3-foundation-model-cost">加速器服务延迟</a></strong>）。整文件重写需要为每一行未改动的内容付出解码时间，而 <strong><a href="../02_foundation_model/02_foundation_model.html#sec-vol3-foundation-model-interface-design">接口基准测试</a></strong> 给出了一个具体示例：重写未能满足单次调用的截止时间，而带锚点的差异补丁满足了这一要求。</p>
+</section>
+</section>
+<section id="sec-vol3-app-b-logit-masking" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-app-b-logit-masking">何时约束解码</h2>
+<p>自由采样的模型可能生成格式错误的调用：未转义的换行符、末尾多余的逗号，或缺失的必填字段。语法约束解码通过将每一步采样限制在模式语法当前状态所允许的 token 范围内，防止此类错误（<strong><a href="../02_foundation_model/02_foundation_model.html#sec-vol3-foundation-model-grammar-constrained">文法引导解码</a></strong>）。<strong><a href="../backmatter/appendix_inference.html#sec-vol3-appendix-inference-decode-loop">解码循环机制</a></strong> 估算了掩码表的大小，并解释了为什么掩码操作必须在采样器旁执行；<strong><a href="../backmatter/appendix_math.html#sec-vol3-appendix-math-dfa">确定性有限自动机与语法约束 Logit 解码</a></strong> 则证明了结果始终可以解析。本节进一步讨论何时采用约束才划算，因为另一种做法——让格式错误的调用在验证时失败，再要求模型修复——也有其自身的成本。</p>
+<p>设一次工具调用包含 <span class="math inline">\(L_{\text{gen}}\)</span> 个输出 token，每个 token 耗时 <span class="math inline">\(t_{\text{decode}}\)</span>；掩码操作为每个 token 增加 <span class="math inline">\(t_{\text{mask}}\)</span> 的耗时；<span class="math inline">\(p_{\text{err}}\)</span> 为无约束调用无法解析的比例；一次修复轮次的延迟成本为 <span class="math inline">\(T_{\text{repair}}\)</span>，其中包括重新发送上下文和重新生成调用的耗时。在不施加约束且允许一次修复的情况下，期望延迟为</p>
+<p><span class="math display">\[\mathbb{E}[T_{\text{free}}] = L_{\text{gen}} \, t_{\text{decode}} + p_{\text{err}} \, T_{\text{repair}}\]</span></p>
+<p>施加约束时，期望延迟为</p>
+<p><span class="math display">\[T_{\text{constrained}} = L_{\text{gen}} \, (t_{\text{decode}} + t_{\text{mask}})\]</span></p>
+<p>令二者相等，得到盈亏平衡错误率</p>
+<p><span id="eq-vol3-app-b-constrain-breakeven"><span class="math display">\[p_{\text{break}} = \frac{L_{\text{gen}} \, t_{\text{mask}}}{T_{\text{repair}}} \tag{1}\]</span></span></p>
+<p>只要观测到的格式错误率超过 <span class="math inline">\(p_{\text{break}}\)</span>，采用约束就更划算。该错误率取决于具体的模型、模式和提示，必须根据工具自身的调用流量进行测量。例如，对于包含 80 个 token 的调用，若每个 token 的掩码开销为 0.5 毫秒，一次修复轮次耗时 1.8 秒，则 <a href="#eq-vol3-app-b-constrain-breakeven" class="quarto-xref">公式&nbsp;1</a> 得到 <span class="math inline">\(p_{\text{break}} = 40\ \text{ms} / 1{,}800\ \text{ms} \approx 2.2\)</span>%，因此，如果某工具的调用无法解析的频率高于约每四十次一次，施加约束的成本就更低。延迟只是考虑因素之一。修复轮次还会向上下文添加错误文本，使下一次针对同一对象提出的调用更可能重复该错误（<strong><a href="../01_introduction/01_introduction.html#sec-vol3-intro-context-poisoning">**上下文污染动力学**</a></strong>）。</p>
+<p>约束只保证语法正确。可以解析的调用仍可能指定不存在的文件、传入超出任务权限范围的参数，或以正确的执行方式完成错误的操作。因此，在约束解码之后，验证、授权和执行包络仍须保留（<strong><a href="../02_foundation_model/02_foundation_model.html#sec-vol3-foundation-model-grammar-constrained">文法引导解码</a></strong>）。</p>
+</section>
+<section id="sec-vol3-app-b-idempotency-leases" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-app-b-idempotency-leases">幂等键与能力</h2>
+<p>两项机制使已获授权的调用能够安全发送。幂等键使重复调用不会产生额外影响，因此，当运行时无法判断一个已超时的调用是否执行过时，可以核实并确定其状态，而不必猜测（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-idempotency">幂等动作执行</a></strong>）。能力限制调用执行后能够访问的范围，因此，即使调用提议受到诱导或出现错误，其操作也不会超出任务允许的范围（<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-least-privilege">权能与凭据</a></strong>）。各章论证了这两项机制的必要性。本节给出各自的参考形式。</p>
+<section id="推导键" class="level3">
+<h3 class="anchored" data-anchor-id="推导键">推导键</h3>
+<p>键必须标识逻辑调用，而非某次尝试，因此运行时根据轨迹以确定性的方式推导该键。<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-idempotency">幂等动作执行</a></strong> 使用</p>
+<p><span class="math display">\[k_{\text{idem}} = \mathcal{H}\big(\text{trajectory\_id} \,\|\, \text{turn} \,\|\, \text{call\_id} \,\|\, \text{tool} \,\|\, \text{canonical\_args}\big)\]</span></p>
+<p>其中，<span class="math inline">\(\mathcal{H}\)</span> 是密码学哈希；当键不能被端点的其他客户端猜出时，则使用带密钥的哈希。在计算哈希之前，必须对参数进行规范化序列化。普通 JSON 序列化不会固定键的顺序或空白字符，因此 <code>{"path": "/a", "force": true}</code> 和 <code>{"force": true, "path": "/a"}</code> 会生成不同的哈希键，导致去重失效。规范形式，例如 RFC 8785 的 JSON 规范化方案，会对键排序，并固定数字和字符串的编码方式。由于键是推导得出的，而非随机生成的，运行时在崩溃恢复后重新发送调用时，会重新生成相同的键，端点便能识别出重复调用（<strong><a href="../10_durable_execution/10_durable_execution.html#sec-vol3-persistence-wal">意图先于效果</a></strong>）。</p>
+</section>
+<section id="端点记录" class="level3">
+<h3 class="anchored" data-anchor-id="端点记录">端点记录</h3>
+<p>在端点上，每个键都映射到一条记录，记录具有四种状态之一；正是这些状态之间的转换保证了重试的安全性。</p>
+<ol type="1">
+<li><strong>未见过。</strong> 端点通过“仅在不存在时设置”操作原子性地认领该键，并设置一个租约，其有效期长于最坏情况下的执行时间、调用方超时时间以及任何时钟偏差之和（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-idempotency">幂等动作执行</a></strong>），随后执行调用。</li>
+<li><strong>执行中。</strong> 如果重复调用在首次执行仍在进行时到达，则拒绝该调用或使其等待。绝不并行执行重复调用。</li>
+<li><strong>已完成。</strong> 对已完成调用的重复请求，返回已存储的结果，不再执行。</li>
+<li><strong>状态存疑。</strong> 如果执行失败且其影响无法确定，例如执行器在执行中途崩溃，记录会保持已认领状态，并标记为状态存疑。在核对探测检查环境并将记录确定为已完成或未执行之前，拒绝重复调用。</li>
+</ol>
+<p>第四种状态是简单实现通常遗漏的状态。异常发生后释放键，会使下一次重试再次执行，而这正是设立该键所要防止的重复执行，因为异常并不能证明操作未产生影响。<a href="#lst-vol3-app-b-gateway" class="quarto-xref">代码&nbsp;3</a> 实现了全部四种状态。</p>
+<div id="lst-vol3-app-b-gateway" class="listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-vol3-app-b-gateway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+列表&nbsp;3: <strong>Endpoint Deduplication with Settlement</strong>: A reference endpoint that claims each idempotency key atomically, returns the stored result for completed keys, refuses repeats while a call is in flight, and marks a failed execution as in doubt rather than releasing its key.
+</figcaption>
+<div aria-describedby="lst-vol3-app-b-gateway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib, json, time</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Any, Callable, Dict</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> canonical(args: Dict[<span class="bu">str</span>, Any]) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Stable serialization: sorted keys, fixed separators."""</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> json.dumps(args, sort_keys<span class="op">=</span><span class="va">True</span>, separators<span class="op">=</span>(<span class="st">","</span>, <span class="st">":"</span>), ensure_ascii<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> derive_key(trajectory_id: <span class="bu">str</span>, turn: <span class="bu">int</span>, call_id: <span class="bu">str</span>, tool: <span class="bu">str</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>               args: Dict[<span class="bu">str</span>, Any]) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    material <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>trajectory_id<span class="sc">}</span><span class="ss">|</span><span class="sc">{</span>turn<span class="sc">}</span><span class="ss">|</span><span class="sc">{</span>call_id<span class="sc">}</span><span class="ss">|</span><span class="sc">{</span>tool<span class="sc">}</span><span class="ss">|</span><span class="sc">{</span>canonical(args)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> hashlib.sha256(material.encode(<span class="st">"utf-8"</span>)).hexdigest()</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> DedupEndpoint:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Executes each logical call at most once per idempotency key."""</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, store, lease_s: <span class="bu">float</span>):</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.store, <span class="va">self</span>.lease_s <span class="op">=</span> store, lease_s   <span class="co"># store offers set_if_absent/get/put</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> handle(<span class="va">self</span>, key: <span class="bu">str</span>, execute: Callable[[], Dict[<span class="bu">str</span>, Any]]) <span class="op">-&gt;</span> Dict[<span class="bu">str</span>, Any]:</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        claimed <span class="op">=</span> <span class="va">self</span>.store.set_if_absent(</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            key, {<span class="st">"state"</span>: <span class="st">"IN_FLIGHT"</span>, <span class="st">"until"</span>: time.time() <span class="op">+</span> <span class="va">self</span>.lease_s})</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> claimed:</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            record <span class="op">=</span> <span class="va">self</span>.store.get(key)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> record[<span class="st">"state"</span>] <span class="op">==</span> <span class="st">"COMPLETED"</span>:</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> record[<span class="st">"result"</span>]                       <span class="co"># repeat: stored result</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {<span class="st">"status"</span>: record[<span class="st">"state"</span>], <span class="st">"retry"</span>: <span class="va">True</span>}  <span class="co"># IN_FLIGHT or IN_DOUBT</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>            result <span class="op">=</span> execute()</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> exc:                              <span class="co"># effect unknown</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.store.put(key, {<span class="st">"state"</span>: <span class="st">"IN_DOUBT"</span>, <span class="st">"error"</span>: <span class="bu">str</span>(exc)})</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> {<span class="st">"status"</span>: <span class="st">"IN_DOUBT"</span>, <span class="st">"retry"</span>: <span class="va">False</span>}     <span class="co"># settle by probe first</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.store.put(key, {<span class="st">"state"</span>: <span class="st">"COMPLETED"</span>, <span class="st">"result"</span>: result})</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>若工具的端点无法保留这样的记录，就需要采用另一条结算路径：通过读取环境的对账探测，在任何重试之前判断该操作是否已产生效果（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-idempotency">幂等动作执行</a></strong>）。</p>
+</section>
+<section id="能力检查" class="level3">
+<h3 class="anchored" data-anchor-id="能力检查">能力检查</h3>
+<p><strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-least-privilege">权能与凭据</a></strong> 将能力表示为 <span class="math inline">\(C = (R, O, P, E)\)</span>，并使用仅由运行时持有的密钥进行签名：<span class="math inline">\(R\)</span> 是权限集合（读取、写入、执行、连接），<span class="math inline">\(O\)</span> 是该能力所指定的对象（路径前缀、主机名、仓库），<span class="math inline">\(P\)</span> 是约束参数和成本的谓词，<span class="math inline">\(E\)</span> 是到期时间。为某条轨迹签发且受 <span class="math inline">\(E\)</span> 约束的能力，是该轨迹对能力中所列资源的租约（<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-lease">每条轨迹独享工作区租约，按租户重置</a></strong>）。只有在签名验证通过、操作属于权限集合、目标位于指定对象范围内、成本满足谓词且能力尚未到期时，运行时才会批准提议。</p>
+<p>委派工作时，子级能力必须由父级能力衰减而来。用 <span class="math inline">\(C_c \preceq C_p\)</span> 表示“子级持有的能力不超过父级”，</p>
+<p><span class="math display">\[C_c \preceq C_p \iff R_c \subseteq R_p \;\land\; O_c \sqsubseteq O_p \;\land\; P_c \Rightarrow P_p \;\land\; E_c \le E_p\]</span></p>
+<p>因此，子级绝不能持有父级不具备的权限、访问父级范围之外的对象、支出超过父级的上限，或在父级授权到期后继续持有授权（<strong><a href="../16_multi_agent/16_multi_agent.html#sec-vol3-multiagent-authority">衰减能力委派</a></strong>；原则 <a href="../parts/scale_principles.html#pri-vol3-monotonic-delegation">21</a>）。<a href="#lst-vol3-app-b-capability" class="quarto-xref">代码&nbsp;4</a> 实现了检查和衰减，为简洁起见，将谓词简化为成本上限。</p>
+<div id="lst-vol3-app-b-capability" class="listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-vol3-app-b-capability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+列表&nbsp;4: <strong>Capability Check and Attenuation</strong>: A reference implementation of the capability <span class="math inline">\(C = (R, O, P, E)\)</span>, with the predicate reduced to a cost ceiling, a runtime-held signing key, and an attenuation step that refuses to widen any component.
+</figcaption>
+<div aria-describedby="lst-vol3-app-b-capability-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> hashlib, hmac, time</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> FrozenSet</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span>(frozen<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Capability:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    rights: FrozenSet[<span class="bu">str</span>]     <span class="co"># R: e.g. {"read", "write"}</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    objects: FrozenSet[<span class="bu">str</span>]    <span class="co"># O: path or host prefixes</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    max_cost: <span class="bu">float</span>            <span class="co"># P: reduced here to a cost ceiling</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    expires_at: <span class="bu">float</span>          <span class="co"># E: epoch seconds</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    sig: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> body(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">bytes</span>:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">repr</span>((<span class="bu">sorted</span>(<span class="va">self</span>.rights), <span class="bu">sorted</span>(<span class="va">self</span>.objects),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                     <span class="va">self</span>.max_cost, <span class="va">self</span>.expires_at)).encode()</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sign(cap: Capability, key: <span class="bu">bytes</span>) <span class="op">-&gt;</span> Capability:</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Capability(cap.rights, cap.objects, cap.max_cost, cap.expires_at,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                      hmac.new(key, cap.body(), hashlib.sha256).hexdigest())</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> within(target: <span class="bu">str</span>, objects: FrozenSet[<span class="bu">str</span>]) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">any</span>(target <span class="op">==</span> o <span class="kw">or</span> target.startswith(o.rstrip(<span class="st">"/"</span>) <span class="op">+</span> <span class="st">"/"</span>) <span class="cf">for</span> o <span class="kw">in</span> objects)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> approve(cap: Capability, key: <span class="bu">bytes</span>, op: <span class="bu">str</span>, target: <span class="bu">str</span>, cost: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    good_sig <span class="op">=</span> hmac.compare_digest(</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        cap.sig, hmac.new(key, cap.body(), hashlib.sha256).hexdigest())</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (good_sig <span class="kw">and</span> op <span class="kw">in</span> cap.rights <span class="kw">and</span> within(target, cap.objects)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> cost <span class="op">&lt;=</span> cap.max_cost <span class="kw">and</span> time.time() <span class="op">&lt;</span> cap.expires_at)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> attenuate(parent: Capability, key: <span class="bu">bytes</span>, <span class="op">*</span>, rights, objects,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>              max_cost, expires_at) <span class="op">-&gt;</span> Capability:</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Issue a child capability; refuse any component wider than the parent's."""</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> (<span class="bu">set</span>(rights) <span class="op">&lt;=</span> parent.rights</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> <span class="bu">all</span>(within(o, parent.objects) <span class="cf">for</span> o <span class="kw">in</span> objects)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>            <span class="kw">and</span> max_cost <span class="op">&lt;=</span> parent.max_cost <span class="kw">and</span> expires_at <span class="op">&lt;=</span> parent.expires_at):</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">PermissionError</span>(<span class="st">"attenuation may only narrow a capability"</span>)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> sign(Capability(<span class="bu">frozenset</span>(rights), <span class="bu">frozenset</span>(objects),</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>                           max_cost, expires_at), key)</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>检查在模型下层的运行时和沙箱驱动程序中执行，每次访问都会触发。模型写入的任何内容都无法扩大能力权限，因为模型从不持有签名密钥；如果提案指定的目标超出能力权限范围，它会在任何宿主操作执行之前失败。</p>
+</section>
+</section>
+<section id="sec-vol3-app-b-deep-vs-shallow" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-app-b-deep-vs-shallow">少量通用工具构成的目录</h2>
+<p>一种自然而直接的初始目录设计，是将现有服务的每个端点各自封装为一个工具：<code>git_status</code>、<code>git_diff</code>、<code>git_add</code>、<code>git_commit</code>，并以此类推，覆盖智能体接触的每个系统。结果便是数十乃至数百个专用工具。Ousterhout 将接口相对于其背后功能过大的模块称为浅模块 <span class="citation" data-cites="ousterhout2018philosophy">(<a href="#ref-ousterhout2018philosophy" role="doc-biblioref">Ousterhout 2018年</a>)</span>；专用工具目录恰好也在这一意义上是浅的，而智能体每一轮都要为此付出代价。<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-toolkit-design">工具集粒度划分</a></strong> 论证了这一设计选择。本节给出具体的数量分析。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-ousterhout2018philosophy" class="csl-entry" role="listitem">
+Ousterhout, John. 2018年. <em>A Philosophy of Software Design</em>. Yaknyam Press.
+</div></div><section id="目录的-token-成本" class="level3">
+<h3 class="anchored" data-anchor-id="目录的-token-成本">目录的 token 成本</h3>
+<p>每个工具的定义都会随每次可能使用该工具的调用一同发送。对于包含 <span class="math inline">\(K\)</span> 个工具、每个工具定义平均占 <span class="math inline">\(S\)</span> 个 token 的目录，一条包含 <span class="math inline">\(N\)</span> 轮的轨迹会发送</p>
+<p><span id="eq-vol3-app-b-catalog-tokens"><span class="math display">\[T_{\text{catalog}} = N \cdot K \cdot S \tag{2}\]</span></span></p>
+<p>个工具定义 token。例如，一个包含 80 个专用工具、每个工具约占 350 个 token 的目录，每轮需要 28,000 个 token，在一条 40 轮轨迹中总计需要 1,120,000 个 token。四个通用工具，每个约占 250 个 token，每轮需要 1,000 个 token，在同样的轨迹中总计需要 40,000 个 token，减少约 96%。只要目录保持逐字节一致且位于固定位置，前缀缓存就能降低重复发送定义的费用，但不会降低这些定义在上下文预算中所占的比例；轨迹进行期间对目录的任何修改，都会使缓存的前缀失效（<strong><a href="../04_context_engineering/04_context_engineering.html#sec-vol3-context-engineering-staging">编排下一次调用</a></strong>）。随着目录扩大、定义相互重叠，工具选择的表现也会下降；函数调用基准通过改变目录规模来衡量这一趋势（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-toolkit-design">工具集粒度划分</a></strong>）。</p>
+<p><strong><a href="app_b_tool_design.html#tbl-vol3-app-b-deep-vs-shallow">专用工具目录与通用工具目录对比</a></strong> 从这些成本以及权限的强制执行位置两个方面，并列比较了这两种目录形态。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-app-b-deep-vs-shallow" style="display:table-caption!important;width:auto!important;position:static!important"><strong>专用工具目录与通用工具目录对比</strong>：目录形态如何影响定义 token 数、工具选择、观测以及权限的强制执行位置。</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 30%">
+<col style="width: 25%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">大量专用工具</th>
+<th style="text-align: left;">少量通用工具</th>
+<th style="text-align: left;">影响</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>接口规模</strong></td>
+<td style="text-align: left;">数十到数百个端点封装</td>
+<td style="text-align: left;">少数几种通用操作</td>
+<td style="text-align: left;">模型需要阅读和从中选择的定义更少</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>定义 token 数</strong></td>
+<td style="text-align: left;">每轮随 <span class="math inline">\(K\)</span> 增长（<a href="#eq-vol3-app-b-catalog-tokens" class="quarto-xref">公式&nbsp;2</a>）</td>
+<td style="text-align: left;">少且稳定</td>
+<td style="text-align: left;">为任务保留更多上下文预算</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>选择</strong></td>
+<td style="text-align: left;">名称和参数相互重叠，容易选错工具</td>
+<td style="text-align: left;">选项少且区分明确</td>
+<td style="text-align: left;">选错工具的调用更少；对各工具描述的依赖更大</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>观测</strong></td>
+<td style="text-align: left;">每个工具的结果结构各不相同</td>
+<td style="text-align: left;">统一的结果结构（输出、错误、退出状态）</td>
+<td style="text-align: left;">网关中只需一条观测整形路径</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>强制执行</strong></td>
+<td style="text-align: left;">授权逻辑分散在多个处理程序中</td>
+<td style="text-align: left;">通过隔离边界和能力权限强制执行权限约束</td>
+<td style="text-align: left;">只需在一处执行约束和审计，代价是工具的功能范围更广</td>
+</tr>
+</tbody>
+</table></div>
+<p>最后一行体现了通用设计的代价。通用 shell 工具所能执行的操作远多于专用工具，因此，限定每项操作范围的责任便从工具代码转移到了隔离边界及其运行时所受的能力权限约束上（<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes">智能体沙箱</a></strong>）。只有当隔离边界足以约束工具所能执行的最大范围操作时，通用目录才是安全的。</p>
+</section>
+<section id="编码智能体的参考目录" class="level3">
+<h3 class="anchored" data-anchor-id="编码智能体的参考目录">编码智能体的参考目录</h3>
+<p>许多编码智能体最终都采用了四种通用操作。shell 在沙箱内运行构建、测试、版本控制和包管理器。窗口式文件查看器返回文件中范围受限的片段，以免一次读取就淹没上下文。精确替换编辑器遵循 <a href="#lst-vol3-app-b-golden-schema" class="quarto-xref">代码&nbsp;1</a>，每次修改一个文本块。搜索工具返回结构化的文件和行匹配结果，避免 shell 引号处理带来的风险。<a href="#lst-vol3-app-b-canonical-schemas" class="quarto-xref">代码&nbsp;5</a> 给出了它们的定义。其他领域也有各自规模较小的通用操作集，例如数据智能体的查询、读取和范围受限的写入操作，同样的数量分析也适用于它们。</p>
+<div id="lst-vol3-app-b-canonical-schemas" class="listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-vol3-app-b-canonical-schemas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+列表&nbsp;5: <strong>A Four-Tool Catalog for Coding Agents</strong>: Definitions for a sandboxed shell, a windowed file viewer, an exact-replacement editor, and a structured search, each with a closed property set and bounded inputs.
+</figcaption>
+<div aria-describedby="lst-vol3-app-b-canonical-schemas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"tools"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"bash_execute"</span><span class="fu">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Runs a shell command in the task's sandbox and returns stdout, stderr, and the exit status, truncated with a marker if long."</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"parameters"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"command"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"maxLength"</span><span class="fu">:</span> <span class="dv">8192</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Shell command line to run."</span><span class="fu">},</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"timeout_ms"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"integer"</span><span class="fu">,</span> <span class="dt">"default"</span><span class="fu">:</span> <span class="dv">30000</span><span class="fu">,</span> <span class="dt">"minimum"</span><span class="fu">:</span> <span class="dv">1000</span><span class="fu">,</span> <span class="dt">"maximum"</span><span class="fu">:</span> <span class="dv">300000</span><span class="fu">}</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"required"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"command"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"additionalProperties"</span><span class="fu">:</span> <span class="kw">false</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"file_view"</span><span class="fu">,</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Returns a window of lines from a text file."</span><span class="fu">,</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"parameters"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"path"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Absolute path inside the workspace."</span><span class="fu">},</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"offset"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"integer"</span><span class="fu">,</span> <span class="dt">"minimum"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"First line to return, 1-indexed."</span><span class="fu">},</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"limit"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"integer"</span><span class="fu">,</span> <span class="dt">"minimum"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"maximum"</span><span class="fu">:</span> <span class="dv">500</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Maximum lines to return."</span><span class="fu">}</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"required"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"path"</span><span class="ot">,</span> <span class="st">"offset"</span><span class="ot">,</span> <span class="st">"limit"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"additionalProperties"</span><span class="fu">:</span> <span class="kw">false</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"file_edit"</span><span class="fu">,</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Replaces exactly one matching block of text in a file."</span><span class="fu">,</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"parameters"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"path"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Absolute path inside the workspace."</span><span class="fu">},</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"old_str"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"minLength"</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Exact block to replace."</span><span class="fu">},</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"new_str"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Replacement text."</span><span class="fu">}</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"required"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"path"</span><span class="ot">,</span> <span class="st">"old_str"</span><span class="ot">,</span> <span class="st">"new_str"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"additionalProperties"</span><span class="fu">:</span> <span class="kw">false</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"name"</span><span class="fu">:</span> <span class="st">"grep_search"</span><span class="fu">,</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Searches files for a regular expression and returns matching paths and line numbers."</span><span class="fu">,</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>      <span class="dt">"parameters"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"type"</span><span class="fu">:</span> <span class="st">"object"</span><span class="fu">,</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"properties"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"pattern"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"maxLength"</span><span class="fu">:</span> <span class="dv">512</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Regular expression to match."</span><span class="fu">},</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"path"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Directory or file to search."</span><span class="fu">},</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>          <span class="dt">"glob"</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">"type"</span><span class="fu">:</span> <span class="st">"string"</span><span class="fu">,</span> <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Optional file filter, such as '*.py'."</span><span class="fu">}</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        <span class="fu">},</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"required"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"pattern"</span><span class="ot">,</span> <span class="st">"path"</span><span class="ot">]</span><span class="fu">,</span> <span class="dt">"additionalProperties"</span><span class="fu">:</span> <span class="kw">false</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>      <span class="fu">}</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>一组精简的通用工具既能保留任务上下文，又能减少模型可选的工具数量，使各选项之间的区别更加明确，并将约束的执行集中到一处。这也使每个工具的能力更强，因此，对智能体可执行操作的限制必须由执行边界和能力权限来承载，而不能依赖工具列表。</p>
+
+
+
+</section>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8083\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol3_zh/appendices/app_a_reference_architecture.html" class="pagination-link" aria-label="附录 A：参考架构">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">附录 A：参考架构</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol3_zh/appendices/app_c_failure_taxonomy.html" class="pagination-link" aria-label="附录 C：故障分类">
+        <span class="nav-page-text">附录 C：故障分类</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《智能体机器学习系统》第三卷 · 简体中文本地版</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>
