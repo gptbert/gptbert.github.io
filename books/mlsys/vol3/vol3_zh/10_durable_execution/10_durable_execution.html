@@ -1,0 +1,3041 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>智能体机器学习系统 · 第三卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol3_zh/11_failure_recovery/11_failure_recovery.html" rel="next">
+<link href="../../vol3_zh/09_agent_harness/09_agent_harness.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c3df12ea3ad0b9d55867f258fc566956.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-77e4780d3a3e3b6bb5092d0b1032ff40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-c3df12ea3ad0b9d55867f258fc566956.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="智能体机器学习系统 · 第三卷">
+<meta property="og:description" content="Vol3 简体中文修订版：模型、记忆、工具、运行时、学习与规模化。">
+<meta property="og:image" content="https://gptbert.com/books/mlsys/vol3/vol3_zh/10_durable_execution/vol3_zh/covers/cover-hardcover-book-vol3.png">
+<meta property="og:site_name" content="智能体机器学习系统 · 第三卷">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:title" content="智能体机器学习系统 · 第三卷">
+<meta name="twitter:description" content="Vol3 简体中文修订版：模型、记忆、工具、运行时、学习与规模化。">
+<meta name="twitter:image" content="https://gptbert.com/books/mlsys/vol3/vol3_zh/10_durable_execution/vol3_zh/covers/cover-hardcover-book-vol3.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<style id="vol3-zh-layout-fixes">#quarto-document-content table > caption { display: table-caption !important; width: auto !important; caption-side: top; } [id] { scroll-margin-top: 90px; } figure > img { max-width: 100%; height: auto; }</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">智能体系统 · 第三卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol3_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">《智能体系统基础》</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol3_zh/parts/runtime_principles.html">第四部分：智能体运行时</a></li><li class="breadcrumb-item"><a href="../../vol3_zh/10_durable_execution/10_durable_execution.html">持久执行</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献辞</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">符号说明</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">《智能体系统基础》</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/model_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第一部分：模型</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/02_foundation_model/02_foundation_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基座模型</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/03_test_time_compute/03_test_time_compute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">测试时计算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/memory_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第二部分：智能体记忆</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/04_context_engineering/04_context_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">上下文工程</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/05_kv_cache/05_kv_cache.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">KV 缓存管理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/06_long_term_memory/06_long_term_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">长期记忆</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/tool_use_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第三部分：工具使用</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/07_tool_calling/07_tool_calling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">工具调用</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/08_sandboxes/08_sandboxes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体沙箱</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/runtime_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第四部分：智能体运行时</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/09_agent_harness/09_agent_harness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体运行框架</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/10_durable_execution/10_durable_execution.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">持久执行</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/11_failure_recovery/11_failure_recovery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">故障恢复</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/12_evaluation/12_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体评估</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/learning_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第五部分：从轨迹中学习</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/13_trajectory_curation/13_trajectory_curation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹整理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/14_fine_tuning/14_fine_tuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹微调</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/15_rlvr/15_rlvr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可验证奖励强化学习</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/scale_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第六部分：规模化智能体</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/16_multi_agent/16_multi_agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">多智能体协同</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/17_agent_economics/17_agent_economics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体经济学</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/synthesis_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第七部分：综合</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/18_conclusion/18_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结语</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">附录</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_a_reference_architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 A：参考架构</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_b_tool_design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 B：工具设计与类型化 ABI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_c_failure_taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 C：故障分类</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/appendix_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">推理与系统硬件基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/appendix_math.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数学基础</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-vol3-persistence-event-sourcing" id="toc-sec-vol3-persistence-event-sourcing" class="nav-link active" data-scroll-target="#sec-vol3-persistence-event-sourcing">轨迹日志</a>
+  <ul>
+  <li><a href="#以日志为事实依据" id="toc-以日志为事实依据" class="nav-link" data-scroll-target="#以日志为事实依据">以日志为事实依据</a></li>
+  <li><a href="#日志记录什么" id="toc-日志记录什么" class="nav-link" data-scroll-target="#日志记录什么">日志记录什么</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-persistence-wal" id="toc-sec-vol3-persistence-wal" class="nav-link" data-scroll-target="#sec-vol3-persistence-wal">意图先于效果</a>
+  <ul>
+  <li><a href="#崩溃后的三种状态" id="toc-崩溃后的三种状态" class="nav-link" data-scroll-target="#崩溃后的三种状态">崩溃后的三种状态</a></li>
+  <li><a href="#持久性的代价组提交摊销" id="toc-持久性的代价组提交摊销" class="nav-link" data-scroll-target="#持久性的代价组提交摊销">持久性的代价：组提交摊销</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-persistence-checkpointing" id="toc-sec-vol3-persistence-checkpointing" class="nav-link" data-scroll-target="#sec-vol3-persistence-checkpointing">检查点</a>
+  <ul>
+  <li><a href="#检查点捕获的内容全量编码与增量差分编码" id="toc-检查点捕获的内容全量编码与增量差分编码" class="nav-link" data-scroll-target="#检查点捕获的内容全量编码与增量差分编码">检查点捕获的内容：全量编码与增量差分编码</a></li>
+  <li><a href="#崩溃的代价与检查点的保存频率" id="toc-崩溃的代价与检查点的保存频率" class="nav-link" data-scroll-target="#崩溃的代价与检查点的保存频率">崩溃的代价与检查点的保存频率</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-persistence-migration" id="toc-sec-vol3-persistence-migration" class="nav-link" data-scroll-target="#sec-vol3-persistence-migration">恢复轨迹</a>
+  <ul>
+  <li><a href="#重建上下文" id="toc-重建上下文" class="nav-link" data-scroll-target="#重建上下文">重建上下文</a></li>
+  <li><a href="#暂停审批与迟到的结果" id="toc-暂停审批与迟到的结果" class="nav-link" data-scroll-target="#暂停审批与迟到的结果">暂停、审批与迟到的结果</a></li>
+  <li><a href="#迁移轨迹" id="toc-迁移轨迹" class="nav-link" data-scroll-target="#迁移轨迹">迁移轨迹</a></li>
+  <li><a href="#迁移轨迹与隔离令牌" id="toc-迁移轨迹与隔离令牌" class="nav-link" data-scroll-target="#迁移轨迹与隔离令牌">迁移轨迹与隔离令牌</a></li>
+  <li><a href="#漂移情况下的恢复" id="toc-漂移情况下的恢复" class="nav-link" data-scroll-target="#漂移情况下的恢复">漂移情况下的恢复</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-persistence-replay" id="toc-sec-vol3-persistence-replay" class="nav-link" data-scroll-target="#sec-vol3-persistence-replay">重放</a>
+  <ul>
+  <li><a href="#时间旅行与反事实分支" id="toc-时间旅行与反事实分支" class="nav-link" data-scroll-target="#时间旅行与反事实分支">时间旅行与反事实分支</a></li>
+  <li><a href="#运行框架的回归测试" id="toc-运行框架的回归测试" class="nav-link" data-scroll-target="#运行框架的回归测试">运行框架的回归测试</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-persistence-non-determinism" id="toc-sec-vol3-persistence-non-determinism" class="nav-link" data-scroll-target="#sec-vol3-persistence-non-determinism">回放为何会发生偏离</a>
+  <ul>
+  <li><a href="#四种偏离来源" id="toc-四种偏离来源" class="nav-link" data-scroll-target="#四种偏离来源">四种偏离来源</a></li>
+  <li><a href="#通过系统调用拦截实现确定性回放" id="toc-通过系统调用拦截实现确定性回放" class="nav-link" data-scroll-target="#通过系统调用拦截实现确定性回放">通过系统调用拦截实现确定性回放</a></li>
+  <li><a href="#衡量偏离" id="toc-衡量偏离" class="nav-link" data-scroll-target="#衡量偏离">衡量偏离</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-persistence-compaction" id="toc-sec-vol3-persistence-compaction" class="nav-link" data-scroll-target="#sec-vol3-persistence-compaction">日志保留</a></li>
+  <li><a href="#sec-vol3-persistence-engine-design" id="toc-sec-vol3-persistence-engine-design" class="nav-link" data-scroll-target="#sec-vol3-persistence-engine-design">轨迹存储引擎</a>
+  <ul>
+  <li><a href="#多层存储流水线" id="toc-多层存储流水线" class="nav-link" data-scroll-target="#多层存储流水线">多层存储流水线</a></li>
+  <li><a href="#幂等摄取与数据去重" id="toc-幂等摄取与数据去重" class="nav-link" data-scroll-target="#幂等摄取与数据去重">幂等摄取与数据去重</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-durable-execution-fallacies" id="toc-sec-vol3-durable-execution-fallacies" class="nav-link" data-scroll-target="#sec-vol3-durable-execution-fallacies">谬误与陷阱</a></li>
+  <li><a href="#sec-vol3-durable-execution-summary" id="toc-sec-vol3-durable-execution-summary" class="nav-link" data-scroll-target="#sec-vol3-durable-execution-summary">总结</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><span id="sec-vol3-durable-execution"></span><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol3_zh/parts/runtime_principles.html">第四部分：智能体运行时</a></li><li class="breadcrumb-item"><a href="../../vol3_zh/10_durable_execution/10_durable_execution.html">持久执行</a></li></ol></nav><h1 class="title display-7">持久执行</h1></header>
+
+
+<header>
+
+
+</header>
+
+
+<div class="{layout-narrow} page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
+
+</div></div><p><a href="images/webp/cover_interrupts_blueprint_labeled.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/webp/cover_interrupts_blueprint_labeled.webp" class="img-fluid" alt="持久执行蓝图。"></a></p>
+</div>
+<section id="目的" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="目的">目的</h2>
+<p><em>为什么智能体必须在行动之前，先记录下自己即将做什么？</em></p>
+<p>长时间运行的智能体，其运行寿命会超过启动它的机器。主机会崩溃，工作进程会被抢占，部署会重启进程，而为了等待人工批准而暂停的轨迹，可能需要等待数天才能得到答复。当这种情况发生在第四十轮时，从原始提示重新开始并不能恢复任务，因为每次模型调用都会产生一个新的样本，重新运行会沿着不同的路径推进；而且，前四十轮中的某些轮次已经通过发送消息、合并分支或配置服务器改变了外部世界，重新运行会再次造成这些改变。能够保留下来的工作，恰好就是运行时在崩溃之前按正确顺序记录下来的工作。持久执行是一套维护这种记录的方法，使轨迹能够恢复执行、为调试而回放，或迁移到另一台机器，同时避免重复产生已经造成的效果；而同一份记录随后也会成为评估和训练所读取的证据。从 H·S·A 的视角看，长时间跨度使状态成为持久性问题，而已使用的权限则成为恢复过程中不能重复偿付的债务。</p>
+<div id="callout-learning-objectives*-0.1" class="callout callout-learning-objectives">
+<details class="callout-learning-objectives fbx-simplebox fbx-default" open=""><summary><strong>学习目标</strong></summary><div>
+<ul>
+<li>设计轨迹日志，使其中的事件（消息、工具调用 ID 及结果、模型与采样元数据、压缩事件、批准记录）足以重建轨迹记录。</li>
+<li>应用“先记录意图、后产生效果”的顺序约束，将崩溃后的每项已记录操作归类为未发送、已确定或状态存疑。</li>
+<li>根据检查点成本和故障率，选择以轮次为单位的检查点间隔，并说明检查点必须捕获哪些日志无法捕获的内容。</li>
+<li>解释恢复执行的轨迹如何重建上下文、重新预填充会产生哪些成本，以及恢复执行如何处理待批准事项、迟到的工具结果和模型、提示或工具模式的漂移。</li>
+<li>构建使用桩替代模型和工具的回放模式，并将其用于时间旅行调试、反事实分支和智能体运行框架回归测试。</li>
+<li>诊断重新运行为何偏离其记录，区分模型侧、智能体运行框架侧和环境侧的原因。</li>
+<li>设计保留策略，在将体积庞大的工具输出转移到外部存储的同时，保留轨迹的因果记录。</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-vol3-persistence-event-sourcing" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-event-sourcing">轨迹日志</h2>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/svg/hsa_locator_hs.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/svg/hsa_locator_hs.svg" class="img-fluid" style="width:100.0%" alt="H·S·A 定位图，其中时间跨度轴和状态轴以紫色突出显示，权限轴以灰色显示。"></a></p>
+<p><em>时间跨度使状态的存续时间超出单台主机的寿命，因此本章将使记录具备持久性。</em></p>
+</div></div><p>一条轨迹正处于云迁移任务的第四十轮。智能体运行框架刚刚发送了创建数据库副本的请求，主机便在响应到达之前断电。当另一台主机接手这条轨迹时，三个问题决定了恢复是有益还是有害。截至第三十九轮，运行时提出、授权和观察到了什么？创建副本的请求是否可能已经离开这台机器？如果已经发出，它是否生效？<strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-acb">轨迹记录</a></strong> 中的轨迹记录无法回答其中任何一个问题，因为它存放在发生故障的主机内存中。在较长的时间跨度内，轨迹所携带的状态会成为持久性问题（<strong><a href="../01_introduction/01_introduction.html#sec-vol3-intro-hsa">H·S·A 暴露面</a></strong>），因为轨迹的运行寿命通常超过启动它们的机器（<strong><a href="../01_introduction/01_introduction.html#sec-vol3-intro-temporal-stretching">时间跨度拉伸：从纳秒指令到千秒级轨迹</a></strong>）。</p>
+<p>最直观的恢复方法是将原始提示重新输入模型，但这种方法行不通。每次模型调用都会采样，而且即使温度为零，模型服务系统也不保证两次生成相同的词元（<strong><a href="../02_foundation_model/02_foundation_model.html#sec-vol3-foundation-model-autoregressive">自回归生成</a></strong>），因此重新运行可能在第三轮选择不同的工具，并在第四轮选择不同的一组文件。更糟的是，重新运行无法知道前四十轮中哪些轮次已经改变了外部世界。第二次创建副本的请求会创建第二个副本。因此，恢复需要一份由运行时在崩溃之前写下的记录，逐轮说明发生了什么。</p>
+<section id="以日志为事实依据" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="以日志为事实依据">以日志为事实依据</h3>
+<p>运行时将这份记录保存为只追加的<strong>轨迹日志</strong>，它是一个由带类型的事件构成的有序序列，运行时从不对其进行原地修改：</p>
+<p><span class="math display">\[\mathcal{E} = [e_1, e_2, \dots, e_t]\]</span></p>
+<p>每个事件记录轨迹的一个事实，例如上下文被组装、模型作出回复、运行时授权一次工具调用，或结果返回。<strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-agent-harness">智能体运行框架</a></strong> 中的实时轨迹记录（状态、预算、待批准事项、当前计划）不再独立存储。它是智能体运行框架通过对日志执行折叠运算计算出的投影：从初始记录 <span class="math inline">\(R_0\)</span> 开始，对每个事件应用一个确定性的更新函数：</p>
+<p><span class="math display">\[R_t = \text{fold}(R_0, \mathcal{E}) = \text{apply}(\dots\text{apply}(\text{apply}(R_0, e_1), e_2)\dots, e_t)\]</span></p>
+<div id="fig-vol3-event-sourcing" class="quarto-float quarto-figure quarto-figure-center anchored" alt="两个面板。上方面板展示崩溃时丢失的运行时内存：初始记录 R 零、应用事件的折叠运算框、第 42 轮的当前记录 R t，以及注明不调用模型或工具的恢复框。下方面板展示持久化的只追加轨迹日志，包含六个事件：TaskStarted、ContextBuilt、ModelReplied、Authorized、ToolIntent 和 ToolResult，每个事件都包含 LSN、前一个 LSN、轮次和校验和。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-event-sourcing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/vol3-event-sourcing.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="图&nbsp;1: 作为日志投影的轨迹记录：持久化轨迹日志（下方）是一个只追加的带类型事件序列，每个事件都包含日志序列号（LSN）和一个后向指针。运行时内存中的轨迹记录（上方）通过确定性的智能体运行框架代码对这些事件执行折叠运算，重新计算得到。当主机在第 42 轮丢失时，恢复过程按顺序读取日志，在不调用模型或任何工具的情况下重建同一份记录。"><img src="images/svg/vol3-event-sourcing.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-event-sourcing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;1: <strong>作为日志投影的轨迹记录</strong>：持久化轨迹日志（下方）是一个只追加的带类型事件序列，每个事件都包含日志序列号（LSN）和一个后向指针。运行时内存中的轨迹记录（上方）通过确定性的智能体运行框架代码对这些事件执行折叠运算，重新计算得到。当主机在第 42 轮丢失时，恢复过程按顺序读取日志，在不调用模型或任何工具的情况下重建同一份记录。
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-vol3-event-sourcing" class="quarto-xref">图&nbsp;1</a> 展示了这两个部分。更新函数是普通的智能体运行框架代码，不包含 I/O，因此对同一份日志执行折叠运算，总会得到同一份记录。崩溃后的恢复过程读取日志，并再次执行折叠运算。它不调用模型，也不调用工具，因为所需的每个模型回复和工具结果都已经记录为事件（原则 <a href="../parts/runtime_principles.html#pri-vol3-intent-before-effect">13</a>）。这种设计模式称为<strong>事件溯源</strong>，在数据系统中已有悠久历史 <span class="citation" data-cites="kleppmann2017designing">(<a href="#ref-kleppmann2017designing" role="doc-biblioref">Kleppmann 2016年</a>)</span>。它尤其适合智能体，因为唯一无法重新计算其输出的组件——模型——恰好就是日志保存其输出的组件。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-kleppmann2017designing" class="csl-entry" role="listitem">
+Kleppmann, Martin. 2016年. <em>Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems</em>. O’Reilly Media.
+</div></div><p>同样的划分也将日志与上下文窗口区分开来。上下文是下一次模型调用所读取的内容。它由日志组装而成，并且有意允许信息损失。压缩（<strong><a href="../04_context_engineering/04_context_engineering.html#sec-vol3-context-engineering-compaction">上下文压缩</a></strong>）会对较早的轮次进行摘要，截断（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-streaming">观测流截断</a></strong>）会裁剪较长的工具输出。日志保留了上下文丢弃的内容。将上下文视为轨迹记录，是丢失轨迹记录最常见的原因，因为事后分析所需的证据，恰恰就是压缩过程中移除的内容。</p>
+</section>
+<section id="日志记录什么" class="level3">
+<h3 class="anchored" data-anchor-id="日志记录什么">日志记录什么</h3>
+<p>只有每个事件都携带后续读取者所需的信息，日志才能用于恢复。<a href="#tbl-vol3-durable-log-schema" class="quarto-xref">表&nbsp;1</a> 列出了单智能体轨迹所需的事件类型，以及每种类型存在的原因。</p>
+<div id="tbl-vol3-durable-log-schema" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[16,20,34,30]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-durable-log-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: <strong>轨迹日志模式</strong>：单智能体轨迹记录的事件类型、各类事件的写入时机、重要字段，以及恢复或重放从中读取的内容。工具调用 ID 将模型的提议、对该提议的授权、执行意图及执行结果关联起来，贯穿四个事件。
+</figcaption>
+<div aria-describedby="tbl-vol3-durable-log-schema-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 34%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>事件</strong></th>
+<th style="text-align: left;"><strong>写入时机</strong></th>
+<th style="text-align: left;"><strong>关键字段</strong></th>
+<th style="text-align: left;"><strong>恢复或重放如何使用该事件</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>TaskStarted</code></td>
+<td style="text-align: left;">仅一次，在第一轮之前</td>
+<td style="text-align: left;">任务规范、模型标识符及版本、采样参数、提示模板版本、工具模式版本、工作区快照 ID</td>
+<td style="text-align: left;">固定恢复或重放必须匹配的版本，并定义初始工作区</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ContextBuilt</code></td>
+<td style="text-align: left;">每次模型调用之前</td>
+<td style="text-align: left;">按顺序排列的消息引用、检索项、组装后上下文的哈希值</td>
+<td style="text-align: left;">使恢复过程能够重新构建完全相同的上下文，并检测重新组装是否会产生差异</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ModelReplied</code></td>
+<td style="text-align: left;">每次模型调用返回之后</td>
+<td style="text-align: left;">原样回复、工具调用及其工具调用 ID、停止原因、token 数量、实际提供服务的模型版本</td>
+<td style="text-align: left;">保存无法重新生成的采样结果的唯一副本</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Authorized</code></td>
+<td style="text-align: left;">策略和预算检查之后</td>
+<td style="text-align: left;">工具调用 ID、决策（允许、拒绝、等待审批）、策略版本、剩余预算</td>
+<td style="text-align: left;">重建预算，并说明某项动作获准执行的原因</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ApprovalRequested</code>, <code>ApprovalResolved</code></td>
+<td style="text-align: left;">调用被暂缓时，以及人工作出答复时</td>
+<td style="text-align: left;">工具调用 ID、审批人、决策、失效时间</td>
+<td style="text-align: left;">使暂停的轨迹能够跨越等待期，并依据同一决策恢复执行</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ToolIntent</code></td>
+<td style="text-align: left;">授权之后、派发之前，以持久方式写入</td>
+<td style="text-align: left;">工具调用 ID、工具名称、参数、幂等键</td>
+<td style="text-align: left;">标记某种外部效果可能已经发生，使恢复过程能够查明并处理，而不必猜测</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ToolResult</code></td>
+<td style="text-align: left;">工具返回时</td>
+<td style="text-align: left;">工具调用 ID、状态、输出（或其哈希值及指向完整内容的指针）、耗时</td>
+<td style="text-align: left;">在重放时替代工具执行，并使意图闭环</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Compacted</code></td>
+<td style="text-align: left;">上下文被摘要时</td>
+<td style="text-align: left;">涵盖的轮次、实际生成的摘要文本</td>
+<td style="text-align: left;">使恢复过程能够复用已记录的摘要，而不是生成不同的摘要</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Checkpoint</code></td>
+<td style="text-align: left;">检查点完成持久化之后</td>
+<td style="text-align: left;">涵盖的日志位置、记录快照 ID、工作区快照 ID</td>
+<td style="text-align: left;">限定重启时必须读取的日志量</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>这一模式的大部分价值来自三个设计选择。工具调用 ID 将同一动作贯穿于提议、授权、意图和结果，使恢复过程能够针对任意动作检查这四个事件中哪些已经存在。版本字段将“模型”和“提示”从不断变化的对象转化为已记录的事实，而恢复和重放都依赖这些事实。<code>Compacted</code> 事件记录实际生成的摘要，因为对相同轮次再次进行摘要就是另一次采样，会使恢复后的轨迹对自身过去形成不同的记忆。</p>
+<p>有了日志，在不变量闭包（原则 <a href="../01_introduction/01_introduction.html#pri-invariant-closure">不变闭包原则</a>）的约束下，运行时不再依赖模型对自身历史的任何陈述。发生了什么，以日志的记载为准。这一断言只有在外界能够依据事件采取行动之前，每个事件都已写入持久存储时才成立；对于其中一种事件，运行时写入与行动的先后顺序决定了恢复是否安全。</p>
+</section>
+</section>
+<section id="sec-vol3-persistence-wal" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-wal">意图先于效果</h2>
+<p>回到第四十轮的资源配置请求。智能体运行框架已经授权该请求，现在必须做两件事：写入一条记录，表明请求即将发出；通过网络发送该请求。如果先派发请求，而主机在记录被持久刷新到非易失性存储之前断电，外部资源就会在实际云环境中完成分配，但日志中完全没有相关记载。重启或迁移后，恢复的智能体运行框架检查日志，发现一个已授权的调用，却找不到任何派发迹象，于是认定该步骤从未执行，并再次发出资源配置请求。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>幽灵效果</strong><br>
+智能体的工具执行在外界造成了外部状态变更，却没有任何持久日志记录描述这一变更，因为主机在网络派发之后、磁盘屏障将意图持久化之前发生了故障。</p>
+</div></div><p>防止这一故障模式的基础不变量是<strong>预写日志（WAL）纪律</strong>，它是意图先于效果原则（<a href="../parts/runtime_principles.html#pri-vol3-intent-before-effect">13</a>）在系统中的实现。在授权并明确指定该动作的 <code>ToolIntent</code> 事件被持久提交到非易失性介质之前，任何外部变更操作都不得越过主机边界。形式化地说，对于每一次改变外界状态的工具执行，运行时都强制遵循以下严格的因果顺序：</p>
+<p><span id="eq-vol3-wal-ordering"><span class="math display">\[e_{\text{prop}} \prec e_{\text{auth}} \prec e_{\text{flush}} \prec a_{\text{ext}} \prec e_{\text{obs}} \tag{1}\]</span></span></p>
+<p>其中，<span class="math inline">\(e_{\text{prop}}\)</span> 表示从模型生成内容中解析出的候选工具调用，<span class="math inline">\(e_{\text{auth}}\)</span> 记录监督器对策略和能力的审批，<span class="math inline">\(e_{\text{flush}}\)</span> 标记物理存储屏障的完成，确认数据已持久落盘，<span class="math inline">\(a_{\text{ext}}\)</span> 表示向外部工具或沙箱发送网络 RPC，<span class="math inline">\(e_{\text{obs}}\)</span> 则记录返回的观测结果。</p>
+<p>屏障与因果转换的物理执行顺序如 <a href="#fig-vol3-wal-sequence" class="quarto-xref">图&nbsp;2</a> 所示。</p>
+<div id="fig-vol3-wal-sequence" class="quarto-float quarto-figure quarto-figure-center anchored" alt="时序图，展示从模型提出工具调用，经监督器策略评估、通过 writev 和 fdatasync 写入磁盘、通过网络分发工具调用，到接收观测结果的执行流程。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-wal-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/ch10-wal-sequence.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="图&nbsp;2: 智能体预写日志执行时序：运行时拦截模型提出的候选动作 e_{\text{prop}}，评估授权策略并生成 e_{\text{auth}}，强制执行严格的持久存储屏障 e_{\text{flush}}，随后才将外部动作 a_{\text{ext}} 发送至沙箱环境。工具观测结果 e_{\text{obs}} 使该轮次完成结算。"><img src="images/svg/ch10-wal-sequence.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-wal-sequence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: <strong>智能体预写日志执行时序</strong>：运行时拦截模型提出的候选动作 <span class="math inline">\(e_{\text{prop}}\)</span>，评估授权策略并生成 <span class="math inline">\(e_{\text{auth}}\)</span>，强制执行严格的持久存储屏障 <span class="math inline">\(e_{\text{flush}}\)</span>，随后才将外部动作 <span class="math inline">\(a_{\text{ext}}\)</span> 发送至沙箱环境。工具观测结果 <span class="math inline">\(e_{\text{obs}}\)</span> 使该轮次完成结算。
+</figcaption>
+</figure>
+</div>
+<p><a href="#eq-vol3-wal-ordering" class="quarto-xref">公式&nbsp;1</a> 中的关键约束是存储屏障 <span class="math inline">\(e_{\text{flush}} \prec a_{\text{ext}}\)</span>。在操作系统编程中，调用 <code>write()</code> 仅会将序列化后的字节从用户空间复制到内核的易失性页缓存中。如果字节仍驻留在易失性 DRAM 中时发生断电，脏页将永久丢失。要保证持久性，必须通过 <code>fdatasync()</code> 或直接 I/O 显式执行硬件屏障，相关对比如 <strong><a href="10_durable_execution.html#tbl-vol3-io-semantics">POSIX I/O 持久化接口与持久性保证</a></strong> 所示。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-io-semantics" style="display:table-caption!important;width:auto!important;position:static!important"><strong>POSIX I/O 持久化接口与持久性保证</strong>：比较 POSIX 文件同步原语、内核返回语义、物理非易失性存储状态，以及在现代 NVMe 驱动器上测得的延迟。</caption>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 14%">
+<col style="width: 26%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">接口</th>
+<th style="text-align: left;">缓存语义</th>
+<th style="text-align: left;">内核返回条件</th>
+<th style="text-align: left;">返回时的 NVMe 状态</th>
+<th style="text-align: left;">对 <span class="math inline">\(e_{\text{flush}} \prec a_{\text{ext}}\)</span> 是否安全？</th>
+<th style="text-align: left;">典型延迟（<span class="math inline">\(\mu\text{s}\)</span>）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>write()</code></td>
+<td style="text-align: left;">标准页缓存</td>
+<td style="text-align: left;">已复制到内核 DRAM</td>
+<td style="text-align: left;">易失／尚未写入</td>
+<td style="text-align: left;">❌ <strong>不安全</strong>（崩溃时数据丢失）</td>
+<td style="text-align: left;"><span class="math inline">\(1 - 2\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>write()</code> + <code>O_SYNC</code></td>
+<td style="text-align: left;">同步页缓存</td>
+<td style="text-align: left;">已写入驱动器缓存</td>
+<td style="text-align: left;">控制器 DRAM／未知</td>
+<td style="text-align: left;">⚠️ <strong>有条件安全</strong>（取决于 FUA）</td>
+<td style="text-align: left;"><span class="math inline">\(150 - 500\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>write()</code> + <code>fdatasync()</code></td>
+<td style="text-align: left;">显式刷写</td>
+<td style="text-align: left;">驱动器已确认</td>
+<td style="text-align: left;">已提交至闪存单元</td>
+<td style="text-align: left;">✅ <strong>安全</strong>（元数据开销最小）</td>
+<td style="text-align: left;"><span class="math inline">\(80 - 150\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>write()</code> + <code>fsync()</code></td>
+<td style="text-align: left;">显式完全同步</td>
+<td style="text-align: left;">驱动器已确认</td>
+<td style="text-align: left;">已提交至闪存单元</td>
+<td style="text-align: left;">✅ <strong>安全</strong>（更新全部 inode 属性）</td>
+<td style="text-align: left;"><span class="math inline">\(100 - 250\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">组提交（<code>fdatasync</code>）</td>
+<td style="text-align: left;">批量向量化刷写</td>
+<td style="text-align: left;">整批已获确认</td>
+<td style="text-align: left;">已提交至闪存单元</td>
+<td style="text-align: left;">✅ <strong>安全</strong>（按事件摊销）</td>
+<td style="text-align: left;"><span class="math inline">\(\frac{85}{k} + \frac{W}{2}\)</span></td>
+</tr>
+</tbody>
+</table></div>
+<section id="崩溃后的三种状态" class="level3">
+<h3 class="anchored" data-anchor-id="崩溃后的三种状态">崩溃后的三种状态</h3>
+<p><a href="#eq-vol3-wal-ordering" class="quarto-xref">公式&nbsp;1</a> 中的顺序约束限制了崩溃后可能留存的记录组合，保证恢复过程发现的每个改变外部世界的动作都处于三种确定状态之一（<strong><a href="10_durable_execution.html#tbl-vol3-durable-recovery-states">已记录动作的恢复状态</a></strong>）。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-durable-recovery-states" style="display:table-caption!important;width:auto!important;position:static!important"><strong>已记录动作的恢复状态</strong>：预写顺序保证，崩溃后每个改变外部世界的动作都恰好处于三种状态之一。只有第三种状态需要主动对账。</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 8%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>日志中的记录</strong></th>
+<th style="text-align: left;"><strong>状态</strong></th>
+<th style="text-align: left;"><strong>恢复操作</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">没有持久化的 <code>ToolIntent</code></td>
+<td style="text-align: left;">未发送</td>
+<td style="text-align: left;">调用从未离开主机。该轮次可以重新执行；如果已记录模型回复，则从该回复开始执行。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ToolIntent</code> 和 <code>ToolResult</code></td>
+<td style="text-align: left;">已结算</td>
+<td style="text-align: left;">结果已知。重放与恢复执行使用已记录的结果，绝不重新分发调用。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">有 <code>ToolIntent</code>，无 <code>ToolResult</code></td>
+<td style="text-align: left;"><strong>存疑</strong></td>
+<td style="text-align: left;">请求可能从未到达，也可能已提交但只有回复丢失。任何重试之前都必须先完成结算。</td>
+</tr>
+</tbody>
+</table></div>
+<p>预写顺序无法神奇地消除第三种状态，即<strong>存疑动作</strong>。它所保证的是，存疑状态会显式可见。重试前先结算（原则 <a href="../parts/tool_use_principles.html#pri-vol3-exactly-once-settlement">9</a>）利用 <strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-idempotency">幂等动作执行</a></strong> 中的机制解决这一问题：</p>
+<ol type="1">
+<li><strong>幂等键</strong>：恢复管理器使用存储在 <code>ToolIntent</code> 事件记录中的同一个幂等随机数，重新发出工具请求。如果工具服务器已经处理过先前的请求，就会返回缓存的结果，而不会重复产生副作用。</li>
+<li><strong>对账探测</strong>：与不具备原生幂等性支持的外部 API 交互时，恢复管理器会执行读取副作用状态的探测（例如，查询数据库副本是否存在），以确定变更是否已经发生。</li>
+<li><strong>监督升级处理</strong>：如果环境状态仍无法确定，监督器会停止执行并升级至人工审查（<strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-hitl">审批关卡</a></strong>），而不是冒险盲目重试。</li>
+</ol>
+</section>
+<section id="持久性的代价组提交摊销" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="持久性的代价组提交摊销">持久性的代价：组提交摊销</h3>
+<p>在每次工具执行的关键路径上强制设置同步 <code>fdatasync()</code> 屏障，会引入非易失性介质延迟。虽然本地闪存上的一次 NVMe 刷新耗时介于 <span class="math inline">\(80\)</span> 与 <span class="math inline">\(150\ \mu\text{s}\)</span> 之间，但网络附加块存储卷（如 AWS EBS 或 Google Persistent Disk）每次屏障操作的耗时为 <span class="math inline">\(2\)</span> 至 <span class="math inline">\(15\ \text{ms}\)</span>。在共享节点上承载数十或数百条并发智能体轨迹的多智能体环境中，串行执行刷新会导致严重的排队竞争。</p>
+<p>解决这一瓶颈的标准系统机制是<strong>组提交</strong> <span class="citation" data-cites="dewitt1984">(<a href="#ref-dewitt1984" role="doc-biblioref">DeWitt 等 1984年</a>)</span>，详见 <a href="#tbl-vol3-group-commit-pipeline" class="quarto-xref">表&nbsp;2</a>。并发智能体工作线程不再各自独立执行 <code>fdatasync()</code>，而是将已授权的事件记录加入无锁多生产者环形缓冲区，并在用于完成通知的 futex 上挂起等待。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-dewitt1984" class="csl-entry" role="listitem">
+DeWitt, David J., Randy H. Katz, Frank Olken, Leonard D. Shapiro, Michael R. Stonebraker, 和 David A. Wood. 1984年. <span>《Implementation Techniques for Main Memory Database Systems》</span>. <em>Proceedings of the 1984 ACM SIGMOD International Conference on Management of Data</em>, 1～8.
+</div></div><div id="tbl-vol3-group-commit-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,40,16,24]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-group-commit-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;2: <strong>组提交流水线架构</strong>：通过无锁暂存和向量化同步，在并发智能体工作线程之间摊销非易失性存储屏障的开销。
+</figcaption>
+<div aria-describedby="tbl-vol3-group-commit-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 40%">
+<col style="width: 16%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">流水线阶段</th>
+<th style="text-align: left;">运行机制</th>
+<th style="text-align: left;">延迟特征</th>
+<th style="text-align: left;">数据结构与 I/O 原语</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1. 接收</strong></td>
+<td style="text-align: left;">并发智能体线程将动作提案（<span class="math inline">\(e_{\text{prop}}, e_{\text{auth}}\)</span>）序列化并推入内存暂存区；线程在完成通知 promise 上挂起等待。</td>
+<td style="text-align: left;">接近零（<span class="math inline">\(\le 5\ \mu\text{s}\)</span>）</td>
+<td style="text-align: left;">无锁多生产者环形缓冲区（MPMC）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2. 聚合</strong></td>
+<td style="text-align: left;">当批次大小达到 <span class="math inline">\(B_{\max}\)</span>（例如 64 条记录）或超时时限 <span class="math inline">\(W\)</span>（例如 2 ms）到期时，专用刷新协调器排空待处理队列。</td>
+<td style="text-align: left;"><span class="math inline">\(0.1 - 2.0\ \text{ms}\)</span></td>
+<td style="text-align: left;">向量化分散—聚集内存数组</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3. 向量化写入</strong></td>
+<td style="text-align: left;">通过一次分散—聚集系统调用，将聚合后的事件记录写入存储设备。</td>
+<td style="text-align: left;"><span class="math inline">\(0.2 - 0.8\ \text{ms}\)</span></td>
+<td style="text-align: left;">POSIX <code>writev()</code> / Linux <code>io_uring</code> 提交</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4. 存储屏障</strong></td>
+<td style="text-align: left;">主机内核强制磁盘控制器将控制器缓存中的脏块提交至非易失性闪存介质。</td>
+<td style="text-align: left;"><span class="math inline">\(2.0 - 15.0\ \text{ms}\)</span></td>
+<td style="text-align: left;"><code>fdatasync()</code> / NVMe 刷新命令</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5. 屏障释放</strong></td>
+<td style="text-align: left;">协调器通知所有用于挂起等待的完成通知 promise；等待中的智能体线程并行恢复运行，以派发工具调用。</td>
+<td style="text-align: left;">接近零（<span class="math inline">\(\le 10\ \mu\text{s}\)</span>）</td>
+<td style="text-align: left;">原子 futex 广播 / 条件变量唤醒</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>我们对每轮的有效存储同步延迟 <span class="math inline">\(t_{\text{eff}}\)</span> 建模，假设授权事件服从总到达率为 <span class="math inline">\(\lambda\)</span> 的泊松到达过程。若组提交协调器采用聚合窗口 <span class="math inline">\(W\)</span> 和最大批次容量 <span class="math inline">\(K_{\max}\)</span>，则每次屏障分摊的事件数量的期望值由 <a href="#eq-vol3-group-commit-k" class="quarto-xref">公式&nbsp;2</a> 给出：</p>
+<p><span id="eq-vol3-group-commit-k"><span class="math display">\[\bar{k} = \min\left(K_{\max},\, \max\left(1,\, \lambda W\right)\right) \tag{2}\]</span></span></p>
+<p>单个智能体线程所经历的有效延迟，包括缓冲区中的预期排队延迟，以及由 <span class="math inline">\(\bar{k}\)</span> 个事件分摊的物理屏障耗时，其形式化表达见 <a href="#eq-vol3-group-commit-latency" class="quarto-xref">公式&nbsp;3</a>：</p>
+<p><span id="eq-vol3-group-commit-latency"><span class="math display">\[t_{\text{eff}} = \frac{W}{2} + \frac{t_{\text{writev}}(\bar{k}) + t_{\text{sync}}}{\bar{k}} \tag{3}\]</span></span></p>
+<p>随着轨迹并发度提升（<span class="math inline">\(\lambda \to \infty\)</span>），窗口 <span class="math inline">\(W\)</span> 可逐步缩小至接近零，从而将物理同步开销 <span class="math inline">\(t_{\text{sync}}\)</span> 分摊到 <span class="math inline">\(K_{\max}\)</span> 条轨迹上，使每轮的屏障开销降至可忽略的水平，同时不违反任何单个智能体的因果预写不变量。</p>
+<div id="chk-10-wal-invariants" class="callout callout-checkpoint" title="预写顺序">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 0.1: 预写顺序</strong></summary><div>
+<p>继续阅读之前，请检查自己能否回答以下问题：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>顺序</strong>：为什么 <code>ToolIntent</code> 必须在派发前持久化，而在模型调用之后记录 <code>ModelReplied</code> 是安全的？</label></li>
+<li><label><input type="checkbox"><strong>恢复状态</strong>：给定一份日志，你能否将每个改变外部世界的动作归类为未发送、已确定或未决？</label></li>
+<li><label><input type="checkbox"><strong>结果确定</strong>：对于工具不接受幂等键的未决调用，恢复过程如何处理？</label></li>
+<li><label><input type="checkbox"><strong>成本</strong>：为什么组提交能够在降低存储屏障频率的同时，保持每条轨迹的因果顺序？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+</section>
+<section id="sec-vol3-persistence-checkpointing" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-checkpointing">检查点</h2>
+<p>一个编程智能体正处于第三百轮。其日志记载：在第 212 轮，编辑工具重写了 <code>parser.py</code>；在第 250 轮，shell 工具删除了一个构建目录。对日志进行折叠处理可以重建轨迹记录，却无法重建 <code>parser.py</code>。日志保存了工具调用及其结果；这些调用生成的文件存放在沙箱工作区（<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-cow">智能体工作区</a></strong>）中，如果承载该工作区的主机因硬件故障而崩溃，工作区也会随之丢失。重放日志同样无法重新创建修改后的文件，因为重放会有意以桩实现替代工具执行。</p>
+<section id="检查点捕获的内容全量编码与增量差分编码" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="检查点捕获的内容全量编码与增量差分编码">检查点捕获的内容：全量编码与增量差分编码</h3>
+<p><strong>检查点</strong>是一份持久化快照，涵盖仅凭日志无法以低成本重建的所有内容，并绑定到其所对应的精确日志位置。它由三个部分组成：</p>
+<ol type="1">
+<li><strong>记录快照</strong>：序列化的轨迹记录 <span class="math inline">\(R_k\)</span>，对应第 <span class="math inline">\(k\)</span> 轮，使重启时无需从 <span class="math inline">\(R_0\)</span> 开始归并整个日志。</li>
+<li><strong>工作区快照</strong>：第 <span class="math inline">\(k\)</span> 轮的沙箱文件系统，通过写时复制快照机制捕获（<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-cow">智能体工作区</a></strong>）。</li>
+<li><strong><code>Checkpoint</code> 事件</strong>：仅在两个快照均已持久保存到非易失性介质后，才追加到日志中。</li>
+</ol>
+<p>架构上的权衡在于监督器采用<em>完整状态快照</em>还是<em>增量差分快照</em>。在长时程任务中，随着代码差异和执行轨迹不断累积，上下文缓冲区单调增长。如果由结构化词元和元数据构成的上下文达到 <span class="math inline">\(128\text{ KiB}\)</span>，每五轮提交一次完整快照，在一条 500 轮的轨迹中就会迫使存储引擎写入：</p>
+<p><span class="math display">\[\text{Total Bytes Written} = \sum_{k=1}^{100} k \cdot \Delta_{\text{turn}} \approx 50 \cdot 100 \cdot 128\text{ KiB} \approx 640\text{ MiB}\]</span></p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>写放大系数（<span class="math inline">\(\text{WAF}_{\text{snap}}\)</span>）：</strong> <span class="math display">\[\text{WAF}_{\text{snap}} = \frac{\text{Bytes Written to Disk}}{\text{Unique State Changes}}\]</span> 对于单调增长轨迹上的完整快照，<span class="math inline">\(\text{WAF}_{\text{snap}} \propto t\)</span>；而对于增量差分编码，<span class="math inline">\(\text{WAF}_{\text{snap}} \approx 1\)</span>。</p>
+</div></div><p>增量差分编码通过仅序列化自上一个检查点以来发生的差异性变更来缓解这种写放大，其形式化定义见 <a href="#eq-vol3-delta-encoding" class="quarto-xref">公式&nbsp;4</a>：</p>
+<p><span id="eq-vol3-delta-encoding"><span class="math display">\[\Delta_t = \mathbf{S}_t \ominus \mathbf{S}_{t - \tau} \tag{4}\]</span></span></p>
+<p>其中，<span class="math inline">\(\tau\)</span> 为检查点步长。运行时无需重新序列化整个提示缓冲区，而是仅记录新追加的消息词元、更新后的预算寄存器和修改过的文件系统 inode（<a href="#tbl-vol3-snapshot-models" class="quarto-xref">表&nbsp;3</a>）。</p>
+<div id="tbl-vol3-snapshot-models" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,28,28,24]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-snapshot-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;3: <strong>状态检查点架构权衡</strong>：完整状态快照、增量差分编码与写时复制内存分叉之间的运行特性比较。
+</figcaption>
+<div aria-describedby="tbl-vol3-snapshot-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">架构维度</th>
+<th style="text-align: left;">完整状态快照</th>
+<th style="text-align: left;">增量差分快照</th>
+<th style="text-align: left;">写时复制（CoW）内存分叉</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>序列化开销</strong></td>
+<td style="text-align: left;">高；随上下文大小线性增长 <span class="math inline">\(\mathcal{O}(\Vert \mathbf{S}_t \Vert)\)</span></td>
+<td style="text-align: left;">低；严格受窗口内变更量限制 <span class="math inline">\(\mathcal{O}(\Vert \Delta_t \Vert)\)</span></td>
+<td style="text-align: left;">暂停时间接近零；复制页表 <span class="math inline">\(\mathcal{O}(\text{RSS})\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>存储放大</strong></td>
+<td style="text-align: left;">在长轨迹中呈现严重的二次增长</td>
+<td style="text-align: left;">极小；存储独有的状态转换</td>
+<td style="text-align: left;">中等；与脏内存页总量成正比</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>崩溃恢复时间</strong></td>
+<td style="text-align: left;">极短 <span class="math inline">\(\mathcal{O}(1)\)</span>；单次读取并即时解包到内存</td>
+<td style="text-align: left;">中等 <span class="math inline">\(\mathcal{O}(\tau)\)</span>；需要从基准状态开始应用差分链</td>
+<td style="text-align: left;">极短 <span class="math inline">\(\mathcal{O}(1)\)</span>；重新映射后备存储或页文件</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>日志压缩影响</strong></td>
+<td style="text-align: left;">简单；可裁剪 <span class="math inline">\(t\)</span> 之前的所有历史快照</td>
+<td style="text-align: left;">复杂；需要定期合并基准状态以裁剪日志</td>
+<td style="text-align: left;">中等；需要后台页面合并与清理</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>隔离屏障</strong></td>
+<td style="text-align: left;">高；与运行中进程的内存空间完全解耦</td>
+<td style="text-align: left;">中等；依赖持续的重放引擎验证</td>
+<td style="text-align: left;">受进程约束；与本地主机内核的内存语义绑定</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>检查点开销与重新执行恢复时间之间的权衡如 <a href="#fig-vol3-checkpoint-cadence" class="quarto-xref">图&nbsp;3</a> 所示。</p>
+<div id="fig-vol3-checkpoint-cadence" class="quarto-float quarto-figure quarto-figure-center anchored" alt="时间线示意图，展示检查点快照 S1、S2、崩溃事件和差分重放窗口。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-checkpoint-cadence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/checkpoint-cadence.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="图&nbsp;3: 周期性检查点间隔与重放恢复：按间隔 \tau 保存的状态快照限制了恢复时的重新计算量。当第 t_{\text{crash}} 轮发生崩溃时，恢复管理器恢复快照 \mathbf{S}_k，并仅重放预写日志中的后缀事件 \langle e_{k+1}, \dots \rangle，无需再次调用模型。"><img src="images/svg/checkpoint-cadence.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-checkpoint-cadence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: <strong>周期性检查点间隔与重放恢复</strong>：按间隔 <span class="math inline">\(\tau\)</span> 保存的状态快照限制了恢复时的重新计算量。当第 <span class="math inline">\(t_{\text{crash}}\)</span> 轮发生崩溃时，恢复管理器恢复快照 <span class="math inline">\(\mathbf{S}_k\)</span>，并仅重放预写日志中的后缀事件 <span class="math inline">\(\langle e_{k+1}, \dots \rangle\)</span>，无需再次调用模型。
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="崩溃的代价与检查点的保存频率" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="崩溃的代价与检查点的保存频率">崩溃的代价与检查点的保存频率</h3>
+<p>有了检查点，恢复过程会恢复最新的检查点，并仅归并其后的日志后缀。局限于沙箱内的效果，例如差异已记录在日志中的文件编辑，可以根据记录的结果重新应用。对于日志无法重现的效果，则必须做出选择：回滚到检查点并重做局部轮次，或升级处理。</p>
+<p>这一代价决定了检查点的保存间隔。设 <span class="math inline">\(\delta\)</span> 为保存检查点导致轨迹暂停的时间，<span class="math inline">\(M\)</span> 为主机或工作进程的平均故障间隔。每 <span class="math inline">\(T\)</span> 秒保存一次检查点，会将运行时间的 <span class="math inline">\(\delta / T\)</span> 用于保存检查点，并在每次故障时平均损失 <span class="math inline">\(T/2\)</span> 的工作量；经典的一阶 Young 最优公式对二者进行平衡 <span class="citation" data-cites="young1974">(<a href="#ref-young1974" role="doc-biblioref">Young 1974年</a>)</span>：</p>
+<div class="no-row-height column-margin column-container"><div id="ref-young1974" class="csl-entry" role="listitem">
+Young, John W. 1974年. <span>《A first order approximation to the optimum checkpoint interval》</span>. <em>Communications of the ACM</em> 17 (9): 530～31. https://doi.org/10.1145/361147.361115.
+</div></div><p><span id="eq-vol3-young-formula"><span class="math display">\[T^{\ast} \approx \sqrt{2\,\delta\,M} \tag{5}\]</span></span></p>
+<p>考虑二阶重启开销 <span class="math inline">\(\delta_{\text{rec}}\)</span> 后，Daly 的高阶公式 <span class="citation" data-cites="daly2006">(<a href="#ref-daly2006" role="doc-biblioref">Daly 2006年</a>)</span> 对 <a href="#eq-vol3-young-formula" class="quarto-xref">公式&nbsp;5</a> 进行修正，其中引入 <a href="#eq-vol3-daly-formula" class="quarto-xref">公式&nbsp;6</a>：</p>
+<div class="no-row-height column-margin column-container"><div id="ref-daly2006" class="csl-entry" role="listitem">
+Daly, J. T. 2006年. <span>《A higher order estimate of the optimum checkpoint interval for restart dumps》</span>. <em>Future Generation Computer Systems</em> 22 (3): 303～12. https://doi.org/10.1016/j.future.2004.11.016.
+</div></div><p><span id="eq-vol3-daly-formula"><span class="math display">\[T_{\text{opt}}^{\text{Daly}} = \sqrt{2 \cdot \delta \cdot \left(M + \delta_{\text{rec}}\right)} + \delta \cdot \left(\frac{1}{3}\sqrt{\frac{2\delta}{M}} - 1\right) \tag{6}\]</span></span></p>
+<div id="nbk-10-checkpoint-cadence" class="callout callout-notebook" title="选择以轮次计的检查点间隔">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>粗略估算 0.1: 选择以轮次计的检查点间隔</strong></summary><div><strong>问题</strong>：一个编码智能体在一组可抢占的工作节点上运行，节点的平均故障间隔为 4 小时。每轮平均耗时 12 秒，而一次检查点操作（在轮次边界将记录刷写到持久存储，并创建写时复制的工作区快照）会使轨迹暂停 0.5 秒。崩溃发生时，上下文包含 40,000 个词元，每条回复包含 350 个输出词元，价格采用 <strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-accounting">预算与上限</a></strong> 中预算示例的定价。这里的输入仅用于说明。运行框架应多久创建一次检查点？在这一间隔下，以及在检查点频率低得多的情况下，一次崩溃的成本分别是多少？<p></p>
+<p><strong>间隔</strong>：当 <span class="math inline">\(\delta\)</span> = 0.5 秒且 <span class="math inline">\(M\)</span> = 14,400 秒时，由 <a href="#eq-vol3-young-formula" class="quarto-xref">公式&nbsp;5</a> 可得 <span class="math inline">\(T^{\ast} = \sqrt{2\,\delta\,M}\)</span> = 120 秒，即 10 轮。</p>
+<p><strong>开销</strong>：运行期间因暂停和丢失工作而耗费的时间占比为 <span class="math inline">\(\delta/T + T/(2M)\)</span>。在最优间隔下，该占比为 0.83 percent。每轮创建一次检查点会使其升至 4.2 percent，其中几乎全部来自暂停；每 100 轮创建一次检查点也会产生 4.2 percent 的开销，其中几乎全部来自丢失的工作。</p>
+<p><strong>崩溃成本</strong>：任何一次恢复都需要对重建的上下文执行一次冷预填充，成本约为 $0.12。除此之外，一次崩溃平均会丢失半个检查点间隔的工作。在最优间隔下，这相当于 5 轮，约 1 分钟，以及在前缀缓存已预热的情况下 $0.09 的词元成本。如果改为每 100 轮创建一次检查点，一次崩溃会丢失 50 轮，约 10 分钟，成本为 $0.86，而且每个重做的轮次都是一次新的采样，可能偏离日志所记录的路径。</p>
+<p><strong>系统层面的洞见</strong>：开销曲线在最小值附近较为平坦，而在两端较为陡峭，因此间隔只需控制在最优值的约两倍或一半范围内即可。决定间隔变化的是检查点成本与故障率之比。较慢的快照存储会增大 <span class="math inline">\(\delta\)</span>，使最优间隔延长；更不稳定的工作节点池会缩短 <span class="math inline">\(M\)</span>，使最优间隔缩短。一次崩溃的金钱成本很小；重做轮次更大的代价在于它们是新的采样，这也是日志保留模型已经生成的每条回复的原因。</p>
+</div></details>
+</div>
+<p>无论公式给出什么结果，以下四个时刻都需要创建检查点，因为它们都是轨迹之后可能需要返回、或绝不能丢失的节点：</p>
+<ul>
+<li><strong>在执行不可逆操作之前</strong>，以确保无论该转折点之后发生什么，转折点之前的工作都能得到保全（<strong><a href="../11_failure_recovery/11_failure_recovery.html#sec-vol3-failure-recovery">故障恢复</a></strong> 涵盖该转折点）。</li>
+<li><strong>当轨迹暂停以等待审批时</strong>，因为长达数小时的等待会使等待期间发生故障的可能性增大。</li>
+<li><strong>在压缩之前</strong>，以便仍能访问压缩前的上下文。</li>
+<li><strong>当运行框架将轨迹迁移到另一个工作节点时</strong>（<a href="#sec-vol3-persistence-migration" class="quarto-xref">节&nbsp;4</a>）。</li>
+</ul>
+</section>
+</section>
+<section id="sec-vol3-persistence-migration" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-migration">恢复轨迹</h2>
+<p>本章开头的轨迹现在将在一个新的工作节点上恢复。原来的主机可能已经崩溃、被抢占，或因部署而被清空任务；也可能只是轨迹暂停了两天，等待某个人批准一项生产环境变更（<strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-hitl">审批关卡</a></strong>）。无论哪种情况，接续轨迹的工作节点启动时都只有日志、最新的检查点，以及不得重复执行某个效应的规则。<strong>恢复</strong> 是将这些转化为运行中轨迹的协议：</p>
+<ol type="1">
+<li><strong>取得所有权。</strong> 使用隔离令牌获取轨迹的租约，确保其他工作节点无法代表该轨迹执行操作（见下文）。</li>
+<li><strong>还原。</strong> 加载最新检查点中的记录和工作区快照，然后将日志后缀归并到记录中。</li>
+<li><strong>结清。</strong> 按照 <a href="#sec-vol3-persistence-wal" class="quarto-xref">节&nbsp;2</a> 所述，在派发任何新操作之前，解决所有状态未决的意图。</li>
+<li><strong>重建上下文</strong>，根据日志重建上下文并执行预填充。</li>
+<li><strong>继续</strong>，在下一个轮次边界继续循环，并采用记录所指示的轨迹状态。</li>
+</ol>
+<p>步骤 2 和 3 复用了前两节的机制。步骤 1 和 4，以及使这两个步骤变得复杂的情形，则是恢复过程特有的。</p>
+<section id="重建上下文" class="level3">
+<h3 class="anchored" data-anchor-id="重建上下文">重建上下文</h3>
+<p>模型在调用之间不保留任何信息，因此恢复运行的工作进程必须向它提供上下文。工作进程使用轨迹此前采用的相同组装规则，从日志中重新推导出该上下文（<strong><a href="../04_context_engineering/04_context_engineering.html#sec-vol3-context-engineering-staging">编排下一次调用</a></strong>）：已记录的消息、按交付时的原样记录的工具结果，以及替代相应轮次的已记录 <code>Compacted</code> 摘要。<code>ContextBuilt</code> 哈希使运行框架能够确认，重新组装的上下文与模型在崩溃前最后看到的上下文一致。不一致意味着组装规则或其输入发生了变化，这属于漂移（见下文），而非恢复。</p>
+<p>随后，必须再次对重建的上下文执行预填充。旧模型服务会话持有的键值状态由令牌前缀推导而来，并未保留下来（原则 <a href="../parts/memory_principles.html#pri-vol3-prefix-coherence">5</a>）；新的调用也可能被分配到一台前缀缓存从未见过该轨迹的服务器上（<strong><a href="../05_kv_cache/05_kv_cache.html#sec-vol3-kvcache-radix-tree">跨轮次前缀缓存</a></strong>）。因此，恢复需要承担一次完整上下文的冷预填充开销。对于长上下文，这意味着数秒的延迟和数美分的输入令牌费用（<strong><a href="../02_foundation_model/02_foundation_model.html#sec-vol3-foundation-model-cost">加速器服务延迟</a></strong>；<strong><a href="../backmatter/appendix_inference.html#sec-vol3-appendix-inference-kv-cache">注意力状态的大小</a></strong>）；相较于重做各轮次，这些开销很小，后者需要数分钟的模型调用和数美元的费用，并使每个结果尚未确定的外部影响都面临风险。两种做法可以降低这一开销。将恢复的轨迹路由到仍持有其前缀的服务器，可将冷预填充转化为缓存命中；逐字节按原样重新组装上下文，则可保持前缀完全一致，使任何仍然存在的缓存条目都能被利用。</p>
+</section>
+<section id="暂停审批与迟到的结果" class="level3">
+<h3 class="anchored" data-anchor-id="暂停审批与迟到的结果">暂停、审批与迟到的结果</h3>
+<p>为等待审批而暂停，是运行框架预先计划的一次恢复。当调用被挂起时（<strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-hitl">审批关卡</a></strong>），运行框架写入 <code>ApprovalRequested</code>，创建检查点，并完全释放工作进程及其模型服务状态，因为将二者保留数小时会造成资源浪费。答复到达后，运行时写入 <code>ApprovalResolved</code>，并通过相同的五个步骤恢复轨迹。审批关卡自身的规则，例如有效期以及在派发前重新检查操作的前置条件，会在恢复后执行，依据的是当前的外部环境状态，而非发起请求时的状态。</p>
+<p>长时间运行的工具会产生相反的情况。通过异步工具启动的作业（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-async-resumption">事件驱动的恢复</a></strong>），可能在启动它的工作进程终止后才完成。因此，其结果必须进入以工具调用 ID 为键的持久收件箱，而不能进入工作进程的内存。恢复时，运行框架将每个等待处理的结果与日志中的意图进行匹配，并写入相应的 <code>ToolResult</code>。如果某个结果的工具调用 ID 在日志中没有对应意图，或者结果到达时其所属轨迹已被取消，记录的状态守卫（<strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-statemachine">轨迹状态</a></strong>）就会拒绝该结果，而不会将其交付给模型。</p>
+</section>
+<section id="迁移轨迹" class="level3">
+<h3 class="anchored" data-anchor-id="迁移轨迹">迁移轨迹</h3>
+</section>
+<section id="迁移轨迹与隔离令牌" class="level3">
+<h3 class="anchored" data-anchor-id="迁移轨迹与隔离令牌">迁移轨迹与隔离令牌</h3>
+<p>由于节点排空、热节流或抢占式实例被回收而在工作进程之间迁移轨迹，是一次计划内的恢复。迁出工作进程允许当前轮次完成，创建检查点，然后释放其租约；迁入工作进程恢复检查点并继续执行。</p>
+<p><a href="#fig-vol3-trajectory-migration" class="quarto-xref">图&nbsp;4</a> 展示了运行中轨迹交接的各个顺序阶段。</p>
+<div id="fig-vol3-trajectory-migration" class="quarto-float quarto-figure quarto-figure-center anchored" alt="分布式架构图，展示两个工作进程主机与一个集中式协调器之间的迁移流程。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-trajectory-migration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig-vol3-trajectory-migration.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="图&nbsp;4: 运行中轨迹迁移架构：贯穿迁出节点、分布式协调器和迁入节点的端到端流程。在轮次边界进入干净的静止状态，确保状态交接期间没有正在执行的工具操作。隔离令牌可防止脑裂导致的双重执行。"><img src="images/svg/fig-vol3-trajectory-migration.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-trajectory-migration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;4: <strong>运行中轨迹迁移架构</strong>：贯穿迁出节点、分布式协调器和迁入节点的端到端流程。在轮次边界进入干净的静止状态，确保状态交接期间没有正在执行的工具操作。隔离令牌可防止脑裂导致的双重执行。
+</figcaption>
+</figure>
+</div>
+<p>迁移期间的关键故障风险是<strong>脑裂执行困境</strong>：遭遇短暂网络分区或内核冻结的工作进程可能未意识到自己的租约已经过期，因而继续执行步骤并发出会修改外部状态的工具操作，与新迁入的工作进程同时执行。运行时通过<strong>单调递增的隔离令牌</strong> <span class="math inline">\(\gamma\)</span> 防止这种情况：</p>
+<ol type="1">
+<li>当分布式租约服务将轨迹 <span class="math inline">\(\tau\)</span> 的所有权授予迁入工作进程 <span class="math inline">\(B\)</span> 时，它会递增纪元计数器：<span class="math inline">\(\gamma_B = \gamma_A + 1\)</span>。</li>
+<li>工作进程派发的每个工具调用载荷都必须携带分配给它的隔离令牌：<span class="math inline">\(a = \langle \text{tool}, \text{args}, \gamma \rangle\)</span>。</li>
+<li>工具执行网关和外部资源代理实施单调性检查：任何携带 <span class="math inline">\(\gamma &lt; \gamma_{\text{current}}\)</span> 到达的派发请求，都会被无条件丢弃，并返回授权错误。</li>
+</ol>
+<p>如果过期的工作进程 <span class="math inline">\(A\)</span> 从短暂暂停中恢复，并尝试发出外部工具调用，网关会因 <span class="math inline">\(\gamma_A &lt; \gamma_B\)</span> 而拒绝该调用，从而防止幽灵状态修改和双重执行。</p>
+</section>
+<section id="漂移情况下的恢复" class="level3">
+<h3 class="anchored" data-anchor-id="漂移情况下的恢复">漂移情况下的恢复</h3>
+<p>在崩溃与恢复之间，或在长时间等待审批期间，轨迹所处的系统可能发生变化。同一名称背后提供服务的模型可能已更新版本，提示词模板可能已被编辑，工具的模式也可能新增字段或重命名字段。由于 <code>TaskStarted</code> 和每个 <code>ModelReplied</code> 都记录了所用版本，智能体运行框架能够检测漂移，而不必等到出现异常行为才发现它，并且有三种选择：</p>
+<ul>
+<li><strong>固定</strong>所记录的版本并使用这些版本恢复，但这只有在这些版本仍然可用时才可行。</li>
+<li>在下一个轮次边界<strong>切换</strong>到新版本，并写入记录新旧版本的漂移事件。已记录的轮次保留其已记录的输出，上下文按新模板重新组装，而前缀缓存从第一个发生变化的 token 起不再命中。</li>
+<li><strong>拒绝</strong>并上报；当工具模式的变化会使未决意图中已记录的参数被重新解释时，这是正确的处理方式。</li>
+</ul>
+<p>发生切换的轨迹从轮次 <span class="math inline">\(k\)</span> 起就属于一个不同的系统。评估时，不应将其切换前后的行为合并处理（<strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation">智能体评估</a></strong>），而漂移事件使评估者能够将两者分开。</p>
+<p>恢复利用日志继续执行轨迹。同一套机制也能重建轨迹的历史而不继续执行，工程师正是通过这种方式查明出了什么问题。</p>
+</section>
+</section>
+<section id="sec-vol3-persistence-replay" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-replay">重放</h2>
+<p>夜间，一个智能体在清理任务的第 23 轮删除了一个发布分支。第二天早上，工程师需要知道模型在选择该操作时看到了什么：向它展示的是哪份列表，上下文压缩后的指令说了什么，以及授权检查是否依据正确的策略执行。重新运行任务无法回答这些问题，因为重新运行会采样一条新轨迹，而且如果指向真实代码仓库，还可能删除其他内容。</p>
+<p><strong>重放</strong>能够回答这些问题。它让智能体运行框架基于日志运行，同时断开两个新信息来源。模型客户端被替换为桩实现，按顺序返回已记录的 <code>ModelReplied</code> 事件；工具传输通道被断开，并返回已记录的 <code>ToolResult</code> 事件。智能体运行框架的代码实际执行，组装上下文、检查策略并更新记录，因此工程师检查的就是运行框架实际做过的事情。<a href="#fig-vol3-replay-mode" class="quarto-xref">图&nbsp;5</a> 对比了这两种模式，<a href="#tbl-vol3-replay-comparison" class="quarto-xref">表&nbsp;4</a> 则将重放与它所替代的重新运行并列展示。</p>
+<div id="fig-vol3-replay-mode" class="quarto-float quarto-figure quarto-figure-center anchored" alt="两个面板。上图：实时执行，智能体运行框架记录、基础模型、授权关卡、工具与环境以及轨迹日志连接成一个环路。下图：重放模式，模型和工具分发框被划掉，另有一个已记录结果框，轨迹日志将已记录的事件以流的形式输入正在重放的智能体运行框架。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-replay-mode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig-vol3-replay-mode.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="图&nbsp;5: 实时执行与重放：在实时执行中（上图），智能体运行框架组装上下文，模型以工具调用作出响应，授权关卡写入决策和持久化意图，工具执行，每一步都追加到轨迹日志中。在重放中（下图），模型客户端被替换为桩实现，工具传输通道被断开。智能体运行框架依次归并已记录的事件，接收已记录的结果来替代工具调用，并在不生成任何 token、不产生任何实际影响的情况下重建同一份记录。任何无法由日志解释的调用都会导致重放失败。"><img src="images/svg/fig-vol3-replay-mode.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-replay-mode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;5: <strong>实时执行与重放</strong>：在实时执行中（上图），智能体运行框架组装上下文，模型以工具调用作出响应，授权关卡写入决策和持久化意图，工具执行，每一步都追加到轨迹日志中。在重放中（下图），模型客户端被替换为桩实现，工具传输通道被断开。智能体运行框架依次归并已记录的事件，接收已记录的结果来替代工具调用，并在不生成任何 token、不产生任何实际影响的情况下重建同一份记录。任何无法由日志解释的调用都会导致重放失败。
+</figcaption>
+</figure>
+</div>
+<div id="tbl-vol3-replay-comparison" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[18,24,29,29]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-replay-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;4: <strong>重放与重新运行</strong>：重放从日志重建轨迹，无需调用模型或工具。从原始提示词重新运行会产生一条新轨迹，再次消耗 token 并重复产生实际影响。
+</figcaption>
+<div aria-describedby="tbl-vol3-replay-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 24%">
+<col style="width: 28%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>维度</strong></th>
+<th style="text-align: left;"><strong>实时执行</strong></th>
+<th style="text-align: left;"><strong>从提示词重新运行</strong></th>
+<th style="text-align: left;"><strong>从日志重放</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>模型</strong></td>
+<td style="text-align: left;">被调用</td>
+<td style="text-align: left;">再次调用，产生新采样</td>
+<td style="text-align: left;">使用桩实现，返回已记录的回复</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>工具</strong></td>
+<td style="text-align: left;">被分发执行</td>
+<td style="text-align: left;">再次分发执行，重复产生影响</td>
+<td style="text-align: left;">断开连接，返回已记录的结果</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>结果</strong></td>
+<td style="text-align: left;">该轨迹</td>
+<td style="text-align: left;">一条不同的轨迹</td>
+<td style="text-align: left;">逐步重建同一条轨迹</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>成本</strong></td>
+<td style="text-align: left;">token、费用、实际影响</td>
+<td style="text-align: left;">token、费用、重复产生的实际影响</td>
+<td style="text-align: left;">仅智能体运行框架的计算开销</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>用途</strong></td>
+<td style="text-align: left;">执行任务</td>
+<td style="text-align: left;">探索替代方案</td>
+<td style="text-align: left;">恢复、调试、审计、测试</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>回放是严格的。如果运行框架在回放过程中尝试调用日志未涵盖的模型或工具，回放就会失败。未记录的调用意味着，运行框架的代码在录制之后发生了变化，或者某个输入未经日志记录就进入了实时轨迹；这两种情况都是需要查明的问题。这一思路源于整机的确定性回放：要复现一次执行，就必须记录每一个非确定性输入 <span class="citation" data-cites="king2005debugging">(<a href="#ref-king2005debugging" role="doc-biblioref">King 等 2005年</a>)</span>。对于智能体，非确定性输入数量不多，且定义明确，即模型回复、工具结果，以及运行框架自身从环境中读取的任何内容（<a href="#sec-vol3-persistence-non-determinism" class="quarto-xref">节&nbsp;6</a>）。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-king2005debugging" class="csl-entry" role="listitem">
+King, Samuel T., George W. Dunlap, 和 Peter M. Chen. 2005年. <span>《Debugging Operating Systems with Time-Traveling Virtual Machines》</span>. <em>Proceedings of the 2005 USENIX Annual Technical Conference (USENIX ATC)</em>, 1～15.
+</div></div><section id="时间旅行与反事实分支" class="level3">
+<h3 class="anchored" data-anchor-id="时间旅行与反事实分支">时间旅行与反事实分支</h3>
+<p>由于回放可以在任意轮次停止，日志便成为工程师可以沿其移动的时间线。</p>
+<div id="dfn-time-travel-replay" class="callout callout-definition" title="时间旅行回放">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 0.1: 时间旅行回放</strong></summary><div>
+<p><strong><em>时间旅行回放</em></strong> 是指重建轨迹在过去任意轮次 <span class="math inline">\(t\)</span> 的精确状态，方法是加载位于 <span class="math inline">\(t\)</span> 或其之前的最近检查点，再回放日志的后续部分，直至 <span class="math inline">\(t\)</span>，同时以桩实现替代模型和工具。</p>
+<ol type="1">
+<li><strong>意义</strong>：工程师可以检查轨迹出错轮次中模型实际收到的上下文、预算状态以及每一项授权决策，而成本仅为运行框架的计算开销。</li>
+<li><strong>区别</strong>：与从提示词开始重新运行不同，它复现的是已记录的轨迹，而非采样一条新轨迹；与阅读原始日志不同，它展示的是运行框架在该轮次的派生状态（组装后的上下文和记录）。</li>
+<li><strong>常见陷阱</strong>：让回放调用真实工具，从而在当前世界中重复执行过去的操作。</li>
+</ol>
+</div></details>
+</div>
+<p>对于被删除的分支，工程师回放到第 23 轮，并查看模型收到的上下文。假设展示给模型的分支列表在标明发布分支受保护的那一行之前就被截断了。那么，缺陷就在观测截断机制中，而非模型中。跨多个事件进行这种归因，将模型故障与运行框架故障区分开来，正是 <strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation-postmortems">事件取证复盘</a></strong> 所讨论的主题。回放为这种归因提供证据。</p>
+<p><strong>反事实分支</strong>则更进一步。工程师在第 22 轮为轨迹创建分支，改变一项因素（截断规则、提示词模板、工具模式或模型），然后让它从该点开始继续实时运行。分叉之前的所有内容都通过回放复现，因此前面的轮次无需付出模型或工具调用成本，且保持完全一致。分叉之后的所有内容则构成一条新轨迹，必须在沙箱中运行，并将外部工具替换为桩实现或指向测试系统，因为它是实时运行的，其影响也是真实的。将一个分支与一份录制记录进行比较，只能说明修复可以改变结果。要证明它能可靠地改变结果，就需要运行许多分支并进行测量，这将在 <strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation">智能体评估</a></strong> 中讨论。</p>
+</section>
+<section id="运行框架的回归测试" class="level3">
+<h3 class="anchored" data-anchor-id="运行框架的回归测试">运行框架的回归测试</h3>
+<p>回放也能测试运行框架本身。对运行框架的每一项修改，例如更严格的工具参数解析器、新的压缩规则或修订后的策略检查，都可能破坏生产轨迹所依赖的行为。使用实时模型测试这类修改既慢、成本又高，而且结果不稳定，因为测试可能仅仅由于模型采样出了不同的措辞而失败。</p>
+<p>让归档轨迹在修改后的运行框架中回放，可以消除这三个问题。记录下来的模型回复是固定的测试输入，因此测试衡量的只有运行框架。假设某个团队收紧了从工具调用中提取文件编辑内容的解析器。使用新解析器回放数百份生产日志，就会发现某条轨迹中，在第 14 轮，旧解析器接受了包裹在 Markdown 代码围栏中的补丁，而新解析器拒绝了它；回放在该轮次停止，并保留两种解析结果供检查。该测试仅消耗运行框架的计算资源，在数秒内完成，并准确定位了对应的轮次和载荷。</p>
+<p>这种测试的范围被刻意限定得很窄。它能表明新运行框架是否像旧运行框架一样处理已记录的模型输出，或指出两者在哪些地方存在差异。它无法表明新运行框架是否让智能体更容易成功，因为模型后续的回复会根据新运行框架作出响应。回答这个问题需要新的轨迹，以及 <strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation">智能体评估</a></strong> 中的统计方法。同一批日志经过验证后，也会成为训练的原始材料（<strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-trajectory-curation">轨迹整理</a></strong>）。</p>
+<p>回放之所以有效，是因为它从不向模型发出任何请求。一旦工程师通过重新运行提示词或继续运行反事实分支向模型发出请求，轨迹就可能偏离其录制记录，而了解原因是有价值的。</p>
+</section>
+</section>
+<section id="sec-vol3-persistence-non-determinism" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-non-determinism">回放为何会发生偏离</h2>
+<p>一名工程师在调查智能体第 42 轮的故障时，使用相同的模型，将温度设为零，并基于处于同一 Git 提交的代码仓库副本重新运行轨迹。重运行在第 6 轮发生偏离，选择了完全不同的工具调用，始终未触发该故障。并没有任何组件损坏。自主智能体的重运行存在多个相互独立的偏离来源。</p>
+<section id="四种偏离来源" class="level3">
+<h3 class="anchored" data-anchor-id="四种偏离来源">四种偏离来源</h3>
+<p><strong><a href="10_durable_execution.html#tbl-vol3-nondeterminism-mitigation">回放偏离的来源</a></strong> 将非确定性进入智能体轨迹的架构层次划分为四类。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-nondeterminism-mitigation" style="display:table-caption!important;width:auto!important;position:static!important"><strong>回放偏离的来源</strong>：重运行可能偏离原始记录的四个位置，以及运行时针对每个位置记录或控制的内容。只有第一种无法消除；必须将其虚拟化并记录到日志中。</caption>
+<colgroup>
+<col style="width: 9%">
+<col style="width: 46%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>来源</strong></th>
+<th style="text-align: left;"><strong>引入方式</strong></th>
+<th style="text-align: left;"><strong>运行时的处理方式</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>模型调用</strong></td>
+<td style="text-align: left;">非零温度下的采样；<span class="math inline">\(T=0\)</span> 时并行归约内核中浮点运算的非结合性</td>
+<td style="text-align: left;">记录每次回复；不要期望重运行能够复现某次回复</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>模型漂移</strong></td>
+<td style="text-align: left;">同一模型名称背后的模型版本或服务配置发生变化</td>
+<td style="text-align: left;">在每次回复中记录实际提供服务的版本；先比较版本，再比较行为</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>运行框架输入</strong></td>
+<td style="text-align: left;">被放入上下文的时间戳、随机 ID、无序目录列表和检索结果</td>
+<td style="text-align: left;">通过运行框架读取每项输入，将其记录为事件，并对没有固有顺序的内容进行排序</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>环境</strong></td>
+<td style="text-align: left;">自记录以来发生变化的外部服务、代码仓库和数据</td>
+<td style="text-align: left;">记录每个工具结果；从日志中回放，并为反事实实验固定环境或创建环境快照</td>
+</tr>
+</tbody>
+</table></div>
+<p>模型调用最令工程师意外，因为基础模型服务即使在温度为零时也不具有确定性（<span class="math inline">\(T=0\)</span>）。在 GPU 架构中，高吞吐量的通用矩阵乘法（GEMM）运算和 FlashAttention 内核会跨数千个流式多处理器核心执行并行归约。由于浮点加法不满足结合律：</p>
+<p><span class="math display">\[(a + b) + c \ne a + (b + c)\]</span></p>
+<p>线程块中线程束调度的变化会导致词元 logit 分布在小数点后第七位出现微小变化。当两个候选词元处于 argmax 决策边界附近时，难以察觉的调度变化就会使输出词元发生切换。由于自回归解码会将输出词元直接反馈到上下文中，第 <span class="math inline">\(t\)</span> 轮的单个词元偏离会在后续轮次中以指数方式累积。</p>
+</section>
+<section id="通过系统调用拦截实现确定性回放" class="level3">
+<h3 class="anchored" data-anchor-id="通过系统调用拦截实现确定性回放">通过系统调用拦截实现确定性回放</h3>
+<p>为实现用于诊断调试的逐位精确回放，运行时采用<strong>环境拦截</strong>，在运行框架与底层主机之间插入一个系统调用与 I/O 适配层（<a href="#fig-vol3-syscall-shim-replay" class="quarto-xref">图&nbsp;6</a>）。</p>
+<div id="fig-vol3-syscall-shim-replay" class="quarto-float quarto-figure quarto-figure-center anchored" alt="展示智能体运行时与主机操作系统之间系统调用拦截层的架构图。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-syscall-shim-replay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig-vol3-syscall-shim-replay.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="图&nbsp;6: 通过环境拦截实现确定性回放：系统调用适配层拦截非确定性的主机交互（时钟、随机种子、工具调用），并提供轨迹日志中记录的事件，从而保证监督逻辑的重新执行在逐位层面完全一致。"><img src="images/svg/fig-vol3-syscall-shim-replay.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-syscall-shim-replay-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;6: <strong>通过环境拦截实现确定性回放</strong>：系统调用适配层拦截非确定性的主机交互（时钟、随机种子、工具调用），并提供轨迹日志中记录的事件，从而保证监督逻辑的重新执行在逐位层面完全一致。
+</figcaption>
+</figure>
+</div>
+<p>当运行框架以回放模式执行时：</p>
+<ol type="1">
+<li><strong>模型虚拟化</strong>：对模型 API 的调用会被拦截，并通过直接返回日志中记录的 <code>ModelReplied</code> 词元载荷来满足调用。</li>
+<li><strong>环境拦截</strong>：请求当前墙上时钟时间（<code>gettimeofday</code>）、进程 ID 或密码学熵（<code>/dev/urandom</code>）的系统调用，会返回 <code>ContextBuilt</code> 事件中捕获并记录的时间戳和种子。</li>
+<li><strong>工具模拟注入</strong>：工具分派会被拦截；适配层会注入记录的 <code>ToolResult</code> 数据，而不执行 shell 命令或发送网络请求。</li>
+</ol>
+<p>该架构将监督代码与物理层面的非确定性解耦，从而支持可复现的回归测试和细粒度的根因归因。</p>
+</section>
+<section id="衡量偏离" class="level3">
+<h3 class="anchored" data-anchor-id="衡量偏离">衡量偏离</h3>
+<p>当工程师有意重新运行模型以测试韧性时，关键诊断指标是<strong>偏离点</strong>：所选工具动作偏离已记录基线的最早轮次 <span class="math inline">\(t_{\text{div}}\)</span>。比较 <span class="math inline">\(t_{\text{div}}\)</span> 处的上下文哈希值即可立即定位根因：相同的上下文哈希值表明原因是模型侧的随机性或浮点运算的非确定性，而不同的哈希值则表明存在环境漂移或未排序的目录输入。</p>
+<div id="chk-10-time-travel-debugging" class="callout callout-checkpoint" title="回放与偏离">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 0.2: 回放与偏离</strong></summary><div>
+<p>在继续之前，请检查你是否能够回答以下问题：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>回放与重新运行</strong>：为什么回放只消耗运行框架的计算资源，而从提示词重新运行会消耗 token，并可能重复产生副作用？</label></li>
+<li><label><input type="checkbox"><strong>浮点漂移</strong>：为什么 GPU 内核中浮点运算的非结合性会导致温度为零时的解码结果出现分歧？</label></li>
+<li><label><input type="checkbox"><strong>严格性</strong>：当回放尝试执行日志中未记录的模型调用或工具调用时，这意味着什么？</label></li>
+<li><label><input type="checkbox"><strong>反事实</strong>：为什么反事实分支必须先从检查点恢复工作区，才能继续实时执行？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+</section>
+<section id="sec-vol3-persistence-compaction" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-compaction">日志保留</h2>
+</section>
+<section id="sec-vol3-persistence-engine-design" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-persistence-engine-design">轨迹存储引擎</h2>
+<p>运营一个每天生成数万条长时程轨迹的企业级集群，会面临一个根本性的存储困境：系统必须在关键执行路径上，为活跃 WAL 维持亚毫秒级的同步写入屏障，同时支持用于实时监控的关系型索引，以及用于下游 RL 微调的高密度列式批处理。单一存储技术无法满足这些相互冲突的约束（<a href="#tbl-vol3-storage-engine-comparison" class="quarto-xref">表&nbsp;5</a>）。</p>
+<div id="tbl-vol3-storage-engine-comparison" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,18,16,22,12,12]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-storage-engine-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;5: <strong>轨迹存储引擎范式</strong>：比较智能体系统的物理存储架构、访问模式、写放大系数及其在生命周期中的位置。
+</figcaption>
+<div aria-describedby="tbl-vol3-storage-engine-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 22%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">存储架构</th>
+<th style="text-align: left;">主要数据结构</th>
+<th style="text-align: left;">追加延迟（p99）</th>
+<th style="text-align: left;">随机扫描吞吐量</th>
+<th style="text-align: left;">典型写放大</th>
+<th style="text-align: left;">最适合的智能体生命周期角色</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>LSM 树（嵌入式）</strong></td>
+<td style="text-align: left;">MemTable + SSTables</td>
+<td style="text-align: left;"><span class="math inline">\(0.2 - 0.8\ \text{ms}\)</span></td>
+<td style="text-align: left;">高（针对连续的 LSN 范围）</td>
+<td style="text-align: left;"><span class="math inline">\(2 - 5\times\)</span></td>
+<td style="text-align: left;"><strong>热层</strong>：活跃 WAL、本地轮次屏障、即时崩溃重启</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>B+ 树（关系型）</strong></td>
+<td style="text-align: left;">分页磁盘块</td>
+<td style="text-align: left;"><span class="math inline">\(5 - 25\ \text{ms}\)</span></td>
+<td style="text-align: left;">高（多属性索引扫描）</td>
+<td style="text-align: left;"><span class="math inline">\(10 - 30\times\)</span></td>
+<td style="text-align: left;"><strong>温层</strong>：集群范围内的协同、HITL 审批队列</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>列式湖仓</strong></td>
+<td style="text-align: left;">Parquet / Zstd 块</td>
+<td style="text-align: left;">批量导入（<span class="math inline">\(&gt;1\ \text{s}\)</span>）</td>
+<td style="text-align: left;">极高（向量化 SIMD 扫描）</td>
+<td style="text-align: left;"><span class="math inline">\(\approx 1.0\times\)</span></td>
+<td style="text-align: left;"><strong>冷层</strong>：轨迹整理、安全审计、SFT 和 RLVR 训练</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<div id="fig-vol3-storage-pyramid" class="quarto-float quarto-figure quarto-figure-center anchored" alt="存储金字塔示意图，展示从本地 NVMe 到冷对象存储各层的延迟和成本。" data-fig-env="figure" data-fig-pos="htb">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-storage-pyramid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig-vol3-storage-pyramid.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="图&nbsp;7: 多层轨迹存储金字塔：将事件持久化组织为多个层级：NVMe SSD 用于活跃的实时轨迹，分布式键值存储用于近期分析查询，冷对象存储用于长期审计和训练数据。"><img src="images/svg/fig-vol3-storage-pyramid.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-storage-pyramid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;7: <strong>多层轨迹存储金字塔</strong>：将事件持久化组织为多个层级：NVMe SSD 用于活跃的实时轨迹，分布式键值存储用于近期分析查询，冷对象存储用于长期审计和训练数据。
+</figcaption>
+</figure>
+</div>
+<section id="多层存储流水线" class="level3">
+<h3 class="anchored" data-anchor-id="多层存储流水线">多层存储流水线</h3>
+<p>生产架构通过将存储组织为三层生命周期金字塔来化解这一矛盾（<a href="#fig-vol3-storage-pyramid" class="quarto-xref">图&nbsp;7</a> 和 <a href="#tbl-vol3-hybrid-storage-tiers" class="quarto-xref">表&nbsp;6</a>）：</p>
+<ol type="1">
+<li><strong>热层（本地 NVMe / 嵌入式 RocksDB）</strong>：在工作节点本地执行。当智能体运行框架记录 <code>ToolIntent</code> 或 <code>ToolResult</code> 时，它通过 <code>fdatasync()</code> 直接追加到嵌入式 LSM 树中。由于写入严格按顺序在本地进行，持久化提交可在 <span class="math inline">\(0.5\ \text{ms}\)</span> 以内完成，无需远程网络跳转即可满足 <a href="#eq-vol3-wal-ordering" class="quarto-xref">公式&nbsp;1</a>。</li>
+<li><strong>温层（集群化关系型数据库 / PostgreSQL）</strong>：异步后台流式 sidecar 守护进程持续读取本地 RocksDB 日志，并将已提交的事件批次复制到集中式关系型数据库。该层提供基于索引的多智能体查询、管理端取消操作和实时仪表板监控，且不会阻塞执行路径。</li>
+<li><strong>冷层（列式对象存储 / Apache Parquet）</strong>：离线批处理流水线将已完成且超过 7 天的轨迹合并为对象存储（S3/GCS）上的压缩 Apache Parquet 文件，并按租户、日期和模型版本分区。分析引擎（DuckDB、Trino）和训练流水线将这些列式数据块直接流式传输到 GPU 内存中，用于策略训练（<strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-trajectory-curation">轨迹整理</a></strong>）。</li>
+</ol>
+<div id="tbl-vol3-hybrid-storage-tiers" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[14,24,24,24,14]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-hybrid-storage-tiers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;6: <strong>生产环境多层轨迹存储引擎</strong>：三个数据生命周期层面的特征。
+</figcaption>
+<div aria-describedby="tbl-vol3-hybrid-storage-tiers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">存储介质</th>
+<th style="text-align: left;">存储技术</th>
+<th style="text-align: left;">查询 / 访问模式</th>
+<th style="text-align: left;">运维功能</th>
+<th style="text-align: left;">性能与成本范围</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>热层</strong></td>
+<td style="text-align: left;">本地 NVMe SSD；采用预写日志的嵌入式 RocksDB</td>
+<td style="text-align: left;">顺序追加、通过单调递增的 LSN 进行点查询</td>
+<td style="text-align: left;">实时 WAL、动作授权屏障、即时崩溃恢复</td>
+<td style="text-align: left;">延迟 <span class="math inline">\(\le 0.5\ \text{ms}\)</span>，WAF <span class="math inline">\(\approx 1.0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>温层</strong></td>
+<td style="text-align: left;">采用 JSONB 索引和分区表的集群化 PostgreSQL</td>
+<td style="text-align: left;">基于索引的范围扫描、多智能体状态查询、关系连接</td>
+<td style="text-align: left;">活跃轨迹监控、人在回路审核、集群协同</td>
+<td style="text-align: left;">延迟 <span class="math inline">\(5 - 50\ \text{ms}\)</span>，99.99% 可用性</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>冷层</strong></td>
+<td style="text-align: left;">分布式云对象存储（S3 / GCS，采用 Zstd 压缩的 Parquet）</td>
+<td style="text-align: left;">向量化批量扫描（DuckDB、Trino、PyTorch 加载器）</td>
+<td style="text-align: left;">合规保留、安全审计、离线 SFT 和 RLVR</td>
+<td style="text-align: left;">扫描 <span class="math inline">\(\ge 10\ \text{GB/s}\)</span>，成本 <span class="math inline">\(\le \$0.02/\text{GB}\cdot\text{month}\)</span></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+</section>
+<section id="幂等摄取与数据去重" class="level3">
+<h3 class="anchored" data-anchor-id="幂等摄取与数据去重">幂等摄取与数据去重</h3>
+<p>为在工作节点与温层之间的网络边界上保持因果一致性，关系型模式通过唯一复合键强制实施<strong>幂等插入或更新语义</strong>：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> trajectory_events (</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    trajectory_id, sequence_number, event_type,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    payload, cryptographic_hash, created_at</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>) <span class="kw">VALUES</span> ($<span class="dv">1</span>, $<span class="dv">2</span>, $<span class="dv">3</span>, $<span class="dv">4</span>, $<span class="dv">5</span>, $<span class="dv">6</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT (trajectory_id, sequence_number) DO <span class="kw">NOTHING</span>;</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>这确保了流式处理边车在节点故障后重启并重新传输事件批次时，重复事件会被静默丢弃，而不会破坏历史序列。</p>
+</section>
+</section>
+<section id="sec-vol3-durable-execution-fallacies" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-durable-execution-fallacies">谬误与陷阱</h2>
+<p>持久执行最常见的失败原因，是工程师沿用了某种假设：它对普通服务或单次模型调用成立，却不适用于会改变外部世界的长轨迹。</p>
+<div class="fallacy-pitfall">
+<p><strong>谬误：</strong> <em>保存最终的上下文窗口，就足以审计或恢复轨迹。</em></p>
+<p>上下文窗口是轨迹的有损投影。压缩对早期轮次做了摘要，截断裁剪了工具输出，而且窗口中没有记录运行时授权了哪些操作、哪些意图已持久化，以及哪些结果已到达。如果工具在第 7 轮返回了凭据，而摘要在第 12 轮将其移除，那么最终上下文中就不会留下任何泄露痕迹。恢复和审计需要 <a href="#tbl-vol3-durable-log-schema" class="quarto-xref">表&nbsp;1</a> 的日志；上下文可以从该日志重建，但该日志无法从上下文重建。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱：</strong> <em>为了降低延迟，在意图持久化之前就发出会改变外部世界的调用。</em></p>
+<p>节省的时间很少，因为一次本地刷盘带来的额外耗时远低于单轮耗时的 1%。代价则是：只要主机在发出调用与刷盘之间的时间窗口内发生故障，就会产生幽灵效应。恢复后的智能体运行框架找不到意图，便认定调用从未发生，进而重复付款、发送消息或请求资源配置。预写顺序（<a href="#sec-vol3-persistence-wal" class="quarto-xref">节&nbsp;2</a>）消除了这一窗口，而组提交可以弥补大部分延迟开销。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误：</strong> <em>以零温度重新运行模型，就能复现轨迹。</em></p>
+<p>零温度推理服务仍无法保证逐比特精确一致，因为批次组成会改变浮点求和的顺序，得分极为接近的词元之间的选择也会翻转。稳定的模型名称背后，模型版本可能发生变化；时间戳等运行框架输入会进入上下文；环境也在变化。重新运行产生的是一条新轨迹。复现依靠回放已记录的模型回复和工具结果（<a href="#sec-vol3-persistence-replay" class="quarto-xref">节&nbsp;5</a>），而分歧分析（<a href="#sec-vol3-persistence-non-determinism" class="quarto-xref">节&nbsp;6</a>）则解释其余差异。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱：</strong> <em>在续行时重新生成摘要和上下文，而不是复用已记录的内容。</em></p>
+<p>如果续行后的智能体运行框架重新概括旧轮次，或使用崩溃后修改过的提示词模板重新组装上下文，模型获得的自身历史记忆就会不同于它先前据以行动的记忆。轨迹于是从一个从未存在过的状态继续，前缀缓存无法命中，后续轮次也无法与先前轮次比较。续行应使用已记录的 <code>Compacted</code> 事件和模板版本，并将任何变化视为显式漂移（<a href="#sec-vol3-persistence-migration" class="quarto-xref">节&nbsp;4</a>）。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱：</strong> <em>因为调用超时，就将结果未决的调用视为失败。</em></p>
+<p>超时表明回复未到达，并不表明请求没有产生任何作用。在没有幂等键或核查探测的情况下，重新发送结果未决的调用，会造成预写顺序原本旨在防止的同一种重复效应，只是这一次由恢复路径自身引入。必须先查明并处理未决意图，轨迹才能继续；若无法解决，则升级处理。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱：</strong> <em>将原始工具输出的每一个字节永久保留在活动日志中。</em></p>
+<p>测试运行器和编译器每轮可能产生数兆字节的输出，其中大部分从未传递给模型。将这些输出全部保留在活动日志中，会拖慢追加写入、检查点操作以及工作进程之间的迁移，并增加存储成本，却无助于改善回放。将截断位置之后的大量内容卸载到内容寻址存储中，同时在日志中保留实际交付的内容及哈希值（<a href="#sec-vol3-persistence-compaction" class="quarto-xref">节&nbsp;7</a>），即可保存回放和审计所需的全部信息。</p>
+</div>
+</section>
+<section id="sec-vol3-durable-execution-summary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-durable-execution-summary">总结</h2>
+<p><span id="sec-vol3-persistence-summary"></span></p>
+<p>本章探讨了运行时必须记录哪些内容，才能让轨迹在经历崩溃、暂停或迁移后继续执行，而不重复已经产生的效应。答案是仅追加的轨迹日志，轨迹记录由该日志计算得出；写入时必须确保，每次会改变外部世界的调用之前，都已有持久化的意图。在这一顺序约束下，恢复过程会发现每个操作处于未发送、已确定或未决状态，并在继续之前解决第三类状态。检查点在一致的轮次边界捕获日志无法重建的内容，主要是工作区。续行将二者结合起来，根据已记录的事件重建上下文，承担一次冷预填充开销，并显式处理审批、迟到结果和版本漂移。回放则将模型和工具替换为桩实现，让运行框架基于日志运行，从而使日志成为调试器、反事实分支的来源，以及运行框架的回归测试套件，并解释重新运行为何会产生分歧。</p>
+<div id="callout-takeaways*-0.2" class="callout callout-takeaways" title="未写入日志的内容，恢复过程就无法信任">
+<details class="callout-takeaways fbx-simplebox fbx-default" open=""><summary><strong>要点回顾: 未写入日志的内容，恢复过程就无法信任</strong></summary><div>
+<ul>
+<li><strong>日志就是轨迹；记录只是视图</strong>：轨迹记录通过对模型回复、决策、意图和结果构成的仅追加日志进行折叠计算来重新生成。恢复过程读取日志，绝不调用模型，因为模型采样结果无法重新生成。</li>
+<li><strong>先写入意图，再产生效应</strong>：会改变外部世界的调用，只有在其意图持久化之后才能从主机发出。这样，恢复过程就能确定每个操作处于未发送、已确定或未决状态；对于未决操作，使用幂等键或探测来查明并处理，绝不凭假设重新发送。</li>
+<li><strong>检查点用于保存日志无法重建的内容</strong>：日志不包含工具写入的文件。检查点在轮次边界对记录和工作区一同生成快照，其频率需要在暂停时间与故障造成的轮次损失之间权衡。</li>
+<li><strong>续行就是恢复加上上下文重建</strong>：续行的轨迹复用已记录的摘要和版本，承担一次上下文冷预填充开销，并将模型、提示词或工具模式的变化视为显式漂移，而不是在变化后静默继续执行。</li>
+<li><strong>复现轨迹依靠回放，而非重新运行</strong>：将模型和工具替换为桩实现，可以让日志成为时间旅行调试器和运行框架回归测试套件，代价是运行框架的计算开销。重新运行会因采样、推理服务、模型漂移、运行框架输入和环境而产生分歧。</li>
+</ul>
+</div></details>
+</div>
+<p>本章中的恢复过程绝不调用模型。轨迹记录从日志重新计算得出，预写顺序确保每个效应都发生在其意图持久化之后，而检查点则限定了重启后必须重做的工作量。这就是附带明确成本的“意图先于效应”（原则 <a href="../parts/runtime_principles.html#pri-vol3-intent-before-effect">13</a>）：每次会改变外部世界的调用都需要一次持久化写入，检查点频率则由故障率决定。这也标明了不变量闭合（原则 <a href="../01_introduction/01_introduction.html#pri-invariant-closure">不变闭包原则</a>）中机械性保障在持久性方面的边界。运行时可以保证没有效应未被记录，也不会重复任何已确定的效应，但仅凭日志无法判断未决效应是否已经发生，也无法判断已记录的效应是否正确。</p>
+<div id="callout-chapter-connection*-0.3" class="callout callout-chapter-connection" title="从持久化历史到从错误中恢复">
+<p></p><details class="callout-chapter-connection fbx-simplebox fbx-default" open=""><summary><strong>后续内容: 从持久化历史到从错误中恢复</strong></summary><div>日志说明发生了什么。当已经发生的事情有误，而且其中一部分无法撤销时，轨迹该如何恢复？<strong><a href="../11_failure_recovery/11_failure_recovery.html#sec-vol3-failure-recovery">故障恢复</a></strong> 将探讨这一问题。它利用本章的日志确定哪些效应已经提交，对能够通过另一项操作加以补偿的效应执行补偿，在允许保留原有效应的情况下通过模型向前修复，在遇到无法逆转的操作时停止，并检测轨迹何时已完全停止取得进展。<p></p>
+</div></details>
+</div>
+
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8083\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol3_zh/09_agent_harness/09_agent_harness.html" class="pagination-link" aria-label="智能体运行框架">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">智能体运行框架</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol3_zh/11_failure_recovery/11_failure_recovery.html" class="pagination-link" aria-label="故障恢复">
+        <span class="nav-page-text">故障恢复</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《智能体机器学习系统》第三卷 · 简体中文本地版</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

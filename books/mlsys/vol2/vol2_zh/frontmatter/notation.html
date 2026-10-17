@@ -1,0 +1,3449 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>规模化机器学习系统</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol2_zh/frontmatter/ai_use.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-3449ea8028b621b1ea0f365a2cf6855f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-68c613c62467269ad621fbab36ffc500.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-3449ea8028b621b1ea0f365a2cf6855f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+<!-- Shared head includes — MLSysBook ecosystem -->
+
+<!--
+  theme-persist (inline, sync) — applies stored color-scheme before first paint.
+  Inlined deliberately: runs before any other <script>, no extra round-trip,
+  and avoids per-subsite asset path differences. Canonical source:
+  shared/scripts/theme-persist.js (kept identical for documentation/testability).
+  If you change one, mirror the change to the other.
+-->
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'quarto-color-scheme';
+  // Quarto's toggle writes 'alternate'/'default' (alternate = dark, the
+  // layered sheet); sibling non-Quarto sites write 'dark'/'light'. Both
+  // hit the same key, so we accept either. Quarto's own startup still
+  // checks `=== 'alternate'`, so we mirror onto <html> rather than rewrite.
+  function normalize(v) {
+    if (v === 'dark' || v === 'alternate') return 'dark';
+    if (v === 'light' || v === 'default') return 'light';
+    return null;
+  }
+  function preferredScheme() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) return n;
+    } catch (e) {}
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  function apply(scheme) {
+    var html = document.documentElement;
+    if (!html) return;
+    html.setAttribute('data-bs-theme', scheme);
+    html.setAttribute('data-quarto-color-scheme', scheme);
+    html.style.colorScheme = scheme;
+    // Bridge to legacy `.quarto-dark` body class — about.css,
+    // community.css, and newsletter.css key their dark-mode CSS
+    // variables off `.quarto-dark { ... }`. Quarto's own toggle adds
+    // that class on click, but the OS-pref / first-paint path never
+    // does. Mirror the scheme onto body so those CSS variables fire
+    // on every dark path, not just toggle clicks. body may not exist
+    // yet on the first call (this script runs in <head>); a
+    // MutationObserver below catches it as soon as it parses.
+    var body = document.body;
+    if (body) body.classList.toggle('quarto-dark', scheme === 'dark');
+  }
+  apply(preferredScheme());
+  // Catch the FOUC window between <head> apply() and DOMContentLoaded:
+  // <body> may not exist yet at first apply(), but as soon as the
+  // parser appends it we want the legacy class bridge in place so any
+  // CSS keyed on `.quarto-dark` paints correctly on first render.
+  if (!document.body) {
+    var earlyObserver = new MutationObserver(function () {
+      if (document.body) {
+        apply(preferredScheme());
+        earlyObserver.disconnect();
+      }
+    });
+    earlyObserver.observe(document.documentElement, { childList: true });
+  }
+  // Quarto's toggle updates localStorage but not <html>, so wrap it to
+  // mirror the new value onto data-bs-theme; otherwise clicking the toggle
+  // leaves CSS keyed off [data-bs-theme="dark"] rendering against the wrong
+  // stylesheet until the next reload.
+  function syncFromStorage() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) apply(n);
+    } catch (e) {}
+  }
+  function wrapToggle() {
+    var orig = window.quartoToggleColorScheme;
+    if (typeof orig !== 'function' || orig.__mlsbWrapped) return;
+    var wrapped = function () { var r = orig.apply(this, arguments); syncFromStorage(); return r; };
+    wrapped.__mlsbWrapped = true;
+    window.quartoToggleColorScheme = wrapped;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { wrapToggle(); syncFromStorage(); });
+  } else {
+    wrapToggle(); syncFromStorage();
+  }
+  // Defend the legacy `.quarto-dark` body class against Quarto's own
+  // `toggleBodyColor(mode)`, which runs *after* this script and re-asserts
+  // the body class based on `mode` — and `mode` defaults to 'light' when
+  // there's no stored quarto-color-scheme value, even when the OS / first
+  // paint already resolved to dark via `data-bs-theme`. Without this
+  // observer, on every fresh visit Quarto would clobber our bridge and
+  // restore `.quarto-light`, leaving `.quarto-dark`-keyed CSS variables
+  // (about/community/newsletter pages) at their light-mode defaults
+  // against the dark `data-bs-theme="dark"` background.
+  function bridgeBody() {
+    var body = document.body;
+    if (!body) return;
+    var wantDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    if (wantDark && !body.classList.contains('quarto-dark')) {
+      body.classList.add('quarto-dark');
+      body.classList.remove('quarto-light');
+    } else if (!wantDark && body.classList.contains('quarto-dark')) {
+      body.classList.remove('quarto-dark');
+      body.classList.add('quarto-light');
+    }
+  }
+  function watchBody() {
+    if (!document.body) return;
+    bridgeBody();
+    var bodyObs = new MutationObserver(bridgeBody);
+    bodyObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var htmlObs = new MutationObserver(bridgeBody);
+    htmlObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watchBody);
+  } else {
+    watchBody();
+  }
+  window.addEventListener('storage', function (ev) {
+    if (ev.key !== STORAGE_KEY) return;
+    var n = normalize(ev.newValue);
+    if (n) apply(n);
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (ev) {
+        try { if (window.localStorage.getItem(STORAGE_KEY)) return; } catch (e) {}
+        apply(ev.matches ? 'dark' : 'light');
+      });
+    } catch (e) {}
+  }
+})();
+</script>
+
+<!--
+  Build-stamp styling. Tiny, neutral, dark-mode aware. The actual stamp text
+  is injected by shared/scripts/inject-build-stamp.sh into footer markup
+  containing the literal MLSB_BUILD_STAMP HTML-comment token (see that
+  script for the exact pattern — we cannot write it here because HTML
+  comments cannot nest and the inner closer would terminate this block).
+-->
+<style>
+.mlsb-build-stamp {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+[data-bs-theme="dark"] .mlsb-build-stamp { opacity: 0.5; }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="icon" href="https://mlsysbook.ai/vol1/assets/images/icons/favicon.png" type="image/png">
+<meta name="author" content="Vijay Janapa Reddi">
+
+<!-- Schema.org JSON-LD structured data for Google Knowledge Graph & Rich Snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mlsysbook.ai/#website",
+      "url": "https://mlsysbook.ai/",
+      "name": "Machine Learning Systems",
+      "description": "The AI Engineering Textbook Series: Foundations, Scaling, Agentic AI, and Physical AI.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Harvard Edge Computing Lab",
+        "url": "https://edge.seas.harvard.edu"
+      }
+    },
+    {
+      "@type": "BookSeries",
+      "@id": "https://mlsysbook.ai/#bookseries",
+      "name": "Machine Learning Systems: Principles and Practices of Engineering Artificially Intelligent Systems",
+      "alternateName": ["MLSysBook", "Machine Learning Systems", "AI Engineering Textbook"],
+      "url": "https://mlsysbook.ai/",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Vijay Janapa Reddi",
+        "jobTitle": "Gordon McKay Professor of Electrical Engineering and Computer Science",
+        "worksFor": {
+          "@type": "EducationalOrganization",
+          "name": "Harvard University",
+          "sameAs": "https://www.harvard.edu"
+        },
+        "sameAs": [
+          "https://profvjreddi.github.io/homepage/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MIT Press",
+        "url": "https://mitpress.mit.edu"
+      },
+      "hasPart": [
+        {
+          "@type": "Book",
+          "name": "Volume I: Introduction to Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol1/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Foundations, Lifecycle, Data Engineering, Training, Inference, Benchmarking, and Responsible AI"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume II: Scaling Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol2/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Distributed Training, Accelerator Architecture, Parallelism, Memory Systems, and Serving"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume III: Agentic Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol3/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Autonomous Agents, Deliberation, Working Sets, Virtual Memory, RAG, RLVR, and Multi-Agent Systems"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume IV: Physical AI Systems",
+          "url": "https://mlsysbook.ai/vol4/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Physical AI, Embodied AI, Closed-Loop Dynamics, Actuation, Control Barrier Functions, and Robotics"
+        }
+      ]
+    },
+    {
+      "@type": "Course",
+      "@id": "https://mlsysbook.ai/#course",
+      "name": "CS249r: Machine Learning Systems",
+      "description": "Harvard University course on principles and practices of engineering artificially intelligent systems.",
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "Harvard University",
+        "sameAs": "https://www.harvard.edu"
+      }
+    }
+  ]
+}
+</script>
+
+<!--
+  navbar-theme-toggle-relocate — moves the Quarto theme toggle into the
+  navbar's right-side .navbar-nav group at page load, so it collapses into
+  the hamburger menu alongside Subscribe/Star/Support/GitHub at narrow widths
+  instead of being stranded in the middle by Quarto's mx-auto brand layout.
+
+  Why JS: Quarto auto-injects the toggle into .quarto-navbar-tools (outside
+  .navbar-collapse). CSS can't move DOM nodes between containers, and CSS
+  positioning hacks (absolute/right: 50px) fight Bootstrap's responsive
+  layout below 992px. Moving the node once at startup is the standard
+  approach used across Quarto-based sites with the same problem.
+-->
+<script>
+(function () {
+  'use strict';
+  function relocateThemeToggle() {
+    var tools = document.querySelector('.quarto-navbar-tools');
+    if (!tools) return;
+    var toggle = tools.querySelector('.quarto-color-scheme-toggle');
+    if (!toggle) return;
+    var navRight = document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav.ms-auto'
+    ) || document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav:last-of-type'
+    );
+    if (!navRight) return;
+    var li = document.createElement('li');
+    li.className = 'nav-item navbar-theme-toggle-item';
+    toggle.classList.add('nav-link');
+    li.appendChild(toggle);
+    navRight.appendChild(li);
+    tools.style.display = 'none';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', relocateThemeToggle);
+  } else {
+    relocateThemeToggle();
+  }
+})();
+</script>
+
+<!--
+  navbar-brand-href-fix — force the navbar brand link to the ecosystem root
+  (https://mlsysbook.ai/) on every subsite.
+
+  Quarto sets each subsite's `site-url` to `https://mlsysbook.ai/<subsite>/`
+  and then relativizes any navbar.href value that lives inside the
+  site-url's domain. The shared `href: https://mlsysbook.ai/` in
+  navbar-common.yml therefore gets emitted as `./index.html`, which on
+  vol1/vol2/tinytorch/etc. resolves to *that subsite's* root rather than
+  the ecosystem landing page. Override the brand link href in JS after
+  Quarto's render: this is a one-line user-experience fix that does not
+  fight Quarto's URL machinery.
+-->
+<script>
+(function () {
+  'use strict';
+  function fixBrandHref() {
+    var brand = document.querySelectorAll(
+      '.navbar .navbar-brand, .navbar .navbar-brand-logo'
+    );
+    for (var i = 0; i < brand.length; i++) {
+      brand[i].setAttribute('href', 'https://mlsysbook.ai/');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixBrandHref);
+  } else {
+    fixBrandHref();
+  }
+})();
+</script>
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="apple-touch-icon" href="../../shared/assets/images/icons/favicon.png">
+<meta name="theme-color" content="#1F407A">
+<!-- Release identity (rendered into the footer pill below).
+     The publish workflow drops release-manifest.json at
+     /vol2_zh/release-manifest.json before deploy. -->
+
+<!-- SocratiQ bundle: -->
+<!-- <script type="module" src="/tools/scripts/socratiQ/bundle.js" defer></script> -->
+<script src="/books/mlsys/shared/assets/scripts/sidebar-auto-collapse.js" defer=""></script>
+<script src="/books/mlsys/shared/assets/scripts/version-link.js" defer=""></script>
+<script src="/books/mlsys/shared/assets/scripts/subscribe-modal.js" defer=""></script>
+<style>
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="/books/mlsys/shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="规模化机器学习系统">
+<meta property="og:description" content="第二卷：规模化机器学习系统。分布式训练、集群运行与负责任部署。">
+<meta property="og:image" content="https://gptbert.com/books/mlsys/vol2/vol2_zh/frontmatter/vol2_zh/covers/cover-hardcover-book-vol2.png">
+<meta property="og:site_name" content="规模化机器学习系统">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:title" content="规模化机器学习系统">
+<meta name="twitter:description" content="第二卷：规模化机器学习系统。分布式训练、集群运行与负责任部署。">
+<meta name="twitter:image" content="https://gptbert.com/books/mlsys/vol2/vol2_zh/frontmatter/vol2_zh/covers/cover-hardcover-book-vol2.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../shared/assets/images/icons/logo-seas-shield.png" alt="" class="navbar-logo light-content">
+    <img src="../../shared/assets/images/icons/logo-seas-shield.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Machine Learning Systems</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">中文首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol2_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">引言</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://mlsysbook.ai/vol2/"> 
+<span class="menu-text">英文原版</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol2_zh/frontmatter/notation.html">记号</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献词</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者的话</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">记号</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol2_zh/parts/fleet_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第一部分：集群</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/02_compute_infrastructure/02_compute_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">计算基础设施</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/03_network_fabrics/03_network_fabrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络互连结构</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/04_data_storage/04_data_storage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据存储</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol2_zh/parts/distributed_ml_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第二部分：分布式机器学习</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/05_distributed_training/05_distributed_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">分布式训练</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/06_collective_communication/06_collective_communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">集合通信</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/07_fault_tolerance/07_fault_tolerance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">容错</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/08_fleet_orchestration/08_fleet_orchestration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">集群编排</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol2_zh/parts/deployment_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第三部分：规模化部署</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/09_performance_engineering/09_performance_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">性能工程</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/10_inference/10_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">在大规模下运行推理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/11_edge_intelligence/11_edge_intelligence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">边缘智能</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/12_ops_scale/12_ops_scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">规模化机器学习运维</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol2_zh/parts/responsible_fleet_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第四部分：负责任的集群</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/13_security_privacy/13_security_privacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">安全与隐私</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/14_robust_ai/14_robust_ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robust AI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/15_sustainable_ai/15_sustainable_ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sustainable AI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/16_responsible_ai/16_responsible_ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">责任人工智能</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/17_conclusion/17_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结论</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">附录</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/appendix_dam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">单机基础（D·A·M）</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/appendix_c3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C³ 分类法</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/appendix_fleet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">集群基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/appendix_communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">通信基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/appendix_reliability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可靠性基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/appendix_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">推理基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/appendix_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">系统假设</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol2_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#记号" id="toc-记号" class="nav-link active" data-scroll-target="#记号">记号</a>
+  <ul>
+  <li><a href="#sec-notation-distributed" id="toc-sec-notation-distributed" class="nav-link" data-scroll-target="#sec-notation-distributed">分布式系统记号</a>
+  <ul class="collapse">
+  <li><a href="#sec-notation-alpha-beta" id="toc-sec-notation-alpha-beta" class="nav-link" data-scroll-target="#sec-notation-alpha-beta"><strong></strong> 通信模型</a></li>
+  <li><a href="#sec-notation-loggp" id="toc-sec-notation-loggp" class="nav-link" data-scroll-target="#sec-notation-loggp">LogGP 扩展</a></li>
+  <li><a href="#sec-notation-scaling" id="toc-sec-notation-scaling" class="nav-link" data-scroll-target="#sec-notation-scaling">扩展效率</a></li>
+  <li><a href="#sec-notation-reliability" id="toc-sec-notation-reliability" class="nav-link" data-scroll-target="#sec-notation-reliability">容错与可靠性</a></li>
+  <li><a href="#sec-notation-parallelism" id="toc-sec-notation-parallelism" class="nav-link" data-scroll-target="#sec-notation-parallelism">并行维度</a></li>
+  <li><a href="#sec-notation-fleet-capacity" id="toc-sec-notation-fleet-capacity" class="nav-link" data-scroll-target="#sec-notation-fleet-capacity">集群容量因子</a></li>
+  <li><a href="#sec-notation-compression-economics" id="toc-sec-notation-compression-economics" class="nav-link" data-scroll-target="#sec-notation-compression-economics">压缩经济性</a></li>
+  <li><a href="#sec-notation-serving-memory-scale" id="toc-sec-notation-serving-memory-scale" class="nav-link" data-scroll-target="#sec-notation-serving-memory-scale">大规模服务内存</a></li>
+  <li><a href="#sec-notation-distributed-collisions" id="toc-sec-notation-distributed-collisions" class="nav-link" data-scroll-target="#sec-notation-distributed-collisions">其他符号冲突点</a></li>
+  <li><a href="#sec-notation-distributed-units" id="toc-sec-notation-distributed-units" class="nav-link" data-scroll-target="#sec-notation-distributed-units">其他单位</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="记号" class="level1 unnumbered page-columns page-full">
+<h1 class="unnumbered">记号</h1>
+<!-- PARTIAL FILE: do not render standalone. -->
+<!-- Included by vol1/frontmatter/notation.qmd (vol1 wrapper) and -->
+<!-- vol2/frontmatter/notation.qmd (vol2 wrapper, which then chains -->
+<!-- vol2/frontmatter/_notation_scaling.qmd for vol2-only content). -->
+<!-- Edits to this file appear in BOTH volumes by design. -->
+<!-- DO NOT add a YAML header. DO NOT add Markdown setext underlines. -->
+<!-- DO NOT add an H1. The chapter H1 lives in each wrapper so Quarto can -->
+<!-- extract it for the sidebar, browser tab, and title block. -->
+<p>Machine Learning Systems spans <em>machine learning</em> (computer science and statistics) and <em>systems</em> (computer architecture and hardware). Each field developed its notation independently, and many symbols mean different things across communities and publications. This collision creates real confusion when the disciplines merge. The conventions below establish a single notation that eliminates this ambiguity.</p>
+<p>Consider a simple statement: <em>“Increasing <span class="math inline">\(B\)</span> improves throughput.”</em> To an ML researcher, <span class="math inline">\(B\)</span> means batch size. To a hardware engineer, <span class="math inline">\(B\)</span> means bandwidth. Both interpretations are correct in their respective fields, but in ML Systems we need both concepts in the same equation—hence the need for a single, consistent convention.</p>
+<section id="sec-notation-conventions-iron-law-ml-systems-ce9d" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-notation-conventions-iron-law-ml-systems-ce9d">The Iron Law of ML Systems</h2>
+<p>For serialized execution phases, the iron-law performance decomposition is:</p>
+<p><span class="math display">\[T = \underbrace{\frac{D_{\text{vol}}}{\text{BW}}}_{\text{Memory Time}} + \underbrace{\frac{O}{R_{\text{peak}} \cdot \eta_{\text{hw}}}}_{\text{Compute Time}} + \underbrace{L_{\text{lat}}}_{\text{Latency Overhead}}\]</span></p>
+<p>Each variable was chosen deliberately to avoid collision with standard ML terminology.</p>
+<div data-tbl-colwidths="[8,12,8,72]">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Definition</strong></th>
+<th style="text-align: left;"><strong>Unit</strong></th>
+<th style="text-align: left;"><strong>Why This Symbol?</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T\)</span></strong></td>
+<td style="text-align: left;"><strong>Time</strong></td>
+<td style="text-align: left;">seconds</td>
+<td style="text-align: left;">Unambiguous. Wall-clock time for an operation.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(D_{\text{vol}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Data Volume</strong></td>
+<td style="text-align: left;">bytes</td>
+<td style="text-align: left;"><strong>Avoids collision with <span class="math inline">\(D\)</span> (Dataset Size)</strong>. In scaling laws, <span class="math inline">\(D\)</span> means training tokens. Here we need bytes moved through memory. The subscript disambiguates.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\text{BW}\)</span></strong></td>
+<td style="text-align: left;"><strong>Bandwidth</strong></td>
+<td style="text-align: left;">bytes/s</td>
+<td style="text-align: left;"><strong>Avoids collision with <span class="math inline">\(B\)</span> (Batch Size)</strong>. Systems literature often uses <span class="math inline">\(B\)</span> for bandwidth, while ML literature often uses <span class="math inline">\(B\)</span> for batch size. The notation preserves the ML convention.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(O\)</span></strong></td>
+<td style="text-align: left;"><strong>Operations</strong></td>
+<td style="text-align: left;">FLOPs</td>
+<td style="text-align: left;">Total floating-point operations. Clean in equations (vs.&nbsp;“<span class="math inline">\(\text{Ops}\)</span>”).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(R_{\text{peak}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Peak Rate</strong></td>
+<td style="text-align: left;">FLOP/s</td>
+<td style="text-align: left;"><strong>Avoids collision with <span class="math inline">\(P\)</span> (Parameters)</strong>. Roofline presentations often use <span class="math inline">\(P\)</span> for performance, while ML literature commonly uses <span class="math inline">\(P\)</span> for parameter count. The notation preserves the ML convention.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\eta_{\text{hw}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Efficiency</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Hardware utilization <span class="math inline">\((0 \le \eta_{\text{hw}} \le 1)\)</span>. Avoids collision with learning rate <span class="math inline">\((\eta)\)</span>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(L_{\text{lat}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Latency</strong></td>
+<td style="text-align: left;">seconds</td>
+<td style="text-align: left;"><strong>Avoids collision with <span class="math inline">\(\mathcal{L}\)</span> (Loss)</strong>. Fixed overhead time (kernel launch, network RTT). The subscript distinguishes from the loss function.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<section id="sec-notation-conventions-choices-matter-0c16" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-conventions-choices-matter-0c16">Why these choices matter</h3>
+<p>Without careful notation, sentences become ambiguous:</p>
+<blockquote class="blockquote">
+<p><em>“Reducing <span class="math inline">\(D\)</span> improves performance.”</em></p>
+</blockquote>
+<p>The sentence has two possible readings:</p>
+<ul>
+<li>Reducing <strong>dataset size</strong> (fewer training samples) can speed training but may reduce accuracy.</li>
+<li>Reducing <strong>data volume moved</strong> (for example, through compression or quantization) can speed inference, with accuracy effects that depend on the technique and calibration.</li>
+</ul>
+<p>With our notation, we can write precisely:</p>
+<blockquote class="blockquote">
+<p><em>“Reducing <span class="math inline">\(D_{\text{vol}}\)</span> through FP32-to-INT8 quantization cuts parameter memory traffic to one quarter while <span class="math inline">\(D\)</span> (training data) remains unchanged.”</em></p>
+</blockquote>
+<p>Our notation eliminates this ambiguity: <em>“<span class="math inline">\(\text{BW}\)</span> limits throughput”</em> has only one reading.</p>
+</section>
+<section id="sec-notation-conventions-subscripted-variants" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-conventions-subscripted-variants">Subscripted variants</h3>
+<p>An upright root names the quantity, and the subscript names which instance of it is meant. The convention holds closely related measurements apart instead of collapsing them into a single symbol:</p>
+<ul>
+<li><span class="math inline">\(\text{BW}_{\text{disk}}\)</span>, <span class="math inline">\(\text{BW}_{\text{network}}\)</span>, <span class="math inline">\(\text{BW}_{\text{accelerator}}\)</span>: bandwidth at three points on the data path</li>
+<li><span class="math inline">\(D_{\text{vol}}\)</span>, <span class="math inline">\(R_{\text{peak}}\)</span>, <span class="math inline">\(L_{\text{lat}}\)</span>, <span class="math inline">\(\eta_{\text{hw}}\)</span>: iron-law terms, each held clear of a common ML symbol</li>
+<li><span class="math inline">\(E_{\text{move}}\)</span>, <span class="math inline">\(E_{\text{compute}}\)</span>, <span class="math inline">\(E_{\text{total}}\)</span>: one energy budget split into tradeable parts</li>
+</ul>
+<p>The subscript therefore carries part of the claim. Disk and accelerator bandwidth differ by orders of magnitude, so a figure is reproducible only when the subscript says where it was measured.</p>
+</section>
+</section>
+<section id="sec-notation-conventions-degradation-equation-ad12" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-notation-conventions-degradation-equation-ad12">The Degradation Equation</h2>
+<p>The degradation equation is a fitted local model. Divergence alone does not determine the direction of accuracy change, so estimate <span class="math inline">\(\lambda\)</span> from labeled outcomes. Some symbols below, such as <span class="math inline">\(\tau\)</span>, appear in chapter prose rather than in the equation. <span class="math display">\[\text{Accuracy}(t) \approx \text{Accuracy}_0 - \lambda \cdot \mathcal{D}(P_t \lVert P_0)\]</span></p>
+<div data-tbl-colwidths="[10,20,13,57]">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 20%">
+<col style="width: 13%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Definition</strong></th>
+<th style="text-align: left;"><strong>Unit/Type</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\text{Accuracy}(t)\)</span></td>
+<td style="text-align: left;"><strong>Accuracy at Time <span class="math inline">\(t\)</span></strong></td>
+<td style="text-align: left;">Scalar</td>
+<td style="text-align: left;">Model accuracy after the model has been deployed for time <span class="math inline">\(t\)</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\text{Accuracy}_0\)</span></td>
+<td style="text-align: left;"><strong>Initial Accuracy</strong></td>
+<td style="text-align: left;">Scalar</td>
+<td style="text-align: left;">Model accuracy at deployment time.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: left;"><strong>Fitted Sensitivity</strong></td>
+<td style="text-align: left;">Scalar</td>
+<td style="text-align: left;">Local coefficient estimated from outcomes over a stated range; not a universal constant. <em>(Not wavelength.)</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(P_t\)</span></td>
+<td style="text-align: left;"><strong>Current Distribution</strong></td>
+<td style="text-align: left;">Distribution</td>
+<td style="text-align: left;">The data distribution at time <span class="math inline">\(t\)</span>. <em>(Not parameters—use <span class="math inline">\(P\)</span> for parameter count.)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P_0\)</span></td>
+<td style="text-align: left;"><strong>Training Distribution</strong></td>
+<td style="text-align: left;">Distribution</td>
+<td style="text-align: left;">The data distribution at training time.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\mathcal{D}(P_t \lVert P_0)\)</span></td>
+<td style="text-align: left;"><strong>Statistical Divergence</strong></td>
+<td style="text-align: left;">Scalar <span class="math inline">\(\ge 0\)</span></td>
+<td style="text-align: left;">Measures how far <span class="math inline">\(P_t\)</span> has drifted from <span class="math inline">\(P_0\)</span>. Common choices: KL divergence, total variation, Wasserstein. <em>(Calligraphic to avoid collision with <span class="math inline">\(D\)</span> = dataset size.)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\tau\)</span></td>
+<td style="text-align: left;"><strong>Response Threshold</strong></td>
+<td style="text-align: left;">Scalar <span class="math inline">\(&gt; 0\)</span></td>
+<td style="text-align: left;">Operational threshold for investigation; it does not automatically trigger retraining.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</section>
+<section id="sec-notation-conventions-energy-corollary-a1da" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-notation-conventions-energy-corollary-a1da">The Energy Corollary</h2>
+<p>With effective per-byte and per-operation costs, workload energy is approximated as: <span class="math display">\[E_{\text{total}} \approx D_{\text{vol}} \times E_{\text{move}} + O \times E_{\text{compute}}\]</span></p>
+<div data-tbl-colwidths="[10,25,15,50]">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 25%">
+<col style="width: 15%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Definition</strong></th>
+<th style="text-align: left;"><strong>Unit</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(E_{\text{total}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Total Energy</strong></td>
+<td style="text-align: left;">joules</td>
+<td style="text-align: left;">Total energy consumed by an ML workload, decomposed into data-movement and compute terms.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(E_{\text{move}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Energy per Byte Moved</strong></td>
+<td style="text-align: left;">joules/byte</td>
+<td style="text-align: left;">Effective movement cost; total energy also depends on bytes moved and operations executed.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(E_{\text{compute}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Energy per Operation</strong></td>
+<td style="text-align: left;">joules/FLOP</td>
+<td style="text-align: left;">Energy cost of a single arithmetic operation.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</section>
+<section id="sec-notation-conventions-deep-learning-notation-b40d" class="level2 unlisted page-columns page-full">
+<h2 class="unlisted anchored" data-anchor-id="sec-notation-conventions-deep-learning-notation-b40d">Deep Learning Notation</h2>
+<p>This book follows standard deep learning conventions <span class="citation" data-cites="goodfellow2016deep">(<a href="#ref-goodfellow2016deep" role="doc-biblioref">Goodfellow 等 2016年</a>)</span> with explicit disambiguation for systems variables.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-goodfellow2016deep" class="csl-entry" role="listitem">
+Goodfellow, Ian, Yoshua Bengio, 和 Aaron Courville. 2016年. <em>Deep Learning</em>. MIT Press.
+</div></div><div data-tbl-colwidths="[8,20,72]">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 20%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Definition</strong></th>
+<th style="text-align: left;"><strong>Dimensions/Type</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(B\)</span></strong></td>
+<td style="text-align: left;"><strong>Batch Size</strong></td>
+<td style="text-align: left;">Integer. The number of samples processed in parallel. <em>(Never bandwidth.)</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(P\)</span></strong></td>
+<td style="text-align: left;"><strong>Parameters</strong></td>
+<td style="text-align: left;">Integer. The total count of scalar model parameters, including weights and biases. <em>(Never peak FLOP/s.)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(D\)</span></strong></td>
+<td style="text-align: left;"><strong>Dataset Size</strong></td>
+<td style="text-align: left;">Integer. Number of training samples or tokens. <em>(Never data volume in bytes—use <span class="math inline">\(D_{\text{vol}}\)</span>.)</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(S\)</span></strong></td>
+<td style="text-align: left;"><strong>Sequence Length</strong></td>
+<td style="text-align: left;">Integer. Number of tokens or time steps.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(d\)</span></strong></td>
+<td style="text-align: left;"><strong>Hidden Dimension</strong></td>
+<td style="text-align: left;">Integer. Size of the hidden state vector.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(d_{\text{head}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Attention Head Dimension</strong></td>
+<td style="text-align: left;">Integer. Per-head hidden dimension in attention layers.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(N_L\)</span></strong></td>
+<td style="text-align: left;"><strong>Number of Layers</strong></td>
+<td style="text-align: left;">Integer. Total number of layers in a network.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(N_{\text{heads}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Number of Attention Heads</strong></td>
+<td style="text-align: left;">Integer. Number of attention heads in a multi-head attention layer.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(H_{\text{KV}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Number of Key-Value Heads</strong></td>
+<td style="text-align: left;">Integer. Number of key-value heads in grouped-query or multi-query attention.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\ell\)</span></strong></td>
+<td style="text-align: left;"><strong>Layer Index</strong></td>
+<td style="text-align: left;">Integer. Index for a layer. Use instead of bare <span class="math inline">\(L\)</span> when indexing layers, since <span class="math inline">\(L\)</span> collides with loss and latency.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\mathcal{L}\)</span></strong></td>
+<td style="text-align: left;"><strong>Loss Function</strong></td>
+<td style="text-align: left;">Scalar. The objective function minimized during training.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\eta\)</span></strong></td>
+<td style="text-align: left;"><strong>Learning Rate</strong></td>
+<td style="text-align: left;">Scalar. Step size for the optimizer. <em>(Never bare for hardware efficiency—use <span class="math inline">\(\eta_{\text{hw}}\)</span>.)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\theta\)</span></strong></td>
+<td style="text-align: left;"><strong>Model Parameters</strong></td>
+<td style="text-align: left;">Parameter collection, often treated as a vector. The set of all learnable parameters.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(p(x)\)</span></strong></td>
+<td style="text-align: left;"><strong>Distribution</strong></td>
+<td style="text-align: left;">Probability mass/density for a random variable. Use lowercase <span class="math inline">\(p(\cdot)\)</span> for generic distributions to avoid collision with <span class="math inline">\(P\)</span> (parameter count).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(p(y \mid x)\)</span></strong></td>
+<td style="text-align: left;"><strong>Conditional Distribution</strong></td>
+<td style="text-align: left;">Conditional probability/density. Use this form for generic label relationships; reserve <span class="math inline">\(P_0\)</span> and <span class="math inline">\(P_t\)</span> for the degradation equation’s training/current distributions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\Pr(E)\)</span></strong></td>
+<td style="text-align: left;"><strong>Event Probability</strong></td>
+<td style="text-align: left;">Probability of an event <span class="math inline">\(E\)</span>. Use for event statements such as <span class="math inline">\(\Pr(\text{batch}=0)\)</span>; use <span class="math inline">\(p(x)\)</span> and <span class="math inline">\(p(y \mid x)\)</span> for distributions.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>Latin matrices and vectors are set in bold (<span class="math inline">\(\mathbf{W}\)</span>, <span class="math inline">\(\mathbf{x}\)</span>); scalars, dimensions, indices, and individual matrix entries stay italic (<span class="math inline">\(N\)</span>, <span class="math inline">\(d\)</span>, <span class="math inline">\(i\)</span>, <span class="math inline">\(W_{ij}\)</span>). The generic parameter symbol <span class="math inline">\(\theta\)</span> is the one conventional exception and stays italic. Local matrix algebra follows the same bold rule: matrix operands are bold (<span class="math inline">\(\mathbf{A}\)</span>, <span class="math inline">\(\mathbf{B}\)</span>, <span class="math inline">\(\mathbf{C}\)</span>), as in general matrix multiply (GEMM) <span class="math inline">\(\mathbf{C}=\alpha \mathbf{A}\mathbf{B}+\beta \mathbf{C}\)</span>. The bold form marks a matrix operand and is distinct from the italic scalar batch size <span class="math inline">\(B\)</span>, which remains batch size in scalar contexts.</p>
+</section>
+<section id="sec-notation-conventions-performance-serving-memory" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-notation-conventions-performance-serving-memory">Performance, Serving, and Memory Notation</h2>
+<p>Reusable performance and serving quantities follow the same collision-avoidance rule as the iron law. Rates use <span class="math inline">\(R\)</span> or descriptive Greek symbols; request counts use <span class="math inline">\(Q_{\text{req}}\)</span> rather than overloading <span class="math inline">\(N\)</span>; queue utilization uses a subscripted <span class="math inline">\(\rho\)</span> so bare <span class="math inline">\(\rho\)</span> remains available for other ratio models.</p>
+<div data-tbl-colwidths="[10,23,13,54]">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 23%">
+<col style="width: 13%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Definition</strong></th>
+<th style="text-align: left;"><strong>Unit/Type</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(I\)</span></strong></td>
+<td style="text-align: left;"><strong>Arithmetic Intensity</strong></td>
+<td style="text-align: left;">FLOP/byte</td>
+<td style="text-align: left;">Workload FLOPs per byte moved. The Roofline Model uses <span class="math inline">\(I\)</span> as the independent variable.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(I_{\text{ridge}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Roofline Ridge Point</strong></td>
+<td style="text-align: left;">FLOP/byte</td>
+<td style="text-align: left;"><span class="math inline">\(I_{\text{ridge}} = R_{\text{peak}}/\text{BW}\)</span>. Prefer this explicit form over starred shorthand so the meaning remains clear in prose.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(R_{\text{attain}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Attainable Compute Rate</strong></td>
+<td style="text-align: left;">FLOP/s</td>
+<td style="text-align: left;">Roofline bound: <span class="math inline">\(R_{\text{attain}} \leq \min(R_{\text{peak}}, I \times \text{BW})\)</span>. Uses <span class="math inline">\(R\)</span>, not <span class="math inline">\(T\)</span>, because this quantity is a rate.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\text{MFU}\)</span></strong></td>
+<td style="text-align: left;"><strong>Model FLOPs Utilization</strong></td>
+<td style="text-align: left;">Dimensionless</td>
+<td style="text-align: left;">Useful model FLOP/s divided by available peak FLOP/s. Text acronym avoids overloading <span class="math inline">\(\eta\)</span>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(r_{\text{comp}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Compression Ratio</strong></td>
+<td style="text-align: left;">Dimensionless</td>
+<td style="text-align: left;">Uncompressed size divided by compressed size. A compressed payload has <span class="math inline">\(1/r_{\text{comp}}\)</span> of the uncompressed size; the subscript avoids bare <span class="math inline">\(C\)</span> collisions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(Q_{\text{req}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Request Concurrency</strong></td>
+<td style="text-align: left;">requests</td>
+<td style="text-align: left;">Average in-flight requests in a stable serving system (<span class="math inline">\(Q_{\text{req}} = \lambda_{\text{arr}} \cdot T_{\text{lat}}\)</span> via Little’s Law). Avoids collision with <span class="math inline">\(N\)</span> as device count in distributed settings.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\lambda_{\text{arr}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Arrival Rate</strong></td>
+<td style="text-align: left;">requests/s</td>
+<td style="text-align: left;">Request arrival rate. The subscript avoids collision with <span class="math inline">\(\lambda\)</span> as degradation sensitivity or failure rate.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{lat}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Request Time in System</strong></td>
+<td style="text-align: left;">seconds</td>
+<td style="text-align: left;">End-to-end queueing/serving latency for Little’s Law. Distinct from <span class="math inline">\(L_{\text{lat}}\)</span>, the fixed-latency term in the iron law.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{svc}}(B)\)</span></strong></td>
+<td style="text-align: left;"><strong>Batch Service Time</strong></td>
+<td style="text-align: left;">seconds</td>
+<td style="text-align: left;">Time to serve a batch of size <span class="math inline">\(B\)</span>.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\mu_{\text{eff}}(B)\)</span></strong></td>
+<td style="text-align: left;"><strong>Effective Service Rate</strong></td>
+<td style="text-align: left;">requests/s</td>
+<td style="text-align: left;">Batched service rate, typically <span class="math inline">\(\mu_{\text{eff}}(B) = B/T_{\text{svc}}(B)\)</span>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\rho_{\text{serv}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Serving Utilization</strong></td>
+<td style="text-align: left;">Dimensionless</td>
+<td style="text-align: left;">Queue/server utilization. Use instead of bare <span class="math inline">\(\rho\)</span>, which is reserved for communication-computation ratio in distributed contexts.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(M_{\text{total}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Total Memory Footprint</strong></td>
+<td style="text-align: left;">bytes</td>
+<td style="text-align: left;">Sum of explicit memory components; avoids bare <span class="math inline">\(M\)</span> ambiguity.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(M_{\text{weights}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Weight Memory</strong></td>
+<td style="text-align: left;">bytes</td>
+<td style="text-align: left;">Memory occupied by model parameters.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(M_{\text{gradients}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Gradient Memory</strong></td>
+<td style="text-align: left;">bytes</td>
+<td style="text-align: left;">Memory occupied by stored gradients.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(M_{\text{optimizer}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Optimizer-State Memory</strong></td>
+<td style="text-align: left;">bytes</td>
+<td style="text-align: left;">Momentum, variance, master weights, and related optimizer buffers.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(M_{\text{activations}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Activation Memory</strong></td>
+<td style="text-align: left;">bytes</td>
+<td style="text-align: left;">Retained activations for the backward pass or serving intermediates.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(s_{\text{elem}}\)</span></strong></td>
+<td style="text-align: left;"><strong>Element Storage Size</strong></td>
+<td style="text-align: left;">bytes/element</td>
+<td style="text-align: left;">Bytes per stored tensor element.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</section>
+<section id="sec-notation-conventions-units-precision-fdaf" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-notation-conventions-units-precision-fdaf">Units and Precision</h2>
+<ul>
+<li>Physical units: This book uses SI (metric) units throughout, including meters, kilograms, seconds, watts, and °C, consistent with standard engineering and scientific practice. Where source data was originally reported in imperial units, the book converts to SI and notes the original values parenthetically. A space always separates the number from the unit (for example, 100 ms, 2 TB/s).</li>
+<li>Data and memory: This book uses <strong>decimal SI prefixes only</strong>: KB = <span class="math inline">\(10^3\)</span> bytes, MB = <span class="math inline">\(10^6\)</span>, GB = <span class="math inline">\(10^9\)</span>, TB = <span class="math inline">\(10^{12}\)</span>. Binary-prefixed units do not appear in prose; all capacities, throughputs, and model sizes are reported in decimal units (for example, 80 GB, 2 TB/s, 102 MB).</li>
+<li>Compute: The notation distinguishes operation counts from rates. Total work uses FLOPs (for example, GFLOPs, TFLOPs), while throughput uses FLOP/s with decimal prefixes (for example, GFLOP/s, TFLOP/s).
+<ul>
+<li>1 TFLOP = <span class="math inline">\(10^{12}\)</span> FLOPs</li>
+<li>1 TFLOP/s = <span class="math inline">\(10^{12}\)</span> FLOPs per second</li>
+<li>Arithmetic intensity conventionally uses FLOP/byte as a unit ratio (floating-point operations per byte moved). This is a ratio unit, not a total-work symbol or throughput symbol.</li>
+</ul></li>
+<li>Currency: Dollar amounts use the dollar sign (<code>$</code>); unless otherwise noted, dollar-denominated costs are U.S. dollars (USD).</li>
+<li>Precision:
+<ul>
+<li><strong>FP64</strong>: Double precision (8 bytes)</li>
+<li><strong>FP32</strong>: Single precision (4 bytes)</li>
+<li><strong>TF32</strong>: TensorFloat-32 (19-bit Tensor Core compute mode; inputs and storage remain FP32)</li>
+<li><strong>FP16</strong>: Half precision (2 bytes, standard range)</li>
+<li><strong>BF16</strong>: Brain float (2 bytes, wide dynamic range)</li>
+<li><strong>FP8</strong>: Quarter precision (1 byte, E4M3 or E5M2 format)</li>
+<li><strong>FP4</strong>: 4-bit floating-point format</li>
+<li><strong>INT8</strong>: 8-bit integer (1 byte)</li>
+<li><strong>INT4</strong>: 4-bit integer; lower integer precisions follow the same uppercase <code>INTn</code> pattern (for example, INT3, INT2)</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-notation-conventions-quick-reference-resolving-collisions-a9cf" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-notation-conventions-quick-reference-resolving-collisions-a9cf">Quick Reference: Resolving Collisions</h2>
+<p>Common collision points in ML Systems literature include:</p>
+<div data-tbl-colwidths="[15,20,25,40]">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 20%">
+<col style="width: 25%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>ML Meaning</strong></th>
+<th style="text-align: left;"><strong>Systems Meaning</strong></th>
+<th style="text-align: left;"><strong>Book Convention</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(B\)</span></td>
+<td style="text-align: left;">Batch Size</td>
+<td style="text-align: left;">Bandwidth</td>
+<td style="text-align: left;"><strong>Batch Size</strong>. Use <span class="math inline">\(\text{BW}\)</span> for bandwidth.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">Parameters</td>
+<td style="text-align: left;">Peak FLOP/s</td>
+<td style="text-align: left;"><strong>Parameters</strong>. Use <span class="math inline">\(R_{\text{peak}}\)</span> for peak rate.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(D\)</span></td>
+<td style="text-align: left;">Dataset Size</td>
+<td style="text-align: left;">Data Volume</td>
+<td style="text-align: left;"><strong>Dataset Size</strong>. Use <span class="math inline">\(D_{\text{vol}}\)</span> for bytes moved.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(L\)</span></td>
+<td style="text-align: left;">Loss</td>
+<td style="text-align: left;">Latency</td>
+<td style="text-align: left;"><strong>Loss</strong> <span class="math inline">\((\mathcal{L})\)</span>. Use <span class="math inline">\(L_{\text{lat}}\)</span> for latency.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\eta\)</span></td>
+<td style="text-align: left;">Learning Rate</td>
+<td style="text-align: left;">Efficiency</td>
+<td style="text-align: left;"><strong>Learning Rate</strong>. Use <span class="math inline">\(\eta_{\text{hw}}\)</span> for efficiency.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<p>As a general principle, ML conventions take precedence for single letters, while systems concepts get subscripts or multi-letter symbols. This reflects the primary audience (ML practitioners learning systems) and preserves compatibility with the vast ML literature.</p>
+<!-- PARTIAL FILE: do not render standalone. -->
+<!-- This file is included by vol2/frontmatter/notation.qmd as a -->
+<!-- continuation of the shared notation chapter. The chapter H1 plus the -->
+<!-- early H2s come from vol1/frontmatter/_notation_body.qmd. -->
+<!-- This file holds the vol2-only distributed-systems notation extension. -->
+<!-- DO NOT add a YAML header to this file. DO NOT add an H1. Start at H2. -->
+</section>
+<section id="sec-notation-distributed" class="level2">
+<h2 class="anchored" data-anchor-id="sec-notation-distributed">分布式系统记号</h2>
+<p>分布式系统工作引入了一层用于协同、通信和可靠性的记号。下表中的部分符号专用于同步、修复和梯度规模语境；集中定义它们，使得这些符号出现时规范形式无歧义。核心方程是 <strong>集群定律</strong>（分布式步时间定律）：</p>
+<p><span class="math display">\[T_{\text{step}}(N) = \frac{T_{\text{compute}}}{N} + T_{\text{comm}}(N) + T_{\text{sync}}(N) - T_{\text{overlap}}\]</span></p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 59%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(N\)</span></strong></td>
+<td style="text-align: left;"><strong>设备数量</strong></td>
+<td style="text-align: left;">Integer</td>
+<td style="text-align: left;">分布式任务中的加速器数量。<em>(不是参数，使用 <span class="math inline">\(P\)</span>.)</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{step}}(N)\)</span></strong></td>
+<td style="text-align: left;"><strong>分布式步时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">在规模 <span class="math inline">\(N\)</span> 下执行一次训练步的墙钟时间。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{compute}}\)</span></strong></td>
+<td style="text-align: left;"><strong>单设备计算时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">单个设备上的前向 + 反向传递。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{comm}}(N)\)</span></strong></td>
+<td style="text-align: left;"><strong>通信时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">集合操作（AllReduce、AllGather）所需时间。随 <span class="math inline">\(N\)</span> 增长。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{overlap}}\)</span></strong></td>
+<td style="text-align: left;"><strong>重叠时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">隐藏在计算背后的通信。降低有效开销。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{sync}}(N)\)</span></strong></td>
+<td style="text-align: left;"><strong>同步时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">在规模 <span class="math inline">\(N\)</span> 下每步的总非重叠同步或协同成本。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\rho\)</span></strong></td>
+<td style="text-align: left;"><strong>通信—计算比</strong></td>
+<td style="text-align: left;">无量纲</td>
+<td style="text-align: left;"><span class="math inline">\(\rho = T_{\text{comm}}(N)/(T_{\text{compute}}/N)\)</span>。接近或高于 1 的值表示通信受限的扩展。</td>
+</tr>
+</tbody>
+</table></div>
+<section id="sec-notation-alpha-beta" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-alpha-beta"><strong></strong> 通信模型</h3>
+<p>网络通信时间分解为固定延迟和带宽相关的传输：</p>
+<p><span class="math display">\[T(n) = \alpha + \frac{n}{\beta}\]</span></p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 7%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T(n)\)</span></strong></td>
+<td style="text-align: left;"><strong>通信时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">传输大小为 <span class="math inline">\(n\)</span> 的消息经过一条链路的墙钟时间。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\alpha\)</span></strong></td>
+<td style="text-align: left;"><strong>网络延迟</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">每条消息的固定开销。<em>(不是学习率，上下文可消歧。)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\beta\)</span></strong></td>
+<td style="text-align: left;"><strong>链路带宽</strong></td>
+<td style="text-align: left;">字节/秒</td>
+<td style="text-align: left;">每条链路的有效吞吐量。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(n\)</span></strong></td>
+<td style="text-align: left;"><strong>消息大小</strong></td>
+<td style="text-align: left;">字节</td>
+<td style="text-align: left;">载荷大小（例如，梯度张量）。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(n^*\)</span></strong></td>
+<td style="text-align: left;"><strong>交叉点</strong></td>
+<td style="text-align: left;">字节</td>
+<td style="text-align: left;"><span class="math inline">\(n^* = \alpha \cdot \beta\)</span>。低于 <span class="math inline">\(n^*\)</span>：延迟受限。高于：带宽受限。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-loggp" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-loggp">LogGP 扩展</h3>
+<p>LogGP 通过分离网络延迟、处理器开销和长消息注入间隙来细化 <span class="math inline">\(\alpha\)</span>-<span class="math inline">\(\beta\)</span> 模型。标准名称较短，但本书对碰撞概率最高的项使用描述性子下标。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 19%">
+<col style="width: 8%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{long}}(n)\)</span></strong></td>
+<td style="text-align: left;"><strong>LogGP 长消息时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">传输一条 <span class="math inline">\(n\)</span> 字节长消息的时间。复用 <span class="math inline">\(n\)</span> 中的 <span class="math inline">\(\alpha\)</span>-<span class="math inline">\(\beta\)</span> 模型。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(L_{\text{LogGP}}\)</span></strong></td>
+<td style="text-align: left;"><strong>LogGP 网络延迟</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">标准 LogGP 延迟参数；下标以避免与裸 <span class="math inline">\(L\)</span> 冲突。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(o_{\text{send}}\)</span></strong></td>
+<td style="text-align: left;"><strong>发送方开销</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">处理器/NIC 发起一条消息的开销。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(o_{\text{recv}}\)</span></strong></td>
+<td style="text-align: left;"><strong>接收方开销</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">处理器/NIC 完成一条消息的开销。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(g\)</span></strong></td>
+<td style="text-align: left;"><strong>消息注入间隙</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">连续两次消息注入之间的最小间隔。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(G\)</span></strong></td>
+<td style="text-align: left;"><strong>每字节长消息间隙</strong></td>
+<td style="text-align: left;">秒/字节</td>
+<td style="text-align: left;">每字节长消息间隙；不同于 <span class="math inline">\(\beta\)</span> 链路带宽。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-scaling" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-scaling">扩展效率</h3>
+<p><span class="math display">\[\eta_{\text{scaling}} = \frac{T_1}{N \times T_N}\]</span></p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 12%">
+<col style="width: 7%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\eta_{\text{scaling}}\)</span></strong></td>
+<td style="text-align: left;"><strong>扩展效率</strong></td>
+<td style="text-align: left;">无量纲</td>
+<td style="text-align: left;">实测加速比与理想线性加速比之比。<span class="math inline">\(1.0\)</span> 是理想线性基线，而非硬性上界。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(T_1\)</span></strong></td>
+<td style="text-align: left;"><strong>单设备时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">在单个设备上完成相同有效工作的基线墙钟时间。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_N\)</span></strong></td>
+<td style="text-align: left;"><strong>N 设备时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">在 <span class="math inline">\(N\)</span> 个设备上完成相同有效工作的墙钟时间；排除由 <span class="math inline">\(\eta_{\text{goodput}}\)</span> 计量的运行停机时间。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-reliability" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-reliability">容错与可靠性</h3>
+<p>系统可靠性随规模下降。假设组件相互独立且服从指数故障分布，跨 <span class="math inline">\(N\)</span> 个组件的系统可靠性为：</p>
+<p><span class="math display">\[R_{\text{system}}(t) = e^{-N\lambda t}\]</span></p>
+<p>聚合指数使用系统级速率 <span class="math inline">\(N\lambda\)</span>，其中 <span class="math inline">\(\lambda\)</span> 是在独立同构组件假设下的单组件故障率。指数 <span class="math inline">\(N\lambda t\)</span> 无量纲，因此 <span class="math inline">\(t\)</span> 必须使用与 <span class="math inline">\(\lambda\)</span>（当 <span class="math inline">\(\lambda\)</span> 来自下方 FIT 推导出的速率时为小时）相同的时间单位。</p>
+<p>最优检查点间隔在 I/O 成本与返工成本之间取得平衡：</p>
+<p><span class="math display">\[\tau_{\text{opt}} = \sqrt{2 \cdot T_{\text{write}} \cdot \text{MTBF}_{\text{system}}}\]</span></p>
+<p>The formula uses <em>系统级</em>平均无故障时间（MTBF）（整个任务的故障间隔），而非<em>组件级</em>MTBF；代入单组件值会高估 <span class="math inline">\(\tau_{\text{opt}}\)</span> 达 <span class="math inline">\(\sqrt{N}\)</span>。为量纲一致性，<span class="math inline">\(T_{\text{write}}\)</span> 与 <span class="math inline">\(\text{MTBF}_{\text{system}}\)</span> 必须使用相同的时间单位。行业标准 <span class="math inline">\(\text{MTBF}\)</span> 以小时报告；为与秒量级的写入时间合并，需转换：<span class="math inline">\(\text{MTBF}_s = \text{MTBF}_h \times 3600\)</span>。结果 <span class="math inline">\(\tau_{\text{opt}}\)</span> 因而带有与输入所选相同的时间单位。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 78%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(R_{\text{system}}(t)\)</span></strong></td>
+<td style="text-align: left;"><strong>可靠性函数</strong></td>
+<td style="text-align: left;">概率</td>
+<td style="text-align: left;">在时间 <span class="math inline">\(t\)</span> 之前整个系统不发生故障的概率。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\lambda\)</span></strong></td>
+<td style="text-align: left;"><strong>单组件故障率</strong></td>
+<td style="text-align: left;">故障/小时</td>
+<td style="text-align: left;">单组件故障率；在独立同构组件假设下，系统级速率为 <span class="math inline">\(N\lambda\)</span>。行业标准报告单位为 FIT（每 <span class="math inline">\(10^9\)</span> 设备小时的故障数）：<span class="math inline">\(\lambda_{\text{hour}} = \text{FIT} \times 10^{-9}\)</span>。<em>(不是敏感性——上下文可消歧。)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\text{MTBF}\)</span></strong></td>
+<td style="text-align: left;"><strong>平均无故障时间</strong></td>
+<td style="text-align: left;">小时</td>
+<td style="text-align: left;">连续两次故障之间的平均时间。<span class="math inline">\(\text{MTBF}_{\text{system}} = \text{MTBF}_{\text{component}} / N\)</span>。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\text{MTTF}\)</span></strong></td>
+<td style="text-align: left;"><strong>平均失效时间</strong></td>
+<td style="text-align: left;">小时</td>
+<td style="text-align: left;">由 FIT 速率推导出的组件寿命指标。当建模修复/更换周期时，与系统级 <span class="math inline">\(\text{MTBF}\)</span> 不同。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\text{MTTR}\)</span></strong></td>
+<td style="text-align: left;"><strong>平均修复时间</strong></td>
+<td style="text-align: left;">小时</td>
+<td style="text-align: left;">故障后的平均恢复时间。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(\tau_{\text{opt}}\)</span></strong></td>
+<td style="text-align: left;"><strong>最优检查点间隔</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">Young-Daly 公式。最小化总浪费时间。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{write}}\)</span></strong></td>
+<td style="text-align: left;"><strong>检查点写入时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">将模型状态持久化到存储所需的时间。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-parallelism" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-parallelism">并行维度</h3>
+<p>三维并行性在三个正交维度上划分训练工作负载：</p>
+<p><span class="math display">\[N_{\text{total}} = d \times p \times t\]</span></p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 22%">
+<col style="width: 8%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(N_{\text{total}}\)</span></strong></td>
+<td style="text-align: left;"><strong>设备总数</strong></td>
+<td style="text-align: left;">整数</td>
+<td style="text-align: left;">三个并行维度之积。整个任务中的加速器总数。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(d\)</span></strong></td>
+<td style="text-align: left;"><strong>数据并行</strong></td>
+<td style="text-align: left;">整数</td>
+<td style="text-align: left;">模型副本数量。<em>(也是隐藏维度，上下文可消歧。)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(p\)</span></strong></td>
+<td style="text-align: left;"><strong>物理流水线阶段</strong></td>
+<td style="text-align: left;">整数</td>
+<td style="text-align: left;">模型深度划分中的物理流水线阶段数量。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(t\)</span></strong></td>
+<td style="text-align: left;"><strong>张量并行</strong></td>
+<td style="text-align: left;">整数</td>
+<td style="text-align: left;">层内划分（模型宽度）的度。<em>(也是时间，上下文可消歧。)</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(m\)</span></strong></td>
+<td style="text-align: left;"><strong>微批次数量</strong></td>
+<td style="text-align: left;">整数</td>
+<td style="text-align: left;">用于填充并排空流水线的微批次数量。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(b_{\text{pipe}}\)</span></strong></td>
+<td style="text-align: left;"><strong>流水线气泡占比</strong></td>
+<td style="text-align: left;">无量纲</td>
+<td style="text-align: left;">流水线 GPU 时间中空闲所占比例；避免与裸 <span class="math inline">\(b\)</span> 冲突。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(V\)</span></strong></td>
+<td style="text-align: left;"><strong>每设备虚拟流水线阶段</strong></td>
+<td style="text-align: left;">整数</td>
+<td style="text-align: left;">分配给每个物理流水线阶段的交错虚拟块数量。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(M\)</span></strong></td>
+<td style="text-align: left;"><strong>消息载荷大小</strong></td>
+<td style="text-align: left;">字节</td>
+<td style="text-align: left;">需通信的梯度、模型状态、激活或压缩消息载荷的总大小。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-fleet-capacity" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-fleet-capacity">集群容量因子</h3>
+<p>集群级容量计算将单设备模型效率、有效步的扩展效率，以及在这些步骤之外测得的运行吞吐相乘。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 3%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(f_{\text{compute}}\)</span></strong></td>
+<td style="text-align: left;"><strong>有效计算时间占比</strong></td>
+<td style="text-align: left;">无量纲</td>
+<td style="text-align: left;"><span class="math inline">\((T_{\text{compute}}/N)/T_{\text{step}}(N)\)</span>。衡量分布式后每步时间中有多少属于有用的本地算术。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(f_{\text{overhead}}\)</span></strong></td>
+<td style="text-align: left;"><strong>运行开销占比</strong></td>
+<td style="text-align: left;">无量纲</td>
+<td style="text-align: left;">在由 <span class="math inline">\(T_N\)</span> 度量的有效步骤之外损失的已分配墙钟时间占比，例如检查点暂停、故障恢复、调度器抢占或维护。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(\eta_{\text{goodput}}\)</span></strong></td>
+<td style="text-align: left;"><strong>吞吐率</strong></td>
+<td style="text-align: left;">无量纲</td>
+<td style="text-align: left;">在 <span class="math inline">\(f_{\text{overhead}}\)</span> 中的步骤外损失之后剩余的已分配墙钟时间占比；通常为 <span class="math inline">\(\eta_{\text{goodput}} = 1 - f_{\text{overhead}}\)</span>。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(R_{\text{eff}}\)</span></strong></td>
+<td style="text-align: left;"><strong>有效集群吞吐量</strong></td>
+<td style="text-align: left;">FLOP/s</td>
+<td style="text-align: left;"><span class="math inline">\(R_{\text{eff}} = (N R_{\text{peak}}) \times \text{MFU} \times \eta_{\text{scaling}} \times \eta_{\text{goodput}}\)</span>，其中 <span class="math inline">\(\text{MFU}\)</span> 为单设备基线，<span class="math inline">\(\eta_{\text{scaling}}\)</span> 涵盖全部步内扩展损失，<span class="math inline">\(\eta_{\text{goodput}}\)</span> 仅涵盖被 <span class="math inline">\(T_N\)</span> 排除的步骤外运行损失。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-compression-economics" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-compression-economics">压缩经济性</h3>
+<p>压缩模型将编解码器开销与通过减少载荷所节省的通信时间相比较。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 21%">
+<col style="width: 6%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{transfer}}(x)\)</span></strong></td>
+<td style="text-align: left;"><strong>载荷 <span class="math inline">\(x\)</span> 的传输时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">在相关链路或集合模型下传输 <span class="math inline">\(x\)</span> 字节载荷的通信时间。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{compressed}}\)</span></strong></td>
+<td style="text-align: left;"><strong>压缩后通信时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">编码、<span class="math inline">\(M/r_{\text{comp}}\)</span> 传输和解码后的总时间。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{encode}}\)</span></strong></td>
+<td style="text-align: left;"><strong>编解码器编码时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">传输前的本地压缩开销。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><span class="math inline">\(T_{\text{decode}}\)</span></strong></td>
+<td style="text-align: left;"><strong>编解码器解码时间</strong></td>
+<td style="text-align: left;">秒</td>
+<td style="text-align: left;">传输后的本地解压开销。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-serving-memory-scale" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-serving-memory-scale">大规模服务内存</h3>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 9%">
+<col style="width: 51%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>定义</strong></th>
+<th style="text-align: left;"><strong>单位</strong></th>
+<th style="text-align: left;"><strong>注释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><span class="math inline">\(M_{\text{KV}}\)</span></strong></td>
+<td style="text-align: left;"><strong>KV 缓存内存</strong></td>
+<td style="text-align: left;">字节</td>
+<td style="text-align: left;">自回归服务用的键值缓存占用。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-distributed-collisions" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-distributed-collisions">其他符号冲突点</h3>
+<p>分布式语境在基础记号所注记的冲突之外引入了进一步的符号冲突：</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>符号</strong></th>
+<th style="text-align: left;"><strong>机器学习含义</strong></th>
+<th style="text-align: left;"><strong>分布式含义</strong></th>
+<th style="text-align: left;"><strong>我们的约定</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(N\)</span></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">设备数量</td>
+<td style="text-align: left;">分布式语境下的<strong>设备数</strong>（加速器，而非主机节点）。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\lambda\)</span></td>
+<td style="text-align: left;">敏感度</td>
+<td style="text-align: left;">故障率</td>
+<td style="text-align: left;"><strong>语境依赖</strong>。退化语境下为敏感度；可靠性语境下为故障率。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(d\)</span></td>
+<td style="text-align: left;">隐藏维度</td>
+<td style="text-align: left;">数据并行度</td>
+<td style="text-align: left;"><strong>语境依赖</strong>。3D 记号下为并行度；架构中为隐藏维度。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(t\)</span></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">张量并行/时间</td>
+<td style="text-align: left;"><strong>语境依赖</strong>。3D 记号下为张量并行；可靠性语境下为时间。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\tau\)</span></td>
+<td style="text-align: left;">漂移阈值</td>
+<td style="text-align: left;">本地区间/延迟</td>
+<td style="text-align: left;"><strong>避免裸复用</strong>。通用检查点区间使用 <span class="math inline">\(\tau_{\text{ckpt}}\)</span>，Young-Daly 最优值使用 <span class="math inline">\(\tau_{\text{opt}}\)</span>，梯度陈旧度使用 <span class="math inline">\(\tau_{\text{stale}}\)</span>。</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-notation-distributed-units" class="level3">
+<h3 class="anchored" data-anchor-id="sec-notation-distributed-units">其他单位</h3>
+<ul>
+<li><strong>网络吞吐量</strong>：依据约定，分别以字节/秒（GB/s、TB/s）和比特/秒（Gbps）报告。InfiniBand 与 Ethernet 规范使用 Gbps；应用级吞吐量使用 GB/s。首次使用时我们注明约定。</li>
+<li><strong>可持续性语境下的功耗</strong>：当所在章节讨论功率或能量时，物理功耗可能使用显式下标 <span class="math inline">\(P_{\text{...}}\)</span> 的变量（例如 <span class="math inline">\(P_{\text{IT}}\)</span>、<span class="math inline">\(P_{\text{dynamic}}\)</span>、<span class="math inline">\(P_{\text{average}}\)</span>）。裸 <span class="math inline">\(P\)</span> 保留用于参数数量。</li>
+</ul>
+
+
+
+</section>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/mlsysbook\.ai\/vol2_zh\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol2_zh/frontmatter/ai_use.html" class="pagination-link" aria-label="关于 AI 辅助的说明">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">关于 AI 辅助的说明</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2024-2026 Harvard University. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-NC-SA 4.0</a><br> <!-- MLSB_BUILD_STAMP --></p>
+</div>   
+    <div class="nav-footer-center">
+<p>简体中文译本 · <a href="https://mlsysbook.ai/vol2/">英文原版</a></p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ <span class="release-pill" data-release-pill=""></span>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/harvard-edge/cs249r_book">
+      <i class="bi bi-github" role="img" aria-label="View source on GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/harvard-edge/cs249r_book">
+      <i class="bi bi-star" role="img" aria-label="Star this repository">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

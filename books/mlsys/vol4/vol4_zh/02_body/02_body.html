@@ -1,0 +1,2646 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>物理人工智能系统 · 第四卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol4_zh/03_brain/03_brain.html" rel="next">
+<link href="../../vol4_zh/01_boundary/01_boundary.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6ab868a96f80aa23e8049a4baf7b30f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+
+<style id="zh-web-layout">#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">物理 AI · 第四卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/books/mlsys/"> 
+<span class="menu-text">三卷书架</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">本卷首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol4_zh/01_boundary/01_boundary.html"> 
+<span class="menu-text">因果边界</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol4_zh/02_body/02_body.html">物理身体</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/01_boundary/01_boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">因果边界</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/02_body/02_body.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">物理身体</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/03_brain/03_brain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认知脑</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/04_nervous/04_nervous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/05_data/05_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理数据</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/06_training/06_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">策略训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/07_evaluation/07_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">闭环评估</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/08_perception/08_perception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">传感器感知</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/09_memory/09_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">空间记忆</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/10_intent/10_intent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">立足物理世界的意图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/11_planning/11_planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹规划</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/12_enforcement/12_enforcement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">安全执行</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/13_placement/13_placement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硅片布局</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/14_intervention/14_intervention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">监督性干预</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/15_verification/15_verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">对抗性验证</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/16_release/16_release.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署发布</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/17_frontier/17_frontier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认识论前沿</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-body" id="toc-sec-body" class="nav-link active" data-scroll-target="#sec-body">物理身体</a>
+  <ul>
+  <li><a href="#sec-body-five-budgets" id="toc-sec-body-five-budgets" class="nav-link" data-scroll-target="#sec-body-five-budgets">五个物理预算</a></li>
+  <li><a href="#sec-body-measurement-freshness" id="toc-sec-body-measurement-freshness" class="nav-link" data-scroll-target="#sec-body-measurement-freshness">测量新鲜度</a></li>
+  <li><a href="#sec-body-kinetic-momentum" id="toc-sec-body-kinetic-momentum" class="nav-link" data-scroll-target="#sec-body-kinetic-momentum">机械动量</a></li>
+  <li><a href="#sec-body-actuator-limits" id="toc-sec-body-actuator-limits" class="nav-link" data-scroll-target="#sec-body-actuator-limits">执行器传动限制</a></li>
+  <li><a href="#sec-body-thermal-duty-cycles" id="toc-sec-body-thermal-duty-cycles" class="nav-link" data-scroll-target="#sec-body-thermal-duty-cycles">热工作占空比</a></li>
+  <li><a href="#sec-body-power-integrity" id="toc-sec-body-power-integrity" class="nav-link" data-scroll-target="#sec-body-power-integrity">电气功率完整性</a></li>
+  <li><a href="#sec-body-measuring-limits" id="toc-sec-body-measuring-limits" class="nav-link" data-scroll-target="#sec-body-measuring-limits">测量机器自身的极限</a></li>
+  <li><a href="#sec-body-archetype-matrix" id="toc-sec-body-archetype-matrix" class="nav-link" data-scroll-target="#sec-body-archetype-matrix">哪一项预算最先成为约束</a></li>
+  <li><a href="#sec-body-fallacies-pitfalls" id="toc-sec-body-fallacies-pitfalls" class="nav-link" data-scroll-target="#sec-body-fallacies-pitfalls">谬误与陷阱</a></li>
+  <li><a href="#sec-body-summary" id="toc-sec-body-summary" class="nav-link" data-scroll-target="#sec-body-summary">摘要</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">物理身体</h1></header>
+
+
+<header>
+
+
+</header>
+
+
+<section id="sec-body" class="level1 page-columns page-full">
+<h1>物理身体</h1>
+<div class="{layout-narrow} page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
+
+</div></div><p><a href="images/webp/cover_body_blueprint_labeled.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/webp/cover_body_blueprint_labeled.webp" class="img-fluid" alt="等距蓝图，展示物理身体架构：BLDC 定子绕组、转子转动惯量、行星齿轮组、光学编码器、输出驱动法兰和散热片。"></a></p>
+</div>
+<section id="目的" class="level2 unnumbered unlisted page-columns page-full">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="目的">目的</h2>
+<p><em>当学习策略的输出驱动电机并带动运动质量时，究竟是什么物理极限在瞬间约束它？</em></p>
+<p>运动中的机器无法为软件而暂停。 推理过程中，物理世界持续演化：位置发生变化，接触面发生位移，观测数据逐渐老化。 要刹停物理运动，需要有限的时间来处理指令，以及有限的距离来耗散动能。 电机与机械齿轮组严格限制了扭矩能够上升的速率，而绕组电流与逆变器开关损耗则持续使电磁线圈发热。 忽略这些约束的策略会索取不存在的力，触发供电轨电压崩溃，或使传动齿轮的齿发生剪切。 更快的神经推理仅能在该物理链路内部带来改善；它无法消除制动距离、机械惯性或热学限制。</p>
+<p>物理人工智能要求这些限制必须在整机装配完成、处于运行负载的条件下实测，而不能从乐观的部件数据手册中直接誊录。 在因果边界上，物理身体确立硬性物理预算——净空距离、峰值力与热余量——感知、规划与控制都必须共享。 依据第一条基石法则，任何动作指令发出之前，都必须先验证相应的预算。 通过刻画机械装置的扭矩-速度曲线、摩擦锥与热耗散速率，系统工程师将学习得到的提议锚定在物理装置不容妥协的物理规律之上。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 物理装置为 <strong><a href="../01_boundary/01_boundary.html#sec-boundary-four-archetypes">三类机器</a></strong> 所定义的三类机器提供了物理基础。</p>
+</div></div><div style="page-break-after: always;"></div>
+<div id="callout-learning-objectives*-1.1" class="callout callout-learning-objectives">
+<details class="callout-learning-objectives fbx-simplebox fbx-default" open=""><summary><strong>学习目标</strong></summary><div>
+<ul>
+<li>依据测量年龄与该机器允许的运动，计算观测新鲜度上限</li>
+<li>依据制动前的延迟、可信减速度与净空余量，计算制动距离与允许的最高速度上限</li>
+<li>对照响应极限与反射惯性，评估执行器与传动方案的选择</li>
+<li>依据发热、冷却与运行工况，估算电机可持续占用的占空比</li>
+<li>为同时执行、计算与再生制动预留电气供电裕量</li>
+<li>规定极限记录要素，说明实测极限的工况、不确定性、裕量、运行时检测器与证据类别</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-body-five-budgets" class="level2">
+<h2 class="anchored" data-anchor-id="sec-body-five-budgets">五个物理预算</h2>
+<p>机器人操作臂即使在接触前收到紧急停止指令，仍可能撞碎其传动机构。 停止指令穿越软件缓冲区，功率逆变器切换状态，电机产生峰值反向转矩。 然而，如果运动构件的动能超过执行器在碰撞前剩余净空距离内能够完成的机械功，碰撞便不可避免。 在纯软件中，故障线程可被操作系统内核瞬间终止。 在物理现实中，运动质量携带的动量无法被异常处理程序捕获，而电气功率级也无法在不发生热失效或电压崩溃的前提下提供无限电流。 软件无法覆盖运动质量、热量和电流的物理规律。</p>
+<p>在提议边界之上，学习得到的策略可以提出任意运动，但<strong>物理实体</strong>只交付力学、热力学和电磁学所允许的部分。 该主体是由执行器、传动机构、连杆、功率母线与换能器构成的“被控对象”，它作用于世界；而策略发出的每一个设定值，都会从它的五项物理预算中抽取：</p>
+<ol type="1">
+<li><strong>测量新鲜度</strong>：物理环境变化的速率，相对于到达控制器的传感器数据的年龄。 由于世界不会为计算而暂停，通信与推理所耗费的时间意味着机器始终基于历史状态采取行动。</li>
+<li><strong>动能动量</strong>：为在碰撞障碍物或超出工作单元边界之前耗散已储存的动能（<span class="math inline">\(E_k = \frac{1}{2} m v^2\)</span>）所需的制动距离与制动力的量。</li>
+<li><strong>执行器带宽与折算惯量</strong>：机械扭矩与速度能够改变的速度，在绕组电感（<span class="math inline">\(\tau_e = L/R\)</span>）、逆变器电流钳位或齿轮传动惯量（<span class="math inline">\(N^2 J\)</span>）限制机械加速度之前。</li>
+<li><strong>热容量</strong>：电阻性焦耳热在定子绕组与功率半导体中累积的速率，相对于机壳散热速率；该速率界定了持续占空比的上限，在热节流介入之前。</li>
+<li><strong>电气功率完整性</strong>: 在快速加速与制动过程中，共享直流配电母线上的瞬态电压跌落、峰值电流容量以及再生能量尖峰。</li>
+</ol>
+<p>本书所追踪的仓库移动操作臂借鉴了全部五项。 装载量不超过 368 kg、以 1.5 m/s 驱动极限移动时（示意性；参见读者指南），它通过与人共用的通道携带 414 J 动能。</p>
+<p>每一项预算都转化为在声明的热与电应力条件下、针对已装配机器所确立的限值。 第一项是每条指令所依赖的测量年龄，它始于物理换能，先于任何软件进程接收该数据。</p>
+</section>
+<section id="sec-body-measurement-freshness" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-body-measurement-freshness">测量新鲜度</h2>
+<p>软件基准测试常将延迟报告为加速器上某网络的执行时间，但该计算片段只是 <strong><a href="../01_boundary/01_boundary.html#sec-boundary-causal-boundary">因果边界</a></strong> 因果链中的一个环节。<strong>测量自换能起即开始衰减；真正重要的是它在被作用时的年龄。</strong> 该年龄跨越从光子击中光电二极管或磁通量经过霍尔传感器的那一刻，到电机绕组产生改变连杆加速度的转矩的那一刻之间的区间。 若感知模型计算障碍物位置耗时 <span class="math inline">\(15\text{ ms}\)</span>，而相机曝光积分、传感器读出、传输、队列调度以及电机电流上升时间又额外增加 <span class="math inline">\(45\text{ ms}\)</span>，那么当关节动作时，该测量的物理时延为 <span class="math inline">\(60\text{ ms}\)</span>。 在整个该时间窗内，物理世界仍在持续演化。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> <strong><a href="../09_memory/09_memory.html#sec-memory-belief-through-occlusion">遮挡下的信念</a></strong> 推导存储信念随测量时延而保持有效的时间长度。</p>
+</div></div><p>追踪测量时延，需将该路径分解为八个阶段（<a href="#fig-02-latency-waterfall" class="quarto-xref">图&nbsp;1</a>）：曝光，以积分中点为时间戳；经 MIPI CSI-2 等接口进行的传感器读出；向主机内存的直接内存访问（DMA）传输；内核缓冲至用户态队列；模型计算；操作系统调度及跨处理器边界的进程间调度；经现场总线或共享内存邮箱的命令传输；以及执行器响应，即驱动器在定子绕组中建立磁通。 在双处理器实现中，该路径自图像传感器出发，经应用处理器的推理、无锁邮箱，以及安全微控制器上的 <span class="math inline">\(1\text{ kHz}\)</span> 权限检查，直至栅极驱动器切换与电流上升。 每个阶段都消耗总时间预算的一部分。</p>
+<p>世界状态的变化速率决定了测量在采取动作之前保持有效的时间长度，超过该时间就会引入不可容忍的误差。 令 <span class="math inline">\(e_{\max}\)</span> 表示被跟踪状态（例如关节角，或传送带上零件的位置）可接受的最大误差，令 <span class="math inline">\(v_{\max}\)</span> 表示该状态可演化的最快可信速度。 新鲜度截止期限 <span class="math inline">\(\Delta t_{\text{fresh}}\)</span> 是测量年龄的上界，超过该上界后基于该测量的控制动作即变为无效，由不等式定义 <span class="math display">\[\Delta t_{\text{fresh}} \le \frac{e_{\max}}{v_{\max}}\]</span></p>
+<p>对于包裹分拣线上的视觉引导拣选器，以最大相对速度 <span class="math inline">\(v_{\max} = 1.2\text{ m/s}\)</span> 跟踪包裹，并带有几何间隙容差 <span class="math inline">\(e_{\max} = 24\text{ mm}\)</span>，其新鲜度截止期限为 <span class="math inline">\(24\text{ mm} / (1200\text{ mm/s}) = 20\text{ ms}\)</span>。 若执行指令依据一张早于当前时刻 <span class="math inline">\(35\text{ ms}\)</span> 捕获的图像到达电机，则包裹已位移 <span class="math inline">\(42\text{ mm}\)</span>，超出位置允许量 <span class="math inline">\(18\text{ mm}\)</span>，因而未能完成抓取。 截止期限约束的是持续运动的目标，而其测量却在老化，例如这里的包裹，或由移动操作臂拣选站的传送带承载并输送的杯子。 对于此类目标，它仅限制由运动引起的误差，且仅在相对速度有界、初始观测可信时；感知与估计误差会额外消耗容差。 站在通道中的人不会随观测变旧而移动。 移动底盘确实在移动，因此观测年龄表现为移动底盘在制动前行驶的距离，而 <a href="#sec-body-kinetic-momentum" class="quarto-xref">节&nbsp;1.3</a> 则将该距离计入停车预算，消耗相应的停车裕量。</p>
+<div id="fig-02-latency-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="两面板示意图。 面板 (a) 展示八个阶段，从传感器曝光经运输、推理、指令传输，直至电机电流上升。 面板 (b) 展示 35.0 和 68.4 毫秒的示意时间线，二者均超过 20 毫秒的时效截止；在 1.2 米每秒下，它们分别对应 4.2 和 8.2 厘米的包裹位移。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-latency-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig02_canonical_latency_waterfall.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="图&nbsp;1: 从感知到执行延迟瀑布与硅数据流管线：从曝光到电机电流上升的八级因果链（面板 a），以及一个示意性延迟剖面（面板 b）。 分拣机的 24\text{ mm} 公差在 1.2\text{ m/s} 下设定了 20\text{ ms} 的年龄截止时限，因为无引导的行程会把时间转化为以小车速度计量的位移。 中位数 35.0\text{ ms} 与 P_{99.9} 尾部 68.4\text{ ms} 均超过该时限，分别对应 4.2\text{ cm} 和 8.2\text{ cm} 的位移。"><img src="images/svg/fig02_canonical_latency_waterfall.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-latency-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;1: <strong>从感知到执行延迟瀑布与硅数据流管线</strong>：从曝光到电机电流上升的八级因果链（面板 a），以及一个示意性延迟剖面（面板 b）。 分拣机的 <span class="math inline">\(24\text{ mm}\)</span> 公差在 <span class="math inline">\(1.2\text{ m/s}\)</span> 下设定了 <span class="math inline">\(20\text{ ms}\)</span> 的年龄截止时限，因为无引导的行程会把时间转化为以小车速度计量的位移。 中位数 <span class="math inline">\(35.0\text{ ms}\)</span> 与 <span class="math inline">\(P_{99.9}\)</span> 尾部 <span class="math inline">\(68.4\text{ ms}\)</span> 均超过该时限，分别对应 <span class="math inline">\(4.2\text{ cm}\)</span> 和 <span class="math inline">\(8.2\text{ cm}\)</span> 的位移。
+</figcaption>
+</figure>
+</div>
+<p>工程师常通过将各个阶段的 <span class="math inline">\(P_{99}\)</span> 值相加来计算总延迟，但和的百分位不等于各百分位的和。<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 共享内存争用与内核队列可能使各阶段延迟相互关联，因此必须在声明负载下的集成机器上实测完整的感知到力矩年龄的分布，而且该实测百分位并非安全截止所需的分析上界（<strong><a href="../04_nervous/04_nervous.html#sec-nervous-deterministic-fieldbuses">按时移动指令</a></strong>）。</p>
+<p>要观察阶段时序与端到端时延的差异，可考虑相机到关节路径在持续推理负载下的时序剖面（<a href="#tbl-02-latency-breakdown" class="quarto-xref">表&nbsp;1</a>），并与同一 <span class="math inline">\(20\text{ ms}\)</span> 截止时间对照。</p>
+<div id="tbl-02-latency-breakdown" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[26,38,12,12,12]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-02-latency-breakdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: <strong>示意性感知—执行时延分解</strong>：各阶段与系统级时延说明了为何各阶段分位数的算术求和并非端到端尾部时延。 该示例的 <span class="math inline">\(P_{99.9} = 68.4\text{ ms}\)</span> 超过了包裹分拣机的 <span class="math inline">\(20\text{ ms}\)</span> 新鲜度截止时间。
+</figcaption>
+<div aria-describedby="tbl-02-latency-breakdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 38%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">流水线阶段</th>
+<th style="text-align: left;">物理机制 / 争用来源</th>
+<th style="text-align: center;"><span class="math inline">\(P_{50}\)</span>（毫秒）</th>
+<th style="text-align: center;"><span class="math inline">\(P_{99}\)</span>（毫秒）</th>
+<th style="text-align: center;">最大（毫秒）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1–2. 传感器曝光与读出</strong></td>
+<td style="text-align: left;"><span class="math inline">\(60\text{ Hz}\)</span> 滚动快门曝光中点</td>
+<td style="text-align: center;"><span class="math inline">\(11.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(16.6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(16.7\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>3–4. 主机传输与 DMA</strong></td>
+<td style="text-align: left;">PCIe DMA 传输至主机内存</td>
+<td style="text-align: center;"><span class="math inline">\(1.4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(6.8\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5. 视觉骨干与策略</strong></td>
+<td style="text-align: left;">板载加速器推理（内存节流尾部）</td>
+<td style="text-align: center;"><span class="math inline">\(18.5\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(24.1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(38.4\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>6. 操作系统调度与进程间通信</strong></td>
+<td style="text-align: left;">内核抢占与向安全微控制器发送邮箱调度</td>
+<td style="text-align: center;"><span class="math inline">\(0.6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(12.3\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>7. 现场总线传输</strong></td>
+<td style="text-align: left;">确定性 EtherCAT 周期报文交换</td>
+<td style="text-align: center;"><span class="math inline">\(1.0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1.0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>8. 执行器电流上升</strong></td>
+<td style="text-align: left;">门驱动切换与定子磁通建立</td>
+<td style="text-align: center;"><span class="math inline">\(2.3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3.0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4.5\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>算术级联求和</strong></td>
+<td style="text-align: left;">各列级联值的求和；并非端到端分位数</td>
+<td style="text-align: center;"><strong>35.0</strong></td>
+<td style="text-align: center;"><strong>50.0</strong></td>
+<td style="text-align: center;"><strong>80.7</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>端到端时延</strong></td>
+<td style="text-align: left;">系统级剖面 (<span class="math inline">\(t_{\text{transduction}} \to \tau\)</span>)</td>
+<td style="text-align: center;"><strong>35.0</strong></td>
+<td style="text-align: center;"><strong>46.2</strong></td>
+<td style="text-align: center;"><strong>80.7</strong></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>各阶段 <span class="math inline">\(P_{99}\)</span> 值之和为 <span class="math inline">\(50.0\text{ ms}\)</span>，与 <span class="math inline">\(46.2\text{ ms}\)</span> 系统百分位不一致，且即便 <span class="math inline">\(35.0\text{ ms}\)</span> 中位数也晚于 <span class="math inline">\(20\text{ ms}\)</span> 截止时间。</p>
+<p>基于过期数据采取行动会给反馈回路引入相位滞后，并且当校正力矩是加强而非抑制跟踪误差时，可能激发颤振<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，因此高推理速率本身并不能使响应及时。 系统必须携带来自换能环节的硬件时间戳（使用 <strong>IEEE 1588 gPTP</strong><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> 或 Ethernet PHY / <strong>MIPI CSI-2</strong><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> 接口的硬件选通信号捕获），并将其贯穿整个流水线。 在应用策略指令之前，权限路径会将观测年龄 <span class="math inline">\(t_{\text{age}} = t_{\text{now}} - t_{\text{transduction}}\)</span> 与其预算所允许的年龄进行比较。 如果年龄超过该限制，它会拒绝过期的提议，并执行一种回退，其制动或保持行为已在剩余物理裕量内得到验证 <span class="citation" data-cites="brooks1986robust">(<a href="#ref-brooks1986robust" role="doc-biblioref">Brooks 1986年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-brooks1986robust" class="csl-entry" role="listitem">
+Brooks, Rodney. 1986年. <span>《A robust layered control system for a mobile robot》</span>. <em>IEEE Journal on Robotics and Automation</em> 2 (1): 14～23.
+</div></div><p>在整个感知到执行间隔期间，身体仍在持续运动，携带着任何软件中断都无法抵消的动量。</p>
+</section>
+<section id="sec-body-kinetic-momentum" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-body-kinetic-momentum">机械动量</h2>
+<p>负载移动机械手在其 1.5 m/s 驱动极限下驶过一条通道。 一个人从车辆前方 1.10 m 处的货架末端走出，站在通道中。 软件无法简单地暂停执行，也无法将速度矢量瞬时归零。 底座、机械臂和周转箱都带有机械动量，使该质量静止需要跨越物理距离耗散动能。<strong>停车距离随延迟线性增长，随速度平方增长，这一差异决定了速度上限。</strong></p>
+<p>从感知危险到速度归零的距离包含两个阶段：盲行距离和制动距离。 在制动前的延迟期间，机器运行 <a href="#sec-body-measurement-freshness" class="quarto-xref">节&nbsp;1.2</a> 的流水线。 在从显示危险的那一帧曝光到制动力开始施加之间的这段延迟 <span class="math inline">\(\tau_{\text{delay}}\)</span> 期间，执行器不施加任何制动力，车辆继续沿其原有轨迹以该帧曝光时的速度 <span class="math inline">\(v\)</span> 继续运动。 假设该窗口内速度保持不变，盲驶距离为 <span class="math display">\[d_{\text{blind}} = v\,\tau_{\text{delay}}\]</span></p>
+<p>当制动指令到达、执行器接合后，机体进入制动阶段。 制动力 <span class="math inline">\(F_{\text{brake}}\)</span> 在制动距离 <span class="math inline">\(d_{\text{brake}}\)</span> 上所做的机械功必须耗散机器的初始动能 <span class="math inline">\(W = \Delta K\)</span>。 对于质量为 <span class="math inline">\(m\)</span> 的机器，在持续制动力 <span class="math inline">\(F_{\text{brake}} = m a_{\text{brake}}\)</span> 作用下减速至静止，由功能关系可得 <span class="math display">\[m a_{\text{brake}} d_{\text{brake}} = \frac{1}{2} m v^2\]</span> 除以质量并解出距离，得到运动学制动行程 <span class="math display">\[d_{\text{brake}} = \frac{v^2}{2 a_{\text{brake}}}\]</span> 参数 <span class="math inline">\(a_{\text{brake}}\)</span> 是车身实际能够施加于物理环境的可信减速度，而非执行器数据表上印出的理论峰值额定值。 它表示机械结构、轮胎和齿轮在失去抓地力（轮胎—路面剪切滑移饱和）、向前倾覆或结构驱动总成屈服之前能够产生的持续负加速度。</p>
+<p>闭式解假设减速度恒定、扭矩瞬时建立、坡度为零且接触为刚性。 这些假设在实际硬件上均不成立，因为力需要时间建立、滑移期间轮胎摩擦下降、结构发生挠曲；因此，在坡道或不确定的路面上，该模型会低估停车距离。 在声明条件范围内进行的带载停车试验提供考虑不确定性并留有裕度的保守低尾减速度，以取代理想化的 <span class="math inline">\(a_{\text{brake}}\)</span>；仅凭样本分位数并不构成硬性的下界。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 未受管理的动能动量会直接转化为 <a href="#sec-body-actuator-limits" class="quarto-xref">节&nbsp;1.4</a> 中分析的破坏性接触冲击载荷。</p>
+</div></div><p>盲驾与制动项的不同指数使得速度成为空间风险的主要乘数（<a href="#fig-02-stopping-distance" class="quarto-xref">图&nbsp;2</a>），这一标度关系在数值上由 <a href="#nbk-body-stopping-distance-budgeting-high-tail-compute">1.1</a> 处理。</p>
+<p>在非结构化环境中，机器无法将其全部净距分配给标称制动动力学。 障碍物跟踪带有状态估计不确定性，传感器校准会随时间漂移，定位算法会引入位置误差。 系统所防护的停车距离 <span class="math inline">\(d_{\text{stop}}\)</span> 因此必须包含空间定位不确定性边界 <span class="math inline">\(\delta_{\text{loc}}\)</span> 与最小物理净距余量 <span class="math inline">\(\delta_{\text{margin}}\)</span>：<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p><span id="eq-body-stopping-distance"><span class="math display">\[d_{\text{stop}} = v\,\tau_{\text{delay}} + \frac{v^2}{2 a_{\text{brake}}} + \delta_{\text{loc}} + \delta_{\text{margin}} \tag{1}\]</span></span></p>
+<p>该和 <span class="math inline">\(\delta_{\text{loc}} + \delta_{\text{margin}}\)</span> 是固定的空间开销，当机体完全静止时必须保持未被占用。</p>
+<div id="dfn-body-dynamic-stopping-distance" class="callout callout-definition" title="动态停车距离">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.1: 动态停车距离</strong></summary><div>
+<p><strong><em>动态停车距离</em></strong> （ <span class="math inline">\(d_{\text{stop}}\)</span> ）是指将运动质量从危险首次成像时的速度 <span class="math inline">\(v\)</span> 完全停下所需的最小物理净距。 它由三部分组成：制动前的延迟 <span class="math inline">\(\tau_{\text{delay}}\)</span> 期间的行进距离，该延迟自显示危险的帧曝光起算，直至减速力开始；可信减速度 <span class="math inline">\(a_{\text{brake}}\)</span> 下的制动行进距离；以及定位边界 <span class="math inline">\(\delta_{\text{loc}}\)</span> 与保护净距 <span class="math inline">\(\delta_{\text{margin}}\)</span>，如 <a href="#eq-body-stopping-distance" class="quarto-xref">公式&nbsp;1</a> 所述。</p>
+<ol type="1">
+<li><strong>意义</strong>：量化软件方案必须清出的不可协商的物理空间余量，运动许可方可在此之后授予。</li>
+<li><strong>区别</strong>：与经典运动学中的静态几何障碍净距不同，动态停车距离随速度平方增长（ <span class="math inline">\(v^2\)</span> ），因此无论控制器循环周期如何，速度翻倍都会使制动项变为四倍。</li>
+<li><strong>常见误区</strong>：假设紧急停止指令会使机器瞬时停下，忽略了运动质量所携带的动能（<span class="math inline">\(E_k = \frac{1}{2}m v^2\)</span>），而耗散该动能需要有限的机械功和制动距离。</li>
+</ol>
+</div></details>
+</div>
+<div id="fig-02-stopping-distance" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="三个案例的横向堆叠条形，每条均分为盲行距离、制动距离和固定开销，与标记货架端净距的虚线竖线相对。 前两根柱状条的末端落在基准线以内，剩余余量以绿色阴影标示；第三根柱状条则越过基准线，形成红色斜纹的越界。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-stopping-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div id="cbdc80ee" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="02_body_files/figure-html/cell-4-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="图&nbsp;2: 仓库移动机械臂的停车距离：每条横条将停车过程分为制动前的盲行距离、在可信减速度下的制动距离，以及定位误差上界与防护净距的固定开销，与1.10 m货架端净距相比。 案例 1 仅统计在 1.5 m/s 驱动速度上限下由机体负责的各项，并在 742.5 mm 内停止。 案例 2 增加了后续各章所组装的完整133.6 ms制动前延迟，即 <a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a> 的租约路径与 <a href="../08_perception/08_perception.html#sec-perception">传感器感知</a> 的观测龄期之和；停车距离为912.9 mm时仍在可用净距以内，尽管后续各章还会加入停车曲线和跟踪误差上界。 案例 3 将速度提高到假设的2 m/s，高于驱动速度上限，延迟保持不变；制动距离增加77.8 percent，停车距离在1,417.2 mm处超出净距。"><img src="02_body_files/figure-html/cell-4-output-1.png" width="2673" height="1001" class="figure-img"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-stopping-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: <strong>仓库移动机械臂的停车距离</strong>：每条横条将停车过程分为制动前的盲行距离、在可信减速度下的制动距离，以及定位误差上界与防护净距的固定开销，与1.10 m货架端净距相比。 案例 1 仅统计在 1.5 m/s 驱动速度上限下由机体负责的各项，并在 742.5 mm 内停止。 案例 2 增加了后续各章所组装的完整133.6 ms制动前延迟，即 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong> 的租约路径与 <strong><a href="../08_perception/08_perception.html#sec-perception">传感器感知</a></strong> 的观测龄期之和；停车距离为912.9 mm时仍在可用净距以内，尽管后续各章还会加入停车曲线和跟踪误差上界。 案例 3 将速度提高到假设的2 m/s，高于驱动速度上限，延迟保持不变；制动距离增加77.8 percent，停车距离在1,417.2 mm处超出净距。
+</figcaption>
+</figure>
+</div>
+<p>对于在距离 <span class="math inline">\(D_{\text{clear}}\)</span> 处探测到的静止障碍物，例如站在货架末端的人或掉落的周转箱，建模后的制动距离必须适配可用路径，<span class="math inline">\(d_{\text{stop}} \le D_{\text{clear}}\)</span>。 这是原理 <a href="https://mlsysbook.ai/vol4/parts/anatomy_principles.html#pri-vol4-irreversibility" title="英文原版参考内容">The irreversibility law</a> 对每一次制动施加的条件，此时 <span class="math inline">\(d_{\text{stop}}\)</span> 的每一项都是该机器的一项上限。 在保守的时间与制动界条件下，许可路径可以求解该不等式，得到新速度提议的天花板 <span class="math inline">\(v_{\text{max}}\)</span>。 二次不等式的正根<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>为： <span class="math display">\[v_{\text{max}} = -a_{\text{brake}} \tau_{\text{delay}} + \sqrt{(a_{\text{brake}} \tau_{\text{delay}})^2 + 2 a_{\text{brake}} (D_{\text{clear}} - \delta_{\text{loc}} - \delta_{\text{margin}})}\]</span> 当传感器探测范围退化或障碍物进入轨迹时，<span class="math inline">\(D_{\text{clear}}\)</span> 收缩并降低天花板，前提是可用距离仍为非负。 在可用距离为零时，天花板为零。 然而，如果机器已经在运动，零设定值无法消除其当前的制动距离；可用距离为负意味着准入条件已被违反，需要紧急响应。</p>
+<div id="nbk-body-stopping-distance-budgeting-high-tail-compute" class="callout callout-notebook" title="物体的制动距离">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.1: 物体的制动距离</strong></summary><div><strong>问题</strong>：仓库移动机械臂装载量不超过 368 kg，以 <span class="math inline">\(v =\)</span> 1.5 m/s 的驱动限速驶向货架末端，一名人员站在通道中，其净空距离为 <span class="math inline">\(D_{\text{clear}} =\)</span> 1.10 m。 车身包含 <a href="#eq-body-stopping-distance" class="quarto-xref">公式&nbsp;1</a> 三项：在可信减速度 <span class="math inline">\(a_{\text{brake}} =\)</span> 2 m/s²（满载、干燥地面）下的制动行程；定位边界 <span class="math inline">\(\delta_{\text{loc}} =\)</span> 50 mm 的固定开销，以及防护净距 <span class="math inline">\(\delta_{\text{margin}} =\)</span> 100 mm；以及制动启动点 <span class="math inline">\(T_{\text{act}} =\)</span> 20 ms，它进入 <span class="math inline">\(\tau_{\text{delay}}\)</span>。 这些项占净距的多少，仅凭它们允许多大的速度，以及速度与附加延迟如何改变答案？<p></p>
+<p><strong>1. 制动行程：</strong> 质量从功-能平衡中消去，因此满载机器的 414 J 动能决定了制动必须吸收多少热量，但不决定底盘行驶多远： <span class="math display">\[d_{\text{brake}} = \frac{v^2}{2 a_{\text{brake}}} = \frac{(1.5 m/s)^2}{2 \times 2 m/s²} = 562.5 mm\]</span> 到目前为止的停车距离为 562.5 mm。</p>
+<p><strong>2. 固定开销：</strong> <span class="math display">\[\delta_{\text{loc}} + \delta_{\text{margin}} = 50 mm + 100 mm = 150 mm\]</span> 累计总量升至 712.5 mm。</p>
+<p><strong>3. 制动启动：</strong> 在制动指令与首个减速力之间，底盘仍以全速运动： <span class="math display">\[v\,T_{\text{act}} = (1.5 m/s) \times (20 ms) = 30 mm\]</span> <span class="math display">\[d_{\text{stop}}\big|_{\text{body}} = 562.5 mm + 150 mm + 30 mm = 742.5 mm\]</span> 扣除本车自身各项占用的距离后，1.10 m 的净距离中还剩 357.5 mm，供所有不属于本车自身的延迟共同使用。</p>
+<p><strong>4. 仅本车的上限：</strong> 以 <a href="#eq-body-stopping-distance" class="quarto-xref">公式&nbsp;1</a> 对速度求解，取 <span class="math inline">\(\tau_{\text{delay}} = T_{\text{act}}\)</span>： <span class="math display">\[v_{\max} = -a_{\text{brake}} T_{\text{act}} + \sqrt{(a_{\text{brake}} T_{\text{act}})^2 + 2 a_{\text{brake}} (D_{\text{clear}} - \delta_{\text{loc}} - \delta_{\text{margin}})} \approx 1.91 m/s\]</span> 仅考虑本车自身约束时，允许的速度上限为 1.91 m/s，高于驱动限值。<strong><a href="../04_nervous/04_nervous.html#sec-nervous">神经系统</a></strong> 与 <strong><a href="../08_perception/08_perception.html#sec-perception">传感器感知</a></strong> 则补充了延迟项，占用了这部分余量。</p>
+<p><strong>5. 速度对延迟：</strong> 在假设的 2 m/s 下，超过驱动限值，仅制动项就增长到 1,000 mm，比驱动限速下的制动距离多出 77.8 percent。 在驱动限值下，每增加 100 ms 的制动前延迟，就增加 150 mm。</p>
+<p><strong>架构师的经验法则</strong>：<em>永远不要提高速度设定值，除非重新求解净空二次方程。</em></p>
+</div></details>
+</div>
+<div id="exmp-body-dynamic-velocity-ceiling-governor-1-khz" class="callout callout-example" title="动态速度上限调节器">
+<details class="callout-example fbx-simplebox fbx-default" open=""><summary><strong>Example 1.1: 动态速度上限调节器</strong></summary><div>
+<p><strong>输入</strong>:</p>
+<ul>
+<li><span class="math inline">\(D_{\text{clear}} \in \mathbb{R}_{\ge 0}\)</span>: 沿行进方向检测到的障碍物距离<span class="math inline">\([\text{m}]\)</span>.</li>
+<li><span class="math inline">\(\tau_{\text{delay}} \in \mathbb{R}_{&gt; 0}\)</span>: 保守界定的感知到制动延迟，包括执行器响应<span class="math inline">\([\text{s}]\)</span>.</li>
+<li><span class="math inline">\(a_{\text{brake}} \in \mathbb{R}_{&gt; 0}\)</span>: 在声明载荷和路面条件下可用的制动减速度保守下界<span class="math inline">\([\text{m/s}^2]\)</span>.</li>
+<li><span class="math inline">\(\delta_{\text{loc}}, \delta_{\text{margin}} \in \mathbb{R}_{\ge 0}\)</span>: 定位不确定性界与物理净距裕量<span class="math inline">\([\text{m}]\)</span>.</li>
+<li><span class="math inline">\(v_{\text{now}} \in \mathbb{R}_{\ge 0}\)</span>: 当前前进速度<span class="math inline">\([\text{m/s}]\)</span>.</li>
+<li><span class="math inline">\(v_{\text{cand}} \in \mathbb{R}_{\ge 0}\)</span>: 由神经网络策略提出的候选前向速度设定值 <span class="math inline">\([\text{m/s}]\)</span>。</li>
+</ul>
+<p><strong>输出</strong>：</p>
+<ul>
+<li><span class="math inline">\(v_{\text{safe}} \in \mathbb{R}_{\ge 0}\)</span>: 夹持于建模上限内的速度请求 <span class="math inline">\([\text{m/s}]\)</span>。</li>
+</ul>
+<p><strong>准入检查</strong>（当前状态可行时）：</p>
+<ol type="1">
+<li>建模停车距离：<span class="math inline">\(d_{\text{stop}}(v_{\text{safe}}) = v_{\text{safe}} \tau_{\text{delay}} + \frac{v_{\text{safe}}^2}{2 a_{\text{brake}}} + \delta_{\text{loc}} + \delta_{\text{margin}} \le D_{\text{clear}}\)</span>（针对静止障碍物）。</li>
+<li>非负性：<span class="math inline">\(v_{\text{safe}} \ge 0.0\)</span>。</li>
+</ol>
+<p><strong>算法步骤</strong>:</p>
+<ol type="1">
+<li><p>计算可用的物理制动距离： <span class="math display">\[D_{\text{avail}} \leftarrow D_{\text{clear}} - \delta_{\text{loc}} - \delta_{\text{margin}}\]</span></p></li>
+<li><p>若 <span class="math inline">\(D_{\text{avail}} \le 0.0\)</span>，则拒绝该提议；若处于静止状态则保持零速，若处于运动状态则请求最大可用的降风险制动响应，并标记已丧失净空。 否则，在接纳另一提议前检查 <span class="math inline">\(v_{\text{now}}\tau_{\text{delay}} + v_{\text{now}}^2/(2a_{\text{brake}}) \le D_{\text{avail}}\)</span>。 若该检查失败，则请求同样的紧急响应，并标记可行性丧失。 零速度设定值无法立即停止已有的运动。</p></li>
+<li><p>计算二次判别式： <span class="math display">\[\text{disc} \leftarrow (a_{\text{brake}} \tau_{\text{delay}})^2 + 2 a_{\text{brake}} D_{\text{avail}}\]</span></p></li>
+<li><p>求解动态速度上限的正物理根： <span class="math display">\[v_{\max} \leftarrow -a_{\text{brake}} \tau_{\text{delay}} + \sqrt{\text{disc}}\]</span></p></li>
+<li><p>对策略提议施加动态钳制： <span class="math display">\[v_{\text{safe}} \leftarrow \min(v_{\text{cand}}, \max(0.0, v_{\max}))\]</span></p></li>
+<li><p>返回 <span class="math inline">\(v_{\text{safe}}\)</span>。</p></li>
+</ol>
+</div></details>
+</div>
+<p>二次不等式将固定限速转化为与净空相关的上限，用于新提议；但该上限仅在机器在每个控制周期开始时已处于可行集内、并能在有界延迟内施加假设的制动力的前提下，才保持停车可行性。 控制屏障函数（CBF-QP）<span class="citation" data-cites="ames2019control">(<a href="#ref-ames2019control" role="doc-biblioref">Ames 等 2019年</a>)</span> 将这一推理推广到满足动力学模型有效、状态估计有效、时序界限成立且所需控制作用可实现等条件的更一般系统；此处的 1D 根则是一种简化的运动学准入检查。 若传感器探测范围退化或延迟超出其上限，许可路径必须在余量耗尽前降低速度，或执行已定义的风险削减回退。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-ames2019control" class="csl-entry" role="listitem">
+Ames, Aaron D, Samuel Coogan, Magnus Egerstedt, Gennaro Notomista, Koushil Sreenath, 和 Paulo Tabuada. 2019年. <span>《Control barrier functions: Theory and applications》</span>. <em>European Control Conference (ECC)</em>, 3420～31.
+</div></div><p>强制这一速度上限，前提是许可路径能够在安全需要时要求驱动系统执行 <span class="math inline">\(a_{\text{brake}}\)</span> 减速。 然而，要求快速减速需要驱动电机与减速机构突然提供大幅机械扭矩。 若许可路径请求的扭矩阶跃超出执行器带宽预算所能允许的范围，机械本体便无法提供所需的减速，从而使基于模型的制动上限失效，并带来碰撞风险。</p>
+</section>
+<section id="sec-body-actuator-limits" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-body-actuator-limits">执行器传动限制</h2>
+<p>机电执行器没有错误返回机制。 当策略命令的扭矩阶跃超出磁场可产生的范围，或齿轮齿无法承受的不连续加速度时，执行器会从功率级拉取最大相电流、扭动其轴并使其齿承受应力，而指令寄存器仍持续报告名义执行。<strong>执行器可能损坏自身，而不是报告错误。</strong></p>
+<p>执行器契约无法用数字设定值来规定。 它必须写在物理接口上，以交付的力、扭矩或质量流量、响应延迟、变化率限制和输出误差来表述。 数字设定值仅仅是一项软件请求；物理动作受绕组电感、母线电压上限、磁饱和和传动弹性所限。</p>
+<p>从下达扭矩指令到实际交付该扭矩之间的延迟，始于定子绕组。 由于线圈具有电感，电流——连同扭矩——沿电机的电气时间常数上升，而非瞬时（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems">Systems and Hardware</a></strong> 推导 RL 响应）。 若策略假定扭矩瞬间出现，机械臂就会在能够校正或制动之前，在扭矩上升所需的时间内发生无引导漂移。</p>
+<p>面向磁场控制（FOC）在专用驱动硅上合成该转矩，频率为 <span class="math inline">\(10\text{--}25\text{ kHz}\)</span>。<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> 转矩与电流成正比（<span class="math inline">\(\tau = K_t I\)</span>），但电流上升的速率受母线电压余量限制： <span class="math display">\[\frac{di}{dt} \le \frac{V_{\text{bus}} - e_{\text{bemf}}}{L}\]</span> 转子旋转时，电机也充当发电机，其反电动势（<span class="math inline">\(e_{\text{bemf}} = K_e \omega\)</span>）与电源相抗。 在低速时，裕量<span class="math inline">\(V_{\text{bus}} - e_{\text{bemf}}\)</span>允许电流快速上升，并可获得满幅峰值转矩。 当<span class="math inline">\(\omega\)</span>接近其基准额定值时，反电动势消耗了裕量，逆变器无论占空比如何都无法再向绕组电感强制灌入电流，因此以硬加速指令的高速策略无法获得它所要求的转矩阶跃。</p>
+<p>裕量限制了电流上升的快慢；驱动电子器件则限制了究竟有多少电流能够流过。 功率逆变器施加最大电流上限 <span class="math inline">\(I_{\text{max}}\)</span>，以保护功率开关晶体管免受热失效，并防止定子铁芯发生铁磁饱和。 当电机经减速比为 <span class="math inline">\(N\)</span>、传动效率为 <span class="math inline">\(\eta\)</span> 的机械传动驱动时，可交付输出转矩的上限为： <span class="math display">\[\tau_{\text{out, max}} = \eta N K_t I_{\text{max}}\]</span></p>
+<p>钳位回答了停止预算遗留的问题——驱动是否能在许可路径要求时提供 <span class="math inline">\(a_{\text{brake}}\)</span>——而它是以静默的方式回答的。 高于 <span class="math inline">\(\tau_{\text{out, max}}\)</span> 的制动需求在功率级被截断，且不会向发出该指令的软件发出任何报告，因此移动底座的实际减速度小于计算停车距离时假定的减速度，并停在其计算边界之外。 因此，可信的减速度仅适用于其建立时所配置的驱动电流限值；对 <span class="math inline">\(I_{\max}\)</span> 的固件改动会使其失效，直至重新测量，这一依赖关系由 <a href="#sec-body-measuring-limits" class="quarto-xref">节&nbsp;1.7</a> 写入其限值记录的条件中。</p>
+<p>只有部分被钳位的电流产生转矩，而定向磁场控制通过坐标变换将其分离。 在表磁电机中，只有定子电流产生的磁场与转子磁通垂直的分量才产生转矩，因此驱动器通过编码器读取转子角度，并将三个实测相电流旋转到转子固定的 <span class="math inline">\(dq\)</span> 坐标系中，其中交轴电流 <span class="math inline">\(I_q\)</span> 产生转矩，直轴电流 <span class="math inline">\(I_d\)</span> 与磁通对齐，不产生转矩。 在曲柄行程顶端笔直向下踩踏板，效果相同：使曲柄承受负荷却无法转动。 控制器根据转矩指令调节 <span class="math inline">\(I_q\)</span>，在基速以下将 <span class="math inline">\(I_d\)</span> 维持在接近零的水平，并将由此得到的电压写入逆变器的互补脉宽调制定时器。<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> 除弱磁运行外，直轴电流只会加热绕组而并不驱动关节，白白消耗热裕量（<a href="#sec-body-thermal-duty-cycles" class="quarto-xref">节&nbsp;1.5</a>）而不产生任何转矩；在弱磁运行中，驱动器会在基速以上故意注入负的 <span class="math inline">\(I_d\)</span> 以抵消反电动势。</p>
+<p>齿轮传动引入了机械上的不对称性。 高减速比关节采用 <span class="math inline">\(50{:}1\)</span> 至 <span class="math inline">\(160{:}1\)</span> 的减速比，从紧凑电机获得高扭矩，该设计将输出扭矩放大 <span class="math inline">\(N\)</span> 倍，却使转子转速比关节快 <span class="math inline">\(N\)</span> 倍。 反向驱动输出的负载也必须使转子转速加快 <span class="math inline">\(N\)</span> 倍；由于动能与转速的平方成正比（<span class="math inline">\(\frac{1}{2} J \dot{\theta}^2\)</span>），转子惯量 <span class="math inline">\(J_{\text{rotor}}\)</span> 折算到关节侧后，对关节加速的惯性阻力按<strong>齿轮比的平方</strong>放大（<a href="#dfn-body-reflected-rotor-inertia">1.2</a>）。</p>
+<p>通过 100:1 的传动，50 g 转子向关节呈现 11.2 kg 飞轮半径为 10 cm 的飞轮的转动惯量 <span class="citation" data-cites="lynch2017modern">(<a href="#ref-lynch2017modern" role="doc-biblioref">Lynch 和 Park 2017年</a>)</span>。 一个撞击夹爪的障碍物必须通过轮齿传力使该飞轮加速，其齿根在冲击下可能开裂（<a href="#fig-02-real-broken-gear-tooth" class="quarto-xref">图&nbsp;4</a>）。</p>
+<div class="no-row-height column-margin column-container"></div><div id="dfn-body-reflected-rotor-inertia" class="callout callout-definition" title="反射转子转动惯量">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.2: 反射转子转动惯量</strong></summary><div>
+<p><strong><em>反射转子转动惯量</em></strong>（<span class="math inline">\(J_{\text{ref}}\)</span>）是执行器转子在负载侧关节输出处的表现转动惯量，随传动速比的平方变化： <span class="math display">\[J_{\text{ref}} = N^2 J_{\text{rotor}}\]</span></p>
+<ol type="1">
+<li><strong>意义</strong>：在高减速比传动（<span class="math inline">\(N \ge 100\)</span>）中，它主导表现负载，限制关节加速度 <span class="math inline">\(\ddot{q}\)</span> 并决定冲击冲击载荷。</li>
+<li><strong>区别</strong>：与转子转动惯量 <span class="math inline">\(J_{\text{rotor}}\)</span> 或连杆转动惯量 <span class="math inline">\(J_{\text{load}}\)</span> 不同，它通过传动刚度与背隙起作用，因此从环境侧反向驱动会遇到 <span class="math inline">\(N^2\)</span> 屏障。</li>
+<li><strong>常见误区</strong>：碰撞与接触建模中忽略反射转子惯量。 在突遇障碍物冲击下，旋转转子的折算动能会使应力直接集中于轮齿，而此时驱动电流尚未来得及切断。</li>
+</ol>
+</div></details>
+</div>
+<p>齿轮传动关节在电机转矩 <span class="math inline">\(\tau_{\text{motor}}\)</span> 作用下驱动负载惯量 <span class="math inline">\(J_{\text{load}}\)</span> 的复合运动方程为： <span class="math display">\[ \ddot{q} = \frac{N \tau_{\text{motor}}}{J_{\text{load}} + N^2 J_{\text{rotor}}} \]</span> 对齿轮比 <span class="math inline">\(N\)</span> 求导可知，关节加速度峰值出现在<strong>惯量匹配比</strong>： <span class="math display">\[ N^* = \sqrt{\frac{J_{\text{load}}}{J_{\text{rotor}}}} \]</span> 低于 <span class="math inline">\(N^*\)</span> 时，关节加速度受扭矩限制。 高于该值后，更多的减速比 <em>反而使输出的加速度</em> 下降，因为电机的大部分扭矩用于加速自身转子，而非连杆。</p>
+<p>由于电机无法瞬时输出扭矩以驱动这一放大后的转动惯量，传动机构充当机械低通滤波器，将尖锐的指令弥散为延迟响应，其滞后削弱反馈稳定性并激发结构共振。 因此，控制回路通过五次样条或 S 形速率限制器来塑造期望的运动，使关节加速度 <span class="math inline">\(\ddot{q}\)</span> 保持在硬件的电流与电压限制之内 <span class="citation" data-cites="lynch2017modern">(<a href="#ref-lynch2017modern" role="doc-biblioref">Lynch 和 Park 2017年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-lynch2017modern" class="csl-entry" role="listitem">
+Lynch, Kevin M, 和 Frank C Park. 2017年. <em>Modern Robotics: Mechanics, Planning, and Control</em>. Cambridge University Press.
+</div><div id="ref-spong1987modeling" class="csl-entry" role="listitem">
+Spong, Mark W. 1987年. <span>《Modeling and control of elastic joint robots》</span>. <em>Journal of Dynamic Systems, Measurement, and Control</em> 109 (4): 310～19.
+</div></div><p>传动机构还会引入齿隙与柔性，使电机与负载解耦。 在换向时，电机轴先越过机械间隙，随后齿面才啮合到相反侧，而轮齿与柔轮中的扭转柔性（<a href="#fig-02-real-strain-wave-gear" class="quarto-xref">图&nbsp;3</a>）使连杆成为一个弹性系统而非刚性杆 <span class="citation" data-cites="spong1987modeling">(<a href="#ref-spong1987modeling" role="doc-biblioref">Spong 1987年</a>)</span>，其柔性关节模型在 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_control.html#sec-appendix-control-flexible-joints">Flexible joint dynamics and singular perturbations</a></strong> 中推导。 不连续的扭矩阶跃会激发这种弹性，并可能使传动机构进入极限环颤振。 电机侧编码器会掩盖死区，因为电机平滑转动而输出保持不动，因此关节位置 <span class="math inline">\(q_{\text{out}}\)</span> 偏离 <span class="math inline">\(q_{\text{motor}} / N\)</span> 一个随负载变化的误差 <span class="math inline">\(\delta_{\text{lost}}\)</span>。 控制器呈现连续跟踪，而末端执行器迟疑后受到一次冲量冲击，当齿合拢时；反复冲击最终导致疲劳断裂(<a href="#fig-02-real-broken-gear-tooth" class="quarto-xref">图&nbsp;4</a>)。</p>
+<div id="psp-body-impedance-control" class="callout callout-perspective" title="阻抗控制：接触安全性">
+<p></p><details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.1: 阻抗控制：接触安全性</strong></summary><div>若控制器驱动机械臂朝向刚性环境中的目标坐标（接触刚度 <span class="math inline">\(k \ge 10^5\text{ N/m}\)</span>），位置误差 <span class="math inline">\(\Delta x = 1\text{ mm}\)</span> 会在毫秒内使接触力升至 <span class="math inline">\(F = k \Delta x = 100\text{ N}\)</span>，同时逆变器以最大电流驱动负载对抗障碍物。 对于移动操作机器人，打开弹簧锁扣式笼门的夹爪遇到刚度为 4.0 × 10⁵ N/m 的击打板，一旦开始接触，力便按 <span class="math inline">\(F = k v t\)</span> 上升：在受保护的 0.03 m/s 接近速度下为 12 N/ms，在 0.10 m/s 下为 40 N/ms，相对于锁扣的 100 N 限值。<p></p>
+<p>阻抗控制 <span class="citation" data-cites="hogan1985impedance">(<a href="#ref-hogan1985impedance" role="doc-biblioref">Hogan 1985年</a>)</span> 将接触视为既非纯位置控制、也非纯力控制。 环境表现为导纳，接受力并产生位移，因此操作机被控制为阻抗，接受运动偏差并生成顺应性力（<span class="math inline">\(F = Z(v)\)</span>）。 关节的驱动控制器将位置设定值转换为 <strong>虚拟弹簧-阻尼系统</strong>： <span class="math display">\[F_{\text{contact}} = K_p (x_{\text{des}} - x) + K_d (\dot{x}_{\text{des}} - \dot{x})\]</span> 关节随后表现为一种可编程悬架，具有刚度 <span class="math inline">\(K_p\)</span> 与阻尼 <span class="math inline">\(K_d\)</span>，在接触时发生让位，并持续限制力足够长的时间，以便高层软件检测到接触并重新规划。</p>
+</div></details>
+</div>
+<div class="no-row-height column-margin column-container"><div id="ref-hogan1985impedance" class="csl-entry" role="listitem">
+Hogan, Neville. 1985年. <span>《Impedance control: An approach to manipulation: Part I–Theory, Part II–Implementation, Part III–Applications》</span>. <em>Journal of Dynamic Systems, Measurement, and Control</em> 107 (1): 1～24.
+</div></div><div id="fig-02-real-strain-wave-gear" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="机器人谐波齿轮传动组件的注释图，突出显示波发生器、柔轮、刚轮以及反射惯量不变量。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-real-strain-wave-gear-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/jpg/fig02_real_strain_wave_gear_annotated.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="图&nbsp;3: 谐波齿轮组件：机器人谐波传动组件集：(1) 带柔性滚珠轴承的椭圆波发生器，(2) 带外齿的柔性杯形柔轮，(3) 带内齿的刚轮，以及 (4) 传动系统中支配折算转子惯量的不变量关系 J_{\text{ref}} = N^2 J_{\text{rotor}}。 弹性变形可在高减速比 50:1 至 160:1 下实现零初始齿隙，但会引入扭转变形柔度、迟滞以及突然冲击载荷下的轮齿疲劳损伤风险。"><img src="images/jpg/fig02_real_strain_wave_gear_annotated.jpg" class="img-fluid figure-img" style="width:70.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-real-strain-wave-gear-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: <strong>谐波齿轮组件</strong>：机器人谐波传动组件集：(1) 带柔性滚珠轴承的椭圆波发生器，(2) 带外齿的柔性杯形柔轮，(3) 带内齿的刚轮，以及 (4) 传动系统中支配折算转子惯量的不变量关系 <span class="math inline">\(J_{\text{ref}} = N^2 J_{\text{rotor}}\)</span>。 弹性变形可在高减速比 <span class="math inline">\(50:1\)</span> 至 <span class="math inline">\(160:1\)</span> 下实现零初始齿隙，但会引入扭转变形柔度、迟滞以及突然冲击载荷下的轮齿疲劳损伤风险。
+</figcaption>
+</figure>
+</div>
+<div id="fig-02-real-broken-gear-tooth" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="一张标注的宏观照片，展示断裂的传动齿轮齿，标出完好工作面、齿根圆角裂纹萌生处、带颗粒解理断面的剪切齿片，以及折算转子惯量公式。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-real-broken-gear-tooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/jpg/fig02_real_broken_gear_tooth_annotated.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="图&nbsp;4: 高反射惯性下的轮齿冲击断裂：NASA 格伦研究中心 高扭矩传动齿轮齿在循环应力测试下的宏观断裂：[①] 完整的齿轮齿面支撑连续驱动接触；[②] 齿根圆角处的应力集中（\sigma_b = \frac{K_v W_t}{b m Y}），循环拉伸由此引发微裂纹；[③] 剪切断裂的齿片，具有颗粒状疲劳条纹，并在冲击载荷下发生突发性解理断裂；以及 [④] 反射转子惯性（J_{\text{ref}} = N^2 J_{\text{rotor}}）。 高减速比降低反向传动性，并可能在冲击下增大齿根应力；柔顺性与接触路径决定有多少能量传递到任一齿上。"><img src="images/jpg/fig02_real_broken_gear_tooth_annotated.jpg" class="img-fluid figure-img" style="width:65.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-real-broken-gear-tooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;4: <strong>高反射惯性下的轮齿冲击断裂</strong>：NASA 格伦研究中心 高扭矩传动齿轮齿在循环应力测试下的宏观断裂：[①] 完整的齿轮齿面支撑连续驱动接触；[②] 齿根圆角处的应力集中（<span class="math inline">\(\sigma_b = \frac{K_v W_t}{b m Y}\)</span>），循环拉伸由此引发微裂纹；[③] 剪切断裂的齿片，具有颗粒状疲劳条纹，并在冲击载荷下发生突发性解理断裂；以及 [④] 反射转子惯性（<span class="math inline">\(J_{\text{ref}} = N^2 J_{\text{rotor}}\)</span>）。 高减速比降低反向传动性，并可能在冲击下增大齿根应力；柔顺性与接触路径决定有多少能量传递到任一齿上。
+</figcaption>
+</figure>
+</div>
+<p>传动方式的选择需要在连续扭矩密度与可反驱性之间进行权衡，而 <a href="#tbl-02-mechanical-drives" class="quarto-xref">表&nbsp;2</a> 对比了该范围中可反向传动与高减速比两端。 摆线减速器介于上述两端之间，其减速比在 <span class="math inline">\(30:1\)</span> 到 <span class="math inline">\(100:1\)</span> 之间，比谐波齿轮更能承受冲击。</p>
+<div id="tbl-02-mechanical-drives" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,18,20,40]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-02-mechanical-drives-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;2: <strong>执行器传动比权衡</strong>：减速比（<span class="math inline">\(N\)</span>）、反射转子惯量缩放（<span class="math inline">\(N^2\)</span>），以及由此对可反驱端与高减速比端学习到的控制策略产生的影响。
+</figcaption>
+<div aria-describedby="tbl-02-mechanical-drives-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">传动</th>
+<th style="text-align: left;">齿轮比（<span class="math inline">\(N\)</span>）</th>
+<th style="text-align: left;">反射惯性（<span class="math inline">\(N^2\)</span>）</th>
+<th style="text-align: left;">对已学策略的启示</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>准直接驱动（QDD）</strong></td>
+<td style="text-align: left;"><span class="math inline">\(3:1\text{--}10:1\)</span> (<span class="math inline">\(N \le 10\)</span>)</td>
+<td style="text-align: left;"><span class="math inline">\(N^2 \le 100\)</span>（低）</td>
+<td style="text-align: left;">可反向驱动；电机电流感知接触扭矩；可承受冲击。 直接驱动（<span class="math inline">\(N = 1\)</span>）是其极限，扭矩密度最低。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Strain Wave（谐波驱动）</strong></td>
+<td style="text-align: left;"><span class="math inline">\(50:1\text{--}160:1\)</span> (<span class="math inline">\(N \ge 50\)</span>)</td>
+<td style="text-align: left;"><span class="math inline">\(N^2 \ge 2500\text{--}25{,}600\)</span>（极端）</td>
+<td style="text-align: left;">零初始齿隙，结构紧凑；扭转柔顺，但在突发的齿剪切冲击下脆弱。</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>这种跨传动比的架构性分野决定了该具身形态的机械透明性与比转矩包络（<a href="#fig-02-actuator-torque-density-vs-gear-ratio" class="quarto-xref">图&nbsp;5</a>）。 在直接驱动关节（<span class="math inline">\(N = 1:1\)</span>）中，例如具有开创性的 CMU 直接驱动机械臂 <span class="citation" data-cites="asada1983design">(<a href="#ref-asada1983design" role="doc-biblioref">Asada 和 Kanade 1983年</a>)</span>，反射惯量可忽略（<span class="math inline">\(N^2 = 1\)</span>），从而消除了齿隙并实现了完美的机械可反驱性。 然而，由于电动机的输出转矩与定子铜体积和气隙半径成正比，直驱执行器很少超过 <span class="math inline">\(5\,\text{N}\cdot\text{m/kg}\)</span> 的连续比转矩密度，给机械臂带来沉重、笨重的连杆。 相反，经典工业机器人（如 KUKA LBR iiwa 或 Universal Robots UR5）和高负载工业机械采用高减速比谐波或摆线减速器（<span class="math inline">\(N = 100{:}1\text{ to }160{:}1\)</span>，即减速比为 100:1 至 160:1）。 虽然高减速比可将连续比转矩密度提升至 <span class="math inline">\(22\text{--}45\,\text{N}\cdot\text{m/kg}\)</span>，但它会带来极端的折算转子惯量惩罚（<span class="math inline">\(N^2 \ge 2{,}500\text{ to }25{,}600\)</span>，即折算惯量倍率的下限随减速比从 2,500 增至 25,600），使关节几乎不可反驱。 在意外接触或障碍物碰撞时，高速旋转转子的动能无法反驱电机；应力反而集中在齿轮根部圆角处，可能在数字转矩环介入之前发生灾难性的轮齿剪切破坏。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-asada1983design" class="csl-entry" role="listitem">
+Asada, Haruhiko, 和 Takeo Kanade. 1983年. <span>《Design of Direct-Drive Mechanical Arms》</span>. <em>ASME Journal of Vibration, Acoustics, Stress, and Reliability in Design</em> 105 (3): 312～16. https://doi.org/10.1115/1.3269094.
+</div><div id="ref-katz2019mini" class="csl-entry" role="listitem">
+Katz, Benjamin, Jared Di Carlo, 和 Sangbae Kim. 2019年. <span>《Mini Cheetah: A Platform for Dynamic Locomotion》</span>. <em>IEEE International Conference on Robotics and Automation (ICRA)</em>, 3295～301. https://doi.org/10.1109/ICRA.2019.8793865.
+</div></div><p>现代动态物理 AI 平台通过 <strong>准直驱（QDD）</strong> 驱动架构 <span class="citation" data-cites="seok2015design wensing2017proprioceptive katz2019mini">(<a href="#ref-seok2015design" role="doc-biblioref">Seok 等 2015年</a>; <a href="#ref-wensing2017proprioceptive" role="doc-biblioref">Wensing 等 2017年</a>; <a href="#ref-katz2019mini" role="doc-biblioref">Katz 等 2019年</a>)</span> 化解这一僵局。 通过高比转矩密度无框外转子无刷电机与低单级行星减速（<span class="math inline">\(N \le 10{:}1\)</span>）配合，QDD 架构将折算惯量倍率限制在 <span class="math inline">\(N^2 \le 100\)</span> 以下。 这保留了机械透明性，使得逆变器处测得的电机相电流可作为接触力的准确、低延迟代理量——该特性称为<strong>本体感知</strong>。 正如四足与人形里程碑（包括 MIT Cheetah 3、MIT Mini Cheetah、Unitree Go1/H1 与 Boston Dynamics Electric Atlas）所示，QDD 执行器在爆发性动态动作中安全吸收冲击的同时，实现了高达<span class="math inline">\(70\text{--}95\,\text{N}\cdot\text{m/kg}\)</span>的峰值间歇扭矩密度。</p>
+<div id="fig-02-actuator-torque-density-vs-gear-ratio" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="htb" data-fig-env="figure" alt="对驱动器比扭矩密度（0 至 135 N·m/kg）与传动减速比（1:1 至 250:1）的双对数图。 三个着色工况分别标示直驱、准直驱（N≤10）与高减速比工业（N≥50）。 数据点展示历史与现代机器人驱动器的连续与峰值扭矩包络，同时展示一条在右轴上按 N 平方缩放的指数型反射惯量曲线。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-actuator-torque-density-vs-gear-ratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="6">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-02-actuator-torque-density-vs-gear-ratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/7g/fkg91tq50f58kfmg7c65747r0000gn/T/ipykernel_91835/361687396.py:327: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()</code></pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-02-actuator-torque-density-vs-gear-ratio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a)
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig">
+图&nbsp;5: <strong>执行器动力学：机器人本体中的比转矩密度与传动齿轮比</strong>：所传递的机械扭矩密度（连续热<span class="math inline">\(S_1\)</span>额定值与峰值间歇爆发）与反射转子惯量倍率（<span class="math inline">\(J_{\text{refl}} / J_{\text{rotor}} = N^2\)</span>，右轴，对数刻度）在传动区间上的权衡。 区间 I：直驱（<span class="math inline">\(N=1{:}1\)</span>，百分之百可反驱，低扭矩密度<span class="math inline">\(&lt;5\,\text{N}\cdot\text{m/kg}\)</span>，例如 CMU 直接驱动机械臂 1983，Maxon EC90）。 区间 II：准直驱（QDD）／本体感知最佳工作区间（<span class="math inline">\(N \le 10{:}1\)</span>，<span class="math inline">\(N^2 \le 100\)</span>，连续<span class="math inline">\(15\text{--}35\,\text{N}\cdot\text{m/kg}\)</span>，峰值最高<span class="math inline">\(95\,\text{N}\cdot\text{m/kg}\)</span>，通过电机电流实现透明的接触感知，例如 MIT Cheetah 3、Mini Cheetah、Unitree Go1/H1、Boston Dynamics Electric Atlas）。 III 与 IV 型工况：高减速比刚性工业（谐波／摆线）与串联弹性驱动器（<span class="math inline">\(N \ge 50{:}1\)</span>、<span class="math inline">\(N^2 \ge 2{,}500\text{--}25{,}600\)</span>、不可反驱、冲击脆弱，例如 UR5、Franka Emika Panda、KUKA LBR iiwa、ANYdrive、Nabtesco RV）。
+</figcaption>
+</figure>
+</div>
+<p>接触主导型手臂要么采用可反向驱动的准直驱（QDD）执行器<span class="citation" data-cites="seok2015design wensing2017proprioceptive">(<a href="#ref-seok2015design" role="doc-biblioref">Seok 等 2015年</a>; <a href="#ref-wensing2017proprioceptive" role="doc-biblioref">Wensing 等 2017年</a>)</span>，要么在实时扭矩限幅与阻抗控制下运行。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-seok2015design" class="csl-entry" role="listitem">
+Seok, Sangok, Albert Wang, Meng Yee Chuah, Dong Jin Hyun, JaeJun Lee, David M. Otten, Jeffrey H. Lang, 和 Sangbae Kim. 2015年. <span>《Design principles for energy-efficient legged locomotion and implementation on the <span>MIT</span> Cheetah robot》</span>. <em>IEEE/ASME Transactions on Mechatronics</em> 20 (3): 1117～29.
+</div><div id="ref-wensing2017proprioceptive" class="csl-entry" role="listitem">
+Wensing, Patrick M., Albert Wang, Sangok Seok, David Otten, Jeffrey H. Lang, 和 Sangbae Kim. 2017年. <span>《Proprioceptive actuator design in the <span>MIT</span> Cheetah: Impact mitigation and high-bandwidth physical interaction for dynamic legged robots》</span>. <em>IEEE Transactions on Robotics</em> 33 (3): 509～22.
+</div></div><p>无论采用哪种方案，负载侧的位置或扭矩传感都会揭示由齿隙或轮齿损伤导致的负载侧测量值与电机编码器读数之间的差异，许可路径随后可以拒绝进一步的力指令并进入定义的降级模式。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 机械齿轮箱的疲劳循环次数决定了强化学习在 <strong><a href="../06_training/06_training.html#sec-training-learning-by-trial">试错学习</a></strong> 中的样本效率上限。</p>
+</div></div><p>接近电流与扭矩限值运行同样具有热力学代价。 每安培电流在加速转子惯量或维持峰值扭矩时，都会在铜绕组中耗散 <span class="math inline">\(I^2 R\)</span>，该热量积聚在执行器的热容量中，从而限制了峰值扭矩在绝缘击穿前能够持续的时间。</p>
+</section>
+<section id="sec-body-thermal-duty-cycles" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-body-thermal-duty-cycles">热工作占空比</h2>
+<p>在机械臂完全伸展至最大伸距时将负载保持静止，对关节式机械臂（如移动操作机器人的机械臂）提出了看似不高、实则具有欺骗性的要求。 要维持静止负载以抵抗重力，定子绕组必须持续通过相电流，从而主动将电能转化为不断累积的热量。<strong>热量在数秒内到达，却在数分钟内散出，因此占空比成为首要设计变量。</strong></p>
+<p>开关断开后，动量可以重新定向，磁通在数毫秒内衰减，但热量没有快速出口。 热容在时间上积分功率损耗，并保护两个材料阈值（<a href="#fig-02-real-burnt-motor-stator" class="quarto-xref">图&nbsp;6</a>）。 绕组绝缘按 IEC 60085 的等级评定，F 级连续运行热点额定温度为 <span class="math inline">\(155^\circ\text{C}\)</span>，H 级为 <span class="math inline">\(180^\circ\text{C}\)</span>；超过其额定值后，漆膜软化，直至相邻线匝短路并烧毁相绕组。 钕铁硼（<span class="math inline">\(\text{NdFeB}\)</span>）转子磁体在强定子磁场下于 <span class="math inline">\(80^\circ\text{C}\)</span> 与 <span class="math inline">\(150^\circ\text{C}\)</span> 之间发生不可逆退磁。</p>
+<div id="fig-02-real-burnt-motor-stator" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="受损电机定子的带标注照片，标注牌突出显示铜相绕组、介电槽衬、叠片定子铁芯与容纳转子的定子内孔。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-real-burnt-motor-stator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/jpg/fig02_real_burnt_motor_stator_annotated.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="图&nbsp;6: 定子绕组绝缘击穿：受损电动机定子的剖视图，显示关键热子系统：(1) 铜相绕组（主要 I^2 R 热源），(2) 电介质槽衬与 Nomex 绝缘击穿阈值（155^\circ\text{C}，F 级），(3) 叠片铁定子铁芯（C_{\text{th}} 与散热路径 \theta_{JA}），以及 (4) 转子孔腔处的气隙与磁体热极限（80^\circ\text{C}\text{--}150^\circ\text{C}）。（来源：工业机电诊断档案库，CC BY 4.0）。"><img src="images/jpg/fig02_real_burnt_motor_stator_annotated.jpg" class="img-fluid figure-img" style="width:85.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-real-burnt-motor-stator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;6: <strong>定子绕组绝缘击穿</strong>：受损电动机定子的剖视图，显示关键热子系统：(1) 铜相绕组（主要 <span class="math inline">\(I^2 R\)</span> 热源），(2) 电介质槽衬与 Nomex 绝缘击穿阈值（<span class="math inline">\(155^\circ\text{C}\)</span>，F 级），(3) 叠片铁定子铁芯（<span class="math inline">\(C_{\text{th}}\)</span> 与散热路径 <span class="math inline">\(\theta_{JA}\)</span>），以及 (4) 转子孔腔处的气隙与磁体热极限（<span class="math inline">\(80^\circ\text{C}\text{--}150^\circ\text{C}\)</span>）。（来源：工业机电诊断档案库，CC BY 4.0）。
+</figcaption>
+</figure>
+</div>
+<p>发热源于电流，焦耳耗散将 <span class="math inline">\(P_{\text{loss}}(t) = I^2(t) R(T)\)</span> 注入定子铜绕组。 该功率在加热绕组的热容与向机壳及周围空气传导之间分配（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems">Systems and Hardware</a></strong> 积分热方程并导出稳态解）。</p>
+<p>热容 <span class="math inline">\(C_{\text{th}}\)</span> 与热阻 <span class="math inline">\(\theta_{JA}\)</span> 表现得像一个 <strong>漏水桶</strong>。 焦耳损耗注入其中，铜与定子铁的热容决定桶的容积，<span class="math inline">\(\theta_{JA}\)</span> 决定排水口，热阻越大排水口越窄。 一次持续数秒的短时发热可迅速抬高温度，但只要温度始终低于绝缘额定温度，系统就能承受这一工况；而持续的保持转矩则会使温度不断升高，直至流入与流出达到平衡，若该平衡点高于额定值，漆膜便会失效。 由于热时间常数 <span class="math inline">\(\tau = \theta_{JA} C_{\text{th}}\)</span> 的量级为分钟级，而发热过程发生在秒级，耗散起到了低通滤波的作用，稳态温度则由平均损耗与热阻共同决定。</p>
+<p>在仿真中训练的策略优化的是转矩作为瞬时、零成本变量的奖励，因此它们可以无限制地保持重物负载、通过共收缩使关节变硬，或在不产生任何后果的情况下跨越接触边界发生颤振。 在硬件上，持续电流以初始速率使绕组发热 <span class="math inline">\(dT/dt \approx I^2 R / C_{\text{th}}\)</span>，随后传导才建立任何热平衡。 铜的正温度系数 （<span class="math inline">\(\alpha_{\text{Cu}} \approx 0.00393\text{ K}^{-1}\)</span>）加剧了这一成本。 从 20 °C 到 140 °C 的工程上限，相电阻按 47.2 percent 依 <span class="math inline">\(R(T) = R_0 [1 + \alpha_{\text{Cu}}(T - T_0)]\)</span> 上升，因此维持同样的转矩 <span class="math inline">\(\tau = K_t I\)</span> 所耗散的功率增加 47.2 percent，而此时散热效率最低，额外的热量又进一步提高了电阻。</p>
+<p>数据手册的热额定值是乐观的，因为它们是在一台不受约束、安装于大散热片并处于自由空气中的电机上测得的，环境温度为 <span class="math inline">\(20^\circ\text{C}\)</span> 或 <span class="math inline">\(25^\circ\text{C}\)</span>。 电机安装在密封机箱内，邻近功率电子器件、电池组和其余关节，因而失去对流气流，导致 <span class="math inline">\(\theta_{JA}\)</span> 升高；在自身绕组通电之前，邻近负载还可能将其局部环境温度提高到 <span class="math inline">\(45^\circ\text{C}\)</span> 至 <span class="math inline">\(55^\circ\text{C}\)</span>。 热裕量必须依据在封闭外壳条件下、相邻负载处于其<span class="math inline">\(P_{99}\)</span>功率耗散时测得的加热与冷却时间常数进行预算。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong>热与功率完整性预算的实时遥测数据，由第@sec-nervous-deterministic-fieldbuses 节所分析的确定性现场总线传输。</p>
+</div></div><p>由于热容量是对功率在时间上的积分，峰值扭矩<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>或峰值电流额定值若无四个参数即毫无意义：绕组初始温度<span class="math inline">\(T(0)\)</span>、允许的持续时间<span class="math inline">\(t_{\text{on}}\)</span>、环境温度<span class="math inline">\(T_{\text{amb}}\)</span>以及恢复时间<span class="math inline">\(t_{\text{off}}\)</span>。 一个能够输出三倍连续扭矩的执行器，只有在<span class="math inline">\(I^2 R\)</span>的积分保持在绝缘限值以下的裕量之内时才能持续输出该扭矩；该裕量从冷绕组起可维持数十秒，而从热饱和绕组起则仅为该时长的一个小部分（<a href="#nbk-body-thermal-burst-limits">1.2</a>）。</p>
+<div id="nbk-body-thermal-burst-limits" class="callout callout-notebook" title="冷启动与热启动下的瞬态热积累">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.2: 冷启动与热启动下的瞬态热积累</strong></summary><div>电机臂肩关节具有绕组电阻 <span class="math inline">\(R =\)</span> 1.2 Ω、集总热容 <span class="math inline">\(C_{\text{th}} =\)</span> 120 J/K 与安装热阻 <span class="math inline">\(\theta_{JA} =\)</span> 2.5 K/W，并运行于封闭环境 <span class="math inline">\(T_{\text{amb}} =\)</span> 40 °C 中，其 Class F 绝缘的额定温度为 155 °C。 热时间常数为 <span class="math inline">\(\tau = \theta_{JA} C_{\text{th}} =\)</span> 300 s。<p></p>
+<p><strong>问题</strong>：初始绕组温度如何影响三倍额定电流突发的持续时间，直至达到绝缘限值？</p>
+<p><strong>数学</strong>：</p>
+<ol type="1">
+<li><strong>连续平衡</strong>：在 <span class="math inline">\(I_{\text{cont}} =\)</span> 5 A 下，绕组稳定于 <span class="math inline">\(T_{\text{eq}} = T_{\text{amb}} + I_{\text{cont}}^2 R\,\theta_{JA} =\)</span> 115 °C，低于限值。</li>
+<li><strong>峰值突发</strong>：在 <span class="math inline">\(I_{\text{peak}} =\)</span> 15 A 处，耗散上升为九倍，达到 <span class="math inline">\(P_{\text{peak}} =\)</span> 270 W，其渐近温度 <span class="math inline">\(T_\infty = T_{\text{amb}} + P_{\text{peak}}\theta_{JA} =\)</span> 715 °C 远高于限值。</li>
+<li><strong>生存边界</strong>：在<span class="math inline">\(T(t) = T_\infty - (T_\infty - T(0))\,e^{-t/\tau}\)</span>条件下，达到极限所需时间为 <span class="math display">\[t_{\text{limit}} = \tau \ln\frac{T_\infty - T(0)}{T_\infty - T_{\text{limit}}}\]</span> 由此得到 56.0 s（冷启动，环境温度为起点）和 20.7 s（热浸泡启动，起点为 <span class="math inline">\(T_{\text{eq}}\)</span>）。</li>
+</ol>
+<p><strong>结论</strong>：热饱和关节的突发持续时间比冷启动关节缩短了63.1 percent，因此峰值扭矩无法在不跟踪热历史的情况下进行预算。</p>
+</div></details>
+</div>
+<p>对于周期为<span class="math inline">\(t_{\text{cycle}} = t_{\text{on}} + t_{\text{off}}\)</span>的重复循环，工程上限<span class="math inline">\(T_{\max} =\)</span> 140 °C设定了一个循环平均功率上限<span class="math inline">\(\bar{P}_{\max} = (T_{\max} - T_{\text{amb}})/\theta_{JA} =\)</span> 40 W。 在<span class="math inline">\(t_{\text{on}}\)</span>期间的峰值耗散与<span class="math inline">\(t_{\text{off}}\)</span>期间的零耗散下，该平均功率判据将占空比<span class="math inline">\(D = t_{\text{on}}/t_{\text{cycle}}\)</span>限定为 <span class="math display">\[D \le \frac{T_{\max} - T_{\text{amb}}}{P_{\text{peak}} \theta_{JA}}\]</span> 此处为 14.8 percent，因此一次 3 s 突发需要恢复 <span class="math inline">\(t_{\text{off}} = t_{\text{on}}(1 - D)/D \approx\)</span> 17.3 s。 平均值并不约束最热的瞬间。 在固定电阻的一阶模型中，周期峰值遵循 <span class="math display">\[T_{\text{peak}} - T_{\text{amb}} = P_{\text{peak}}\theta_{JA}\,\frac{1 - e^{-t_{\text{on}}/\tau}}{1 - e^{-t_{\text{cycle}}/\tau}}\]</span> 而按该判据筛选出的调度，其峰值温度达到 142.7 °C，已超过温度上限，且这还未计入 <span class="math inline">\(R(T)\)</span> 上升带来的额外温升。 平均功率筛选是乐观的，突发调度只有依据瞬态热点温度轨迹校核通过后才可接受。<a href="#fig-02-motor-torque-speed-envelope" class="quarto-xref">图&nbsp;7</a> 区分连续工作制 <span class="math inline">\(S_1\)</span> 与间歇周期工作制 <span class="math inline">\(S_3\)</span>，其峰值加速度同时取决于初始温度与冷却时间。</p>
+<div id="fig-02-motor-torque-speed-envelope" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="永磁同步电机的转矩-转速特性曲线，对比连续热额定区与间歇峰值加速区，并附一张显示工作脉冲期间温升与冷却衰减的相邻曲线图。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-motor-torque-speed-envelope-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig02_motor_torque_speed_envelope.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="图&nbsp;7: 电机转矩-转速工作区：永磁同步电机的转矩-转速平面，将热平衡下的连续工作制 S_1 与峰值加速下的间歇周期工作制 S_3 分开，并包含峰值突发期间的指数热积累轨迹与恢复期间的传导冷却。 绕线热极限约束的是可持续占空比，而非峰值逆变器电流。"><img src="images/svg/fig02_motor_torque_speed_envelope.svg" class="img-fluid figure-img" style="width:100.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-motor-torque-speed-envelope-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;7: <strong>电机转矩-转速工作区</strong>：永磁同步电机的转矩-转速平面，将热平衡下的连续工作制 <span class="math inline">\(S_1\)</span> 与峰值加速下的间歇周期工作制 <span class="math inline">\(S_3\)</span> 分开，并包含峰值突发期间的指数热积累轨迹与恢复期间的传导冷却。 绕线热极限约束的是可持续占空比，而非峰值逆变器电流。
+</figcaption>
+</figure>
+</div>
+<p>因此，安全微控制器运行一个热观测器，将实测相电流积分到估计热点温度。 当估计值越过上限时，观测器降低电流限值；若限值被突破，则在介质击穿之前以热关断否决该策略。 静态保持显示，观测器为何必须建模铜的反馈（<a href="#nbk-body-thermal-stall-derating">1.3</a>）。</p>
+<div id="nbk-body-thermal-stall-derating" class="callout callout-notebook" title="静态保持转矩与热停转降额">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.3: 静态保持转矩与热停转降额</strong></summary><div>机械臂肘部以 <span class="math inline">\(\tau_{\text{hold}} =\)</span> 42.5 N·m 的保持转矩在 <span class="math inline">\(\omega = 0\)</span> 停转，经由 <span class="math inline">\(N =\)</span> 50:1 的摆线齿轮箱 <span class="math inline">\(\eta =\)</span> 0.85。 其电机具有 <span class="math inline">\(K_t =\)</span> 0.10 N·m/A，冷态电阻 <span class="math inline">\(R_0 =\)</span> 0.80 Ω（在 <span class="math inline">\(T_0 =\)</span> 20 °C 下），以及 <span class="math inline">\(\theta_{JA} =\)</span> 1.80 K/W，Class F 限值为 155 °C，位于未通风的肢体环境中，环境温度为 <span class="math inline">\(T_{\text{amb}} =\)</span> 40 °C。<p></p>
+<p><strong>问题</strong>：随着铜的电阻随温度升高，停转绕组将稳定在何处，以及何种保持转矩在热学上可持续？</p>
+<p><strong>数学</strong>：</p>
+<ol type="1">
+<li><strong>停转电流</strong>： <span class="math inline">\(\tau_{\text{motor}} = \tau_{\text{hold}}/(\eta N) =\)</span> 1 N·m，因此 <span class="math inline">\(I = \tau_{\text{motor}}/K_t =\)</span> 10 A 与冷态耗散为 <span class="math inline">\(P_0 = I^2 R_0 =\)</span> 80 W。</li>
+<li><strong>失控（Runaway）</strong>：在 <span class="math inline">\(R(T) = R_0[1 + \alpha_{\text{Cu}}(T - T_0)]\)</span> 下，稳态温升满足 <span class="math display">\[\Delta T = I^2 R_0 \left[1 + \alpha_{\text{Cu}}(T_{\text{amb}} - T_0 + \Delta T)\right] \theta_{JA}\]</span> 该式求值为 <span class="math inline">\(\Delta T =\)</span> 155.32 <span class="math inline">\(+\)</span> 0.5659 <span class="math inline">\(\Delta T\)</span>，因此 <span class="math inline">\(\Delta T =\)</span> 357.8 K 与绕组将稳定在 397.8 °C 附近，远高于其额定值。</li>
+<li><strong>降额（Derating）</strong>：在极限条件下，允许温升为 115 K，因此可持续耗散为 <span class="math inline">\(P_{\max} = \Delta T_{\max}/\theta_{JA} =\)</span> 63.89 W。 在绕组高温电阻 <span class="math inline">\(R(T_{\text{limit}}) \approx\)</span> 1.224 Ω 下，该值允许 <span class="math inline">\(I_{\max} = \sqrt{P_{\max}/R} \approx\)</span> 7.22 A 以及保持 <span class="math inline">\(\tau_{\text{hold,max}} = \eta N K_t I_{\max} \approx\)</span> 30.7 N·m。</li>
+</ol>
+<p><strong>结果（Result）</strong>：若无控制，堵转会使绕组温度趋向 397.8 °C，而保持在绝缘额定值以内需要 27.8 percent 的降额，保持转矩从 42.5 N·m 到 30.7 N·m。 连续重力保持属于摩擦制动或配重，不属于堵转电流。</p>
+</div></details>
+</div>
+<p>为产生这些热负荷而提供的电流脉冲，同样会加剧上游供电，使负担从铜导体上的热负荷转移到电源母线上的瞬态电流。</p>
+</section>
+<section id="sec-body-power-integrity" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-body-power-integrity">电气功率完整性</h2>
+<p>当移动机械臂急转向以避免碰撞时，每一个驱动电机、关节逆变器和加速器都会同时从同一直流配电母线索取峰值电流。 在仿真中，电流来自理想化电源。 在硬件上，供电受有限容量、源阻抗和瞬态电压稳定性的约束。<strong>在运动中掉电的机器会物理失效；供电是一种共享资源。</strong></p>
+<p>电源轨电压跌落、再生过压和热积累，是同一有界能量网络在不同时间尺度上的表现。 三者之中，电压响应最快：只要瞬时电流需求超过电源在该时刻能够提供的电流，电压便会在微秒到毫秒量级内跌落。 计算、传感与电机逆变器共用同一母线，因此当策略指令多个关节的协调加减速时，它们电流之和会改变机器上每个节点所获得的电压。</p>
+<p>电源无法提供任意的电流阶跃。 每条母线都具有非零的源阻抗<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>，即电池内阻与线束、连接器和保护开关的电阻之和；大容量电容仅能在局部缓冲高频瞬态。 因此，总电流的快速阶跃会立即使母线电压跌落，其成因包括 <span class="math inline">\(R_{\text{bus}}\)</span> 上的电阻压降、线束电感 <span class="math inline">\(L_{\text{bus}}\)</span> 上的感应反电动势，以及局部电容的放电（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems">Systems and Hardware</a></strong> 推导这一瞬态跌落）。 若跌落幅度越过欠压锁定阈值，监督芯片将触发掉电复位，使机器在运动过程中停机。</p>
+<p>该复位将电气故障转化为机械故障。 电压监督电路拉低微控制器与栅极驱动器上的复位线，时钟停止，寄存器配置丢失，通信总线浮空。 恰在复位前发出的加速指令在栅极驱动器级失效之前仍保持物理有效。 若驱动器随后浮空，相电流停止，转矩降为零，机体在重力与惯性作用下漂移至工件或硬限位。 若改为通过短接低侧开关进行动态制动，则反电动势（<span class="math inline">\(e_{\text{bemf}} = K_e \omega\)</span>）会产生一种立即且剧烈的反向转矩，使机械结构在关节限位处受到猛烈冲击。</p>
+<p>断电属于不受控的状态跃迁，而非自动回到安全状态。 断电会使执行器处于三种无动力状态之一，即自由滑行、相短路动态制动或弹簧抱闸机械制动，且每种状态各自对应一种不同的机械行为。 电磁式摩擦制动需要 30 ms 到 80 ms 的时间，才能使机械弹簧克服磁线圈衰减并压紧摩擦片；在此期间，重力使上方摆臂向下加速。 相短路动态制动类似于粘性流体阻尼，提供与速度成正比的阻力，但在零速时不产生任何保持扭矩。 自由滑行只是允许重力在无约束下加速关节，不产生任何阻力。 机器在电气切断后所遵循的轨迹必须在满载机械载荷条件下实测，而不能从电路图中推导。 选择机器应进入的哪个安全回退状态属于系统安全架构 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement">安全执行</a></strong>，但无动力关节的物理动力学是身体不可更改的机械约束。</p>
+<p>减速使母线趋向其对侧边界，即过压，因为运动质量中储存的动能返回该处。 <strong>制动将机械能转换为电能，由供电网络吸收或耗散。</strong> 若电源无法接受反向电流，再生能量便可依据 <span class="math inline">\(\frac{1}{2} C_{\text{bus}} (V_{\text{final}}^2 - V_{\text{initial}}^2) = E_{\text{regen}}\)</span> 为本地直流母线充电（参见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems">Systems and Hardware</a></strong>）。 该关系在理想化假设下给出仅含电容的端点，而非电压波形。 保护必须在母线超过逆变器与变换器额定值之前将能量旁路。<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<p>电源完整性是一项架构约束。 该设计在加速器与驱动器之间协调设定功率预算和电流变化率限制；权限路径仲裁同时发生的多轴加速，使它们的 <span class="math inline">\(dI/dt\)</span> 暂态不会叠加；制动斩波器在紧急制动期间保护逆变器免受再生反馈影响。<a href="#nbk-body-dc-bus-power-integrity">1.4</a> 兼顾该预算的两个方面——轨压的下陷与制动时的再生尖峰——于移动机械手的电池轨。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/svg/margin_pdn_voltage_droop_envelope.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="images/svg/margin_pdn_voltage_droop_envelope.svg" class="img-fluid" style="width:100.0%" alt="在轨压标尺上的两条水平条，对照 稳压器的 18 V 失稳电压界限。 从 24 V 满充轨压出发，70 A 阶跃使电压跌落 5.3 V，但仍高于失稳电压界限。 从 21.5 V 电池低电压点出发，仅 4.2 V 的欧姆压降项就使轨压降至 18 V 失稳电压界限以下，低于该界限的部分标为红色。"></a></p>
+<p><em>推理与驱动共同产生的电流阶跃所引起的压降处于满充时轨压的余量以内；从耗尽的电池出发，仅该阶跃引起的持续欧姆压降就足以使轨压降至稳压器的失稳电压界限以下。</em></p>
+</div></div><div id="nbk-body-dc-bus-power-integrity" class="callout callout-notebook" title="直流母线电压跌落与再生过压">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.4: 直流母线电压跌落与再生过压</strong></summary><div>移动操作机器人的电池向一条标称 24 V 控制轨供电，该控制轨承载驱动逆变器、机械臂的关节驱动器，以及为其应用处理器供电的负载端稳压器件。<p></p>
+<p><strong>问题</strong>：在推理突发与驱动电机同时出现的电流阶跃，以及随后从驱动速度上限开始制动停车的过程中，该轨是否保持在稳压器件和电机逆变器的运行限值之内？</p>
+<p><strong>数学</strong>：</p>
+<ol type="1">
+<li><strong>参数</strong>：
+<ul>
+<li>机器质量、移动速度、可信减速率：<span class="math inline">\(m =\)</span> 368 kg（上界，满载料架），<span class="math inline">\(v =\)</span> 1.5 m/s，<span class="math inline">\(a_{\text{brake}} =\)</span> 2 m/s²</li>
+<li>轨线特性：<span class="math inline">\(V_{\text{rail, nom}} =\)</span> 24 V，线束电阻 <span class="math inline">\(R_{\text{bus}} =\)</span> 60 mΩ，寄生电感 <span class="math inline">\(L_{\text{bus}} =\)</span> 2 μH，总线链路电容 <span class="math inline">\(C_{\text{bus}} =\)</span> 22,000 μF</li>
+<li>工作限值：负载端稳压器的最低工作电压阈值 <span class="math inline">\(V_{\text{uvlo}} =\)</span> 18 V，逆变器 MOSFET 击穿 <span class="math inline">\(V_{\text{breakdown}} =\)</span> 40 V</li>
+</ul></li>
+<li><strong>暂降</strong>：
+<ul>
+<li>作为示例性的同时负载，两台驱动电机与机械臂的关节驱动器在该轨线上合计增加 66 A，而应用处理器在该轨线上增加 4 A。 它们的总阶跃量为 <span class="math inline">\(\Delta I =\)</span> 70 A，历时 <span class="math inline">\(\Delta t =\)</span> 0.5 ms（<span class="math inline">\(dI/dt = 1.4 \times 10^{5}\,\text{A/s}\)</span>）。 该示例假设此阶跃期间计算供电轨不具备独立的保持供电能力。</li>
+<li>暂态电压跌落横跨电阻、电感和电容各项计算： <span class="math display">\[\Delta V_{\text{droop}} \approx \Delta I R_{\text{bus}} + L_{\text{bus}} \left(\frac{dI}{dt}\right) + \frac{\Delta I \Delta t}{2 C_{\text{bus}}}\]</span> <span class="math display">\[\Delta V_{\text{droop}} = 4.20 V + 0.28 V + 0.80 V = 5.28 V\]</span></li>
+<li>满充状态下的最低轨电压： <span class="math display">\[V_{\text{rail, min}} = 24 V - 5.28 V = 18.72 V\]</span></li>
+<li>供电轨电压相对于稳压器最低工作电压阈值的裕量为 6 V，而模型计算的 5.28 V 电压跌落后，剩余裕量为 0.72 V。 电感和电容项仅在上升过程中存在，而欧姆项随负载持续存在，<a href="#sec-body-fallacies-pitfalls" class="quarto-xref">节&nbsp;1.9</a> 中的共轨谬误紧随其后，源于耗尽的电池。</li>
+</ul></li>
+<li><strong>再生尖峰</strong>：
+<ul>
+<li>从驱动速度上限开始制动停车时，满载机器的动能必须被耗散： <span class="math display">\[E_k = \tfrac{1}{2} m v^2 = \tfrac{1}{2}\,(368 kg)(1.5 m/s)^2 = 414 J\]</span></li>
+<li>若电池管理系统断开充电输入，且有一示意的动能 75 percent 返回母线（<span class="math inline">\(E_{\text{regen}} =\)</span> 310.5 J），则无保护、无损耗且仅由电容吸收能量的能量平衡将结束于： <span class="math display">\[V_{\text{final}} = \sqrt{V_{\text{rail, nom}}^2 + \frac{2 E_{\text{regen}}}{C_{\text{bus}}}} \approx 169.7 V\]</span></li>
+<li><em>失效机制</em>：母线在到达该终点之前，早已越过 40 V 的开关额定值。</li>
+</ul></li>
+<li><strong>制动斩波器的容量设计</strong>：
+<ul>
+<li>在恒定减速度下，再生功率在停车过程中由峰值线性降至零，停车持续 <span class="math inline">\(t_{\text{stop}} = v / a_{\text{brake}} =\)</span> 750 ms。 该三角形下的面积为 <span class="math inline">\(E_{\text{regen}}\)</span>，因此 <span class="math inline">\(V_{\text{clamp}} =\)</span> 30 V 的设计必须应对峰值： <span class="math display">\[P_{\text{regen, peak}} \approx \frac{2 E_{\text{regen}}}{t_{\text{stop}}} = 828 W\]</span></li>
+<li>将峰值功率旁路所需的最大斩波器电阻： <span class="math display">\[R_{\text{brake}} \le \frac{V_{\text{clamp}}^2}{P_{\text{regen, peak}}} \approx 1.09 Ω\]</span></li>
+<li><em>组件筛选</em>：一个标称 1 kW 脉冲额定值的 1 Ω 电阻器是一个候选项。 先核对其 310.5 J 脉冲能量与温度限值、斩波开关的安全工作区，以及针对实际制动曲线的钳位响应，再将该吸收支路视为保护路径。</li>
+</ul></li>
+</ol>
+<p><strong>结果</strong>：满充时，重合的阶跃使轨电压达到 18.72 V，仅比 18 V 稳压器最低工作电压阈值高 0.72 V，因此耗尽的电池会抹去裕量。 无缓冲的再生制动会使母线电压超过 40 V MOSFET 额定值，这需要采用动态制动斩波器，其电阻不超过 1.09 Ω，并吸收 828 W 峰值。</p>
+<p><strong>系统洞见</strong>：机械运动与电功率双向耦合：加速需要电容保持电压以防止欠压，而减速需要主动动态制动以防止硅器件过压损坏。</p>
+</div></details>
+</div>
+<div id="chk-body-bus-droop-regen" class="callout callout-checkpoint" title="五个物理预算">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 1.1: 五个物理预算</strong></summary><div>
+<p>在为一台装配好的机器测量这些极限之前，先验证你对五个预算的理解：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>新鲜度截止期限</strong>：你能计算以 0.20 m/s 的速度随取件站传送带运动的杯子所允许的最大测量年龄吗（抓取容差为 15 mm，而初始估计已经消耗了 3 mm）？并请解释，为什么这个年龄要从传感器曝光开始计算，而不是从推理开始计算；以及为什么底盘为站立的人停车时，反而将测量年龄折算为盲行距离？</label></li>
+<li><label><input type="checkbox"><strong>速度上限</strong>：你能解释为什么将制动前的延迟时间翻倍会使停车距离线性增加，而将行进速度翻倍会使制动项按平方增加吗？以及为什么允许的最大速度是 <span class="math inline">\(d_{\text{stop}} \le D_{\text{clear}}\)</span> 的正根？</label></li>
+<li><label><input type="checkbox"><strong>转动惯量匹配</strong>：你能解释为什么使连杆加速度最大的减速比，会让折算后的转子转动惯量等于负载转动惯量（<span class="math inline">\(N^2 J_{\text{rotor}} = J_{\text{load}}\)</span>）吗？以及为什么将减速箱按静态扭矩做得过大，反而会降低动态关节加速度？</label></li>
+<li><label><input type="checkbox"><strong>热边界与失控</strong>：你能解释为什么执行器能在数秒内产生三倍的额定扭矩，但若持续数分钟保持该状态，却会烧毁其绕组绝缘，以及铜的电阻温度系数（<span class="math inline">\(\alpha_{\text{Cu}}\)</span>）如何将持续堵转转化为失控？</label></li>
+<li><label><input type="checkbox"><strong>轨压跌落与再生制动</strong>：你能解释当计算电流与驱动电流同时阶跃时，如何通过电阻、电感和电容耗尽使共用母线发生跌落，以及为什么从速度制动时会将能量泵回母线，而必须由制动斩波器将其旁路？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-body-measuring-limits" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-body-measuring-limits">测量机器自身的极限</h2>
+<p>在执行器集成到底盘之前，先在测功机台（<a href="#fig-02-real-motor-dyno-bench" class="quarto-xref">图&nbsp;8</a>）上进行标定。 软件将参数视为配置文件中的标称常量，但在物理系统工程中，<strong>一项无法说明其仪器、百分位和样本数量的测量，无法支撑后续论证。</strong></p>
+<p>一次测量始于它所将要约束的决策，即权限路径中的决策，这确定了被测物理量、观测点、传感器带宽、分辨率和参考时钟。 例如，要建立移动操作臂可信的减速能力，需要峰值相电流以及从制动指令发出瞬间起的减速轨迹，由一台隔离电流探头以 <span class="math inline">\(100\text{ kHz}\)</span> 采样、以及共用硬件时间基准的轮速编码器共同捕获；使用一台平均型台式仪表则得不到任何可用的数值。 一台模拟带宽低于电气上升时间的仪表会衰减真实的瞬态峰值，而建立在该峰值之上的裕度，依赖的是测量伪影而非机器本身。</p>
+<div id="fig-02-real-motor-dyno-bench" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="图注：安装在 NASA Armstrong 飞行研究中心光电测功试验台上的仪表化电动马达，可见耦合扭矩传感器与传感器布线。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-real-motor-dyno-bench-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/jpg/fig02_real_motor_dyno_bench.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="图&nbsp;8: 电动马达测功台：位于 NASA Armstrong 飞行研究中心的高带宽执行器表征测试台。 对峰值扭矩饱和、电气时间常数（\tau_e = L/R）、连续温升（\Delta T = P_{\text{loss}} \theta_{JA}）以及再生功率反馈进行直接实测，需要将多通道力传感器、光电编码器和隔离电流探头同步到同一硬件时间基准上，而不是依赖制造商目录中的额定值。（来源：NASA，公有领域）。"><img src="images/jpg/fig02_real_motor_dyno_bench.jpg" class="img-fluid figure-img" style="width:85.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-real-motor-dyno-bench-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;8: <strong>电动马达测功台</strong>：位于 NASA Armstrong 飞行研究中心的高带宽执行器表征测试台。 对峰值扭矩饱和、电气时间常数（<span class="math inline">\(\tau_e = L/R\)</span>）、连续温升（<span class="math inline">\(\Delta T = P_{\text{loss}} \theta_{JA}\)</span>）以及再生功率反馈进行直接实测，需要将多通道力传感器、光电编码器和隔离电流探头同步到同一硬件时间基准上，而不是依赖制造商目录中的额定值。（来源：NASA，公有领域）。
+</figcaption>
+</figure>
+</div>
+<p>每个探头都会干扰其所观测的过程。 被动电压探头会加载高频走线，串联电流分流器会使母线电压跌落至足以提前触发欠压保护的程度，而电机外壳内的热电偶则会改变其传热路径。 因此，仪表不确定度是一项复合预算，而非校准表上给出的单一容差，它综合了传感器线性度、量化误差、随频率变化的相移、探头加载效应以及采集通道之间的时钟漂移。 当对具有 <span class="math inline">\(0.05^\circ\)</span> 量化误差的光学编码器以 <span class="math inline">\(1\text{ kHz}\)</span> 的采样率进行采样，并通过离散后向差分计算关节角速度时，数值微分噪声会引入数度每秒量级的速度方差，该方差完全存在于测量链路中，而非机械关节本身。</p>
+<p>脱离其测试语境，任何限值都毫无意义。 每一条已记录的限值都须说明该次运行的载荷、环境温度、供电电压、外壳状态、固件版本以及并发计算负载。 在环境温度为<span class="math inline">\(20^\circ\text{C}\)</span>的开放台面上测得的热时间常数，可能与同一执行器在阳光下、环境温度为<span class="math inline">\(45^\circ\text{C}\)</span>的密封整流罩中测得的热时间常数相差一个数量级；而一份省略了电机堵转期间视觉语言模型推理<span class="citation" data-cites="brohan2023rt1 brohan2023rt2">(<a href="#ref-brohan2023rt1" role="doc-biblioref"><span class="nocase">Brohan, Brown, Carbajal, Chebotar, Dabis, 等</span> 2023年</a>; <a href="#ref-brohan2023rt2" role="doc-biblioref"><span class="nocase">Brohan, Brown, Carbajal, Chebotar, Chen, 等</span> 2023年</a>)</span>是否正在运行的供电母线表征，描述的是一块闲置板卡，而非完整算力与峰值扭矩的总功耗。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-brohan2023rt1" class="csl-entry" role="listitem">
+<span class="nocase">Brohan, Anthony, Noah Brown, Justice Carbajal, Yevgen Chebotar, Joseph Dabis, Chelsea Finn, Keerthana Gopalakrishnan, 等</span>. 2023年. <span>《<span>RT-1</span>: <span>Robotics Transformer</span> for real-world control at scale》</span>. <em>Robotics: Science and Systems (RSS)</em>. https://doi.org/10.15607/RSS.2023.XIX.025.
+</div><div id="ref-brohan2023rt2" class="csl-entry" role="listitem">
+<span class="nocase">Brohan, Anthony, Noah Brown, Justice Carbajal, Yevgen Chebotar, Xi Chen, Krzysztof Choromanski, Tianli Ding, 等</span>. 2023年. <span>《Rt-2: Vision-language-action models transfer web knowledge to robotic control》</span>. <em>arXiv preprint arXiv:2307.15818</em>.
+</div></div><p>凡规范机器的每个数字，都是直接测量、由测量值经明确模型推导出的数值、数据手册额定值，或举例说明；只有前两类可以支撑安全裕度或超时。 设计师设定的预算，例如保护间隙 <span class="math inline">\(\delta_{\text{margin}}\)</span>，则属于选定值，只有在核验其符合实测数值所限定的范围之后才产生约束作用（参见读者指南）。</p>
+<p>测试期间未发生失效，在统计上界定了失效率；它并不构成安全性。 若移动机械臂在负载条件下完成 <span class="math inline">\(n =\)</span> 3,000 次停止且未发生欠压或超程，则数据仅能支持每次停止的失效率低于约 <span class="math inline">\(3/n\)</span> <strong><a href="../07_evaluation/07_evaluation.html#sec-evaluation-closed-loop-survival">二十次干净运行能确立什么</a></strong>，即在 95 percent 置信度下约为每 1,000 次停止发生一次失效，且仅当试验相互独立且平稳时。 绕组在连续试验中发热、齿轮发生磨损，会使连续试验彼此相关且非平稳；因此，在较凉的早晨跑同一组停止，对下午的情况毫无说明力，因为此时绕组温度更高、电阻更大、峰值扭矩更低。</p>
+<p>因此，表征是一种持续记录，会随着机器老化而重新建立，因为物理极限随运行时间漂移，这一过程称为 <strong>全生命周期退化</strong>。 制动片摩擦釉化与轮胎花纹磨损会劣化可持续减速度上限 <span class="math inline">\(a_{\text{brake}}\)</span>；锂离子电池组的化学老化会增大内部直流母线阻抗 <span class="math inline">\(R_{\text{bus}}\)</span>，加剧动态机动过程中的电压跌落（<span class="math inline">\(\Delta V_{\text{droop}}\)</span>）；机械齿轮齿面磨损则使 齿侧间隙 <span class="math inline">\(\delta_{\text{lost}}\)</span> 变宽。</p>
+<p>违反后可能造成损害的限值，不以孤立数值的形式保存，而是保存为包含六个要素的 <strong>限值记录</strong>，其中 <a href="#tbl-02-limit-record" class="quarto-xref">表&nbsp;3</a> 定义并填写了移动机械臂的两个限值：其停车距离所依据的可信减速度，以及其共用控制电源轨上稳压器的掉压阈值。</p>
+<div id="tbl-02-limit-record" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[12,28,30,30]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-02-limit-record-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;3: <strong>移动操作臂的限值记录</strong>：限值记录的六个要素，分别填入可信的减速（决定停车距离）与稳压器掉压阈值（限定共用控制电源轨）。两个数值都还没有样本或已确定的测量不确定度，溯源元素指明将替换每个数值的测量。
+</figcaption>
+<div aria-describedby="tbl-02-limit-record-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 28%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">元素</th>
+<th style="text-align: left;">该记录陈述的内容</th>
+<th style="text-align: left;">可信减速度 <span class="math inline">\(a_{\text{brake}}\)</span></th>
+<th style="text-align: left;">控制电源轨稳压器掉压阈值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>数值</strong></td>
+<td style="text-align: left;">数值或经验分布，连同其样本数以及它所报告的尾部分位数</td>
+<td style="text-align: left;">2 m/s²，作为已装载停车的可靠低尾；目前尚无样本</td>
+<td style="text-align: left;">18 V 在负载端调节器处；目前尚无样本</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>条件</strong></td>
+<td style="text-align: left;">此前列出的成立条件，以及任何依赖附着力的极限所对应的表面</td>
+<td style="text-align: left;">装载量不超过 368 kg；干燥地面摩擦系数 <span class="math inline">\(\mu \ge\)</span> 0.204；驱动电流限制按配置执行；轮胎磨损程度与投运验收时一致</td>
+<td style="text-align: left;">该限值仅在许可路径由其专用、隔离且具备供电维持能力的电源轨供电时有效；这是 <a href="#sec-body-archetype-matrix" class="quarto-xref">节&nbsp;1.8</a> 中的设计决策，使得电压越过稳压器掉压阈值时仅复位应用处理器；该轨线上的调节器被假定为具有相同的掉压阈值。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>不确定性</strong></td>
+<td style="text-align: left;">各仪表的测量不确定度，连同其观测点与带宽</td>
+<td style="text-align: left;">未确定</td>
+<td style="text-align: left;">未确定</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>裕量</strong></td>
+<td style="text-align: left;">分离运行目标与失效阈值之间的工程裕量</td>
+<td style="text-align: left;">减速度数值本身不加裕量；大小为 100 mm 的保护性净空距离 <span class="math inline">\(\delta_{\text{margin}}\)</span> 吸收该数值的误差</td>
+<td style="text-align: left;">0.72 V 在满电状态下在同时发生的负载阶跃下的余量；来自耗尽电池的余量没有</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>检测器</strong></td>
+<td style="text-align: left;">运行中的检查，能在机器运行时捕捉到越界，例如相电流传感器、光电中断检测器或电源轨监视器</td>
+<td style="text-align: left;">减速监控器，比较指令减速与来自车轮编码器的实测减速以及 Bosch BMI088 惯性单元给出的减速，每次停车都进行</td>
+<td style="text-align: left;">共用轨线上的轨线电压监视器，许可路径以停车动作响应其欠压标志</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>来源</strong></td>
+<td style="text-align: left;">证据类别，以及产生该值的仪器或模型</td>
+<td style="text-align: left;">示例性，取自基座类别画像；将由带载停车试验替换</td>
+<td style="text-align: left;">示例性，取自机器的画像；将由同时负载条件下的电源轨特性测试替换</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>上述每一种退化机制都会改变某个限定的条件，因此已部署的机器通过定期重新标定来重建其记录，而不是信任投运验收时测得的数值。 Schiaparelli 着陆器惯性单元曾被接受的饱和时长就是这样一个限定；着陆器在 2016 年的失效表明，当限定的条件在运行中被超出、而下游没有任何环节检查结果时，会随之出现什么。</p>
+<div id="ws-body-2016-schiaparelli-imu-saturation" class="callout callout-war-story" title="ExoMars Schiaparelli IMU 饱和与高度塌陷（2016）">
+<p></p><details class="callout-war-story fbx-simplebox fbx-default" open=""><summary><strong>War Story 1.1: ExoMars Schiaparelli IMU 饱和与高度塌陷（2016）</strong></summary><div><strong>上下文</strong>：2016 年 10 月 19 日，欧洲空间局的 ExoMars Schiaparelli 着陆器执行了向火星表面的大气进入与下降，依赖机载制导、导航与控制（GNC）计算机将惯性测量单元（IMU）陀螺仪与多普勒雷达高度计融合起来 <span class="citation" data-cites="esa2017schiaparelli">(<a href="#ref-esa2017schiaparelli" role="doc-biblioref">ESA Investigation Board 2017年</a>)</span>。<p></p>
+<p><strong>机制</strong>：大气进入约三分钟后，降落伞充气并令着陆器发生振荡。 惯性测量单元测得的俯仰角速率大于预期，并触发了饱和标志，该标志持续的时间长于单元验收时假设的 15 ms。 在标志被置位期间，GNC 软件将饱和阈值速率当作真实速率进行积分，尽管着陆器实际上处于振荡状态，其姿态估计漂移了约 <span class="math inline">\(165^{\circ}\)</span>，几乎翻转。 当雷达高度计随后返回有效的斜距后，软件将其投影到该姿态上，计算出了负高度。 没有任何机载检查对该高度进行合理性检验。</p>
+<p><strong>后果</strong>：将负高度视为有效估计，制导逻辑释放了降落伞和背罩，为 <span class="math inline">\(3\text{ seconds}\)</span> 点火制动喷气器，而非计划的 <span class="math inline">\(30\text{ seconds}\)</span>，并像已经着陆一样激活了地面系统。 着陆器仍位于表面约 <span class="math inline">\(3.7\text{ km}\)</span> 的高度。 它自由下落约半分钟，并以约 <span class="math inline">\(150\text{ m/s}\)</span>（<span class="math inline">\(540\text{ km/h}\)</span>）的速度撞击地面。</p>
+<p><strong>响应</strong>：欧洲航天局调查委员会建议在机载软件中纳入稳健的合理性检查，其中包括高度不能为负，且在一秒内不能由 <span class="math inline">\(3.7\text{ km}\)</span> 变为负值，以及显式处理惯性测量单元饱和的设计，例如在降落伞展开期间抑制惯性测量单元输入。</p>
+<p><strong>系统层面的教训</strong>：物理实体无法超越其传感器的饱和范围。 当传感器的物理极限（陀螺仪的速率上限或加速度计的动态范围）被超过时，将饱和后的测量值当作有效值进行积分的状态估计器会偏离物理状态。 惯性测量单元验收所依据的饱和持续时间是一个附条件的限值；一旦下降过程超出这些条件，就没有任何检测器在发出不可逆动作之前检查该估计值。</p>
+</div></details>
+</div>
+<div class="no-row-height column-margin column-container"><div id="ref-esa2017schiaparelli" class="csl-entry" role="listitem">
+ESA Investigation Board. 2017年. <em>ExoMars 2016 - Schiaparelli Anomaly Inquiry</em>. European Space Agency.
+</div></div><p>逐项测量并记录后，这五项限值分别按各自的预算条件，逐一描述该实体的预算。 究竟哪一项最先成为约束，取决于机器与指令。</p>
+</section>
+<section id="sec-body-archetype-matrix" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-body-archetype-matrix">哪一项预算最先成为约束</h2>
+<p>来自 chunk 策略的一条使已装载的移动机械臂加速的指令，会同时消耗全部五项预算。 它依赖于一帧已经老化的相机帧，它加入制动系统稍后必须耗散的动能，它通过驱动齿轮加速反射转子惯性，它在绕组中沉积焦耳热而散热仅以分钟计，它从同时为应用处理器供电的轨线上取电。<a href="#tbl-02-cross-archetype-matrix" class="quarto-xref">表&nbsp;4</a> 将五项预算并列呈现，给出支配各自的定律、软件训练的策略对它所作的假设、它最先对哪一类机器构成约束，以及回答该问题的设计响应与运行时不变量。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 此处记录的退化限值，界定了在 <strong><a href="../14_intervention/14_intervention.html#sec-intervention-authority-transitions">权威权移交</a></strong> 中推导出的监督者干预阈值。</p>
+</div></div><p>移动操作机在一台底盘上承载了两类机器类别的 <strong><a href="../01_boundary/01_boundary.html#sec-boundary-four-archetypes">三类机器</a></strong>，即一类以动量和制动距离优先约束的 Class 1 基座，以及一类以反射惯性、接触刚度和保持热优先约束的 Class 2 机械臂。</p>
+<p>第 3 类被控对象以热负荷而非制动距离为约束。 定向能量沉积单元通过激光熔化所送粉末来制造金属零件，在频率为 1 kHz 的控制回路下将功率为 5 kW 的激光束送入熔池，因此每个控制周期向零件中输送 5 J 的热量，无论龙门是否移动。 其极限是熔池及周围零件能够吸收的热量。 控制器在激光仍开启的状态下发生 100 ms 停滞，会输送 500 J，超过满载移动操作机在驱动极限处所携带的 414 J 动能，而任何制动都无法将这部分热量取出。 对于流动主导型被控对象，<strong>热耗散与电气功率完整性</strong> 决定其能否存活，而较长的热时间常数（<span class="math inline">\(\tau = \theta_{JA} C_{\text{th}}\)</span>）会掩盖缓慢累积的热量，直到微小的持续过载已经越过绝缘或材料极限。</p>
+<div id="tbl-02-cross-archetype-matrix" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[18,20,24,18,20]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-02-cross-archetype-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;4: <strong>跨类别的物理约束矩阵：</strong> 五项预算、支配每项的定律、软件训练策略对其的假设、它首先约束的类别，以及回答该问题的运行时不变量。
+</figcaption>
+<div aria-describedby="tbl-02-cross-archetype-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 24%">
+<col style="width: 18%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">物理预算 / 因子</th>
+<th style="text-align: left;">起支配作用的第一性原理与标度律</th>
+<th style="text-align: left;">软件幻觉与 硬件真值</th>
+<th style="text-align: left;">主要绑定类别</th>
+<th style="text-align: left;">系统架构要点与运行时不变量</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1. 测量新鲜度与年龄</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\Delta t_{\text{fresh}} \le \frac{e_{\max}}{v_{\max}}\)</span>；端到端时延进行测量，而非由各阶段分位数相加得到</td>
+<td style="text-align: left;"><em>幻觉：</em> 高推理速率（<span class="math inline">\(50\text{ Hz}\)</span>）保证实时响应。<em>真相：</em> 时延自曝光时刻起算；流水线延迟会引入相位滞后（<span class="math inline">\(-\omega \tau\)</span>）。</td>
+<td style="text-align: left;"><strong>第 1 类与第 2 类：</strong> 侵蚀安全间隙裕量并使高增益接触回路失稳。</td>
+<td style="text-align: left;">为帧打硬件时间戳；在电机寄存器处强制<span class="math inline">\(t_{\text{age}} \le\)</span>预算时延；丢弃过期指令。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2. 动量与制动距离</strong></td>
+<td style="text-align: left;"><span class="math inline">\(d_{\text{stop}} = v\,\tau_{\text{delay}} + \frac{v^2}{2 a_{\text{brake}}} \le D_{\text{clear}}\)</span></td>
+<td style="text-align: left;"><em>错觉：</em> 减速度可以瞬时指令。<em>真相：</em> 制动距离按平方增长（<span class="math inline">\(v^2\)</span>）；动能需要摩擦做功（<span class="math inline">\(W = F d\)</span>）。</td>
+<td style="text-align: left;"><strong>第 1 类（移动性）：</strong> 首要约束。 速度翻倍，制动项变为四倍。</td>
+<td style="text-align: left;">在安全微控制器上以制动预算设定的速率求解间隙二次方程 <span class="math inline">\(v_{\max}(D_{\text{clear}}, \tau_{\text{delay}})\)</span>；钳制策略速度。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3. 执行器与折算惯量</strong></td>
+<td style="text-align: left;"><span class="math inline">\(J_{\text{ref}} = N^2 J_{\text{rotor}}\)</span>; <span class="math inline">\(\tau_e = \frac{L}{R}\)</span>; <span class="math inline">\(I(t) \le I_{\max}\)</span></td>
+<td style="text-align: left;"><em>幻象：</em> 电机扭矩跟踪策略设定值，无机械阻力。 <em>真相：</em> 减速箱使折算惯量达到转子惯量的 <span class="math inline">\(N^2\)</span> 倍；电感延迟电流上升；冲击阶跃导致轮齿剪切破坏。</td>
+<td style="text-align: left;"><strong>第 2 类（操作）：</strong> 首要约束。 刚性接触会产生极端的<span class="math inline">\(dF/dt\)</span>力尖峰，并导致齿轮疲劳。</td>
+<td style="text-align: left;">对<span class="math inline">\(C^2\)</span>样条（S 曲线）轨迹速率限制进行强制；采样负载侧光学编码器；部署准直驱（QDD）执行器。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4. 热限制与占空比</strong></td>
+<td style="text-align: left;"><span class="math inline">\(C_{\text{th}} \frac{dT}{dt} = I^2 R(T) - \frac{\Delta T}{\theta_{JA}}\)</span>; <span class="math inline">\(D \le \frac{T_{\max} - T_{\text{amb}}}{P_{\text{peak}} \theta_{JA}}\)</span></td>
+<td style="text-align: left;"><em>错觉：</em>电机持续输出峰值目录扭矩。<em>真相：</em>焦耳热（<span class="math inline">\(I^2 R\)</span>）具有正的热反馈（<span class="math inline">\(\alpha_{\text{Cu}}\)</span>）；热量在密封外壳中积聚。</td>
+<td style="text-align: left;"><strong>第 3 类（热）与第 2 类：</strong>静态保持会抽取堵转电流，数秒内使线圈过热。</td>
+<td style="text-align: left;">在安全微控制器上运行离散的<span class="math inline">\(I^2 t\)</span>热观测器；当热点模型接近限值时，动态降额速度与扭矩。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5. 电源完整性</strong></td>
+<td style="text-align: left;"><span class="math inline">\(\Delta V_{\text{droop}} \approx \Delta I R_{\text{bus}} + \frac{\Delta I \Delta t}{2 C_{\text{bus}}}\)</span>; <span class="math inline">\(V_{\text{final}} = \sqrt{V_{\text{rail, nom}}^2 + \frac{2 E_{\text{regen}}}{C_{\text{bus}}}}\)</span></td>
+<td style="text-align: left;"><em>幻觉：</em> 电源轨表现为无限、理想的电压源。<em>真相：</em> 母线阻抗在计算与电机同时突发的情况下使电源轨电压跌落；制动尖峰则造成过压。</td>
+<td style="text-align: left;"><strong>1 类与 3 类：</strong> 峰值多轴加速度触发微控制器的欠压复位；再生制动尖峰烧毁逆变器 FET。</td>
+<td style="text-align: left;">强制实施协同的计算-执行功率预算和 <span class="math inline">\(dI/dt\)</span> 限值；安装动态制动斩波器；表征无电源回退行为。</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>表格把预算分开列，但机器并不分开，移动机械臂上算出的余量，差异在于单个指令最多能花掉多少。 共享控制轨已经没有任何余量。 从耗尽到 21.5 V 的电池，<a href="#nbk-body-dc-bus-power-integrity">1.4</a> 中同时发生的阶跃事件使其电压跌落至 17.3 V，低于其调节器的 18 V 掉电，因此其余量已经为负。 一个热浸渍的臂关节，其余量以时间衡量，因为持续的三倍电流尖峰会在 20.7 s 内将其绕组带到绝缘极限。 在 1.5 m/s 驱动极限下的制动距离，仍保留 357.5 mm 的净距离，而只有额外延迟才会消耗这部分剩余净空距离；一个经过热节流的应用处理器会占用其中的 16.5 mm。</p>
+<p>由于该电源轨最先成为约束瓶颈，设计上的解决方案是将许可路径移出该电源轨。 安全微控制器、驱动逻辑和弹簧制动线圈由一条隔离电源轨供电，本地储能单元在选定的 2 s 时间内为其供电，足以覆盖许可路径能够指令的最长停车过程（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong> 定义了该停车过程）。 这些负载消耗 70 W，因此保持时间需要 140 J，由 2.025 F 储能单元在电池低电压点和调节器掉电点之间提供。 共享电源轨发生欠压后，应用处理器被复位，而许可路径则顺利通过欠压，标记欠压，并停止机器。 完整的耦合关系——即车体的停车距离决定许可路径授予的租期，而该租期决定 Brain 必须提供的量——在 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-coupled-budget">用于机器整体构造的一个耦合预算</a></strong> 中针对第一部分进行了一次完整计算。</p>
+</section>
+<section id="sec-body-fallacies-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="sec-body-fallacies-pitfalls">谬误与陷阱</h2>
+<p>物理极限在子系统边界之间相互影响。 满足每个部件预算的设计，仍可能在热、时序、功耗与运动共同变化时失效。</p>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>模型推理时间决定了测量新鲜度延迟。</em></p>
+<p>某团队对其视觉主干网络进行量化，将推理耗时从 <span class="math inline">\(30\text{ ms}\)</span> 降至 <span class="math inline">\(10\text{ ms}\)</span>。 该改进缩短了其中一个环节，但控制器仍依据经过曝光、读出、传输与操作系统队列的测量值进行动作。 指令先经过网络现场总线传输，之后电机线圈电流才上升以产生力。 链路上其他环节的 <span class="math inline">\(45\text{ ms}\)</span> 传输尖峰，即使推理达到其基准，也可能耗尽余量。 工程预算必须度量从感知到物理响应的真实“光子到扭矩”耗时并约束其尾部，而不是仅凭模型执行时间就宣称该回路为实时。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>软件阶跃指令会立即产生物理扭矩。</em></p>
+<p>一个模拟策略在 <span class="math inline">\(50\text{ Hz}\)</span> 发出分段常数设定值，并假定执行器会立即跟随每一次变化。 物理关节则通过定子电感（<span class="math inline">\(L/R\)</span>）和折算转子惯量（<span class="math inline">\(N^2 J_{\text{rotor}}\)</span>）响应。 一个突发的指令可能超出执行器带宽预算，使逆变器的电流限幅饱和，并在关节完成所需运动之前就剧烈加载传动机构。 这一物理滞后会改变在仿真中习得的反馈行为。 设定值整形与执行器模型必须考虑这些物理时间常数；软件更新率并不决定关节的可达响应。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱</strong>：<em>把孤立的组件数据表当作系统层面的运行保证。</em></p>
+<p>工程师用电机的持续扭矩额定值来设定规划器的限制。 该额定值反映的是厂商自由空气测试条件（<a href="#sec-body-thermal-duty-cycles" class="quarto-xref">节&nbsp;1.5</a>），而非紧邻计算单元处的密封关节条件，因而高估了已安装电机能够持续输出的扭矩。 由于规划器将该额定值视为其扭矩上限，它所生成的每条轨迹都会继承这一误差，而故障往往只在机箱热浸之后才显现，远离导致该故障的设计决策。 规划限制必须源自对完整装配机器在预期环境与冷却条件下的实测结果。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱</strong>： <em>将动态电压与频率缩放（DVFS）视为透明的软件优化。</em></p>
+<p>移动操作机器人的驱动电机使共用底盘发热，直至其应用处理器触发动态电压与频率缩放（DVFS）以降低时钟频率，避免结温过热。 这次热干预将视觉主干网络从22 ms拉伸到33 ms。 额外的11 ms进入观测数据龄期<span class="math inline">\(t_{\text{age}}\)</span>，并在1.5 m/s驱动极限下，在制动指令能够依据摄像头所见产生之前，向制动预算增加16.5 mm的行程。 电源管理器保护了硅片，但它已悄然改变了制动预算所假设的时序。 原本充足的制动裕量可能不再充足。 因此，热遥测必须为运动预算提供依据：当处理器降频使感知与响应所需时间增加时，移动操作臂的行程速度须相应降低。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱</strong>：<em>在不重新计算二次制动距离和热耗散的情况下，扩大作业速度。</em></p>
+<p>反复的高电流制动会使电机绕组发热，因此，移动操作臂在提高后的作业速度下能够承受一次的停车，在通过一个班次重复进行时，可能超出其热约束下允许的工作占空比（热容量预算），此外，制动行程还会随二次方增长，这一点在 <a href="#fig-02-stopping-distance" class="quarto-xref">图&nbsp;2</a> 的 案例 3 中由 2 m/s 所示。 较高的运行速度需要重新计算停车距离，并在规划器将该速度视为可用之前，先完成对重复动作的热评估。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>计算加速器与电机逆变器运行于彼此独立、理想化的电源轨。</em></p>
+<p>在移动机械臂上，一次沉重的推理突发与驱动电机将基座推过笼门门槛同时发生。 合并后的 70 A 瞬态电流流经标称电压为 24 V 的共享控制电源轨上阻值为 60 mΩ 的线束电阻，产生 4.2 V 压降。 电池已放电至 21.5 V，电源轨下垂至 17.3 V，低于机载点负载稳压器的 18 V 欠压门限，应用处理器随之复位。 若安全微控制器共用该电源轨，同样的欠压也会将其复位，而此时机器仍带有活动动量，基座与臂将处于 <a href="#sec-body-power-integrity" class="quarto-xref">节&nbsp;1.6</a> 的无电状态，而非受控停止。 计算与执行分别划分的软件预算，忽略了二者对同一电气供电的物理依赖。 功率资格验证必须测试来自耗尽电池的并发峰值负载，负责使整机停止的控制器必须由其自身具有维持供电能力的独立电源轨供电(<a href="#sec-body-archetype-matrix" class="quarto-xref">节&nbsp;1.8</a>)。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>通过孤立的单变量台架试验，就保证在复合运行压力下的物理生存能力。</em></p>
+<p>机械臂在<span class="math inline">\(20^\circ\text{C}\)</span>空调实验室中通过最大载荷试验，在<span class="math inline">\(45^\circ\text{C}\)</span>热室中通过空抓手试验。 这两项试验均未确立其在更热环境下、以耗尽电池供电时承载该最大载荷的能力。 在这些叠加条件下，重物负载会抬高绕组电阻损耗，更热的外界环境会削弱系统散热能力，而更低的供电电压使反电动势上方的余量减少，从而限制转速与电流变化率。 因此，各子系统都可能在单独的隔离试验所暗示的时限之前，更早接近其失效极限。 因此，资格验证必须对装配后的机器施加载荷、温度与电池状态的现实组合，而不是将单次测试通过视为关于组合条件的证据。</p>
+</div>
+</section>
+<section id="sec-body-summary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-body-summary">摘要</h2>
+<p>物理本体设定了学习模型提出的每项提案所消耗的各项预算，机器运行期间这些预算均不可重新协商。 一个运动质量无法以超过其可信减速度所允许的速率耗散动能，一个绕组无法以超过其热阻所允许的速率耗散热量，一次观测不可能比从传感到扭矩的路径更年轻。 该章将物理本体归结为五类此类预算，每一类都是许可路径在接纳一条指令之前可以核查的量，并且每一类都以界限而非典型值的形式进入该路径（即 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-deterministic-fieldbuses">按时移动指令</a></strong> 所区分的百分位与界限之别）。 每一项物理限幅都依赖于所声明的运行配置，并在其发生变化时失去效力，因此该章将每一项都作为限幅记录保留，记录其条件、不确定性、裕量、检测器与来源。 停止距离或热时间常数无法由器件数据手册直接引入安全论证；载荷、表面、冷却、供电电压或磨损发生变化时，时序、力或能量预算复用该限值之前必须先重新测量该限值。 机器上计算出的裕量中，共用的控制轨最先耗尽，因此许可路径运行在由其自身具有维持供电能力的独立电源轨供电的硬件上。 在移动操作臂处于其 1.5 m/s 行驶速度上限的条件下，制动、固定开销与制动触发已经在 1.10 m 的总可用距离中消耗了 742.5 mm，剩余 357.5 mm 留给感知与计算延迟、制动曲线，以及后续各章加入的跟踪误差界限。</p>
+<div id="callout-takeaways*-1.2" class="callout callout-takeaways" title="物理本体与不变预算">
+<details class="callout-takeaways fbx-simplebox fbx-default" open=""><summary><strong>要点回顾: 物理本体与不变预算</strong></summary><div>
+<ul>
+<li><strong>观测年龄自转导起算</strong>：观测年龄自传感器积分光或通量时开始，而非自推理开始；端到端尾部并非各阶段尾部的简单相加。 许可路径将硬件时间戳与其预算允许的观测年龄上限进行比较，并拒绝过期提案；对于被跟踪的移动目标，该年龄上限为 <span class="math inline">\(e_{\max}/v_{\max}\)</span>。</li>
+<li><strong>速度决定了停止包络</strong>：盲行距离随制动前延迟线性增长，制动距离随速度平方增长，因此可行驶速度是 <span class="math inline">\(d_{\text{stop}} \le D_{\text{clear}}\)</span> 的正根，并在净空或延迟发生变化时重新计算。</li>
+<li><strong>齿轮传动以扭矩换取响应性</strong>：齿轮比 <span class="math inline">\(N\)</span> 将折算转子惯量乘以 <span class="math inline">\(N^2\)</span>。 超过惯量匹配比之后，继续增大传动比会降低关节加速度，并把冲击应力集中于齿轮齿面。</li>
+<li><strong>热量是一个积分状态</strong>：焦耳损耗以秒为单位进入，以分钟为单位离开，铜的电阻温度系数将其反馈回去。 峰值扭矩额定值若不给出其初始温度、持续时间、环境温度和恢复时间，便毫无意义。</li>
+<li><strong>电源轨是共用的</strong>：驱动器与应用处理器共用同一电源轨，因此由驱动器与应用处理器同时取电而在耗尽电池供电下产生的电流阶跃可能越过其调节器的欠压阈值，而未钳制的再生制动也可能摧毁为其制动的逆变器。 必须使机器停止的控制器因此由独立的电源轨供电，该电源轨维持供电的时间足够长，确保共用电源轨的欠压不会在整机停止完成之前使控制器复位。</li>
+<li><strong>限值是一条记录，而非一个数字</strong>：限值只有在具备其条件、不确定性、余量、检测器与证据类别时，才支配一项决策；当磨损、发热、新的载荷或新的构建改变了这些条件时，该限值即失效。</li>
+</ul>
+</div></details>
+</div>
+<div id="callout-chapter-connection*-1.3" class="callout callout-chapter-connection" title="从机体的限值到大脑的提议">
+<p></p><details class="callout-chapter-connection fbx-simplebox fbx-default" open=""><summary><strong>后续内容: 从机体的限值到大脑的提议</strong></summary><div>本章的限值记录说明了移动机械臂的机体能够交付什么，以及在何种条件下：观察可以有多旧、带载基座行进多远才停止，以及一次运动可以消耗多少扭矩、热量与电源轨电流。 它们都没有说明机器下一步应当做什么。<strong><a href="../03_brain/03_brain.html#sec-brain">认知脑</a></strong> 转而讨论大脑，即提出下一段运动的学习模型，并追问这类模型在这些预算下能够提供什么：一段设定值序列能前瞻多远、计算一段新的设定值序列需要多长时间、以及支撑它的证据变旧得多快。<strong><a href="../04_nervous/04_nervous.html#sec-nervous">神经系统</a></strong> 随后推导出位于提议边界之下的许可路径，如何决定身体可以执行这些提议中的哪些。<p></p>
+</div></details>
+</div>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">脚注</h2>
+
+<ol>
+<li id="fn1"><p><strong>分位数卷积</strong>：一般而言，延迟之和的分位数不同于各阶段在相同百分位水平下的分位数之和（<span class="math inline">\(Q_p(X + Y) \ne Q_p(X) + Q_p(Y)\)</span>）。 独立性本身并不能使它们的算术和成为最坏情况上界。 来自共享总线与队列的关联会改变端到端尾部延迟，必须在系统边界处加以刻画。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>Bode 延迟定理与相位裕度</strong>: 纯传输延迟 <span class="math inline">\(\tau_d\)</span> 会在不改变环路增益幅值的情况下引入不可回避的频率相关相移滞后 <span class="math inline">\(\Delta \phi = -\omega \tau_d\)</span> 弧度。 在闭环反馈系统中，这种相移侵蚀会劣化相位裕度（<span class="math inline">\(\text{PM} = 180^\circ + \angle L(j\omega_c)\)</span>）；一旦 <span class="math inline">\(\tau_d\)</span> 在增益穿越频率 <span class="math inline">\(\omega_c\)</span> 处将裕度侵蚀至零，闭环极点便会越入复平面的右半平面，使物理被控对象失稳为破坏性的极限环振荡。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><strong>IEEE 1588 gPTP</strong>: 通用精密时间协议（gPTP）通过在网络芯片（媒体访问控制 [MAC] 物理层）层直接交换硬件打时间戳的报文，实现以太网网络中的亚微秒级时钟同步。 在硬件中捕获时间戳，可将操作系统调度器的抖动排除在测量之外。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><strong>MIPI CSI-2</strong>: 移动行业处理器接口相机串行接口 2（MIPI CSI-2）是一种高带宽、高速差分协议，用于以最小延迟将未压缩的视频数据直接从图像传感器传输到主机片上系统（SoC）设备。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><strong>ISO/TS 15066 分离距离</strong>：ISO/TS 15066（第 5.5.4 条），在 ISO 13855 基础上，为速度与分离监控（SSM）规定该防护性分离距离： <span class="math inline">\(S = (v_r \cdot T_r) + (v_h \cdot T_r) + S_r + S_s + C\)</span>，其中 <span class="math inline">\(T_r\)</span> 为最坏情况处理延迟，<span class="math inline">\(S_r\)</span> 为制动行程，<span class="math inline">\(C\)</span> 为净距余量（<span class="math inline">\(100\text{--}200\text{ mm}\)</span>）。 对于运行于协作式人类工作空间中的学习策略，若不约束计算尾延迟，就会直接增大 <span class="math inline">\(T_r\)</span>，从而扩大所需的分离区，并迫使保护性提前停车。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><strong>运动学速度根</strong>: 将恒定的空间项分组为可用的物理距离 <span class="math inline">\(D_{\text{avail}} = D_{\text{clear}} - \delta_{\text{loc}} - \delta_{\text{margin}}\)</span>，得到二次不等式 <span class="math inline">\(\frac{1}{2 a_{\text{brake}}} v^2 + \tau_{\text{delay}} v - D_{\text{avail}} \le 0\)</span>。 乘以 <span class="math inline">\(2 a_{\text{brake}}\)</span> 得到 <span class="math inline">\(v^2 + 2 a_{\text{brake}} \tau_{\text{delay}} v - 2 a_{\text{brake}} D_{\text{avail}} \le 0\)</span>。 应用求根公式并取正的物理根，即定义动态速度上限。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><strong>面向磁场控制（FOC）电流环</strong>：电流环运行于驱动器自身的控制器，而非运行策略的处理器，因此策略发出的转矩指令只能以电流环和母线余量所允许的上坡方式到达绕组。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><strong>逆变器死区时间</strong>：逆变器半桥中两个开关均处于关断状态的、由硬件插入的短暂区间，因此同一桥臂的上桥臂开关与下桥臂开关不会同时导通并短路直流母线，这种故障称为直通（shoot-through）。<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p><strong>执行器间歇工作制限制</strong>：机器人电机数据表显著地宣传峰值扭矩（<span class="math inline">\(\tau_{\text{peak}}\)</span>），但该额定值严格属于间歇工况，其可维持时长取决于绕组的起始温度。 持续动态机动必须依据连续均方根扭矩<span class="math inline">\(\tau_{\text{cont}}\)</span>进行预算，否则激进的神经策略指令将触发热保护并导致肢体在运动过程中塌陷。<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><strong>电源分配母线阻抗</strong>：具身直流母线的集总源阻抗为 <span class="math inline">\(R_{\text{bus}} = R_{\text{cell}} + R_{\text{harness}} + R_{\text{switch}}\)</span>，即电池电芯、线束与连接器以及保护开关导通态电阻之和。 一次电流尖峰 <span class="math inline">\(\Delta I\)</span> 会使母线电压跌落 <span class="math inline">\(\Delta V = \Delta I R_{\text{bus}}\)</span>。<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p><strong>动态制动斩波电路</strong>：跨接在直流母线上的功率开关与低电感制动电阻。 当再生能量将母线推高至比较器阈值之上时，开关导通，电阻将多余能量以热的形式耗散，从而将母线钳制在逆变器与变换器硅片的击穿额定值之下。<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8084\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol4_zh/01_boundary/01_boundary.html" class="pagination-link" aria-label="第1章 · 因果边界">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第1章 · 因果边界</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol4_zh/03_brain/03_brain.html" class="pagination-link" aria-label="第3章 · 认知脑">
+        <span class="nav-page-text">第3章 · 认知脑</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《物理人工智能系统》第四卷 · 简体中文本地版 · 仅17章正文</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

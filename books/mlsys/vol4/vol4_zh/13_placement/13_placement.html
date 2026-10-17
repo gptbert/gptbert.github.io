@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>物理人工智能系统 · 第四卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol4_zh/14_intervention/14_intervention.html" rel="next">
+<link href="../../vol4_zh/12_enforcement/12_enforcement.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-6ab868a96f80aa23e8049a4baf7b30f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-d8f93a8b899dea5d44e4b3599334720f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+
+<style id="zh-web-layout">#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">物理 AI · 第四卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/books/mlsys/"> 
+<span class="menu-text">三卷书架</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">本卷首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol4_zh/01_boundary/01_boundary.html"> 
+<span class="menu-text">因果边界</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol4_zh/13_placement/13_placement.html">硅片布局</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/01_boundary/01_boundary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">因果边界</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/02_body/02_body.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理身体</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/03_brain/03_brain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认知脑</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/04_nervous/04_nervous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/05_data/05_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">物理数据</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/06_training/06_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">策略训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/07_evaluation/07_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">闭环评估</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/08_perception/08_perception.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">传感器感知</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/09_memory/09_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">空间记忆</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/10_intent/10_intent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">立足物理世界的意图</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/11_planning/11_planning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹规划</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/12_enforcement/12_enforcement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">安全执行</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/13_placement/13_placement.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">硅片布局</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/14_intervention/14_intervention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">监督性干预</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/15_verification/15_verification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">对抗性验证</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/16_release/16_release.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署发布</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol4_zh/17_frontier/17_frontier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">认识论前沿</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-placement" id="toc-sec-placement" class="nav-link active" data-scroll-target="#sec-placement">硅片布局</a>
+  <ul>
+  <li><a href="#sec-placement-silicon-substrate" id="toc-sec-placement-silicon-substrate" class="nav-link" data-scroll-target="#sec-placement-silicon-substrate">硅基载体</a></li>
+  <li><a href="#sec-placement-two-paths-one-die" id="toc-sec-placement-two-paths-one-die" class="nav-link" data-scroll-target="#sec-placement-two-paths-one-die">同一芯片上的两条路径</a></li>
+  <li><a href="#sec-placement-resource-contention" id="toc-sec-placement-resource-contention" class="nav-link" data-scroll-target="#sec-placement-resource-contention">共享资源争用</a></li>
+  <li><a href="#sec-placement-boundary-contract" id="toc-sec-placement-boundary-contract" class="nav-link" data-scroll-target="#sec-placement-boundary-contract">边界契约</a>
+  <ul class="collapse">
+  <li><a href="#窗口看门狗定时器与执行活性" id="toc-窗口看门狗定时器与执行活性" class="nav-link" data-scroll-target="#窗口看门狗定时器与执行活性">窗口看门狗定时器与执行活性</a></li>
+  </ul></li>
+  <li><a href="#sec-placement-thermal-timing-coupling" id="toc-sec-placement-thermal-timing-coupling" class="nav-link" data-scroll-target="#sec-placement-thermal-timing-coupling">热与时序耦合</a></li>
+  <li><a href="#sec-placement-testing-separation" id="toc-sec-placement-testing-separation" class="nav-link" data-scroll-target="#sec-placement-testing-separation">测试分离性</a></li>
+  <li><a href="#sec-placement-isolation-decisions" id="toc-sec-placement-isolation-decisions" class="nav-link" data-scroll-target="#sec-placement-isolation-decisions">硅隔离决策</a></li>
+  <li><a href="#sec-placement-hardware-allocation" id="toc-sec-placement-hardware-allocation" class="nav-link" data-scroll-target="#sec-placement-hardware-allocation">硬件分配</a></li>
+  <li><a href="#sec-placement-fallacies-pitfalls" id="toc-sec-placement-fallacies-pitfalls" class="nav-link" data-scroll-target="#sec-placement-fallacies-pitfalls">谬误与陷阱</a></li>
+  <li><a href="#sec-placement-summary" id="toc-sec-placement-summary" class="nav-link" data-scroll-target="#sec-placement-summary">摘要</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">硅片布局</h1></header>
+
+
+<header>
+
+
+</header>
+
+
+<section id="sec-placement" class="level1 page-columns page-full">
+<h1>硅片布局</h1>
+<div class="{layout-narrow} page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
+
+</div></div><p><a href="images/webp/cover_placement_blueprint_labeled.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/webp/cover_placement_blueprint_labeled.webp" class="img-fluid" alt="等轴测蓝图展示硅片布局：异构物理人工智能 SoC，包含为学习模型设计的神经加速器集群、三维存储堆栈、周边散热鳍片、共享互连交叉开关总线、隔离的确定性实时 MCU 安全区，以及深红色 QoS 隔离沟槽。"></a></p>
+</div>
+<section id="目的" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="目的">目的</h2>
+<p><em>为什么一个学习模型可以延迟运行在不同处理器核心上的安全检查？</em></p>
+<p>软件架构图通常将提议路径与许可路径描绘为干净解耦的功能模块。 然而，在物理硅片上，不同的软件组件不可避免地争夺共享的硬件资源：内存总线、电源分配网络、时钟树以及散热路径。 一次高吞吐量的神经推理突发可以饱和共享的内存互连，或在电源轨上诱发感应性电压跌落，从而延迟运行于相邻处理器核心上的安全检查，而此时物理机箱仍在滑行。</p>
+<p>软件特权环决定地址空间的访问权限，而非事务调度或 DRAM 队列延迟。 因此，逻辑隔离无法保证峰值竞争下的最坏情况执行时间。 只有对抗性工作负载下的实证压力测量才能验证时序截止时间。 要强制实时保证，就需要硬件级隔离、专用内存通道，或物理分离的微控制器飞地。 在物理人工智能栈中，硬件布局确立了 神经系统 的计算基础，确保确定性执行检查在指令跨越因果边界之前完成。</p>
+<div style="page-break-after: always;"></div>
+<div id="callout-learning-objectives*-1.1" class="callout callout-learning-objectives">
+<details class="callout-learning-objectives fbx-simplebox fbx-default" open=""><summary><strong>学习目标</strong></summary><div>
+<ul>
+<li>清点 提议路径与许可路径共用的内存、互连、电源、时钟、复位和热资源。</li>
+<li>解释为何平均总线利用率无法界定截止时间，需结合事务大小、队列策略与 存储体时序。</li>
+<li>依据实测完成抖动，为两条路径之间的非阻塞记录交换设计窗口看门狗的服务窗口。</li>
+<li>分析轨压跌落与热节流如何在不同时间尺度上拉长许可路径的执行时间。</li>
+<li>设计带负载的压力测试，其证伪阈值取许可路径声明的最坏情况执行时间。</li>
+<li>从实测的干扰与租约的时间余量中，在预留、分区、降载与迁移之间作出选择</li>
+<li>构建一条放置记录，界定带负载运行时的观测最大值、缓解措施与未经测试的条件，以供发布评审</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-placement-silicon-substrate" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-placement-silicon-substrate">硅基载体</h2>
+<p>仓库移动操作臂在其同一机身内承载应用处理器与权限路径。 在其软件架构图中，大脑与神经系统 之间的提案边界是一条规整的虚线。 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement">安全执行</a></strong> 的屏障过滤器（barrier filter）与回退阶梯（fallback ladder）只有在权限路径在每个节拍内都于其截止时间内完成检查时，才保有其保证；而该条件取决于检查在哪里执行，图中并未显示。 在物理硅上，虚线可以坍缩为一块共享的芯片裸片。 假设两条路径都运行在同一块异构 System-on-Chip（SoC）上，也就是这台机器会拒绝的布局。 分块策略与意图模型将在嵌入式加速器上执行，而权限路径则会在相邻的实时核心上执行。 当意图模型在其数十亿参数权重上开始一次推理轮次时，数十亿个晶体管会同时激活。 这次当前的电流尖峰（<span class="math inline">\(dI/dt\)</span>）会在芯片内部的电源分配网络（PDN）上引起电感和电阻性电压跌落（<span class="math inline">\(\Delta V = L \cdot dI/dt + IR\)</span>），可能导致相邻实时逻辑出现时钟不稳定和建立时间违例。<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 与此同时，密集的张量矩阵乘法会饱和共享的 LPDDR 内存总线，流式传输数吉字节的激活图，并将安全执行器的固定传感器表从末级缓存中淘汰。</p>
+<p>当许可路径读取传感器缓冲区，而提案工作负载占用共享内存控制器时，其请求会在直接内存访问流量之后排队，等待时间可能耗尽执行器计算所需的截止时间份额。 逻辑特权对此类等待毫无作用，因为它规定任务可以触碰哪些地址，而非其请求在内存队列中的等待位置。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> 硬件执行节奏与微控制器计时循环已在 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong> 中定义。</p>
+</div></div><p>该机器上的两项任务都会感受到共享芯片耦合的影响。 对于 Class 1 底盘，特征提取期间的内存停顿会延迟许可路径的拒绝，而此时已装载的底盘正驶向机架端；超出停止预算所计量的那一个节拍之外的每一拍延迟，都是它从未预留的距离。 对于 Class 2 机械臂，加速器突发访问将共享缓存中许可路径的表项驱逐出去，会推迟接触检查，而此时夹爪正压在弹簧锁扣的笼门上。</p>
+<p>承接系统设计中的端到端论证 <span class="citation" data-cites="saltzer1984end">(<a href="#ref-saltzer1984end" role="doc-biblioref">Saltzer 等 1984年</a>)</span>，内存保护与操作系统进程隔离本身并不能确立运行独立性。 在异构芯片上，<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <strong>运行独立性</strong> 要求：提案侧的活动不得使安全强制执行检查的执行超出其硬性物理截止时间，且提案侧的崩溃或热过载不得使许可路径拒绝的权限失效。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-saltzer1984end" class="csl-entry" role="listitem">
+Saltzer, Jerome H, David P Reed, 和 David D Clark. 1984年. <span>《End-to-end arguments in system design》</span>. <em>ACM Transactions on Computer Systems (TOCS)</em> 2 (4): 277～88.
+</div></div><p>由于这些耦合受物理固态现象而非软件抽象所支配，隔离性的架构主张必须作为需要通过测量来证伪的假设来对待。 检验此类主张需要四个工程步骤：清点所有共享硅资源及其请求方；开展压力测试，将提案路径驱动至最坏情况下的计算、内存与总线争用，同时记录许可路径的延迟分布与实测最大值；测量持续负载下的电压跌落与结温；以及一份放置记录，其中将实测最大值与截止期限对照陈述，并说明尚未测试的条件。 这些步骤贯穿本章其余部分，本章考察共享芯片裸片 作为机器拒绝的放置方案，以及物理独立的控制器作为机器使用的方案。 它首先说明每条路径必须计算什么、在哪里运行，以及在无竞争时保留多少余量。</p>
+<p>物理人工智能架构的历史演进从根本上源于半导体缩放的物理极限(<a href="#fig-placement-fifty-year-microprocessor-trend" class="quarto-xref">图&nbsp;1</a>)。 在五十年的微处理器进展（1975–2025）中，计算系统跨越了两道主要架构边界。 在经典扩展时代（1975–2004 年），摩尔定律与 Dennard 缩放使时钟频率从 <span class="math inline">\(2\,\text{MHz}\)</span> 到 <span class="math inline">\(3.8\,\text{GHz}\)</span> 呈指数级跃升，而热功率密度并未增加。 自主机器人直接受益于这波浪潮，从与外部小型计算机的缆线连接（Shakey）过渡到机载 VMEbus 机架（CMU Navlab 1）以及嵌入式 x86 主板（Stanford Stanley）。</p>
+<p>2004 年 Dennard 缩放律崩塌时，静态漏电功耗将单核时钟频率限制在 <span class="math inline">\(3.8\,\text{GHz}\)</span> 附近，使频率缩放时代戛然而止。 工业机器人通过解耦架构加以改造：确定性的微控制器负责按周期计数的 <span class="math inline">\(1\,\text{kHz}\)</span> 现场总线电机换相回路，而应用处理器负责多线程轨迹生成。 当高容量深度学习与视觉—语言—动作（VLA）基础模型问世时，物理人工智能遭遇了第二个、同样严苛的硬件约束：<strong>移动机器人负载热与电池功耗上限</strong>（<span class="math inline">\(15\text{--}60\,\text{W}\)</span>）。 在无外部线缆连接的移动操作臂或人形机器人上，散热能力和电池供电能力均无法支持功耗为 <span class="math inline">\(300\text{--}700\,\text{W}\)</span> 的服务器级加速器。 这一约束迫使部署了专用加速器（DSAs）以及异构的边缘片上系统（例如 NVIDIA Jetson AGX Orin 与 Drive Thor），将板载计算密度提升了九个数量级（<span class="math inline">\(10^9\times\)</span>），同时严格控制在移动设备的功耗限制之内。 最近，自回归 VLA 中的顺序 词元 解码撞上了 <strong>认知推理墙</strong>（<span class="math inline">\(1\text{--}3\,\text{Hz}\)</span>），促使转向流匹配与扩散策略，并采用带时间动作分块的策略，从而将闭环控制节奏恢复到 <span class="math inline">\(30\text{--}50\,\text{Hz}\)</span>。</p>
+<div id="fig-placement-fifty-year-microprocessor-trend" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="htb" data-fig-env="figure" alt="一张横跨 1975 至 2025 的双面板纵向图。 上方面板展示了晶体管数量的指数增长，以及 2004 年 3.8 GHz 的时钟频率饱和，以及服务器功耗超过 15 至 60 瓦的移动机器人热预算。 下面板展示了板载边缘计算密度的九个数量级的跃升，并对照 1,000 赫兹现场总线伺服线追踪认知感知到动作的节奏。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-placement-fifty-year-microprocessor-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="1">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-placement-fifty-year-microprocessor-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/7g/fkg91tq50f58kfmg7c65747r0000gn/T/ipykernel_91966/979283785.py:180: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+/var/folders/7g/fkg91tq50f58kfmg7c65747r0000gn/T/ipykernel_91966/979283785.py:181: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()</code></pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-placement-fifty-year-microprocessor-trend-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a)
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig">
+图&nbsp;1: <strong>五十年微处理器缩放与物理 AI 计算（1975–2025）</strong>：上：晶体管数量（摩尔定律）、时钟频率，以及峰值服务器 TDP 与移动机器人载荷热预算（<span class="math inline">\(15\text{--}60,\text{W}\)</span>）的对比，展示了 2004 年 Dennard 缩放失效点（<span class="math inline">\(3.8,\text{GHz}\)</span>）。 下：<span class="math inline">\(\le 60,\text{W}\)</span> 载荷下的板载计算密度（GFLOPS 与 TOPS 等效值，扩展 <span class="math inline">\(10^9\times\)</span>）与闭环感知到动作的推理节奏（Hz）对比，对照 <span class="math inline">\(1,\text{kHz}\)</span> 确定性现场总线伺服基线、<span class="math inline">\(1\text{--}3,\text{Hz}\)</span> 自回归 VLA 认知推理墙，以及 <span class="math inline">\(30\text{--}50,\text{Hz}\)</span> 流匹配动作分块。（里程碑改编自 Karl Rupp 与斯坦福 CPU 数据库）。
+</figcaption>
+</figure>
+</div>
+<p>将高容量神经推理与边缘硅基芯片衔接起来，需要与通用云计算截然不同的编译原则。 云端推理引擎通过动态批处理、运行时图追踪和堆内存分配（<code>malloc</code>）来优化平均吞吐量（每秒词元）。 在具身物理人工智能系统中，这些做法是危险的。 动态内存分配会引入堆碎片和分配器锁竞争，而即时编译与页面故障则会注入数毫秒的尾延迟抖动（<span class="math inline">\(P_{99.9}\)</span>），直接侵蚀制动余量（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-stopping-envelopes">停止包络</a></strong>）。 因此，物理人工智能的边缘编译器强制采用 <strong>提前编译（AOT）静态图编译</strong>：执行图的拓扑被永久冻结，张量维度固定，每个中间激活缓冲区在动作执行开始之前映射到静态的、预先分配的物理内存偏移量，从而保证零运行时动态分配。</p>
+<p>除了消除尾延迟抖动之外，边缘 SoC 上的编译还受热力学和内存墙支配。 如 <strong><a href="../03_brain/03_brain.html#sec-brain-cognitive-pipeline">供给、新鲜度与内存墙</a></strong> 所述，数据经由片外动态随机存取存储器（DRAM）总线传输，每比特的能耗约为在片上寄存器或静态随机存取存储器（SRAM）内执行算术运算的 <span class="math inline">\(10\text{--}20\times\)</span>。 对于在 <span class="math inline">\(15\text{--}60\,\text{W}\)</span> 的载荷热预算约束内运行的无缆移动机器人，中间激活张量在 DDR 总线上反复往返传输，会迅速耗尽机身的散热能力。<strong>算子融合</strong> 将多层子图（例如卷积 + 偏置 + 激活，或注意力投影 + 层归一化）编译为统一的融合内核，完全在片上寄存器文件与本地 SRAM 缓存中执行，从而消除片外内存流量。 与此同时，<strong>数值精度降低</strong>（将权重与激活值从 FP32/FP16 量化至 INT8 或 FP4）直接成为内存总线容量的乘数。 将操作数位宽减半，会使内存交叉开关的有效传输吞吐率翻倍，直接降低内存总线占用，并为并发的实时安全监控保留总线带宽。</p>
+</section>
+<section id="sec-placement-two-paths-one-die" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-placement-two-paths-one-die">同一芯片上的两条路径</h2>
+<p>移动操作臂在两条要求相互冲突的控制路径之间进行划分。 提案路径在应用处理器上以 20 Hz 的频率运行分片策略，接收导航与腕部相机数据流，并一并输出底座速度指令与机械臂关节目标值。 其 P99 推理（含视觉部分）在每个 50 ms 分片周期中耗时 40 ms（示意性数值；详见读者指南）；它不直接拥有驱动硬件的授权，且运行于非特权用户空间。 许可路径以 1 kHz 的频率运行于离散安全微控制器（MCU）上。 每个节拍，它检查最新提案与 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-stopping-envelopes">停止包络</a></strong> 的停止包络，并将获准的设定值编排进发给驱动的 EtherCAT 帧。 它必须在其 1 ms 节拍内选定的 400 μs 截止时间之前完成，并运行于双核锁步控制器上的特权实时执行域中，<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> 其比较器诊断覆盖许可路径自身的故障，因为包络检查无法检测执行该检查的核心自身的故障。 只有权限路径具备对承载驱动器指令的现场总线主机的内存映射输入输出（MMIO） 访问权限。</p>
+<div id="dfn-placement-heterogeneous-silicon-partitioning" class="callout callout-definition" title="异构硅片分区">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.1: 异构硅片分区</strong></summary><div>
+<p><strong><em>异构硅片分区</em></strong> 是在硬件隔离的专用执行域之间分配随机的、高容量的认知工作负载（感知、学习策略评估）与确定性的安全回路（安全不变量检查、准入与回退）的架构性分配。</p>
+<ol type="1">
+<li><strong>意义</strong>：将高容量的神经推理与实时安全执行放在同一个通用操作系统或计算引擎上，会产生共模故障。 内核线程抢占、动态内存分配以及 GPU warp 调度会引入数毫秒的尾部抖动，导致授权路径错过物理控制截止时间。</li>
+<li><strong>区别</strong>：与逻辑软件进程隔离（如 Linux 容器或 POSIX 进程优先级）不同，硅片分区跨越独立的硬件寄存器、紧密耦合的静态内存（TCM）以及专用外设总线来强制隔离。</li>
+<li><strong>常见误区</strong>：假定多核 CPU 的亲和性提供了真正的失效域隔离，而实际上这些核心仍共享缓存、内存控制器、时钟树和电源轨。</li>
+</ol>
+</div></details>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↰ <strong>前置条件：</strong> CBF-QP 执行器亚毫秒级执行时限的设定见 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-minimal-intervention">最小干预</a></strong>。</p>
+</div></div><p>这两台处理器运行不同类型的软件，遵循 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-silicon-partitioning">权限路径的执行位置</a></strong> 的双处理器实现方式。 提案推理、遥测日志、网络通信和故障记录运行在 Linux 下的应用处理器上，其调度尾部即使在实际实时配置下也仍暴露于内核与驱动程序的抖动；<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> 执行与传感器校验则在离散安全微控制器上以裸金属固件运行，位于硬件内存保护单元之后，<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> 编码器接口、IMU 和定时器通道均直接连接到该微控制器。 每个提案通过板级链路到达微控制器，并通过 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong> 的 seqlock 邮箱发布，因此两条路径之间不共享任何动态随机存取存储器（DRAM）。 在供电侧，两条路径仅共享电池。 微控制器、驱动逻辑和弹簧制动线圈位于 <strong><a href="../02_body/02_body.html#sec-body-archetype-matrix">哪一项预算最先成为约束</a></strong> 的隔离轨上，该轨不承载提案侧负载，并由本地储能维持供电 2 s，该维持供电时长超过强制执行器在包络内所能命令的任何停车所需的时间（<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong>）。 因此，共享控制轨上的下垂无法重置许可路径。</p>
+<p>在未加载的机器上，计算预算显得宽裕。 以安全微控制器为例，各子成本示意如下：读取编码器、IMU 以及提案的证据 epoch 耗时 40 μs，评估约束耗时 80 μs，而为驱动帧暂存已准入的设定值则耗时 15 μs。 执行器的未加载周期总计为 135 μs，在微控制器的 400 MHz 时钟下为 54,000 个周期。 对照 400 μs 的截止时间，未加载路径留有 265 μs 的余量；而采用声明的最坏情况执行时间 250 μs（即 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-minimal-intervention">最小干预</a></strong> 中经确认的预算）时，仍余 150 μs。 在应用处理器上，该分块策略的推理耗时为 40 ms，在其 50 ms 周期内还剩 10 ms 的余量。 单独评估时，两个循环均以充裕的余量运行。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/svg/margin_execution_determinism_ladder.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/svg/margin_execution_determinism_ladder.svg" class="img-fluid" style="width:100.0%" alt="四条水平条，按对数刻度由长到短：云主机超过 150 ms，Linux RT 20 ms，Cortex-M7 5 微秒，以及锁步 MCU 50 纳秒。"></a></p>
+<p><em>候选执行域在时序控制上存在差异；实测尾部决定其放置位置。</em></p>
+</div></div><p>将任务分配到不同的处理器核心，并不会形成相互独立的失效域，前提是硅基础设施是共享的。<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> <strong><a href="../04_nervous/04_nervous.html#sec-nervous-hardware-isolation">硬件隔离</a></strong> 在机器所在主板上追踪了这些共因路径，其中分离的封装与隔离的电源轨切断了内存与供电路径。 在共享裸片上，这台机器被否决的方案，它们被移动到了同一个封装内部。 实时核心独立于应用处理器执行指令，但两个核心都依赖共同的硬件服务：</p>
+<ul>
+<li><em>共享中断路由：</em> 通用中断控制器（GIC）通过共享片上网络路由周边与处理器间通知，应用处理器上的以太网包中断洪泛可能延迟触发 1 kHz 权限循环的定时器中断。</li>
+<li><em>共享内存控制器：</em> 两条路径访问同一个动态内存控制器 与互联交叉开关，神经加速器产生的大型矩阵瓦片加载会占满 DRAM 命令队列，将实时核心上预期的 <span class="math inline">\(20\text{ ns}\)</span> 二级缓存填充变成一次 <span class="math inline">\(350\text{ ns}\)</span> 主存往返。<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></li>
+<li><em>共享时钟树：</em> 两个核心共享锁相环（PLL）用于时钟生成，应用处理器上的动态电压与频率缩放（DVFS）瞬变会在相邻实时域中引入时钟抖动。</li>
+<li><em>共享电源轨：</em> 单个电源分配网络（PDN）向两个域供电，神经加速器的开关尖峰会使内部电压轨跌落，可能导致逻辑状态损坏或欠压复位。</li>
+<li><em>共享复位域：</em> 应用处理器上触发硬件看门狗 复位的内核恐慌可能拉低共享外设总线或系统互连，使驱动器输出失效，并令基座处于无许可指令的状态。</li>
+</ul>
+<p>在这些域之间的共享硬件争用并非仅仅是被动的调度低效；它构成了一条主动的 <strong>网络物理攻击通道</strong> 。 在第三方神经工作负载或面向网络的软件容器与许可路径共享同一芯片的异构 SoC 中，被攻破的应用进程可以对物理安全发起蓄意的拒绝服务（DoS）攻击。 通过生成病态的对齐不良内存流量，或触发缓存行抖动（利用缓存侧信道机制或 Rowhammer 式扰动），非特权提案路径上的攻击者可以蓄意饱和内存控制器队列，延迟安全微控制器的内存访问，并导致错过截止时间。 同样地，对抗性负载可能触发高频张量核心切换模式，以最大化 <span class="math inline">\(L \cdot dI/dt\)</span> 电流感应电压跌落，使共享的电源分配网络进入欠压状态，并诱发共模硬件复位。 在物理人工智能架构中，软件进程隔离无法抵御电气耦合与微架构耦合；硬件强制的质量服务分区（如 ARM MPAM）与物理硅片隔离属于基本的信息物理安全控制。</p>
+<p>由于软件进程隔离无法缓解这些硬件级时序与安全耦合，物理硅片布局成为主要的架构防御手段。 对于该机器许可循环，比较三种布局。 共享的应用核心将权限循环暴露给内核与驱动调度尾部（即前述尾部），该尾部不仅可能将其推过 400 μs 期限，甚至推过 1 ms 节拍本身。 应用 SoC 上的实时集群保留自己的核心，但共享该芯片的内存控制器、电源轨与热路径；<a href="#sec-placement-thermal-timing-coupling" class="quarto-xref">节&nbsp;1.5</a> 展示了拒绝它的时钟降频。 机器所采用的分立安全微控制器改以传输环节支付其隔离成本：从应用处理器到分立安全微控制器的一次板级传输，而两种共享芯片方案都不需要，<a href="#sec-placement-isolation-decisions" class="quarto-xref">节&nbsp;1.7</a> 则将其计入租约。 三种方案之间的取舍，取决于各方案在干扰条件下的实测传感器到驱动响应，而非取决于其使用多少个封装。</p>
+<p>原则 <a href="https://mlsysbook.ai/vol4/parts/running_principles.html#pri-vol4-proposal-permission" title="英文原版参考内容">Proposal is not permission</a> 要求一条学习型负载无法延迟的权限路径，而三种部署方案的区别，恰好在于两条路径仍然共享哪些资源。 即便是分立微控制器的隔离，也仅是关于负载条件下时序的论断，只有在该负载条件下对其节拍的实测才能支撑这一论断。 两条路径共用的每一份资源，在该控制节拍上都有竞争者，而内存系统正是它们首先发生冲突之处。</p>
+</section>
+<section id="sec-placement-resource-contention" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-placement-resource-contention">共享资源争用</h2>
+<p>每一个共享物理资源都有多个竞争者；忽略并发竞争的资源利用率指标无法为截止时间提供上界。 若移动操作臂将其许可路径置于应用 SoC，则许可路径、申请路径与系统基础设施将直接争夺同一批内存控制器、交叉开关与电源分配轨。 在该机器上实际构建后，同样的突发仍留在应用处理器上，因而延迟的是观测与数据块，而非许可控制节拍。 该共享内存总线上的数字竞争者包括：将帧写入 DRAM 的相机与激光雷达 DMA 流，获取模型权重矩阵与中间激活张量的神经加速器，读取其约束表与传感器历史的实时核心，用于驱动指令的致动器写缓冲，执行脏行写回的缓存控制器，以及将状态记录写入非易失性存储的诊断日志进程。 这些突发造成的延迟以证据年龄增大的形式影响许可路径（<strong><a href="../08_perception/08_perception.html#sec-perception-cost-ingestion">摄取的成本</a></strong>），许可路径，拒绝超过其拒绝阈值的证据，并在没有任何被接纳的 chunk 续租租约时进入其回退路径。</p>
+<p>在共享裸片上，<strong>交叉开关总线与 DRAM bank 争用</strong> 是指当内存与 DMA 事务共享同一互连和控制器时产生的排队延迟，其界限取决于事务大小、队列策略和 bank 时序。<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>每个请求方的平均需求由其传输大小和事件速率决定；在共享 LPDDR 通道上，相机流、按策略速率进行的权重获取、执行者的读取、驱动写入、写回和日志记录合在一起平均只占用其容量的一小部分。 只检查该平均值的工程师会得出结论：总线大部分处于空闲状态。 内存仲裁器不调度平均速率。 它们仲裁离散突发；若一方以小包流式传输、另一方以长且饱和的数据块到达，即使平均吞吐相同，两者也会产生不同的干扰。</p>
+<p>算术强度 <span class="citation" data-cites="williams2009roofline">(<a href="#ref-williams2009roofline" role="doc-biblioref">Williams 等 2009年</a>)</span> 说明在稳态下某例程究竟受执行单元还是受内存带宽约束；它并不说明当两条路径同时到达总线时，究竟是哪一条请求需要等待。 当权重从 DRAM 流式传输时，加速器的算术强度为零，此时它充当一个高带宽的直接内存访问引擎，使共享总线饱和。 权重流式传输同样限制了内存墙中新鲜提案的速率，<strong><a href="../03_brain/03_brain.html#sec-brain-cognitive-pipeline">供给、新鲜度与内存墙</a></strong> 的内存墙即受此限制。 布局看到的是这一上限的另一面：凡是约束提案者的权重传输，都是共置许可路径需要排队等待的流量。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-williams2009roofline" class="csl-entry" role="listitem">
+Williams, Samuel, Andrew Waterman, 和 David Patterson. 2009年. <span>《Roofline: an insightful visual performance model for multicore architectures》</span>. <em>Communications of the ACM</em> 52 (4): 65～76.
+</div></div><p>安全读取的等待时长取决于事务仲裁与 DRAM 调度。 以 <span class="math inline">\(262{,}144\)</span> 字节块搬运权重的加速器不会发起一次突发： <a href="https://documentation-service.arm.com/static/64256e84314e245d086bc88f">Arm 的 AXI4 规范</a> 规定每次突发最多 256 次 beat，并禁止突发跨越 <span class="math inline">\(4{,}096\)</span> 字节地址边界；因此，在假设的 128 位内部通路下，一个块对应 64 次对齐事务。 一个在途事务可能不可抢占，剩余块内事务是否会阻塞后续安全读取，取决于控制器是否实现优先级旁路。 DRAM 自身引入延迟，因为每个 bank 同一时刻只有一行处于开启状态：就像必须关上抽屉才能打开另一个抽屉的办事员，对已关闭行次的读取需先完成预充电（<span class="math inline">\(t_{\text{RP}}=14\text{ ns}\)</span>）与激活（<span class="math inline">\(t_{\text{RCD}}=14\text{ ns}\)</span>），才能进行列服务。</p>
+<p>采用 <strong>First-Ready First-Come-First-Served (FR-FCFS)</strong> 调度的控制器会让就绪行命中超越较早的请求，而流式加速器大量提供行命中，因此该策略需要自身的饥饿上界。 在不允许较晚到达越过安全读请求的 FIFO 队列下，理想化等待为 <span id="eq-placement-dram-queuing"><span class="math display">\[t_{\text{queue}} = \sum_{k \in \mathcal{Q}} \frac{B_k}{\text{BW}_{\text{peak}}} + N_{\text{conflicts}} (t_{\text{RP}} + t_{\text{RCD}}) \tag{1}\]</span></span> 其中 <span class="math inline">\(\mathcal{Q}\)</span> 表示排在读请求之前的事务集合，<span class="math inline">\(B_k\)</span> 表示每个事务的字节数，<span class="math inline">\(N_{\text{conflicts}}\)</span> 表示存储体切换次数，<span class="math inline">\(\text{BW}_{\text{peak}}\)</span> 表示乐观服务速率，因此仲裁开销与刷新都会累加到结果中。</p>
+<div id="nbk-placement-loaded-read" class="callout callout-notebook" title="共享 die 上权限路径在负载下的读取">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.1: 共享 die 上权限路径在负载下的读取</strong></summary><div><strong>问题</strong>：假设权限路径从应用 SoC 的共享 DRAM 读取了它的传感器快照。 在该读之前，队列中最多可能有多少已排队流量，才会使该 tick 超出其感知配额、其声明的最坏情况执行时间，以及其截止时间？<p></p>
+<p><strong>变量</strong>：该 tick 在 400 μs 的截止时间内，为感知分配 40 μs，为约束评估和驱动帧写入分配 95 μs。 该快照为 4,096 字节，位于 12.8 GB/s 的通道上。 在它之前，FIFO 中已有一个权重 tile（64 次事务）、一次摄像头传输和一条遥测记录：88 次事务、360,448 字节、3 次存储体切换。</p>
+<p><strong>数学推导</strong>: 由 <a href="#eq-placement-dram-queuing" class="quarto-xref">公式&nbsp;1</a> 给出，以 12.8 GB/s 的速率传输积压的 360,448 字节，再加上 3 次切换的耗时，每次切换耗时 28 ns，总耗时为 28.244 <span class="math inline">\(\mu\text{s}\)</span>。 快照本身读取需要 0.32 <span class="math inline">\(\mu\text{s}\)</span>，因此负载下的读取需要 28.564 <span class="math inline">\(\mu\text{s}\)</span>，并使感知时间配额剩余 11.436 <span class="math inline">\(\mu\text{s}\)</span>。 第二个积压将超出该时限。 一旦读取耗时超过 155 μs，就会超出所声明的最坏情况执行时间 250 μs，而该情形需要超过 5 个积压；该交叉点本身已足以否定独立性，尽管该次触发仍满足其截止时间。 截止时间本身在读取耗时超过 305 μs（即超过 10 个积压）之前一直成立，因此满足截止时间的触发并不构成该放置方案正确的证据。 在经校验的优先级旁路下，仅有一个在途事务需要等待在先，读取耗时 0.64 <span class="math inline">\(\mu\text{s}\)</span>。</p>
+<p><strong>系统洞见</strong>：该读取操作的界属于内存控制器，而非工作负载。 只有当控制器限制了其在安全读操作之前可接纳的流量，或允许该读操作绕过队列时，它才存在；而一台为流式加速器服务的 FR-FCFS 控制器，除非其配置已经过验证，确认具备相应的保障能力，否则既不提供前者也不提供后者。 机器上的分立微控制器通过其自身总线从紧耦合存储器中读取快照，从而消除了这一问题。</p>
+</div></details>
+</div>
+<p>竞争延伸至电源分配网络，其中请求方争夺的是电荷而非带宽。 电压降 <a href="#sec-placement-silicon-substrate" class="quarto-xref">节&nbsp;1.1</a>、<span class="math inline">\(\Delta V = L\,dI/dt + IR\)</span> 随电流步长的速率与幅度同时增长。 片外电压调节器响应远为缓慢，无法跟上纳秒级电流步长，因此最初的电荷来自片内去耦电容；一旦该电容耗尽，共享电源轨便会出现电压下垂，波及其供电的每个核心。</p>
+<p>在共享的 <span class="math inline">\(V_{\text{core}} =\)</span> 0.85 <span class="math inline">\(\text{V}\)</span> 电源上，封装电感为 <span class="math inline">\(L =\)</span> 30 <span class="math inline">\(\text{pH}\)</span>、电阻为 <span class="math inline">\(R =\)</span> 8 <span class="math inline">\(\text{m}\Omega\)</span> 时，加速器电流阶跃 <span class="math inline">\(\Delta I =\)</span> 6 <span class="math inline">\(\text{A}\)</span> 在 2 <span class="math inline">\(\text{ns}\)</span> 内产生 90 <span class="math inline">\(\text{mV}\)</span> 的电感压降和 48 <span class="math inline">\(\text{mV}\)</span> 的电阻压降，合计 138 <span class="math inline">\(\text{mV}\)</span>，即电压跌落 16.2 %，使电压降至 0.712 <span class="math inline">\(\text{V}\)</span>。 alpha 幂律门延迟模型<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> 将该跌落转化为传播延迟的 39 %增加（<strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems-droop">Inductive Voltage Droop and Gate Delay Stretch</a></strong> 推导这两个步骤）。 这是门延迟，而非一个时钟周期。 它是否消耗许可路径的余量、触发欠压复位，还是完全无影响，取决于器件的最小工作电压与时钟策略；只有依据所声明电流阶跃进行的电源轨与时序测量才能对此作出定论。 两条干扰通道——互连 FIFO 排队与电源轨电压跌落——均以 <a href="#fig-13-soc-contention-droop" class="quarto-xref">图&nbsp;2</a> 的形式加以刻画。 共享裸片 使上述问题对每一个加速器突发都悬而未决；而独立的微控制器，在其自身总线与电源轨上，并不继承这些问题。</p>
+<div id="fig-13-soc-contention-droop" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="两条条件干扰路径：FIFO 事务队列导致一次示例性的读加计算超期；另有一条独立建模的电流阶跃导致 138 毫伏的电源轨跌落与门延迟展宽，存在跨越最低器件电压的风险。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-13-soc-contention-droop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig13_soc_contention_droop.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="图&nbsp;2: 异构 SoC 干扰通道: (a) 在内存总线 FIFO 队列中，排队中的后台事务会延迟一次安全读操作，并将读加计算推过其子截止时刻；优先级旁路改变了等待时间。(b) 在电源分配网络上，矩阵加速器电流阶跃（在 2.0\text{ ns} 内变化 \Delta I = 6.0\text{ A}）产生 138\text{ mV} 的感性跌落与电阻性跌落，在 alpha 幂律下非线性地拉长了门电路传播延迟。 跨越最低工作阈值 V_{\min} 会导致时序违例或欠压。"><img src="images/svg/fig13_soc_contention_droop.svg" class="img-fluid figure-img" style="width:95.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-13-soc-contention-droop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: <strong>异构 SoC 干扰通道</strong>: (a) 在内存总线 FIFO 队列中，排队中的后台事务会延迟一次安全读操作，并将读加计算推过其子截止时刻；优先级旁路改变了等待时间。(b) 在电源分配网络上，矩阵加速器电流阶跃（在 <span class="math inline">\(2.0\text{ ns}\)</span> 内变化 <span class="math inline">\(\Delta I = 6.0\text{ A}\)</span>）产生 <span class="math inline">\(138\text{ mV}\)</span> 的感性跌落与电阻性跌落，在 alpha 幂律下非线性地拉长了门电路传播延迟。 跨越最低工作阈值 <span class="math inline">\(V_{\min}\)</span> 会导致时序违例或欠压。
+</figcaption>
+</figure>
+</div>
+<p>检测这些相互作用需要在受影响核心之外进行仪器化，因为停滞或变慢的核心无法自行计时自己的延迟。 内存控制器计数器、轨压监视器、热敏二极管和复位原因寄存器记录耦合关系。</p>
+<p>共享芯片可在硬件中计量这些耦合：通过交叉开关仲裁器，将带标记的安全事务经其专属队列路由，同时以带宽配额计量加速器突发；热保护触发时，电源管理控制器仅降低加速器的时钟频率。 每一项都是部署测试必须确认的控制器属性，而非框图中可以假定的调度器设置。 仲裁决定事务何时移动，而非它携带什么。 跨越两条路径之间物理边界的，必须由生产时间、有效性和故障响应上的显式保证来定义。</p>
+</section>
+<section id="sec-placement-boundary-contract" class="level2">
+<h2 class="anchored" data-anchor-id="sec-placement-boundary-contract">边界契约</h2>
+<p>边界契约下跨越提案路径与许可路径的，是一条记录，而非对共享内存的无保留指针，因为将原始内存地址跨越信任边界传递，会把读取方直接耦合到写入方的内部内存布局、执行时序与故障域。 若加速器上运行的分块策略仅向它提供私有输出缓冲区的指针，则许可路径没有任何机制来判断写入方是否仍在修改缓冲区、是否在中途推理时卡住，或是否遇到了未处理的故障。 因此，边界载荷必须是一条不可变、自包含的记录。 跨越的正是@sec-nervous-cadences 的提案头部，经由其 seqlock 邮箱发布；部署安排不增加任何字段，只增加该交换在负载下满足其截止时间的证据。 许可路径将该记录作为隔离快照读取，在任何一个设定值到达驱动器之前，先评估其时序新鲜度与物理有效性。</p>
+<p>无论交换跨越共享裸片 还是机器的板级链路，保持时序隔离都要求消除交换接口处的阻塞同步。 如果许可循环获取了提案生成器持有的锁，一次推理停顿可能延迟一个物理决策。 因此，一次 <span class="math inline">\(25\text{ ms}\)</span> 的主机停顿必须使 1 kHz 执行器在每个 tick 上持续运行：仅在其租约和当前状态持续满足准入条件期间，它才可使用最后一个已验证的数据分块；一旦该条件不再满足，就切换到其独立验证过的回退方案。 许可路径上的分配与记录同样需要实测的时间上界。 生产者可能停顿或丢弃更新；它无法对被控对象的执行节奏施加反向压力。</p>
+<p>《<strong><a href="../04_nervous/04_nervous.html#tbl-04-boundary-fallbacks">边界契约失效类别与确定性回退矩阵</a></strong>》的邮箱拒绝规则，可防止失败的提案者迫使执行器等待。 被拒绝的提案会使已批准的设定值继续生效，直到租约到期；若没有可接受的提案续期，且机器处于运动状态，则 MCU 执行《<strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-fallback-ladder">回退阶梯</a></strong>》的停止层级，即基座的常驻停止措施与机械臂的状态匹配停止措施，二者都不等待提案者。 该兜底机制仍须在限定的时间内完成，而该部署测试会在承载该路径的硅片上、在负载条件下测量这一上界。</p>
+<section id="窗口看门狗定时器与执行活性" class="level3">
+<h3 class="anchored" data-anchor-id="窗口看门狗定时器与执行活性">窗口看门狗定时器与执行活性</h3>
+<p>软件内存边界与无锁 seqlocks 可防止撕裂读取，但不能保证安全执行器代码处于存活状态并正在推进其预期操作。 执行器活性属于 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong> 的自看门狗，而该看门狗仅在完成一次 tick 之后才获得输入。 由定时器中断服务的倒计时看门狗对死任务视而不见，这正是 <em>Bookout v. Toyota</em> 案中论证的失效。 在共享硅片上，执行器还可能因互连争用而被饿死，或因时钟损坏而运行过快，因此部署安排需要一种更强的自看门狗形式，即从两侧约束刷新。</p>
+<p>因此，高完整性的物理 AI 架构会强制实施<strong>窗口化看门狗定时器</strong>。 窗口化看门狗会拒绝任何过早或过晚发生的刷新。 定时器硬件定义了一个由下界（闭窗口，<span class="math inline">\(T_{\text{lower}}\)</span>）和上界（开窗口，<span class="math inline">\(T_{\text{upper}}\)</span>）参数化的服务窗口：</p>
+<ol type="1">
+<li><strong>提前触发违规（<span class="math inline">\(t_{\text{service}} &lt; T_{\text{lower}}\)</span>）</strong>：如果软件试图在下限阈值到期之前刷新看门狗，硬件会立即触发故障复位。 过早触发可能表明软件绕过了必需的算法阶段、进入了病态的短循环，或因时钟损坏而获得了执行加速。</li>
+<li><strong>延迟踢出违规（<span class="math inline">\(t_{\text{service}} &gt; T_{\text{upper}}\)</span>）</strong>：若计时器在未收到有效刷新时倒计时超过 <span class="math inline">\(T_{\text{upper}}\)</span>，计数器将下溢，触发硬件复位。 一次延迟踢出可能表明，执行器因互连争用而计算周期被饿死，或因未处理的异常而陷入死锁，或因过多的缓存淘汰而延迟。</li>
+<li><strong>有效服务窗口（<span class="math inline">\(T_{\text{lower}} \le t_{\text{service}} \le T_{\text{upper}}\)</span>）</strong>：窗口内的刷新表明馈送路径满足了其时序条件；任务进展仍需合适的挑战或独立的监督。</li>
+</ol>
+<p>若控制器在每次成功 tick 后馈送一次，看门狗测量<em>两次馈送之间</em>的间隔。 令完成偏移量 <span class="math inline">\(c_n\)</span> 相对于 tick <span class="math inline">\(n\)</span> 起始位于 <span class="math inline">\([c_{\min},c_{\max}]\)</span> 内，并以 <span class="math inline">\(J_{\text{phase}}\)</span> 约束 tick 相位变化。 馈送间隔的保守取值范围是 <span class="math display">\[T_{\text{feed}}\in[T_{\text{period}}-(c_{\max}-c_{\min})-J_{\text{phase}},\;T_{\text{period}}+(c_{\max}-c_{\min})+J_{\text{phase}}].\]</span> 围绕该 <em>实测或论证的</em> 范围设置 <span class="math inline">\(T_{\text{lower}}\)</span> 与 <span class="math inline">\(T_{\text{upper}}\)</span>，同时保持迟到触发响应处于为被控对象另行推导的故障预算之内。 仅凭一次 tick 的执行时间并不能确定看门狗服务间隔。 在机器上，<span class="math inline">\(T_{\text{period}}\)</span> 是 1 ms tick，声明的 250 μs 最坏情况提供 <span class="math inline">\(c_{\max}\)</span>。 空载的 135 μs 路径无法提供 <span class="math inline">\(c_{\min}\)</span>，因为强制器的最短分支可能比其标称分支更早完成，因此下界取自压力测试记录的最短完成时间。 <span class="math inline">\(J_{\text{phase}}\)</span> 是微控制器滴答计时器相对于其参考值的抖动，在相同负载下测量。 该区间会为机器仅具备超时自看门狗的情况提供 <span class="math inline">\(T_{\text{lower}}\)</span>，而 <span class="math inline">\(T_{\text{upper}}\)</span> 仍保持所选的 5 ms 超时时间，因此该窗口可以容忍多次漏滴答后才触发。</p>
+<p>容差是有意设定的。 一次漏滴答在通道行驶速度下仅造成毫米量级的位移（ <a href="#sec-placement-testing-separation" class="quarto-xref">节&nbsp;1.6</a> ），远低于故障预算；而若窗口因单次迟到的看门狗馈送而关闭，则会停止一个正常运行的强制器，以节省该位移。 由估计值而非记录完成时间取出的下界会在健康滴答时触发，而上界宽于故障预算则会掩盖该窗口本应捕捉的饥饿现象。</p>
+<p>部分设计会加入 <strong>挑战-响应检查点机制</strong>：看门狗馈送以最新的传感器校验、权限评估和输出状态检查为前提，而非仅依赖计时器 ISR。 其故障覆盖率取决于挑战的生成位置、谁能计算或重放响应，以及失效的强制器状态是否仍能执行馈送路径。 因此，该方案的覆盖率是故障注入的结果，而非词元本身的属性。</p>
+<p>然而，在内存、互连仲裁和看门狗执行存活性方面建立清晰的边界，只解决了共址的逻辑与时序一半问题。 当加速器与实时处理器位于同一硅片上时，密集矩阵运算期间耗散的高功率会通过衬底直接传导，抬高局部结温，并改变相邻核心晶体管的开关速度。</p>
+</section>
+</section>
+<section id="sec-placement-thermal-timing-coupling" class="level2">
+<h2 class="anchored" data-anchor-id="sec-placement-thermal-timing-coupling">热与时序耦合</h2>
+<p>硅片上耗散的每一瓦特功率都流入同一个热域。 在共享 SoC 上，矩阵单元、应用核心、内存接口和集成稳压器都发热于同一个封装，许可回路的基线功耗较低且稳定，而提案路径则随其负载波动。 封装对环境的有限导热能力，使得峰值加速器活动会抬高芯片上每一条电路的结温。</p>
+<p>在物理人工智能系统工程中，<strong>热时钟降频</strong> 是指当持续高功耗的认知推理使硅片结温（<span class="math inline">\(T_j\)</span>）超过热保护触发阈值（<span class="math inline">\(T_{\text{trip}}\)</span>）时，自动施加并由硬件强制执行的处理器时钟频率降低。 为防止芯片损坏，硬件会突然降低时钟频率。 这引入了持续的、与温度相关的降速（迟滞），即使认知负载已经消退，执行时间仍被拉长，并可能把并置的实时安全回路推过其硬性物理截止时间。</p>
+<p>机器底座中的电子舱处于 45<span class="math inline">\(\,^{\circ}\text{C}\)</span> 环境温区。 <a href="#fig-13-jetson-orin" class="quarto-xref">图&nbsp;3</a> 展示了该模块类开发套件，即机器用作应用处理器的模块；其外壳既未显露散热路径，也未显露后续估算所依赖的时钟域。 假设共享 SoC 采用传导散热，其 <strong>结-环境热阻</strong> 为 <span class="math inline">\(\theta_{\text{JA}} =\)</span> 2 <span class="math inline">\(\text{K/W}\)</span>，<strong>热时间常数</strong> 为 <span class="math inline">\(\tau_{\text{th}} =\)</span> 8 <span class="math inline">\(\text{s}\)</span>。 许可回路连同空闲和内存功耗的总功耗为 4 <span class="math inline">\(\text{W}\)</span>，并将结温维持在 53<span class="math inline">\(\,^{\circ}\text{C}\)</span>。 连续提案推理会引入加速器、内存流量与调节器损耗，总计 26 <span class="math inline">\(\text{W}\)</span> 使稳态升高 <span class="math inline">\(P\,\theta_{\text{JA}} =\)</span> 52 <span class="math inline">\(\text{K}\)</span> 至 <span class="math inline">\(T_j =\)</span> 97<span class="math inline">\(\,^{\circ}\text{C}\)</span>。</p>
+<div id="fig-13-jetson-orin" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="t" data-fig-env="figure" alt="Jetson AGX Orin 开发者套件零售包装盒，旁边是一台带散热槽和外接连接器的灰色封闭机箱。 内部组件与散热路径不可见。 照片：Auledas 摄，CC BY 4.0；本地副本重新编码。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-13-jetson-orin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/jpg/fig13_real_jetson_orin.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="图&nbsp;3: 封闭式边缘计算套件：照片展示了一个 Jetson AGX Orin 开发者套件盒体，以及一个封闭的、带通风结构的机箱。 SoC、内存、散热硬件与时钟域均不可见；文中热模型属于独立的示意性场景。 照片：Auledas，CC BY 4.0，来自 Wikimedia Commons；本地副本重新编码。"><img src="images/jpg/fig13_real_jetson_orin.jpg" class="img-fluid figure-img" style="width:85.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-13-jetson-orin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: <strong>封闭式边缘计算套件</strong>：照片展示了一个 Jetson AGX Orin 开发者套件盒体，以及一个封闭的、带通风结构的机箱。 SoC、内存、散热硬件与时钟域均不可见；文中热模型属于独立的示意性场景。 照片：<a href="https://commons.wikimedia.org/wiki/File:NVidia_Jetson_Orin_AGX.png">Auledas</a>，<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>，来自 Wikimedia Commons；本地副本重新编码。
+</figcaption>
+</figure>
+</div>
+<p>仅靠热管理，移动操作臂的共享芯片（shared-die）布局方案即被否决。 假设其许可路径运行在应用 SoC 的实时集群上，频率为 <span class="math inline">\(f_{\text{nom}} =\)</span> 1.2 GHz，每个 tick 消耗 <span class="math inline">\(N_{\text{cycles}} =\)</span> 300,000 个周期，是离散微控制器在无负载状态下所需的 54,000 个周期的数倍，因为一个没有紧密耦合内存的集群会在每次快照和表读取时支付缓存填充与一致性周期。 当结温超过 <span class="math inline">\(T_{\text{trip}} =\)</span> 95<span class="math inline">\(\,^{\circ}\text{C}\)</span> 时，调速器将簇降至 <span class="math inline">\(f_{\text{throt}} =\)</span> 600 MHz，强制执行机制的周期延长至 <span class="math inline">\(t_{\text{exec,throt}} =\)</span> 500 μs，从而错过 400 μs 的截止时间，超出 100 μs（即 25 %的超量），并远远超过已声明的界限，而强制执行机制之上各层的所有裕量均依据该界限确定。 该离散微控制器运行在自身时钟与电源轨上，不受该调速器的管辖。</p>
+<p>超量运行会持续超过负载，因为调速器施加了<strong>状态依赖的迟滞</strong>，只有当半导体结冷却到 <span class="math inline">\(T_{\text{clear}} =\)</span> 85<span class="math inline">\(\,^{\circ}\text{C}\)</span> 之后，才恢复 1.2 GHz，这样时钟才不会在跳闸线附近振荡。 在策略被暂停、功率恢复到 4 <span class="math inline">\(\text{W}\)</span> 后，结温向其 53<span class="math inline">\(\,^{\circ}\text{C}\)</span> 基线松弛： <span id="eq-placement-cooling-recovery"><span class="math display">\[T_j(t) = T_{j,\text{target}} + (T_{j,\text{start}} - T_{j,\text{target}}) e^{-t/\tau_{\text{th}}} \tag{2}\]</span></span> 其中 <span class="math inline">\(T_{j,\text{start}}\)</span> 是降频开始时的结温，<span class="math inline">\(T_{j,\text{target}}\)</span> 是基线平衡温度，<span class="math inline">\(\tau_{\text{th}}\)</span> 是封装的热时间常数。 求解 <a href="#eq-placement-cooling-recovery" class="quarto-xref">公式&nbsp;2</a> 得到从 95 降至 85<span class="math inline">\(\,^{\circ}\text{C}\)</span> 所需的时间为 <span class="math inline">\(t_{\text{recov}} = \tau_{\text{th}} \ln[(T_{j,\text{start}} - T_{j,\text{target}})/(T_{\text{clear}} - T_{j,\text{target}})] =\)</span> 2.18 s。 在机器的 1 ms 时钟节拍处，2,175 个已排定的节拍落在该冷却窗口内，而共享 die 的设计需要为其中每一个都启用独立计时的后备方案。</p>
+<p>共享 die 上的周期拉伸还可能来自 <strong>电功率轨耦合</strong>，其时间尺度不同。 轨压跌落 <a href="#sec-placement-resource-contention" class="quarto-xref">节&nbsp;1.3</a> 在加速器突发后数纳秒内到来，而热耦合需要数秒才建立，因为热量通过封装扩散；因此，跟随结温 <span class="math inline">\(T_j(t)\)</span> 而非 <span class="math inline">\(V_{\text{core}}(t)\)</span> 瞬态的时序故障属于降频，而非轨压塌陷。</p>
+<div id="chk-placement-thermal-throttling-hysteresis" class="callout callout-checkpoint" title="结温与时钟降频">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 1.1: 结温与时钟降频</strong></summary><div>
+<p><a href="images/svg/chk_placement_thermal_throttling_hysteresis.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="images/svg/chk_placement_thermal_throttling_hysteresis.svg" class="img-fluid" style="width:100.0%" alt="热时钟降频迟滞的动态时序图。 左：结温冷却曲线显示，在 t=0 停止认知推理后，从 95°C 冷却至 85°C 的降频解除阈值需要 2.18 秒。 右图：在 1 毫秒控制周期内的比较显示，1.2 GHz 的标称执行耗时 250 微秒，在 400 微秒截止时间前留有 150 微秒余量，而 600 MHz 的降频执行则扩展为 500 微秒，即 25 %的截止时间超期；与此同时，冷却期间暴露出 2,175 个已调度周期，必须由一个独立的回退机制来承担控制。"></a></p>
+<p>在依赖软件热管理来保证实时安全性之前，先核实你对结温动态与降频迟滞的理解：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>热质量的延迟记忆效应</strong>：你能解释为什么物理热质量会作为长时程记忆，影响实时任务的执行延迟，即使引发该延迟的认知型负载已经被终止？</label></li>
+<li><label><input type="checkbox"><strong>冷却恢复尺寸设计</strong>：你能推导出 SoC 的冷却恢复时间 <span class="math inline">\(t_{\text{recov}}\)</span> 吗？该 SoC 的热时间常数为 <span class="math inline">\(\tau_{\text{th}} =\)</span> 8 <span class="math inline">\(\text{s}\)</span>，需要从 <span class="math inline">\(T_{\text{trip}} =\)</span> 95<span class="math inline">\(\,^{\circ}\text{C}\)</span> 降至 <span class="math inline">\(T_{\text{clear}} =\)</span> 85<span class="math inline">\(\,^{\circ}\text{C}\)</span>，且基线处于 53<span class="math inline">\(\,^{\circ}\text{C}\)</span> 平衡状态？</label></li>
+<li><label><input type="checkbox"><strong>调速器迟滞的作用</strong>：你能解释硬件热调速器中温度迟滞（<span class="math inline">\(T_{\text{trip}}\)</span> 与 <span class="math inline">\(T_{\text{clear}}\)</span>）的作用，并说明它如何抑制高频时钟振荡吗？</label></li>
+<li><label><input type="checkbox"><strong>物理隔离决策</strong>：哪些实测的时钟、功耗与时序证据可以支持采用共享 die，又在什么情况下需要独立的控制器？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-placement-testing-separation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-placement-testing-separation">测试分离性</h2>
+<p>在任何一种放置方案下，独立性主张都是对已声明提案工作负载、芯片温度与模式下的强制执行机制延迟与拒绝可用性的可检验界限。 若竞争使拒绝延迟超过物理截止时间，则所声称的运行分离性即告失败。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 对抗性微架构竞争测试为 <strong><a href="../15_verification/15_verification.html#sec-verification-hardware-fault-injection">硬件故障注入</a></strong> 的硬件故障注入套件提供信息。</p>
+</div></div><p>本实验的通过阈值来自被检验的命题。 机器的权限路径声明了最坏情况执行时间 <span class="math inline">\(C_{\text{wcet}} =\)</span> 250 μs，并且必须在所选截止时间 <span class="math inline">\(D_{\text{enf}} =\)</span> 400 μs 内完成每个 tick，而该截止时间位于 tick <span class="math inline">\(T_{\text{tick}} =\)</span> 1 ms 之内。 每一个实测的强制时间 <span class="math inline">\(t_{\text{enf}}\)</span> 都必须遵守该链，正如 <a href="#eq-placement-falsification-threshold" class="quarto-xref">公式&nbsp;3</a> 所述： <span id="eq-placement-falsification-threshold"><span class="math display">\[t_{\text{enf}} \le C_{\text{wcet}} &lt; D_{\text{enf}} &lt; T_{\text{tick}} \tag{3}\]</span></span> 声明的上界 <span class="math inline">\(C_{\text{wcet}}\)</span> 是 <strong>证伪阈值</strong>。 如果被检验的任一强制周期超过该阈值，独立性假设即被证伪，即使该周期仍满足截止期限，因为从强制器的截止时间到停止预算所计入的节拍之间的每一段余量，都是按照声明的数值设计的。 一个实测最大值可以证伪声明的上界，但不能确立它，因为一次活动只采样它所达到的状态，而在投机核心上，时序异常可能使真实最坏情况高于所记录的每一个周期。<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<div id="dfn-placement-worst-case-execution-time" class="callout callout-definition" title="最坏情况执行时间">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 1.2: 最坏情况执行时间</strong></summary><div>
+<p><strong><em>最坏情况执行时间</em></strong> 是在目标硬件平台上，在全部可接受输入、架构争用状态和运行条件下，使计算任务完整执行所需的物理墙钟时长上的形式上界： <span class="math display">\[t_{\text{exec}} \le t_{\text{WCET}} \le t_{\text{deadline}}\]</span></p>
+<ol type="1">
+<li><strong>意义</strong>: 在 信息物理控制回路中，正确性不仅取决于输出的数值有效性，还取决于其送达时刻；在硬物理截止时刻之后送达的最优控制指令，在功能上等同于系统完全失效。</li>
+<li><strong>区分</strong>：与表征软实时软件吞吐量的平均执行时间（<span class="math inline">\(\bar{t}\)</span>）或高百分位（<span class="math inline">\(P_{99}\)</span>）不同，WCET 是一个绝对的确定性上界，必须在并发内存总线饱和、缓存抖动和外设中断风暴的条件下成立。</li>
+<li><strong>常见误区</strong>：依赖经验性执行剖析或基准测试平均值来确立现代超标量或乱序处理器上的 WCET。 微架构时序异常（局部缓存命中或分支预测成功反而悖论性地增加了总执行时间）意味着，仅凭经验测试无法在缺乏形式化静态分析和硬件争用界的情况下证明真实的全局上界。</li>
+</ol>
+</div></details>
+</div>
+<p>单个 tick 所涉距离很小，这使该上界容易被低估。 在 <strong><a href="../12_enforcement/12_enforcement.html#tbl-enforcement-stopping-budget">仓库移动操作臂的停车预算</a></strong> 中完成的预算使机器在 997.4 mm 以 1.3 m/s 的通道速度停车，相对于 1.10 m 的净空距离仍留有 102.6 mm 的余量，而一次漏掉 tick 只会增加 <span class="math inline">\(v\,T_{\text{tick}} =\)</span> 1.3 mm。 部署位置所保护的正是上界本身，因为 <span class="math inline">\(\tau_{\text{delay}}\)</span> 恰好计入一个 <span class="math inline">\(T_{\text{tick}}\)</span>，而没有上界的争用则是长度未知的停顿。</p>
+<p>反驳独立性主张需要借助专门设计的合成负载来诱发最坏情况下的资源争用，而非报告平均吞吐量的标准基准。 高平均利用率调度会在时钟周期间均匀摊开内存访问，使系统看起来负载低于容量、留有安全余量；而实际的物理干扰峰值出现在同步突发期间，此时多个部件在同一瞬间争夺同一组导线。 测试框架必须刻意向共享内存通道灌入非对齐的直接内存访问传输，用来自 Transformer 权重张量的脏行写回耗尽共享缓存容量，触发加速器矩阵乘法以引起电源轨电压的快速跌落<span class="math inline">\(L \cdot di/dt\)</span>，并在诊断日志写入非易失性闪存的同时流式传输峰值速率传感器遥测数据。 这些压力剖面重现了如下瞬态争用：当许可循环读取传感器快照的同一微秒时刻，提议模型发起一次大规模注意力前向计算。</p>
+<p>测量仪器记录传感器快照达到一致后的强制执行入口时刻（<span class="math inline">\(t_0\)</span>）、许可完成时刻（<span class="math inline">\(t_1\)</span>），以及已接纳的设定值发布到驱动帧的时刻（<span class="math inline">\(t_2\)</span>）。 这些指标用于诊断计算与设定值发送环节，但<span class="math inline">\(t_2\)</span>并非制动。 帧到达驱动（<span class="math inline">\(t_3\)</span>）与实测制动启动（<span class="math inline">\(t_4\)</span>）共同构成完整的物理链路。 真正关键的是终点，即自最后一次有效租约续期起算的 <span class="math inline">\(t_4\)</span>，并计入时钟误差。 制动启动必须在 82 ms 之内跟随，该值等于租约、一个节拍、一个总线周期与制动启动延迟 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong> 之和。 仅凭 250 μs 这一计算界是不足的。</p>
+<p>耦合机制在物理、电气与逻辑域之间相互叠加，因而需要覆盖各因子水平全部组合的全因子实验矩阵。 评估扫描覆盖低结温条件（<span class="math inline">\(T_j = 35^\circ\text{C}\)</span>）以及温度保持在 <a href="#sec-placement-thermal-timing-coupling" class="quarto-xref">节&nbsp;1.5</a> 所述的节流触发阈值 <span class="math inline">\(T_{\text{trip}}\)</span> 或以上的高结温条件；以及空闲提案路径与执行最大批次推理的饱和提案引擎之间的对比；诊断环形日志关闭与以全量非易失性内存带宽流式写入之间的对比；以及标称跟踪指令与触发拒绝流程的边界违反指令之间的对比。 对拒绝路径施加全量压力测试是强制性的，因为执行安全钳位轨迹或进入紧急关机涉及冷分支路径、非缓存的错误处理代码，以及常态通道行驶中从未执行的次级总线事务。</p>
+<p>在被否决的共享同一裸片的布局中，该矩阵旨在捕捉的那一对是特定的。 一个人在机架末端走出，许可路径便执行通向停止环节的拒绝分支，这是一条经过未缓存代码的冷路径。 在同一瞬间，应用处理器已标记了同一异常，开始通过共享直接内存访问互连结构发起诊断内存转储。 一套分别练习拒绝与诊断日志记录功能的测试套件会同时通过两者，却从未测量这一对，因为两个子系统只有在同时运行时才会争用同一个内存控制器。</p>
+<p>考虑一个用于被否决布局的示意性 <span class="math inline">\(10^7\)</span> 拍压力轨迹，即应用 SoC 中实时簇上的许可路径。 每 1 ms 一个 tick，轨迹跨越 10,000 s，即 2 h 46 min 40 s，尚未计入复位或准备耗时。 冷态轨迹的 <span class="math inline">\(P_{50}=\)</span> 95 μs、<span class="math inline">\(P_{99}=\)</span> 128 μs 与观测到的最大值 152 μs；热态、已加载轨迹的 <span class="math inline">\(P_{50}=\)</span> 210 μs、<span class="math inline">\(P_{99}=\)</span> 330 μs、<span class="math inline">\(P_{99.9}=\)</span> 395 μs 与观测到的最大值 468 μs。 已加载的 <span class="math inline">\(P_{99}\)</span> 已超出声明的 250 μs 界限，且最大值越过 400 μs 截止时间，因此该轨迹反驳了这一部署位置。</p>
+<p>若该轨迹通过，则其 tick 仅显示所测状态下的观测干扰低于阈值。 报告给出延迟分布、观测最大值、样本数、时长以及未施加的条件，包括电源劣化、电磁干扰和老化。<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a></p>
+<div id="ws-placement-1969-apollo11-radar-overload" class="callout callout-war-story" title="阿波罗 11 号雷达负载与计算机重启（1969 年）">
+<p></p><details class="callout-war-story fbx-simplebox fbx-default" open=""><summary><strong>War Story 1.1: 阿波罗 11 号雷达负载与计算机重启（1969 年）</strong></summary><div><strong>上下文</strong>：1969 年 7 月 20 日，阿波罗 11 号登月舱 <em>“鹰”号</em> 正在执行向月球表面的动力下降。 阿波罗制导计算机（AGC）是一台采用磁芯绳程序存储器的 <span class="math inline">\(1.024\text{ MHz}\)</span> 机器，它在由麻省理工学院仪器实验室开发的异步、优先级调度的 Executive 下执行制导、导航与下降发动机油门回路 <span class="citation" data-cites="martin1969apollo11 mindell2008digital">(<a href="#ref-martin1969apollo11" role="doc-biblioref">NASA Manned Spacecraft Center 1969年</a>; <a href="#ref-mindell2008digital" role="doc-biblioref">Mindell 2008年</a>)</span>。<p></p>
+<p><strong>机制</strong>：当 交会雷达模式开关脱离 <code>LGC</code> 位置后，雷达旋转变压器由一台频率锁定、但相位与制导系统参考信号不同步的 <span class="math inline">\(800\text{ Hz}\)</span> 电源激励。 耦合数据单元将这一相位差解读为天线运动，并向计算机连续发送计数脉冲。 NASA 的<a href="https://www.nasa.gov/wp-content/uploads/static/apollo50th/pdf/A11_MissionReport.pdf">任务报告，第 16 节</a> 给出每秒 12,800 个脉冲的最大值，来自两个数据单元，每个脉冲占用一个 <span class="math inline">\(11.7\,\mu\text{s}\)</span> 的存储周期，即计算机时间的 15%，而计算机在动力下降期间通常以约 90% 的容量运行。 无法一次完成的重复性作业会被重新排程，每次另占一块存储区，直到执行管理程序（Executive）的存储区耗尽为止。</p>
+<p><strong>影响</strong>：下降过程的低门阶段之前发生了五次执行溢出告警（1201 和 1202）。 任务报告称，制导与控制功能的表现未受影响。</p>
+<p><strong>响应</strong>：每次告警都触发了一次软件重启，AGC 按照优先级继续其关键的制导与显示工作，而机组与任务控制则在评估告警、下降继续进行。 后续任务在开关未处于 <code>LGC</code> 时清零数据单元，从而消除了其源头的虚假脉冲。</p>
+<p><strong>系统教训</strong>：外围设备可能在制导需要其执行能力的那一刻占用执行能力。 现代部署测试应计入异步外围设备负载，并验证关键路径及其恢复行为仍在其声明的时序边界内。</p>
+</div></details>
+</div>
+<div class="no-row-height column-margin column-container"><div id="ref-mindell2008digital" class="csl-entry" role="listitem">
+Mindell, David A. 2008年. <em>Digital Apollo: Human and Machine in Spaceflight</em>. MIT Press.
+</div></div><div class="no-row-height column-margin column-container"><div id="ref-martin1969apollo11" class="csl-entry" role="listitem">
+NASA Manned Spacecraft Center. 1969年. <em>Apollo 11 Mission Report</em>. MSC-01855. National Aeronautics; Space Administration.
+</div></div><p>阿波罗 11 号的 Executive 告警与火星探测者号（Pathfinder）的优先级反转（见 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-deterministic-fieldbuses">按时移动指令</a></strong>）展示了两种截然不同的实时资源争用形式。 在阿波罗 11 号中，外围设备消耗了执行能力；在 Pathfinder 中，一个低优先级任务占住了高优先级任务所需的资源。</p>
+<p>一次失败的干扰测试会指出假设的隔离可能在哪一处失效：缓存、内存仲裁、热时钟、电源或输出队列。 进一步的仪表化（instrumentation）在团队预留、划分或迁移共享资源之前，定位出该机制。</p>
+</section>
+<section id="sec-placement-isolation-decisions" class="level2">
+<h2 class="anchored" data-anchor-id="sec-placement-isolation-decisions">硅隔离决策</h2>
+<p>被证伪的独立性主张留下四种补救措施，各自以不同的代价计量（<a href="#tbl-13-replacement-decisions" class="quarto-xref">表&nbsp;1</a>）：静态预留、空间划分、降低工作负载，以及将工作负载物理迁移到独立芯片上。</p>
+<div id="tbl-13-replacement-decisions" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[16,16,18,18,16,16]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-13-replacement-decisions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: <strong>工作负载重新部署与隔离决策矩阵</strong>：当测试在共享硅片上证伪独立性时采用的补救路径。 每种补救方案都以不同的工程代价（吞吐量、容量、延迟、板载面积）为代价，在升级到物理隔离的硅片之前消除争用通道。
+</figcaption>
+<div aria-describedby="tbl-13-replacement-decisions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">补救策略</th>
+<th style="text-align: left;">目标耦合层</th>
+<th style="text-align: left;">实现机制</th>
+<th style="text-align: left;">系统工程权衡</th>
+<th style="text-align: left;">残余漏洞</th>
+<th style="text-align: left;">物理硅迁移触发条件</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>静态预留</strong></td>
+<td style="text-align: left;">CPU 执行时间、操作系统调度抢占</td>
+<td style="text-align: left;">固定优先级抢占式调度（<code>SCHED_FIFO</code>）、静态时间片切分（ARINC 653）</td>
+<td style="text-align: left;">空闲容量（<span class="math inline">\(20\text{--}40\%\)</span> 吞吐量损失）；静默状态下浪费的未分配周期</td>
+<td style="text-align: left;">操作系统可见性之下的微架构争用（共享 L3、DRAM 存储体冲突）</td>
+<td style="text-align: left;">即使已分配 <span class="math inline">\(100\%\)</span> CPU 核心，内存总线或缓存停顿仍会违反实时截止时间</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>空间划分</strong></td>
+<td style="text-align: left;">缓存容量抖动、DRAM 总线争用</td>
+<td style="text-align: left;">缓存 way 分区（ARM MPAM、Intel CAT）、MPU/IOMMU 域、AXI QoS 速率限制器</td>
+<td style="text-align: left;">结构性碎片；感知 L3 工作集减小（<span class="math inline">\(+15\text{--}30\text{ ns}\)</span> DRAM 访问惩罚）</td>
+<td style="text-align: left;">不可划分的 DRAM 控制器队列、行缓冲局部性重排、PDN 电压跌落</td>
+<td style="text-align: left;">矩阵引擎电流阶跃（<span class="math inline">\(\Delta I &gt; 10\text{ A}\)</span>）触发轨电压跌落，或 DRAM 队列停顿超过松弛量</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>工作量削减</strong></td>
+<td style="text-align: left;">内存吞吐饱和、峰值热功率</td>
+<td style="text-align: left;">模型量化（INT8/FP8）、上下文降采样、策略速率减半</td>
+<td style="text-align: left;">策略跟踪保真度下降；动态稳定性边界附近控制相位滞后增大</td>
+<td style="text-align: left;">公共时钟分配树、共享电源管理单元（PMU）、统一的复位域</td>
+<td style="text-align: left;">模型精度低于运行限值，或共享时钟/复位故障跨域传播</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>物理重新部署</strong></td>
+<td style="text-align: left;">共享电源、时钟、复位，或无界控制器干扰</td>
+<td style="text-align: left;">独立的安全约束执行 MCU，其电源、时钟、存储与传感器/执行器路径分别评估</td>
+<td style="text-align: left;">需要更多板卡面积以及外部通信预算</td>
+<td style="text-align: left;">线束、收发器以及公共电源故障仍然存在</td>
+<td style="text-align: left;">当共享裸片 无法为所需的时序与故障隔离提供证据时，选择独立方案</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p><strong>静态预留</strong> 在保留共享芯片上工作负载的物理部署位置的同时，为关键路径分配共享资源的一个保证比例。 预留为关键循环分配专用的执行时段或固定的内存总线带宽。 预留的代价是闲置容量。 若该机器的主机许可路径与它位于同一芯片上，那么为快照读取的最坏情况而设计的仲裁器时段会在每个 1 ms 周期中始终被保留，即使底座处于停驻状态且没有制动动作进行，也不可供策略模型使用。</p>
+<p><strong>空间分区</strong>将物理硬件结构切分，使负载不再争夺相同的物理单元。<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> 缓存 way 分区、核心钉死以及专用内存通道，在单颗芯片内建立起硬件隔离屏障。 分区带来的代价是灵活性的丧失与结构碎片化。 将一个八兆字节的共享缓存切分为策略模型专用的六兆字节分区与权限路径表格专用的两兆字节分区，可避免跨边界发生缓存行淘汰。 然而，这会永久限制学习模型的工作集，迫使更高的 DRAM 访问频率，并在每个推理步骤上使平均内存延迟增加数十纳秒。</p>
+<p><strong>工作量削减</strong> 通过缩小非关键任务的计算量或内存占用，化解竞争，直到其峰值需求落在共享系统的无竞争余量之内。 工程师可能将遥测日志的采样率从 <span class="math inline">\(1\text{ kHz}\)</span> 降到 <span class="math inline">\(100\text{ Hz}\)</span>，将策略权重从十六位浮点数量化为八位整数，以将内存总线流量减半，或降低分块策略的速率。 削减工作负载的代价是功能执行能力的下降。 在移动操作臂上，租约限制了最后一根杠杆。 若分块周期长于 60 ms 的租约 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong>，则提案会在续期之间过期，因此策略的速率必须高于 16.7 Hz，即使尚未计入续期抖动，这使得相对于其当前分块速率 20 Hz，可进一步降低速率的空间很小。 权重量化可能使策略在传送带拣取的抓取容差附近精度下降。</p>
+<p>若预留、分区与降低负载均无法建立所需的响应界，物理迁移即为一项候选补救措施。 它能够触及预留与分区无法触及的耦合，例如共享复位或时钟域，使一条故障同时使两条路径停止；声称已隔离此类故障的片上系统，必须通过设计与注入测试加以证明。 独立的控制器仅在电源、时钟、复位、传感器与执行器的独立性得到设计与测试的范围内，才消除这些共因路径；其所服务的完整性目标，取决于应用的安全论证，而非器件数量。 外部控制器还会增加传输与公共供电方面的义务，因此其传感器与执行器路径必须作为一个整体进行测量。</p>
+<p>将负载迁移到独立的硅片上，很少是一次局部的修改。 它会引发整台机器范围内布局与通信调整的连锁反应，而移动操作机器人则显示了这一成本落在何处。 <span class="math inline">\(T_{\text{bus}}\)</span> 项的 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-cadences">多速率节拍</a></strong> 不发生变化，因为驱动指令会穿越 EtherCAT 现场总线，无论授权路径位于何处。 重新定位所增加的，是方案将应用处理器到微控制器的通信由片上邮箱改为板级链路穿越。 该延迟不会进入 <span class="math inline">\(\tau_{\text{delay}}\)</span> 的任何新增项。 晚到的提案会消耗 5 ms 的续期抖动余量，而该余量由 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-coupled-budget">用于机器整体构造的一个耦合预算</a></strong> 的租约规则置于 50 ms 的块周期与 60 ms 租约之间的间隙中。 主机内存争用同样占用该余量，因此它对块策略的 40 ms 推理最多只能拉伸 12.5 %（<strong><a href="../08_perception/08_perception.html#sec-perception-cost-ingestion">摄取的成本</a></strong>）。 链路的最坏情况延迟（在负载下测得）必须因此容纳于该争用与提案方自身抖动所剩余的余量之内。</p>
+<p>更难的决策在于每个传感器安装在何处。 机器将编码器与惯性测量单元保留在微控制器一侧的链路上，因为授权路径每拍都要读取它们；而相机与激光雷达则留在应用处理器一侧，因为学习模型要消费它们，授权路径只读取提案的证据时段。 将相机接口移到微控制器一侧虽然可以减轻主芯片的负载，却会迫使学习模型经由更慢的外部链路接收观测流，并增加 <strong><a href="../08_perception/08_perception.html#sec-perception">传感器感知</a></strong> 所测得的观测龄期。 每一次重新布置决策都会经由物理互连传播，将瓶颈从片上内存仲裁器转移到板级引脚数量、走线长度与串行总线。</p>
+<p>物理人工智能中的硬件选型无法与具身形态的机械动力学解耦。 传统基准套件在诸如理论峰值 TOPS 或原始批推理吞吐量等孤立指标上评估边缘加速器，而具身系统则运行在闭环能量约束之下，其中计算延迟与物理运动紧密耦合（<a href="#fig-placement-robotics-aware-dse" class="quarto-xref">图&nbsp;4</a>）。 跨连续谱评估边缘加速器配置——从超低功耗边缘 TPU 到数百瓦级工作站 GPU——揭示了一条倒 U 形帕累托效率前沿。</p>
+<p>供给不足的加速器（例如一个 <span class="math inline">\(4\,\text{TOPS}\)</span> 边缘 TPU 或未加速的 CPU）会招致较长的视觉—语言—动作推理延迟（<span class="math inline">\(&gt;200\,\text{ms}\)</span> 每步），将拣放任务拉长到超过三分钟（<span class="math inline">\(T_{\text{mission}} = 215\,\text{s}\)</span>）。 在整个这一时段内，机器人的底座电子器件、传感器、电机保持电流以及热管理系统持续消耗静态待机功耗（<span class="math inline">\(P_{\text{static}}\)</span>）。 因此，静态能耗惩罚（<span class="math inline">\(P_{\text{static}} \times T_{\text{mission}} = 23.65\,\text{kJ}\)</span>）主导了总任务能耗，导致净系统效率较差（<span class="math inline">\(40.8\,\text{tasks/MJ}\)</span>）。 相反，用桌面级 GPU（<span class="math inline">\(300\,\text{W}\)</span> TDP）超配边缘硬件，可将模型执行时间压缩到 <span class="math inline">\(55\,\text{ms}\)</span>，但系统会撞上机器人的运动学速度上限（<span class="math inline">\(v_{\text{max}} = 0.8\,\text{m/s}\)</span>）。 边际的时间节省（<span class="math inline">\(27.5\,\text{s} \to 24.0\,\text{s}\)</span>）无法弥补巨大的动态芯片耗散（<span class="math inline">\(P_{\text{chip}} \times T_{\text{mission}}\)</span>），致使每任务总能耗飙升至 <span class="math inline">\(9.84\,\text{kJ}\)</span>。 最优协同设计窗口出现在平衡点（以 <span class="math inline">\(50\,\text{W}\)</span> Jetson AGX Orin 为例），此时模型推理已被充分摊薄，足以避免静态整机耗电，而不会引入不必要的动态功耗代价。</p>
+<div id="fig-placement-robotics-aware-dse" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="htb" data-fig-env="figure" alt="两面板的考虑机器人系统特性的设计空间探索可视化。 上图显示系统能效呈倒 U 形曲线，在欠配与过配区间于 Jetson AGX Orin 处达到峰值 227.3 任务/兆焦耳。 下方面板展示了各任务的静态底盘待机能耗与动态加速器能耗的堆叠柱状图，并用虚线标示出在 4.4 千焦处出现的 U 形最小值。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-placement-robotics-aware-dse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-placement-robotics-aware-dse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/7g/fkg91tq50f58kfmg7c65747r0000gn/T/ipykernel_91966/3835871085.py:316: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+  plt.show()</code></pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-placement-robotics-aware-dse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a)
+</figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig">
+图&nbsp;4: <strong>考虑机器人系统特性的跨边缘加速器层级设计空间探索（DSE）</strong>：上图为系统能效（每兆焦耳所求解的闭环任务），呈现为跨越七种边缘硬件配置的倒 U 形 Pareto 前沿。 欠配芯片上的迟缓推理会引发静态整机耗电，而过配加速器则会遭遇运动学速度饱和（<span class="math inline">\(v_{\text{max}} = 0.8\,\text{m/s}\)</span>），并承受过量的动态热耗散。 下图为按任务分解的能耗构成，比较静态整机与电机待机能耗（<span class="math inline">\(P_{\text{static}} \times T_{\text{mission}}\)</span>）与动态加速器耗散（<span class="math inline">\(P_{\text{chip}} \times T_{\text{mission}}\)</span>），在均衡边缘 SoC 上识别出最优最小值 <span class="math inline">\(4.40\,\text{kJ}\)</span> 每任务。
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-placement-hardware-allocation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-placement-hardware-allocation">硬件分配</h2>
+<p>移动操作机器人现已具备其许可路径的硬件部署位置、截止时间、未加载执行时间估计，以及一项可能证伪该分离性的测试。 除非将其连同其成立条件一并书面记录，否则这些内容都不会进入发布决策。 该 <strong>放置记录</strong> 消费 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-telemetry">执行记录</a></strong> 的执行记录，从中取走许可路径声明的最坏情况执行时间与截止时间，并补充该声明的界在路径运行所在硅片上承受负载时依然成立的证据：执行域、特权、周期、未加载与加载观察到的最大值、仲裁设置、电压跌落与热保护触发、缓解措施，以及测试台账的摘要。 加载最大值决定独立性主张，该主张仅在每一个最大值在声明负载下都不超过声明的最坏情况执行时间时成立；正如 <strong><a href="../04_nervous/04_nervous.html#sec-nervous-deterministic-fieldbuses">按时移动指令</a></strong> 对任意观察到的延迟分布所论证的，样本最大值是关于该界的证据，而从不取代它。</p>
+<p>该记录由两部分组成。 紧凑的表头存放配置值与观测到的最大值，并承载一份外部测试台账的摘要。 台账容纳无法放入固定布局的内容：清单、每个最大值背后的延迟分布与样本数、测试条件、缓解措施，以及尚未闭合的限值。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>字节布局：</strong> 放置记录的字段偏移量与大小见 <strong><a href="https://mlsysbook.ai/vol4/backmatter/appendix_systems.html#sec-appendix-systems-wire-placement">Placement record</a></strong>。</p>
+</div></div><p>对于移动操作机器人，表头记录了 1 ms 打点、400 μs 截止时间，以及一个示意性的 135 μs 未装载估计值，该估计值尚未经过实测得到最大值。 表头的缓解标志包括许可路径的隔离电源轨。 其负载字段保持为空，因为该机器目前尚无负载测试台账。 填写该负载字段需要在机器本体上开展 <a href="#sec-placement-testing-separation" class="quarto-xref">节&nbsp;1.6</a> 所述的测试活动，其中分立微控制器持续计时，而应用处理器运行峰值提案推理并完整记录日志，同时处于较高结温条件下，且拒止分支在同一轮测试中得到演练。 该轮测试所记录的每一个满载最大值都必须保持在声明的 250 μs 及以下，而制动起始时刻从最后一次有效的许可续期开始计时，必须在 82 ms 之内到来。 在这些测量存在之前，<strong><a href="../16_release/16_release.html#sec-release">部署发布</a></strong> 所评估的许可路径独立性主张仅建立在声明的界限之上、缺乏实证支撑，因而无法据此作出需要该主张的判定。</p>
+<p>外部账本清点内存通道、缓存分区、DMA 引擎、电源轨及其相互竞争的占用方。 对每一项，它记录仲裁配置与实测的干扰。 对于许可电源轨，它记录 2 s 的保持能力，该保持能力由 <strong><a href="../15_verification/15_verification.html#sec-verification-hardware-fault-injection">硬件故障注入</a></strong> 的馈电丢失注入所演练，并给出承载隔离主张的占用方清单，即微控制器、驱动逻辑，以及弹簧制动线圈，且不含任何提案侧负载。</p>
+<p>一次干扰测量需要其运行状态：模型与固件哈希、时钟策略、机箱与热界面、环境温度和结温、电源轨、仲裁设置、流量发生器、采样率、仪表、采样次数，以及测试时长。 账本将这些字段置于其所限定的延迟分布与尚未测试的状态旁边，而表头中的观测最大值则汇总这些分布。 该 <span class="math inline">\(10^7\)</span>-tick 轨迹仅覆盖 <a href="#sec-placement-testing-separation" class="quarto-xref">节&nbsp;1.6</a> 中单台机器运行的 2 h 46 min 40 s，太短，无法揭示任何发生频率低于约每 <span class="math inline">\(10^7\)</span> 个 tick 一次的干扰，对机队而言证据也过于单薄。</p>
+<p>每个放置条目都要求在测试执行之前预先声明一条证伪判据。 该判据规定构成架构失效的物理阈值，例如在神经加速器突发与 DMA 传输同时发生时，强制执行路径的任何周期长于声明的 250 μs 最坏情况。 该记录将实测分布与此判据对照，并说明被测主张是幸存还是被证伪。 当干扰违反目标预算并迫使工程变更时，记录会详述所采用的确切缓解措施，例如在神经加速器上启用内存总线带宽节流。 条目还必须记录测试运行期间未覆盖的边界条件，例如高于 45<span class="math inline">\(\,^{\circ}\text{C}\)</span> 舱段环境温度的运行状态、多位内存错误注入，或传感器收发器故障状态同时发生的情况。</p>
+<p><strong><a href="../15_verification/15_verification.html#sec-verification">对抗性验证</a></strong> 消耗已记录的仲裁点与共享电源轨，作为硬件与软件故障注入的目标映射，故意损坏共享结构，以检验故障传播是否与预测的失效域相符。<strong><a href="../16_release/16_release.html#sec-release">部署发布</a></strong> 将已记录的加载执行边界与测试尚未覆盖的范围与条件纳入正式安全论证，从而将经验测量转化为运行部署的证据性论证。</p>
+
+<div class="no-row-height column-margin column-container"><div class="margin-pointer">
+<p>↳ <strong>下游：</strong> 硬件布局安全论证为在 <strong><a href="../16_release/16_release.html#sec-release-safety-cases-claims">安全论证与主张</a></strong> 中的生产部署提供证据性依据。</p>
+</div></div><div id="capstone-placement-humanoid-crucible" class="callout callout-perspective" title="当兜底动作是一次迈步时">
+<details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.1: 当兜底动作是一次迈步时</strong></summary><div>
+<p><strong>问题</strong>：当兜底动作是一次迈步而非停止时，停止预算中的哪些行能够存活？</p>
+<p>在放置保护了 <span class="math inline">\(\tau_{\text{delay}}\)</span> 计数的这一拍之后，第三部分的停止预算对于一台由回退制动使其静止的机器而言是完整的，正如移动操作机所做的那样。 行走人形机器人没有步态中段的静止状态可供制动，因此其兜底动作是一次恢复平衡的迈步，预算的每一行都必须针对该动作重新检查。</p>
+<ul>
+<li><strong>观测年龄仍然存活。</strong> 年龄仍然会转化为位移（<strong><a href="../08_perception/08_perception.html#sec-perception-photons-to-claims">光子到空间主张</a></strong>），而在转动的头部上，误差是角向的。 未标定的10 ms相机—IMU 偏移量在1.5 rad/s 的头部转动中，会使一个位于前方5 m 处的点产生7.5 cm 的位移误差。</li>
+<li><strong>承诺变更。</strong> 闩锁的停止后缀 <strong><a href="../11_planning/11_planning.html#sec-planning-behavior-seam">接缝处的行为</a></strong> 变为一次经校验的迈步，仍以原方式随轨迹被接纳，但结束于新的落脚点而非静止。</li>
+<li><strong>向内收缩会发生变化。</strong> 平衡约束的相对度可以高于 1，即 <strong><a href="../12_enforcement/12_enforcement.html#sec-enforcement-safe-sets-conditional-permission">安全集作为条件许可</a></strong> 通过把速度折进障碍来求解原始净空度的情形。 平衡障碍需要采用同样的构造，而针对跟踪误差的向内收缩随后应用于它所生成的障碍。</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-placement-fallacies-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="sec-placement-fallacies-pitfalls">谬误与陷阱</h2>
+<p>配置决定了复杂提案算法与关键安全约束强制实施例程所共享的物理资源。 正常运行留下的轨迹无法证明这些系统真正相互独立，当罕见的物理事件——例如电源电压瞬变、时钟故障、内存争用，或一个卡住的产生者——对这些共享硬件通路施加压力时，更是如此。</p>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>逻辑特权环可保护实时权限执行单元免受共享电源轨的电压跌落影响。</em></p>
+<p>假设移动操作臂将锁步权限核心置于加速器的供电上，位于同一片 SoC 中。 那么，<a href="#sec-placement-resource-contention" class="quarto-xref">节&nbsp;1.3</a> 的电压跌落会使共享电源轨上每个逻辑门的传播延迟拉伸 39 %，包括权限核心自身的逻辑门，无论其软件拥有什么优先级。 时钟留出的时序余量小于该拉伸的核心，会在其关键路径上错过建立时间。 两个锁步核心看到相同的电压跌落，因而可能锁存同一个错误值，使比较器保持静默；或者欠压检测器在基座移动时重置权限执行单元。 访问控制决定权限执行单元可以写入哪些地址；其规则中没有约束该单元触发器电压的项。 布局鉴定必须用去耦电容或 <span class="math inline">\(di/dt\)</span> 电流变化率限制来约束电压跌落，并在声明的电流阶跃下展示时序裕量；否则移除共享电源。 机器将其移除，在其隔离的、具有供电保持能力的 <strong><a href="../02_body/02_body.html#sec-body-archetype-matrix">哪一项预算最先成为约束</a></strong> 电源轨上运行许可路径，而加速器并不从中取电。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱</strong>：<em>在提议域与许可域之间共享锁相环或复位控制器。</em></p>
+<p>若机器的应用处理器与许可域共用同一个锁相环和同一个复位控制器（<strong><a href="../04_nervous/04_nervous.html#sec-nervous-hardware-isolation">硬件隔离</a></strong>），那么一次热时钟故障或停滞策略簇的看门狗复位都可能使许可域一并停摆。 名义方框图显示处理器彼此独立，但两者都依赖脆弱的硅基基础设施，单个事件即可在无声中将其禁用。 沿物理实现追踪并核查时钟树与复位树，以确保持续实施许可约束所需的资源彼此独立。 底座与机械臂驱动在不再收到获准指令时，同样需要定义到安全状态的硬件过渡；重启应用处理器不能是唯一的重启恢复机制。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误</strong>：<em>平均内存总线利用率低，就保证实时安全任务的读延迟有界。</em></p>
+<p>假设机器权限路径从共享 DRAM 读取传感器快照，其中适度的平均总线占用掩盖了与其读取同时发生的摄像头与日志突发流量。 <a href="#nbk-placement-loaded-read">1.1</a> 中存在竞争负载时的读取 仅在前置单个积压时符合感测配额，而平均量界无法说明会有多少个积压。 假定读取尾延迟为 320 μs，则在 400 μs 的总期限中仅剩 80 μs，小于约束评估与驱动帧写入所需的 95 μs，因此该配置不成立。 一个一致的 TCM 快照可以省去共享 DRAM 读取，前提是对其 DMA 完成时间、容量和本地传输时间均加以限定。 平均利用率本身不足以证明能够满足该截止时间。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱</strong>：<em>跨处理器通信边界与不可信的神经网络策略共用阻塞式软件互斥锁。</em></p>
+<p>分块策略在将一批16设定值发布到一半时崩溃。 一个必须获取该生产者持有的锁的强制器会随之冻结，这就是为什么@sec-placement-boundary-contract 的边界契约不允许阻塞式同步。 其 seqlock 使强制器无需等待即可拒绝一条被撕裂的记录，并继续执行其回退行为，但前提是重试行为本身具有上界。 通信契约必须像规定载荷格式一样严格地规定中断发布的时间行为。</p>
+</div>
+</section>
+<section id="sec-placement-summary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-placement-summary">摘要</h2>
+<p>物理 AI 平台将学到的提议器部署在应用处理器与加速器上，而许可路径则置于裸金属微控制器，但仅凭这一分配并不能实现二者之间的隔离，因为特权边界并不管辖这两条路径仍然共享的任何物理资源。 因此，分区（partitioning）在负载测试未能证伪它之前，只是一个设计假设。</p>
+<p>物理隔离必须由对内存队列、交叉开关仲裁、电源瞬态以及执行器路径的实测界限来支撑。 一个放置结果是一项经验性主张，其适用范围限于所测条件。 一条通过的放置记录表明：在声明的压力工作负载、特定环境温度和固定的时钟治理策略以及已记录的故障域条件下，芯片的共享物理底层并未导致不可信路径违反安全路径的时序约束。 在仓库移动操作臂上，若在架构图中将 分块策略与权限路径分别画入不同的框，就不会把它们与共享的电压调节器、共用的内存交叉开关，或横跨两个处理器集群的散热片隔离开来。 若加速器在执行该学习得到的提议时达到峰值电流，而所有内存通道都在服务直接内存访问传输，那么由此产生的电压跌落会在纳秒级时间内波及同址的权限核心，热量则会在数秒内传至该核心；正因如此，该机器将这一核心置于独立的硅片上。 系统设计中绘出的边界，只有在与这些共享的电学、热学与架构学限制逐项核对之后，才真正存在于硅片之上。</p>
+<p>放置记录将这一证据向前传递。 它从执行记录中取用权限路径声明的最坏情况执行时间与截止时间，并补充声明测试条件下的负载工况实测最大值、共享资源队列与功率余量、共用的电源、时钟、复位与内存失效路径，以及尚未测试的条件。 机器自身的记录中，在 400 μs 的截止时间内，针对声明的 250 μs 最坏情况，保存了一条 135 μs 的示例性无负载估计；然而，它仍等待一份负载工况测量账本，该账本必须在任何发布声明成立之前，指明仲裁策略、时钟、采样数量与物理端点。</p>
+<p>随着本次布局分析的完成，第三部分的各个阶段构成一台必须作为一个整体来测量的机器。 观测契约、信念记录、意图租约、轨迹记录、执行记录与布局记录构成一条链，每一环都是一项附有条件的主张；因此，产生这些记录的阶段不能被当作通过理想化信道通信的独立软件模块来处理。 前几章确立的逻辑边界提供了推理权威与故障传播所需的结构，但物理现实决定其执行。 内存控制器遵循已配置的仲裁与行调度，二者未必反映软件特权；中断可能在任一工作负载期间到来。 当许可路径接受一个底座速度设定值时，该动作是流水线中的最后一步，其时序、功耗与内存占用必须在同一底盘上共同测量。 前几章假定学习型负载无法延迟原则 <a href="https://mlsysbook.ai/vol4/parts/running_principles.html#pri-vol4-proposal-permission" title="英文原版参考内容">Proposal is not permission</a> 所要求的许可路径，而布局分析将这一假设转化为一个可证伪的阈值，并以压力测试和记录作为支撑。 第四部分继承了链条留下的三件事：已完成制动预算中的余量、站点穿越规则尚未定论的前提，以及布局记录中尚未填写负载工况测量结果的字段。</p>
+<div id="callout-takeaways*-1.2" class="callout callout-takeaways" title="异构硅片布局与内存争用">
+<details class="callout-takeaways fbx-simplebox fbx-default" open=""><summary><strong>要点回顾: 异构硅片布局与内存争用</strong></summary><div>
+<ul>
+<li><strong>逻辑隔离是一个关于硬件的假设：</strong>特权环决定任务可以触及哪些地址，而不是它的请求等待在哪里、由哪条供电轨为其供电，或它依赖哪棵时钟树和复位树。 一项独立性主张只有在带负载的测试未能证伪它时才成立。</li>
+<li><strong>平均值无法约束截止时间：</strong>在被否决的共享 die 上，一批由权重 tile、相机和遥测事务组成的积压，把权限路径上的快照读取从 0.32 延长到 28.564 <span class="math inline">\(\mu\text{s}\)</span>。 超过 5 个这样的积压会越过声明的最坏情况执行时间，而平均值并不能排除这种情况。 事务大小、队列策略与旁路行为决定等待，因此该界限属于内存控制器。</li>
+<li><strong>耦合运行发生在三个时间尺度上：</strong> 供电轨电压跌落在纳秒级发生，排队在微秒级发生，而热节流在负载停止后持续数秒。 在被否决的共享 die 布局中，时钟频率减半使执行保障机制的 250 μs 执行周期延长至 500 μs，持续 2,175 个控制节拍。</li>
+<li><strong>声明的界限即证伪阈值：</strong> 任何在带负载条件下超过声明的最坏情况执行时间的执行周期，即使截止期限仍然满足，也足以否定独立性，因为执行保障机制之上各层的全部余量都是依据该数值设计的。 一条通过的轨迹仅能支持它所测试过的状态。</li>
+<li><strong>被证伪的论断迫使一次有代价的选择：</strong> 预留占用空闲容量，分区占用工作集，降低负载则牺牲策略权威，而迁移会引入板级链路，其最坏情况必须落在租约的续期抖动余量之内。</li>
+<li><strong>布局记录限定了所展示的内容：</strong> 它取自执行记录声明的最坏情况执行时间与截止期限，并补充带负载条件下的观测最大值、缓解措施以及未测试的条件。 对于移动操作臂，带负载测试结果字段仍然为空，因此独立性主张在没有任何证据的情况下进入了放行评审。</li>
+</ul>
+</div></details>
+</div>
+<div id="callout-chapter-connection*-1.3" class="callout callout-chapter-connection" title="从计算放置到监督性干预">
+<p></p><details class="callout-chapter-connection fbx-simplebox fbx-default" open=""><summary><strong>后续内容: 从计算放置到监督性干预</strong></summary><div>当最慢的延迟属于人时，停止预算会怎样？ 本章考察的每一个延迟都属于机器（排队读取、耗时延长的门控环节、受限的时钟），而每一个都可以通过对底盘的测试加以界定或证伪。<strong><a href="../14_intervention/14_intervention.html#sec-intervention">监督性干预</a></strong> 开启第四部分，以放置无法界定的延迟开篇。 一位通过许可路径并不控制的链路接管通道内移动操作臂的远程助手，其反应比此处测得的任何一项都更慢，而这一反应消耗的是同样的停止预算。 于是，权限必须在已学习的提议者、许可路径和人之间传递，而交接本身不得产生它所旨在阻止的运动，并且每一拍都必须记录权限由谁持有。<p></p>
+</div></details>
+</div>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">脚注</h2>
+
+<ol>
+<li id="fn1"><p><strong>电感电压跌落机制</strong>：在高性能 VLSI 设计中，电感电压跌落（<span class="math inline">\(\Delta V = L \cdot dI/dt\)</span>）在大量逻辑门同时开关时，产生于电源分配封装引脚和片上电源网络的寄生电感（<span class="math inline">\(L\)</span>）两端。 若局部轨电压低于最低工作阈值（<span class="math inline">\(V_{\min}\)</span>），数字触发器将遭受建立时间违例、亚稳态或欠压复位，从而破坏确定性的实时执行。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>异构系统芯片架构</strong>：异构 SoC 将多个不同的计算域集成到同一硅片基板上，将高吞吐应用处理器与神经加速器同确定性实时安全岛结合起来。 尽管内存管理单元跨域隔离了软件地址空间，硬件子部件仍共享电源分配网络、时钟分配树和 DRAM 控制器。 在峰值认知突发负载下，这些共享物理结构之间的资源争用缺乏协调，可能使实时响应时间劣化到超出关键物理截止时间。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><strong>双核锁步</strong>: 两个核心可执行匹配的指令流，同时比较逻辑检测所选的偏差。 检测覆盖率、延迟、共享轨脆弱性和诊断响应取决于器件和应用的安全论证，因此锁步只是 ASIL D 论证的一个组成部分，而非全部。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><strong>PREEMPT_RT</strong>: 一种 Linux 实时配置可降低部分调度器延迟，但其尾部延迟取决于内核、驱动、工作负载和共享硬件。 在没有测量的情况下，无法得出可移植的低于 <span class="math inline">\(50\,\mu\text{s}\)</span> 或裸金属对比结论。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><strong>硬件内存保护与 IOMMU 域</strong>：强制空间地址隔离的物理硅结构。 片上内存保护单元（MPU）将 CPU 线程的执行限制在有界的内存段内，而输入输出内存管理单元（IOMMU）则转换并监管外围总线主设备（如 PCIe 神经加速器或相机反序列化器）发起的直接内存访问（DMA）请求，从而在物理上阻止不可信设备篡改安全状态缓冲区。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><strong>航电多核认证</strong>: FAA 咨询通告 AC 20-193 与 CAST-32A 为安全关键航电的多核干扰分析确立了规范。 该指导要求通过证明共享缓存、互连交叉开关和内存控制器不会导致关键任务超出执行截止时间，来界定最坏情况执行时间。 若无硬件强制的质量服务分区或专用互连通道，跨核内存流量将使单核时序边界失效。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><strong>缓存着色与路划分</strong>: 将共享缓存容量在竞争任务之间划分的技术。 软件缓存着色通过划分物理页分配，使不同进程的地址映射到互不重叠的缓存集合；而硬件划分机制（如 ARM 内存系统资源划分与监控技术 MPAM，或 Intel 缓存分配技术 CAT）则动态限制不可信神经加速器可分配的缓存路，防止关键安全线程的缓存行被逐出。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><strong>DRAM bank 冲突</strong>：同一已激活的存储体中的不同行可能需要在列服务之前先预充电并激活。 实际的 bank 映射、重叠与调度决定了所增加的延迟。<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p><strong>Alpha-Power CMOS 延迟模型</strong>: 该模型使用 <span class="math inline">\(t_{\text{prop}} \propto V/(V-V_{\text{th}})^\alpha\)</span> 与 <span class="math inline">\(V_{\text{th}}=0.42\text{ V}\)</span> 和 <span class="math inline">\(\alpha=1.3\)</span>。 它把供电电压与单个门电路的开关延迟联系起来；建立时间违例与欠压行为由器件特性表征确定。<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><strong>微架构时序异常</strong>: 在乱序和投机处理架构中，局部的性能改善，例如缓存命中或加速的分支求值，会改变指令调度与资源争用，从而造成全局执行时间的净增加。 这种反直觉行为使简单的组合式最坏情况执行时间分析失效。 安全性验证需要为声明的工作负载、仲裁、温度和故障条件给出有依据的界；仅凭测量结果和单独的非投机核心，都无法确立端到端的硬界。<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p><strong>硅衬底老化与时间裕量</strong> ：长期衬底退化机制，例如负偏置温度不稳定性（NBTI）和热载流子注入（HCI），会随运行年限逐渐增大晶体管开关延迟。 与突发多核电流阶跃（<span class="math inline">\(\frac{di}{dt}\)</span>）耦合的瞬态供电电压跌落，会使老化硅片的传播延迟超出设计余量。 在硬实时系统中，这些物理时序劣化会引发间歇性竞态条件与未能在调度器规定的截止时间前完成任务的情况，而这两类问题在洁净的台架验证中从未显现。<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p><strong>汽车领域的无干扰（Freedom From Interference）</strong>: ISO 26262 第 9 部分将“无干扰”（Freedom From Interference，FFI）正式定义为不同安全完整性等级软件元素之间级联故障的缺失。 在异构机器人 SoC 中，实现 FFI 需要硬件强制的空间分区（内存保护单元、IOMMU 页表）与时间分区（固定优先级总线仲裁、TDMA 互连），以防止非特权感知模型劣化安全关键性执行任务。<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8084\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol4_zh/12_enforcement/12_enforcement.html" class="pagination-link" aria-label="第12章 · 安全执行">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">第12章 · 安全执行</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol4_zh/14_intervention/14_intervention.html" class="pagination-link" aria-label="第14章 · 监督性干预">
+        <span class="nav-page-text">第14章 · 监督性干预</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《物理人工智能系统》第四卷 · 简体中文本地版 · 仅17章正文</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

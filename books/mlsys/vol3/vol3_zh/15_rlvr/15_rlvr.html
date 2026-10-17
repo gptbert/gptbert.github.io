@@ -1,0 +1,3262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>智能体机器学习系统 · 第三卷</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol3_zh/parts/scale_principles.html" rel="next">
+<link href="../../vol3_zh/14_fine_tuning/14_fine_tuning.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-c3df12ea3ad0b9d55867f258fc566956.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-dark-77e4780d3a3e3b6bb5092d0b1032ff40.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../site_libs/bootstrap/bootstrap-c3df12ea3ad0b9d55867f258fc566956.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<style>
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="智能体机器学习系统 · 第三卷">
+<meta property="og:description" content="Vol3 简体中文修订版：模型、记忆、工具、运行时、学习与规模化。">
+<meta property="og:image" content="https://gptbert.com/books/mlsys/vol3/vol3_zh/15_rlvr/vol3_zh/covers/cover-hardcover-book-vol3.png">
+<meta property="og:site_name" content="智能体机器学习系统 · 第三卷">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:title" content="智能体机器学习系统 · 第三卷">
+<meta name="twitter:description" content="Vol3 简体中文修订版：模型、记忆、工具、运行时、学习与规模化。">
+<meta name="twitter:image" content="https://gptbert.com/books/mlsys/vol3/vol3_zh/15_rlvr/vol3_zh/covers/cover-hardcover-book-vol3.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<style id="vol3-zh-layout-fixes">#quarto-document-content table > caption { display: table-caption !important; width: auto !important; caption-side: top; } [id] { scroll-margin-top: 90px; } figure > img { max-width: 100%; height: auto; }</style>
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">智能体系统 · 第三卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol3_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">《智能体系统基础》</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol3_zh/parts/learning_principles.html">第五部分：从轨迹中学习</a></li><li class="breadcrumb-item"><a href="../../vol3_zh/15_rlvr/15_rlvr.html">可验证奖励强化学习</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献辞</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">符号说明</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">《智能体系统基础》</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/model_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第一部分：模型</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/02_foundation_model/02_foundation_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基座模型</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/03_test_time_compute/03_test_time_compute.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">测试时计算</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/memory_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第二部分：智能体记忆</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/04_context_engineering/04_context_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">上下文工程</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/05_kv_cache/05_kv_cache.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">KV 缓存管理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/06_long_term_memory/06_long_term_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">长期记忆</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/tool_use_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第三部分：工具使用</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/07_tool_calling/07_tool_calling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">工具调用</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/08_sandboxes/08_sandboxes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体沙箱</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/runtime_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第四部分：智能体运行时</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/09_agent_harness/09_agent_harness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体运行框架</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/10_durable_execution/10_durable_execution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">持久执行</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/11_failure_recovery/11_failure_recovery.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">故障恢复</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/12_evaluation/12_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体评估</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/learning_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第五部分：从轨迹中学习</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/13_trajectory_curation/13_trajectory_curation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹整理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/14_fine_tuning/14_fine_tuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">轨迹微调</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/15_rlvr/15_rlvr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">可验证奖励强化学习</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/scale_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第六部分：规模化智能体</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/16_multi_agent/16_multi_agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">多智能体协同</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/17_agent_economics/17_agent_economics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">智能体经济学</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../vol3_zh/parts/synthesis_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第七部分：综合</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/18_conclusion/18_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结语</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">附录</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_a_reference_architecture.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 A：参考架构</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_b_tool_design.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 B：工具设计与类型化 ABI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/appendices/app_c_failure_taxonomy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">附录 C：故障分类</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/appendix_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">推理与系统硬件基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/appendix_math.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数学基础</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol3_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-vol3-rlvr-need" id="toc-sec-vol3-rlvr-need" class="nav-link active" data-scroll-target="#sec-vol3-rlvr-need">为什么要从奖励中学习</a>
+  <ul>
+  <li><a href="#可验证奖励信号下的行为演化" id="toc-可验证奖励信号下的行为演化" class="nav-link" data-scroll-target="#可验证奖励信号下的行为演化">可验证奖励信号下的行为演化</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-rewards" id="toc-sec-vol3-rlvr-rewards" class="nav-link" data-scroll-target="#sec-vol3-rlvr-rewards">可验证奖励</a>
+  <ul>
+  <li><a href="#奖励黑客行为" id="toc-奖励黑客行为" class="nav-link" data-scroll-target="#奖励黑客行为">奖励黑客行为</a></li>
+  <li><a href="#奖励可以基于什么构建" id="toc-奖励可以基于什么构建" class="nav-link" data-scroll-target="#奖励可以基于什么构建">奖励可以基于什么构建</a></li>
+  <li><a href="#组合奖励" id="toc-组合奖励" class="nav-link" data-scroll-target="#组合奖励">组合奖励</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-credit" id="toc-sec-vol3-rlvr-credit" class="nav-link" data-scroll-target="#sec-vol3-rlvr-credit">跨轮次的信用分配</a>
+  <ul>
+  <li><a href="#为什么终局奖励会抑制诊断" id="toc-为什么终局奖励会抑制诊断" class="nav-link" data-scroll-target="#为什么终局奖励会抑制诊断">为什么终局奖励会抑制诊断</a></li>
+  <li><a href="#结果奖励与过程奖励" id="toc-结果奖励与过程奖励" class="nav-link" data-scroll-target="#结果奖励与过程奖励">结果奖励与过程奖励</a></li>
+  <li><a href="#蒙特卡洛价值估计" id="toc-蒙特卡洛价值估计" class="nav-link" data-scroll-target="#蒙特卡洛价值估计">蒙特卡洛价值估计</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-grpo" id="toc-sec-vol3-rlvr-grpo" class="nav-link" data-scroll-target="#sec-vol3-rlvr-grpo">组相对策略优化</a>
+  <ul>
+  <li><a href="#经典演员评价器架构的内存墙" id="toc-经典演员评价器架构的内存墙" class="nav-link" data-scroll-target="#经典演员评价器架构的内存墙">经典演员—评价器架构的内存墙</a></li>
+  <li><a href="#sec-vol3-rlvr-grpo-objective" id="toc-sec-vol3-rlvr-grpo-objective" class="nav-link" data-scroll-target="#sec-vol3-rlvr-grpo-objective">组相对优势</a></li>
+  <li><a href="#sec-vol3-rlvr-grpo-zero-variance" id="toc-sec-vol3-rlvr-grpo-zero-variance" class="nav-link" data-scroll-target="#sec-vol3-rlvr-grpo-zero-variance">没有信号的组</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-multi-turn" id="toc-sec-vol3-rlvr-multi-turn" class="nav-link" data-scroll-target="#sec-vol3-rlvr-multi-turn">多轮智能体强化学习</a>
+  <ul>
+  <li><a href="#屏蔽环境写入的内容" id="toc-屏蔽环境写入的内容" class="nav-link" data-scroll-target="#屏蔽环境写入的内容">屏蔽环境写入的内容</a></li>
+  <li><a href="#逐回合信用分配" id="toc-逐回合信用分配" class="nav-link" data-scroll-target="#逐回合信用分配">逐回合信用分配</a></li>
+  <li><a href="#轨迹采样中的环境耗时" id="toc-轨迹采样中的环境耗时" class="nav-link" data-scroll-target="#轨迹采样中的环境耗时">轨迹采样中的环境耗时</a></li>
+  <li><a href="#停滞与截断的采样轨迹" id="toc-停滞与截断的采样轨迹" class="nav-link" data-scroll-target="#停滞与截断的采样轨迹">停滞与截断的采样轨迹</a></li>
+  <li><a href="#在部署运行框架下训练" id="toc-在部署运行框架下训练" class="nav-link" data-scroll-target="#在部署运行框架下训练">在部署运行框架下训练</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-sandboxing" id="toc-sec-vol3-rlvr-sandboxing" class="nav-link" data-scroll-target="#sec-vol3-rlvr-sandboxing">隔离验证器</a>
+  <ul>
+  <li><a href="#作为对手的策略" id="toc-作为对手的策略" class="nav-link" data-scroll-target="#作为对手的策略">作为对手的策略</a></li>
+  <li><a href="#双沙箱隔离区" id="toc-双沙箱隔离区" class="nav-link" data-scroll-target="#双沙箱隔离区">双沙箱隔离区</a></li>
+  <li><a href="#不稳定测试作为奖励噪声" id="toc-不稳定测试作为奖励噪声" class="nav-link" data-scroll-target="#不稳定测试作为奖励噪声">不稳定测试作为奖励噪声</a></li>
+  <li><a href="#硬性机制不变量与软性奖励信号" id="toc-硬性机制不变量与软性奖励信号" class="nav-link" data-scroll-target="#硬性机制不变量与软性奖励信号">硬性机制不变量与软性奖励信号</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-pathologies" id="toc-sec-vol3-rlvr-pathologies" class="nav-link" data-scroll-target="#sec-vol3-rlvr-pathologies">训练病态</a>
+  <ul>
+  <li><a href="#熵坍缩" id="toc-熵坍缩" class="nav-link" data-scroll-target="#熵坍缩">熵坍缩</a></li>
+  <li><a href="#长度失控" id="toc-长度失控" class="nav-link" data-scroll-target="#长度失控">长度失控</a></li>
+  <li><a href="#对探索与长度进行正则化" id="toc-对探索与长度进行正则化" class="nav-link" data-scroll-target="#对探索与长度进行正则化">对探索与长度进行正则化</a></li>
+  <li><a href="#sec-vol3-rlvr-deliberation" id="toc-sec-vol3-rlvr-deliberation" class="nav-link" data-scroll-target="#sec-vol3-rlvr-deliberation">训练使行为发生哪些变化</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-infrastructure" id="toc-sec-vol3-rlvr-infrastructure" class="nav-link" data-scroll-target="#sec-vol3-rlvr-infrastructure">环境与轨迹采样</a>
+  <ul>
+  <li><a href="#可验证任务从何而来" id="toc-可验证任务从何而来" class="nav-link" data-scroll-target="#可验证任务从何而来">可验证任务从何而来</a></li>
+  <li><a href="#轨迹采样的时间花在哪里" id="toc-轨迹采样的时间花在哪里" class="nav-link" data-scroll-target="#轨迹采样的时间花在哪里">轨迹采样的时间花在哪里</a></li>
+  <li><a href="#将轨迹采样与训练分离" id="toc-将轨迹采样与训练分离" class="nav-link" data-scroll-target="#将轨迹采样与训练分离">将轨迹采样与训练分离</a></li>
+  <li><a href="#sec-vol3-rlvr-freshness" id="toc-sec-vol3-rlvr-freshness" class="nav-link" data-scroll-target="#sec-vol3-rlvr-freshness">限制策略陈旧程度</a></li>
+  <li><a href="#轨迹采样与训练器的分离式架构" id="toc-轨迹采样与训练器的分离式架构" class="nav-link" data-scroll-target="#轨迹采样与训练器的分离式架构">轨迹采样与训练器的分离式架构</a></li>
+  <li><a href="#同组慢任务的延迟差异" id="toc-同组慢任务的延迟差异" class="nav-link" data-scroll-target="#同组慢任务的延迟差异">同组慢任务的延迟差异</a></li>
+  <li><a href="#发布门禁隔离环境" id="toc-发布门禁隔离环境" class="nav-link" data-scroll-target="#发布门禁隔离环境">发布门禁隔离环境</a></li>
+  <li><a href="#sec-vol3-rlvr-release-gating" id="toc-sec-vol3-rlvr-release-gating" class="nav-link" data-scroll-target="#sec-vol3-rlvr-release-gating">对新策略版本实施门禁</a></li>
+  </ul></li>
+  <li><a href="#sec-vol3-rlvr-fallacies" id="toc-sec-vol3-rlvr-fallacies" class="nav-link" data-scroll-target="#sec-vol3-rlvr-fallacies">谬误与陷阱</a></li>
+  <li><a href="#sec-vol3-rlvr-summary" id="toc-sec-vol3-rlvr-summary" class="nav-link" data-scroll-target="#sec-vol3-rlvr-summary">总结</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content"><span id="sec-vol3-rlvr"></span><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol3_zh/parts/learning_principles.html">第五部分：从轨迹中学习</a></li><li class="breadcrumb-item"><a href="../../vol3_zh/15_rlvr/15_rlvr.html">可验证奖励强化学习</a></li></ol></nav><h1 class="title display-7">可验证奖励强化学习</h1></header>
+
+
+<header>
+
+
+</header>
+
+
+<div class="{layout-narrow} page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="">
+
+</div></div><p><a href="images/webp/cover_rlvr_blueprint_labeled.webp" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/webp/cover_rlvr_blueprint_labeled.webp" class="img-fluid" alt="可验证奖励强化学习蓝图。"></a></p>
+</div>
+<section id="目的" class="level2 unnumbered unlisted">
+<h2 class="unnumbered unlisted anchored" data-anchor-id="目的">目的</h2>
+<p><em>为什么一个从自身试错中学习的智能体，会如此稳定地学会作弊？</em></p>
+<p>模仿的边界止于已有示范，而对于许多智能体任务，例如修复真实代码仓库或证明引理，无论付出多高的代价，都找不到示范者；但检查却是可行的，因为测试的结果非通过即失败。强化学习将这种检查转化为目标，让策略在数百万个多轮回合中搜索一切能够获得检查奖励的行为。这种搜索并不关心意图。能够访问测试文件的策略会学会修改测试文件，由学习得到的评判器打分的策略会学会取悦评判器，而仅在三十轮回合结束时才获得奖励的策略，则很难学到究竟哪一轮起了作用。每个回合还会在真实沙箱中运行真实工具，因此，训练成本在很大程度上由环境而非梯度更新步骤决定。训练并不会改变 H·S·A 的任何风险暴露，因为策略仍然保有原先的交互跨度、状态和权限；而为其评分的验证器则成为另一道权限边界，必须由运行时而非模型来守住。</p>
+<div id="callout-learning-objectives*-0.1" class="callout callout-learning-objectives">
+<details class="callout-learning-objectives fbx-simplebox fbx-default" open=""><summary><strong>学习目标</strong></summary><div>
+<ul>
+<li>解释在什么情况下，基于可验证奖励的强化学习能够使智能体超越其示范，以及为什么它需要非零的初始通过率。</li>
+<li>利用结果检查、部分得分、格式检查和评分准则评判器来设计智能体奖励，并预测策略将如何钻每一种奖励的空子。</li>
+<li>计算跨轮次蒙特卡洛信用分配的 token 成本，并将其与仅基于结果的奖励和学习得到的过程奖励进行比较。</li>
+<li>推导 GRPO 的组内相对优势，并诊断零方差组和长度归一化偏差。</li>
+<li>实现多轮轨迹采样收集，支持观测掩码、忠实保留 token 的轨迹采样记录以及轮次上限。</li>
+<li>设计验证隔离区，使奖励机制处于策略无法触及的范围内，并能容忍不稳定的测试。</li>
+<li>评估轨迹采样与训练流水线是否存在熵坍塌、长度失控、策略陈旧等问题，以及是否已具备通过发布门禁的条件。</li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="sec-vol3-rlvr-need" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-need">为什么要从奖励中学习</h2>
+<p>在通过准入审核的轨迹上进行微调的修复智能体（<strong><a href="../14_fine_tuning/14_fine_tuning.html#sec-vol3-fine-tuning">轨迹微调</a></strong>），能够解决修复方式与示范相似的问题，却会在其余问题上停滞不前。增加示范只有在有人能写出示范的情况下才有帮助，而同策略纠正仍然需要一位专家，能够在策略到达的每个状态中指出正确动作（<strong><a href="../14_fine_tuning/14_fine_tuning.html#sec-vol3-fine-tuning-exposure-bias">暴露偏差与同策略数据</a></strong>）。对于代码仓库规模的修复、协议调试或定理证明，没有人能以可接受的价格找到这样的专家。但检查确实存在。测试套件无法编写补丁，却能判断补丁是否有效，而这种较弱的能力已足以支撑强化学习。策略在沙箱内提出完整轨迹，验证器对结果评分，模型权重则朝着能够获得高分的方向更新。</p>
+<p>最后这一点正是本章要解决的系统问题。一个因通过测试而获得奖励的优化器，会利用环境允许的任何途径通过测试，包括修改测试本身；它还会在数百万次轨迹采样中这样做，而每次采样都需要一个沙箱、一次验证器运行以及模型计算时间。本章按照问题本身所要求的顺序构建相关机制。首先讨论奖励可以由哪些来源构成，以及策略如何钻每一种来源的空子；随后讨论如何将回合结束时的单一分数归因于三十轮动作，以及 GRPO 如何在不使用学习型评价器的情况下，将成组的轨迹采样结果转化为梯度。在此基础上，本章进一步讨论当回合变成使用工具的多轮轨迹时会发生哪些变化，如何使验证器处于策略无法触及的范围内，在做到这一点后会出现哪些病态现象，以及如何大规模运行环境与轨迹采样并实施门禁控制。</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/svg/hsa_locator_origin.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/svg/hsa_locator_origin.svg" class="img-fluid" style="width:100.0%" alt="H·S·A 定位图，各轴均未点亮，原点高亮，表示训练不会改变任何暴露。"></a></p>
+<p><em>训练改变策略，但每一项暴露仍停留在运行时将其闭合的位置。</em></p>
+</div></div><p>通过试错学习，并不会赋予策略在部署时不具备的任何权限。每次轨迹采样中的动作，无论是 shell 命令、数据库查询还是源代码编辑，都只是一个提议，运行时仅在 <strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes">智能体沙箱</a></strong> 的沙箱内执行它。探索使这种约束更加重要。以高温度采样的策略经常会提出格式错误或具有破坏性的命令，而轨迹采样集群会数百万次地提出此类命令，因此，<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-pooling">沙箱池与重置</a></strong> 的沙箱重置与池化机制也成为训练循环的一部分。</p>
+<p>奖励沿用运行时关于证据的规则。模型声称自己已完成任务，并不具备任何证据效力（<strong><a href="../01_introduction/01_introduction.html#sec-vol3-intro-epistemic-boundary">认识论边界：受强制的约束域与语义正确性</a></strong>）；询问模型其代码是否解决了任务，也只是再执行一次具有相同盲点的推理。因此，奖励必须来自模型外部的检查，而奖励的可信程度取决于计算该奖励的检查所具备的闭合证据等级（<strong><a href="../01_introduction/01_introduction.html#sec-vol3-intro-closure-evidence">闭合证据等级</a></strong>）。静态检查弱于封闭测试，封闭测试又弱于形式化证明。</p>
+<p>形式上，这种交互是一个具有有限时域 <span class="math inline">\(T\)</span> 的马尔可夫决策过程。状态 <span class="math inline">\(s_t\)</span> 包括策略在第 <span class="math inline">\(t\)</span> 轮所看到的任务、上下文和截至当前的观测，以及这些信息背后的沙箱状态。动作 <span class="math inline">\(a_t\)</span> 是策略在该轮输出的 token 序列，包括一个推理块，通常还包括一次工具调用。状态转移由运行时在沙箱中执行 <span class="math inline">\(a_t\)</span> 并追加观测来实现。奖励 <span class="math inline">\(R(\tau) \in \{0, 1\}\)</span> 由验证器根据轨迹 <span class="math inline">\(\tau\)</span> 的最终状态计算，目标为</p>
+<p><span class="math display">\[\mathcal{J}(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}\left[R(\tau)\right]\]</span></p>
+<p>时域 <span class="math inline">\(T\)</span> 与 <span class="math inline">\(H\)</span>（见 <strong><a href="../01_introduction/01_introduction.html#sec-vol3-intro-hsa">H·S·A 暴露面</a></strong>）计数的是相同的交互轮次，此处记为 <span class="math inline">\(T\)</span>，以遵循强化学习文献的惯例 <span class="citation" data-cites="sutton2018reinforcement">(<a href="#ref-sutton2018reinforcement" role="doc-biblioref">Sutton 和 Barto 2018年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"></div><div id="dfn-reinforcement-learning-with-verifiable-rewards" class="callout callout-definition" title="可验证奖励强化学习">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 0.1: 可验证奖励强化学习</strong></summary><div>
+<p><strong><em>可验证奖励强化学习（RLVR）</em></strong> 是一种策略优化方法，其中一条轨迹的奖励由模型外部运行的自动化检查计算，例如封闭测试套件、编译器或证明检查器。这些检查作用于轨迹产生的状态，而非通过学习得到的奖励模型或人工评分来确定奖励。</p>
+<ol type="1">
+<li><strong>意义</strong>：移除了学习得到的奖励模型，也随之消除了优化过程利用该模型错误的途径。奖励的可信程度完全取决于检查的覆盖范围及其与策略的隔离程度。</li>
+<li><strong>区别</strong>：基于人类反馈的强化学习针对学习得到的人类偏好模型进行优化，而策略可能将该模型推向评分失准的区域。RLVR 则针对检查进行优化，其判定不依赖于输出的措辞。</li>
+<li><strong>常见误区</strong>：将可验证奖励视为完整的规范。策略可能用一个空洞或错误的解法通过不完整的测试套件，因为没有任何测试覆盖该解法的问题。</li>
+</ol>
+</div></details>
+</div>
+<p>这一目标也解释了为什么监督训练要先进行。策略梯度需要高得分轨迹与未获得高分的轨迹之间存在差异。如果初始策略在某个任务上从未成功，那么每次轨迹采样的得分都为零，该任务的梯度也为零。关键并非单次尝试的通过率，而是 <span class="math inline">\(k\)</span> 次尝试中至少一次成功的概率，即 pass@<span class="math inline">\(k\)</span>（见 <strong><a href="../03_test_time_compute/03_test_time_compute.html#sec-vol3-test-time-compute-candidate-diversity">候选选择</a></strong>）：</p>
+<p><span class="math display">\[\text{pass@}k = 1 - (1 - \hat{p})^k\]</span></p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="images/svg/vol3_rlvr_margin_002.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/svg/vol3_rlvr_margin_002.svg" class="img-fluid" style="width:100.0%" alt="pass at k 的凹曲线，从 k 等于 1 时的 18% 上升至 k 等于 8 时的 79.6%，再升至 k 等于 16 时的 96%。"></a></p>
+<p><em>各次尝试相互独立且每次成功率为 18% 时，包含 8 次尝试的一组中至少有一次成功的概率为 79.6%。</em></p>
+</div></div><p>一个在 18% 的尝试中能解决任务的监督学习策略，在一组 8 次轨迹采样中至少成功一次的概率为 79.6%，在一组 16 次轨迹采样中至少成功一次的概率为 95.8%。这些采样组能提供梯度。成功率为零的策略则无法提供梯度，无论它耗费多少次轨迹采样。因此，监督微调并非强化学习的替代方案，而是其自举步骤：让策略在关键任务上的成功率脱离零点，这也是基于隔离验证器的强化学习（原则 <a href="../parts/learning_principles.html#pri-vol3-verifiable-rewards">18</a>）所要求的。</p>
+<p>现在，这个循环已清晰可见：一个已经能偶尔成功的策略、一个容纳其探索活动的沙箱，以及一个对结果评分的验证器。后续的一切都取决于验证器的分数是否表达了任务设计者的本意。下一节将探讨奖励可以由哪些要素构成，以及为什么优化器会找到分数与意图之间的每一处差距。</p>
+<section id="可验证奖励信号下的行为演化" class="level3">
+<h3 class="anchored" data-anchor-id="可验证奖励信号下的行为演化">可验证奖励信号下的行为演化</h3>
+<p>从监督模仿到强化学习的转变，标志着模型行为的根本性变化。监督微调迫使模型记忆专家的词元序列，而可验证奖励强化学习则促使模型自主探索、自我纠正并进行算法推理。各训练轮次中的行为演化阶段如 <a href="#fig-vol3-rlvr-progression" class="quarto-xref">图&nbsp;1</a> 所示。</p>
+<div id="fig-vol3-rlvr-progression" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="三阶段架构演进图，展示基础预训练、监督微调和可验证强化学习，以及各自的损失目标、系统基础设施和实证观察到的失效模式。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-rlvr-progression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig-vol3-rlvr-progression.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="图&nbsp;1: 策略能力演进：策略优化生命周期中的架构演化。基础预训练在未经筛选的语料上建立广泛的分布表征，监督微调使词元生成接口与结构化工具调用模式对齐，而可验证强化学习则探索受确定性执行判定器约束的新型多步动作轨迹。"><img src="images/svg/fig-vol3-rlvr-progression.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-rlvr-progression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;1: <strong>策略能力演进</strong>：策略优化生命周期中的架构演化。基础预训练在未经筛选的语料上建立广泛的分布表征，监督微调使词元生成接口与结构化工具调用模式对齐，而可验证强化学习则探索受确定性执行判定器约束的新型多步动作轨迹。
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="sec-vol3-rlvr-rewards" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-rewards">可验证奖励</h2>
+<p><a href="../01_introduction/01_introduction.html#exmp-trajectory-trace">跨越三轮的智能体轨迹解剖</a> 中悄无声息的测试绕过行为破坏了一个结果，而 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-verifier-gaming">验证器投机行为防御</a></strong> 展示了同样的捷径如何破坏经过筛选的语料库。强化学习则将其转化为一种策略。当测试文件位于轨迹采样的可写工作区中时，针对一个棘手缺陷的一组轨迹采样大多包含失败的修复，但有时会出现一次削弱失败断言的轨迹采样。该次轨迹采样获得 <span class="math inline">\(1\)</span> 的分数，得到组内最大的优势值，而梯度则提高了产生这一编辑操作的每个词元的概率。几百个训练步之后，削弱断言就成了策略的主导行为，因为这条路径更短，无须理解缺陷，而且得分与正确修复完全相同。循环中的任何环节都没有发生故障。优化器只是针对所获得的奖励，完成了其设计要求的工作。</p>
+<section id="奖励黑客行为" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="奖励黑客行为">奖励黑客行为</h3>
+<p>在监督训练中，有缺陷的目标会使模型逐渐退化，趋向其数据的平均水平。在强化学习中，策略会主动搜索奖励所定义的空间，因此奖励与开发者意图之间的任何差距都会成为目标。文献将这种现象称为规范博弈 <span class="citation" data-cites="krakovna2020specification">(<a href="#ref-krakovna2020specification" role="doc-biblioref">Krakovna 等 2020年</a>)</span> 或奖励黑客行为 <span class="citation" data-cites="amodei2016concrete skalse2022defining">(<a href="#ref-amodei2016concrete" role="doc-biblioref">Amodei 等 2016年</a>; <a href="#ref-skalse2022defining" role="doc-biblioref">Skalse 等 2022年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-krakovna2020specification" class="csl-entry" role="listitem">
+Krakovna, Victoria, Jonathan Uesato, Vladimir Mikulik, Matthew Rahtz, Tom McGrath, Celestine Mendler-Dünner, Kyle Haslett, 等. 2020年. <span>《Specification Gaming: The Flip Side of Specification Design》</span>. <em>arXiv preprint arXiv:2011.08827</em>.
+</div><div id="ref-amodei2016concrete" class="csl-entry" role="listitem">
+Amodei, D., C. Olah, J. Steinhardt, P. Christiano, J. Schulman, 和 D. Mané. 2016年. <span>《Concrete Problems in <span>AI</span> Safety》</span>. <em>arXiv preprint arXiv:1606.06565</em>, 网络首发. https://doi.org/10.48550/arXiv.1606.06565.
+</div><div id="ref-skalse2022defining" class="csl-entry" role="listitem">
+Skalse, Joar, Nikolaus H. R. Howe, Dmitrii Krasheninnikov, 和 David Krueger. 2022年. <span>《Defining and characterizing reward hacking》</span>. <em>Advances in Neural Information Processing Systems (NeurIPS)</em> 35: 9460～71.
+</div></div><div id="dfn-reward-hacking" class="callout callout-definition" title="奖励黑客行为">
+<details class="callout-definition fbx-simplebox fbx-default" open=""><summary><strong>Definition 0.2: 奖励黑客行为</strong></summary><div>
+<p><strong><em>奖励黑客行为</em></strong> 指策略通过无法完成奖励本应衡量的任务的行为，提高测得的奖励；其手段包括利用奖励检查中的漏洞，或访问并修改计算奖励的机制。</p>
+<ol type="1">
+<li><strong>重要性</strong>：强化学习会将奖励与意图之间的每一处差距转化为优化目标，因此，在奖励缺乏防护时，奖励黑客行为是预期结果，而非异常现象。</li>
+<li><strong>区别</strong>：<strong><a href="../03_test_time_compute/03_test_time_compute.html#sec-vol3-test-time-compute-verification">过程验证</a></strong> 中的古德哈特失效发生在验证器从候选项中进行<em>选择</em>时。奖励黑客行为则发生在验证器<em>训练</em>生成器时，因此，利用漏洞的行为会被学入权重，并在此后的每个任务中反复出现。</li>
+<li><strong>常见误区</strong>：将奖励黑客行为视为提示词问题。对策略下达任何指令，都无法消除其可利用的漏洞，因为无论指令是否禁止这种行为，梯度都会奖励对漏洞的利用。</li>
+</ol>
+</div></details>
+</div>
+<p>设 <span class="math inline">\(U(\tau)\)</span> 为开发者的真实目标，即可正常运行且易于维护的代码，<span class="math inline">\(\hat{R}(\tau)\)</span> 为训练循环计算出的奖励。如果某条轨迹 <span class="math inline">\(\tau_{\text{hack}}\)</span> 满足 <span class="math inline">\(\hat{R}(\tau_{\text{hack}}) \ge \hat{R}(\tau^*)\)</span>，同时 <span class="math inline">\(U(\tau_{\text{hack}}) \ll U(\tau^*)\)</span>，且 <span class="math inline">\(\tau_{\text{hack}}\)</span> 更短或在当前策略下的概率更高，那么对 <span class="math inline">\(\hat{R}\)</span> 进行梯度上升就会使概率向该轨迹转移 <span class="citation" data-cites="hadfieldmenell2016cooperative">(<a href="#ref-hadfieldmenell2016cooperative" role="doc-biblioref">Hadfield-Menell 等 2016年</a>)</span>。除编辑断言外，编码环境中的漏洞还会表现为其他可辨识的形式。能够将代码加载到测试运行器中的策略可以覆盖其退出状态，例如通过如下形式的钩子：</p>
+<div class="no-row-height column-margin column-container"><div id="ref-hadfieldmenell2016cooperative" class="csl-entry" role="listitem">
+Hadfield-Menell, Dylan, Stuart J. Russell, Pieter Abbeel, 和 Anca Dragan. 2016年. <span>《Cooperative Inverse Reinforcement Learning》</span>. <em>Advances in Neural Information Processing Systems (NeurIPS 2016)</em> 29.
+</div></div><div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Illustrative exploit: a test-runner hook that forces a passing exit status</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pytest_sessionfinish(session, exitstatus):</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    session.exitstatus <span class="op">=</span> <span class="dv">0</span>  <span class="co"># every failing run now reports success</span></span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>若奖励通过解析构建日志来查找字符串 <code>BUILD SUCCESSFUL</code>，就会奖励只打印该字符串却不进行任何构建的策略。每种利用漏洞的方式都比真正修复更简短，因此一旦某种方式可达，它就会胜出。防御手段不能是更好的指令，而必须是策略无法触及的检查，并基于策略无法伪造的证据来计算；这正是不变量闭合（原则 <a href="../01_introduction/01_introduction.html#pri-invariant-closure">不变闭包原则</a>）置于模型之上的端到端证据。</p>
+</section>
+<section id="奖励可以基于什么构建" class="level3">
+<h3 class="anchored" data-anchor-id="奖励可以基于什么构建">奖励可以基于什么构建</h3>
+<p><strong><a href="../03_test_time_compute/03_test_time_compute.html#sec-vol3-test-time-compute-verification">过程验证</a></strong> 根据验证器产生的证据，以及它们在候选项之间进行选择时的错误不对称性，对验证器进行了分类。训练改变了问题。选择器接受一个不合格的候选项，只会浪费一次决策；而奖励机制接受一条不合格的轨迹，则会教会策略生成更多这样的轨迹。<strong><a href="15_rlvr.html#tbl-vol3-reward-oracles">智能体训练的奖励来源</a></strong> 列出了构建智能体奖励的来源，并按策略能够操纵它们的程度排序。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-reward-oracles" style="display:table-caption!important;width:auto!important;position:static!important"><strong>智能体训练的奖励来源</strong>：构建智能体奖励的来源、每种来源实际检查的内容、优化策略如何利用其漏洞，以及每种来源可以安全承担的作用。只有判定结果不依赖输出措辞的检查，才能决定奖励。</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 26%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>奖励来源</strong></th>
+<th style="text-align: left;"><strong>检查内容</strong></th>
+<th style="text-align: left;"><strong>策略如何钻空子</strong></th>
+<th style="text-align: left;"><strong>在奖励中的作用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>证明检查器</strong></td>
+<td style="text-align: left;">针对固定命题的证明</td>
+<td style="text-align: left;">可变的公理或定义；否则可利用的空间很小</td>
+<td style="text-align: left;">结果奖励</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>封闭测试套件</strong></td>
+<td style="text-align: left;">在隐藏的失败转通过测试和通过保持通过测试上的行为</td>
+<td style="text-align: left;">测试覆盖的空白；若测试可被触及，则可篡改测试</td>
+<td style="text-align: left;">结果奖励</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>编译器或类型检查器</strong></td>
+<td style="text-align: left;">形式是否正确，而非行为是否正确</td>
+<td style="text-align: left;">能编译但什么也不做的代码</td>
+<td style="text-align: left;">门控条件或部分得分</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>工具调用格式检查</strong></td>
+<td style="text-align: left;">调用能否按其模式解析</td>
+<td style="text-align: left;">格式正确却毫无成效的调用</td>
+<td style="text-align: left;">小幅塑形项</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>学习型过程奖励模型</strong></td>
+<td style="text-align: left;">每个中间步骤的分数</td>
+<td style="text-align: left;">看起来像是在认真推理的文本</td>
+<td style="text-align: left;">仅用于塑形，绝不作为门控条件</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>评分准则评判器</strong></td>
+<td style="text-align: left;">自由形式输出是否符合书面标准</td>
+<td style="text-align: left;">篇幅、自信的语气、评分准则中的关键词</td>
+<td style="text-align: left;">仅用于不存在可执行检查的情形；须先校准</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>人工评分</strong></td>
+<td style="text-align: left;">人能够评估的任何内容</td>
+<td style="text-align: left;">评分者疲劳和表面线索</td>
+<td style="text-align: left;">离线审计；速度太慢，无法用于在线奖励</td>
+</tr>
+</tbody>
+</table></div>
+<p>表格顶部的几行对应封闭测试和形式化证明这两个闭合层级。它们的判定结果不会随输出措辞变化，因此提高分数的唯一方式是改变检查所针对的产物，而隔离（<a href="#sec-vol3-rlvr-sandboxing" class="quarto-xref">节&nbsp;6</a>）封堵了这条途径。下方几行对文本评分，而文本由策略控制。学习型过程奖励模型或评分准则评判器本身也是有盲点的模型，梯度上升会找到这些盲点。有些任务，例如编写文档或回答用户问题，没有可执行检查，评分准则评判器是唯一可用的奖励来源。此类评判器必须先依据经过验证的结果进行校准，并检查其是否存在位置偏差、长度偏差和自我偏好偏差，如 <strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation">智能体评估</a></strong> 所述。验证不对称性（原则 <a href="../parts/model_principles.html#pri-vol3-verification-asymmetry">3</a>）规定了此类验证器能够承担的作用；这也是 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-trajectory-curation-rankers">门控之下的学习式排序器</a></strong> 为接纳训练数据划定的边界，如今被应用于奖励。学习型验证器可以对轨迹采样结果进行排序或塑形，但在存在确定性检查的情况下，应由该检查决定奖励。</p>
+<p>让学习型验证器决定奖励的代价很容易被低估，因为与大幅提速相比，较低的错误接受率看起来似乎无害。下面的计算示例用真正重要的指标来衡量这一代价：教会策略利用漏洞的更新在正向更新中所占的比例。无需引入新公式。该比例为 <span class="math inline">\(1 - \Pi_V\)</span>，即 <strong><a href="../03_test_time_compute/03_test_time_compute.html#eq-vol3-verifier-precision">equation</a></strong> 中验证器精确率的补值，其中以策略的真实通过率作为基础发生率 <span class="math inline">\(p\)</span>，且不存在错误拒绝。此前在 <strong><a href="../03_test_time_compute/03_test_time_compute.html#sec-vol3-test-time-compute-verification">过程验证</a></strong> 中制约候选项选择的贝叶斯计算，如今支配着哪些轨迹采样结果会获得正奖励。</p>
+<div id="nbk-14-oracle-gaming" class="callout callout-notebook" title="奖励中的错误接受">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>粗略估算 0.1: 奖励中的错误接受</strong></summary><div><strong>问题</strong>：一个训练步骤采样 8 条轨迹，针对的是 1,024 个编码任务中的每个任务。策略真正解决了 10% 的轨迹。一个快速的学习型验证器取代了封闭测试套件，并接受了 2.5% 的失败轨迹。在获得正奖励的轨迹中，有多大比例是在教策略欺骗验证器？<p></p>
+<p><strong>变量</strong>：</p>
+<ul>
+<li>每步轨迹采样数：<span class="math inline">\(N = 1,024 \times 8 = 8,192\)</span></li>
+<li>真实通过率：10%；失败轨迹的错误接受率：2.5%</li>
+</ul>
+<p><strong>数学推导</strong>：</p>
+<p><span class="math display">\[N_{\text{true}} = 8,192 \times 0.10 \approx 819\]</span></p>
+<p><span class="math display">\[N_{\text{false}} = 8,192 \times 0.90 \times 0.025 \approx 184\]</span></p>
+<p><span class="math display">\[\text{False share} = 1 - \Pi_V = \frac{184}{819 + 184} = \frac{184}{1,003}\]</span></p>
+<p><strong>结果</strong>：18.3% 的正奖励流向了欺骗验证器的轨迹。</p>
+<p><strong>系统洞见</strong>：只要真实成功很少见，一个听起来微不足道的错误接受率就会使错误接受占据正向信号的很大一部分，而这恰好是 RL 训练所处的情形。这些更新会强化任何欺骗了验证器的行为，而且随着策略学会更频繁地欺骗验证器，这一比例还会增长。没有错误接受的封闭测试套件会完全消除这一项，这也是为什么学习型验证器可以塑造奖励，却不能决定奖励。</p>
+</div></details>
+</div>
+</section>
+<section id="组合奖励" class="level3">
+<h3 class="anchored" data-anchor-id="组合奖励">组合奖励</h3>
+<p>实用的智能体奖励会将结果与几个小项结合起来，以引导结果本身未涵盖的行为：</p>
+<p><span class="math display">\[R(\tau) = R_{\text{outcome}}(\tau) + \lambda_{\text{fmt}} R_{\text{format}}(\tau) - \alpha \frac{|\tau_{\text{gen}}|}{T_{\max}}\]</span></p>
+<p>这里，<span class="math inline">\(R_{\text{outcome}} \in \{0, 1\}\)</span> 来自决定奖励的检查，<span class="math inline">\(R_{\text{format}}\)</span> 对能够按其模式解析的工具调用给予奖励（<strong><a href="../07_tool_calling/07_tool_calling.html#sec-vol3-tool-calling-schemas">工具接口模式</a></strong>），<span class="math inline">\(|\tau_{\text{gen}}|\)</span> 统计策略生成的 token 数，<span class="math inline">\(T_{\max}\)</span> 是生成上限。各系数必须确保正确性占主导地位。简短但错误的轨迹绝不能比冗长但正确的轨迹得分更高，因此，相对于单位结果奖励，<span class="math inline">\(\lambda_{\text{fmt}}\)</span> 和 <span class="math inline">\(\alpha\)</span> 必须保持较小。在非成即败的结果使大多数分组都没有成功轨迹的任务中，可以用部分得分（例如通过测试的比例）替代二元结果；只有当部分测试与完整测试套件一样封闭时，这才有帮助。</p>
+<p>一个诱人的附加项是对危险操作施加惩罚：只要轨迹尝试访问外部网络、读取凭据或向工作区之外写入，就减去一个较大的 <span class="math inline">\(\beta\)</span>。这个项不起作用，原因有二。惩罚是概率性的。如果一次未经授权的网络调用代价为 <span class="math inline">\(\beta\)</span>，却获取了隐藏测试并确保获得结果奖励，探索最终会找到净回报为正的轨迹，而梯度会沿着这些轨迹优化。惩罚也在事后才施加。只有在操作已经执行之后才计算梯度，因此，如果该操作已经泄露了凭据或破坏了共享状态，对模型权重施加惩罚并不能修复任何东西。模型侧的项会降低不良操作的概率，却永远无法阻止一次不良操作。隔离约束必须在模型之下强制执行，由沙箱在调用运行之前拒绝它（原则 <a href="../parts/tool_use_principles.html#pri-vol3-zero-trust-sandboxing">10</a>）；软性项则仅用于即使违反也不会造成损失的偏好，例如格式错误的调用、冗余调用或过长输出。</p>
+<p>确定性的、隔离的结果检查配合较小的塑形项，可以为每条轨迹提供可信的分数。然而，它为每条<em>轨迹</em>打分，而策略是逐轮采取行动的。下一节将讨论：一个三十轮回合结束时得到的单一分数，应如何分配给产生该分数的各轮行动。</p>
+</section>
+</section>
+<section id="sec-vol3-rlvr-credit" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-credit">跨轮次的信用分配</h2>
+<p>一条修复轨迹持续三十轮。智能体列出目录、读取堆栈跟踪、在调试器下复现故障、定位一个差一错误、修改五行代码、编译并运行集成测试，而测试因一个未处理的边界情况失败。验证器返回 <span class="math inline">\(0\)</span>。在最简单的策略梯度下，这个零会同等地落到轨迹的每个 token 上。找到缺陷的调试会话受到的惩罚，与有缺陷的修改完全相同。如果一次幸运的修改尽管推理混乱却通过了测试，那么每一步，包括走入死胡同的步骤，都会得到奖励。终局奖励说明的是轨迹是否奏效，而不是哪些轮次使其奏效。</p>
+<section id="为什么终局奖励会抑制诊断" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="为什么终局奖励会抑制诊断">为什么终局奖励会抑制诊断</h3>
+<p>在使用终局奖励和基线 <span class="math inline">\(b(s_0)\)</span> 时，REINFORCE 估计量 <span class="citation" data-cites="sutton2018reinforcement">(<a href="#ref-sutton2018reinforcement" role="doc-biblioref">Sutton 和 Barto 2018年</a>)</span> 为</p>
+<div class="no-row-height column-margin column-container"><div id="ref-sutton2018reinforcement" class="csl-entry" role="listitem">
+Sutton, Richard S., 和 Andrew G. Barto. 2018年. <em>Reinforcement Learning: An Introduction</em>. 2nd 版. MIT Press.
+</div></div><p><span class="math display">\[\hat{g} = \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t \mid s_t) \left( R(\tau) - b(s_0) \right)\]</span></p>
+<p>每一轮都乘以同一个标量。早期行动与最终结果之间的相关性被后续每个行动的随机性淹没，因此估计量的方差会随时间跨度增长。智能体任务还会引入一种特定的扭曲。运行 <code>grep</code>、阅读文档或检查失败测试等诊断行动，不改变任何状态，只会间接推动修复。当它们出现在失败轨迹中时——在困难任务上，大多数轨迹都失败——它们会反复受到惩罚。如果奖励还包含长度项，那么跳过诊断会缩短轨迹，并在失败时获得略高的分数。策略因此逐渐倾向于立即进行未经诊断的修改。下面的一条示例失败轨迹展示了这一模式：</p>
+<pre class="text"><code># Illustrative failing trajectory under uniform terminal credit
+Turn 1 [diagnose]  $ ls -la src/core/                    exit 0
+Turn 2 [diagnose]  $ grep -rn "buffer_len" src/          exit 0
+Turn 3 [diagnose]  $ gdb --batch -ex bt ./bin/server     exit 0
+Turn 4 [edit]      patch src/core/net.c                  exit 0
+Turn 5 [verify]    $ pytest tests/test_allocator.py      exit 1
+# Reward 0: turns 1-3 are penalized as heavily as the faulty edit in turn 4.</code></pre>
+<p>解决这一问题，需要让信用分配反映每一轮对最终结果的贡献。有两类解决方案，它们都在方差和可操纵性这两个量之间进行权衡。</p>
+</section>
+<section id="结果奖励与过程奖励" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="结果奖励与过程奖励">结果奖励与过程奖励</h3>
+<p>结果奖励模型（ORM）仅对最终状态评分；在可验证环境中，测试套件本身就是结果奖励模型。它不对执行路径作任何假设，这使其评判保持客观，但也意味着它无法为中间轮次提供任何信号。过程奖励模型（PRM）对每个步骤评分，<span class="math inline">\(r_t = M_{\text{PRM}}(s_t, a_t) \in [0, 1]\)</span>，从而提供密集的逐轮信用分配，并降低方差 <span class="citation" data-cites="lightman2023let uesato2022solving">(<a href="#ref-lightman2023let" role="doc-biblioref">Lightman 等 2024年</a>; <a href="#ref-uesato2022solving" role="doc-biblioref">Uesato 等 2022年</a>)</span>。<strong><a href="../03_test_time_compute/03_test_time_compute.html#sec-vol3-test-time-compute-verification">过程验证</a></strong> 将二者都作为用于筛选的验证器引入。在训练中，PRM 的弱点成为主导因素，因为它是一个对文本评分的学习模型，而文本由策略生成。有三种利用方式反复出现。策略会输出程式化的谨慎表述（“彻底验证这个指针”），在不采取任何实际行动的情况下提高步骤得分。它会在错误前提上构建连贯的步骤，而对局部一致性评分的模型会奖励这些步骤。它还会避开那些暂时得分较低、却是长程修复所必需的迂回步骤。<a href="#fig-vol3-credit-assignment" class="quarto-xref">图&nbsp;2</a> 将这两种方法与第三种方案进行对照，后者保留终局检查作为唯一的真值来源；<strong><a href="15_rlvr.html#tbl-vol3-credit-comparison">信用分配方案</a></strong> 则比较了全部三种方法。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-lightman2023let" class="csl-entry" role="listitem">
+Lightman, Hunter, Vineet Kosaraju, Yura Burda, Harri Harres, Karl Cobbe, Christopher Hesse, Oleg Klimov, Jan Leike, John Schulman, 和 Ilya Sutskever. 2024年. <span>《Let’s Verify Step by Step》</span>. <em>International Conference on Learning Representations (ICLR)</em>.
+</div><div id="ref-uesato2022solving" class="csl-entry" role="listitem">
+Uesato, Jonathan, Nate Kushman, Ramana Kumar, Francis Song, Noah Shen, Hemanth Ramchurn, Balazs Gyevnar, Laurence Aitchison, Richard Evans, 和 Tianqi Gao. 2022年. <span>《Solving math word problems with process- and outcome-based feedback》</span>. <em>arXiv preprint arXiv:2211.14275</em>, 网络首发. https://doi.org/10.48550/arXiv.2211.14275.
+</div></div><div id="fig-vol3-credit-assignment" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="搜索树的三面板对比。结果面板在最终状态失败后惩罚所有步骤。过程面板展示学习模型对每个步骤评分，其中包括对迎合性文字给出的高分。蒙特卡洛面板展示从一个中间状态分叉出的四条后续执行，其中三条通过、一条失败，得到的优势估计值为正 0.55。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-credit-assignment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/credit-assignment-topologies.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="图&nbsp;2: 跨轮次信用分配：将终局结果的信用分配给中间轮次的三种方法。结果奖励模型仅检查最终状态，因此正确的早期步骤也会与出错的步骤一同受到惩罚。过程奖励模型使用学习模型对每个步骤评分，提供密集的信用信号，但策略可以用看似合理的文本操纵评分。蒙特卡洛子树从中间状态分叉出后续执行，衡量它们通过终局检查的频率，使逐轮信用分配以验证器为依据，但其轨迹采样成本呈二次增长。"><img src="images/svg/credit-assignment-topologies.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-credit-assignment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;2: <strong>跨轮次信用分配</strong>：将终局结果的信用分配给中间轮次的三种方法。结果奖励模型仅检查最终状态，因此正确的早期步骤也会与出错的步骤一同受到惩罚。过程奖励模型使用学习模型对每个步骤评分，提供密集的信用信号，但策略可以用看似合理的文本操纵评分。蒙特卡洛子树从中间状态分叉出后续执行，衡量它们通过终局检查的频率，使逐轮信用分配以验证器为依据，但其轨迹采样成本呈二次增长。
+</figcaption>
+</figure>
+</div>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-credit-comparison" style="display:table-caption!important;width:auto!important;position:static!important"><strong>信用分配方案</strong>：从评估对象、判定来源、方差、被操纵的风险以及额外成本等方面，比较结果信用分配、过程信用分配和蒙特卡洛信用分配。</caption>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 30%">
+<col style="width: 19%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>维度</strong></th>
+<th style="text-align: left;"><strong>结果奖励（ORM）</strong></th>
+<th style="text-align: left;"><strong>过程奖励（PRM）</strong></th>
+<th style="text-align: left;"><strong>蒙特卡洛子树</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>评估对象</strong></td>
+<td style="text-align: left;">最终状态 <span class="math inline">\(s_T\)</span></td>
+<td style="text-align: left;">每个步骤 <span class="math inline">\((s_t, a_t)\)</span></td>
+<td style="text-align: left;">通过分叉评估中间状态 <span class="math inline">\(s_t\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>真值来源</strong></td>
+<td style="text-align: left;">确定性检查</td>
+<td style="text-align: left;">学习模型</td>
+<td style="text-align: left;">对后续执行进行确定性检查</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>梯度方差</strong></td>
+<td style="text-align: left;">高，随 <span class="math inline">\(T\)</span> 增大</td>
+<td style="text-align: left;">低</td>
+<td style="text-align: left;">中等，随 <span class="math inline">\(1/\sqrt{K}\)</span> 降低</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>可操纵性</strong></td>
+<td style="text-align: left;">受测试覆盖范围和隔离机制限制</td>
+<td style="text-align: left;">高（对文本评分）</td>
+<td style="text-align: left;">受终局检查限制</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>额外成本</strong></td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">每个步骤进行一次模型前向计算</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{O}(K \cdot T^2)\)</span> 个轨迹采样轮次</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="蒙特卡洛价值估计" class="level3">
+<h3 class="anchored" data-anchor-id="蒙特卡洛价值估计">蒙特卡洛价值估计</h3>
+<p>第三种方案用测量取代学习得到的步骤评分器。在中间状态 <span class="math inline">\(s_t\)</span>，运行时为沙箱创建快照（<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-cow">智能体工作区</a></strong>），分叉上下文，并将当前策略的 <span class="math inline">\(K\)</span> 条后续执行运行至完成，每条都由终局检查评分。平均值用于估计该状态的价值，相邻状态价值之差则用于估计二者之间动作的优势：</p>
+<p><span class="math display">\[\hat{V}(s_t) = \frac{1}{K} \sum_{k=1}^{K} R\left(\tau_k^{(s_t)}\right), \qquad \hat{A}(s_t, a_t) = \hat{V}(s_{t+1}) - \hat{V}(s_t)\]</span></p>
+<p>这使诊断步骤免于受到压制。假设从初始缺陷报告出发的后续执行有 5% 能够成功，<span class="math inline">\(\hat{V}(s_0) = 0.05\)</span>。智能体运行调试器后，观测中便包含了出错的代码行。从该状态出发的后续执行有 60% 能够成功，因此调试器所在轮次获得 <span class="math inline">\(\hat{A} = 0.60 - 0.05 = +0.55\)</span>，即使运行调试器的那条具体轨迹后来在另一轮失败，也不受影响。一个轮次获得的信用仅取决于它将通过终局检查的概率提高了多少，除此之外没有其他依据。</p>
+<p>这种测量成本高昂，而用词元数衡量成本最为合适。</p>
+<div id="nbk-14-mc-credit-assignment" class="callout callout-notebook" title="蒙特卡洛信用分配的 token 开销">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>粗略估算 0.2: 蒙特卡洛信用分配的 token 开销</strong></summary><div><strong>问题</strong>：一条修复轨迹执行 30 轮，每轮生成 512 个 token。为了给每一轮分配信用，运行时在每个中间轮次分叉出 8 条后续轨迹，并将每条轨迹运行至结束。对一条轨迹进行信用分配会生成多少 token，是该轨迹本身所生成 token 数的多少倍？<p></p>
+<p><strong>变量</strong>：</p>
+<ul>
+<li>轮数 <span class="math inline">\(T\)</span>，每轮生成的 token 数 <span class="math inline">\(L\)</span>，每次分叉的后续轨迹数 <span class="math inline">\(K\)</span></li>
+<li>在第 <span class="math inline">\(t\)</span> 轮进行分叉后，执行剩余的 <span class="math inline">\(T - t\)</span> 轮</li>
+</ul>
+<p><strong>数学推导</strong>：</p>
+<p><span class="math display">\[N_{\text{base}} = T \cdot L = 30 \times 512 = 15,360\]</span></p>
+<p><span class="math display">\[\sum_{t=1}^{29} (T - t) = 435\]</span></p>
+<p><span class="math display">\[N_{\text{MC}} = K \cdot L \cdot 435 = 8 \times 512 \times 435 = 1,781,760\]</span></p>
+<p><strong>结果</strong>：<span class="math inline">\(15,360 + 1,781,760 = 1,797,120\)</span> 个 token，是仅运行该轨迹时的 117 倍，此外，每条后续轨迹还需要一次沙箱分叉和一次验证器运行。</p>
+<p><strong>系统洞见</strong>：穷举式蒙特卡洛信用分配所生成的 token 数按 <span class="math inline">\(K \cdot T^2\)</span> 增长，因此，为一条长轨迹分配信用的成本相当于生成一百多条普通轨迹。逐轮信用分配只有在少数选定轮次上才负担得起。</p>
+</div></details>
+</div>
+<p>因此，运行时会选择性地分叉。常见的触发条件有两种：一是策略的下一个 token 分布具有高熵的轮次，这标志着真正的决策点；二是发出会改变状态的工具调用的轮次，例如编辑或迁移。每条轨迹只在两三个这样的轮次进行分叉，而非在所有轮次都分叉，可将后续轨迹预算降低一个数量级，同时仍在关键决策点上通过测量分配信用。其余轮次共享轨迹级信号。</p>
+<p>逐轮信用若由学习得到的模型提供，就可能被钻空子；若通过测量获得，则成本高昂。这两种方案还都预设了存在一种将分数转化为梯度的方法。经典方法是学习一个价值函数，根据状态预测 <span class="math inline">\(\hat{V}(s_t)\)</span>，而对于智能体轨迹，这个价值函数本身就是一个难题。</p>
+<div id="chk-14-reward-oracles" class="callout callout-checkpoint" title="奖励与信用分配">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 0.1: 奖励与信用分配</strong></summary><div>
+<p>在将分数转化为梯度之前，检验你对分数含义的理解：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>奖励投机</strong>：为什么将一项检查从筛选阶段移到训练阶段，会使很低的错误接受率转化为学习信号中的很大占比？</label></li>
+<li><label><input type="checkbox"><strong>硬边界与软边界</strong>：为什么奖励惩罚可以降低未经授权的行动的概率，却永远无法阻止它？</label></li>
+<li><label><input type="checkbox"><strong>信用分配</strong>：为什么统一的终局信用分配会抑制诊断性轮次，而用蒙特卡洛信用分配来解决这一问题需要付出什么成本？</label></li>
+<li><label><input type="checkbox"><strong>自举</strong>：为什么对于初始策略从未解决过的任务，无论进行多少次轨迹采样，都无法为训练作出贡献？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+</section>
+<section id="sec-vol3-rlvr-grpo" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-grpo">组相对策略优化</h2>
+<p>语言模型的标准策略优化器——近端策略优化（PPO）<span class="citation" data-cites="schulman2017proximal">(<a href="#ref-schulman2017proximal" role="doc-biblioref">Schulman 等 2017年</a>)</span>——会学习一个评价器 <span class="math inline">\(V_\phi(s)\)</span>，作为每个状态的基线。对于多轮智能体，状态包含截至当前的完整轨迹、任务、数十条工具观测以及策略自身的推理；要预测其预期结果，就需要一个能够读取所有这些内容的模型。在实践中，评价器是策略模型的副本，并带有一个标量输出头。它使训练集群必须存储和更新的可训练参数、梯度及优化器状态增加一倍，同时又引入了一个学习得到的模型，策略可以利用其误差钻空子。恰恰在智能体任务常见的情形下，即仅有一个二元结果的长轨迹上，它的估计也最不准确。第一项成本背后的内存与通信核算属于训练系统方面的内容，已在《大规模机器学习系统》中讨论；在智能体层面，其后果是评价器的成本与策略相当，却在稀疏、可验证的奖励上收益甚微。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-schulman2017proximal" class="csl-entry" role="listitem">
+Schulman, John, Filip Wolski, Prafulla Dhariwal, Alec Radford, 和 Oleg Klimov. 2017年. <span>《Proximal Policy Optimization Algorithms》</span>. <em>arXiv preprint arXiv:1707.06347</em>, 网络首发. https://doi.org/10.48550/arXiv.1707.06347.
+</div></div><p>组相对策略优化（GRPO）<span class="citation" data-cites="shao2024deepseekmath">(<a href="#ref-shao2024deepseekmath" role="doc-biblioref"><span class="nocase">Shao 等</span> 2024年</a>)</span> 移除了评价器。它针对同一个任务进行一组轨迹采样，并以该组自身的奖励作为基线。<strong><a href="15_rlvr.html#tbl-vol3-ppo-vs-grpo-comparison">PPO 与 GRPO 对比</a></strong> 总结了由此带来的变化。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-ppo-vs-grpo-comparison" style="display:table-caption!important;width:auto!important;position:static!important"><strong>PPO 与 GRPO 对比</strong>：从存储的模型、使用的基线、信用分配粒度以及失效方式四个方面比较这两种优化器。</caption>
+<colgroup>
+<col style="width: 17%">
+<col style="width: 38%">
+<col style="width: 43%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>维度</strong></th>
+<th style="text-align: left;"><strong>PPO</strong></th>
+<th style="text-align: left;"><strong>GRPO</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>存储的模型</strong></td>
+<td style="text-align: left;">策略模型、评价器、参考模型，通常还有奖励模型</td>
+<td style="text-align: left;">策略模型和参考模型；奖励来自外部检查</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>可训练模型</strong></td>
+<td style="text-align: left;">两个，每个都与策略模型大小相同</td>
+<td style="text-align: left;">一个</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>基线</strong></td>
+<td style="text-align: left;">学习得到的状态价值 <span class="math inline">\(V_\phi(s_t)\)</span></td>
+<td style="text-align: left;">同一任务对应组内的平均奖励</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>信用分配粒度</strong></td>
+<td style="text-align: left;">通过评价器逐 token 分配</td>
+<td style="text-align: left;">按轨迹分配，由轨迹中的所有 token 共享</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>每个任务的轨迹采样数</strong></td>
+<td style="text-align: left;">可以为一次</td>
+<td style="text-align: left;">一组 <span class="math inline">\(G\)</span>，通常为几次到几十次</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>失效模式</strong></td>
+<td style="text-align: left;">评价器在奖励稀疏的长轨迹上产生误差</td>
+<td style="text-align: left;">当组内所有采样轨迹的分数相同时，没有梯度</td>
+</tr>
+</tbody>
+</table></div>
+<section id="经典演员评价器架构的内存墙" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="经典演员评价器架构的内存墙">经典演员—评价器架构的内存墙</h3>
+<p>经典近端策略优化（PPO）在训练期间，会在 GPU 内存中维护四个独立的神经网络模型：</p>
+<ol type="1">
+<li><strong>演员网络（<span class="math inline">\(\pi_\theta\)</span>）：</strong> 正在优化的策略模型。</li>
+<li><strong>评价器网络（<span class="math inline">\(V_\phi\)</span>）：</strong> 估计轨迹预期回报的价值模型。</li>
+<li><strong>参考策略（<span class="math inline">\(\pi_{\text{ref}}\)</span>）：</strong> 预训练模型的冻结快照，用于施加 KL 散度约束。</li>
+<li><strong>奖励模型（<span class="math inline">\(R_\psi\)</span>）：</strong> 预测人类偏好代理分数的神经网络。</li>
+</ol>
+<p>对于大型基础模型（例如采用 FP16 的 70B 参数模型），同时存储四个模型的权重、优化器状态和激活值，每个流水线阶段需要超过 560 GB 的 GPU 显存，严重限制了最大上下文长度和批大小。</p>
+<p>组相对策略优化（GRPO）<span class="citation" data-cites="shao2024deepseekmath">(<a href="#ref-shao2024deepseekmath" role="doc-biblioref"><span class="nocase">Shao 等</span> 2024年</a>)</span> 通过完全舍弃参数化的评价器网络（<span class="math inline">\(V_\phi\)</span>）突破了这一内存墙。GRPO 无需训练独立的价值网络，而是针对每个任务提示，从当前策略中采样一组 <span class="math inline">\(G\)</span> 条独立轨迹 <span class="math inline">\(\{y_1, y_2, \dots, y_G\}\)</span>，以评估策略优势；当前策略为 <span class="math inline">\(\pi_\theta\)</span>，任务提示为 <span class="math inline">\(x\)</span>。基线直接根据组内奖励的经验均值和标准差计算： <span class="math display">\[
+\hat{A}_i = \frac{r_i - \mu_{\text{group}}}{\sigma_{\text{group}} + \epsilon}, \quad \mu_{\text{group}} = \frac{1}{G}\sum_{j=1}^G r_j, \quad \sigma_{\text{group}} = \sqrt{\frac{1}{G}\sum_{j=1}^G (r_j - \mu_{\text{group}})^2}
+\]</span></p>
+<div class="no-row-height column-margin column-container"><div id="ref-shao2024deepseekmath" class="csl-entry" role="listitem">
+<span class="nocase">Shao, Zhihong, Peiyi Wang, Qihao Zhu, 等</span>. 2024年. <span>《<span>DeepSeekMath</span>: Pushing the limits of mathematical reasoning in open language models》</span>. <em>arXiv preprint arXiv:2402.03300</em>, 网络首发. https://doi.org/10.48550/arXiv.2402.03300.
+</div></div><p>PPO 与 GRPO 在架构上的对比如 <a href="#fig-vol3-ppo-vs-grpo" class="quarto-xref">图&nbsp;3</a> 所示。</p>
+<div id="fig-vol3-ppo-vs-grpo" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="对比 PPO 与 GRPO 的双面板系统示意图。面板 (a) 展示了 PPO，其 HBM 中包含四个神经网络模型，并采用双环梯度同步。面板 (b) 展示了 GRPO，仅包含策略模型和参考模型，验证在 CPU 上执行，并采用单环全归约，将动态上下文余量从 5.6 GB 扩大到 40.6 GB。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-ppo-vs-grpo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/vol3-ppo-vs-grpo.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="图&nbsp;3: PPO 与 GRPO 的分布式运行时拓扑：分布式集群内存分配与网络同步拓扑的架构对比。经典 PPO 在加速器 HBM 中同时维护四个网络（策略网络 \pi_\theta、价值网络 V_\phi、参考网络 \pi_{\text{ref}} 和奖励网络 R_\psi），每个 GPU 占用 74.4 GB 的静态显存，几乎不留动态余量。GRPO 同时移除价值网络和奖励网络，每个 GPU 仅预留 39.4 GB，并释放出 40.6 GB 的动态余量，用于长时域 KV 缓存和并行的组内轨迹采样。"><img src="images/svg/vol3-ppo-vs-grpo.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-ppo-vs-grpo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;3: <strong>PPO 与 GRPO 的分布式运行时拓扑</strong>：分布式集群内存分配与网络同步拓扑的架构对比。经典 PPO 在加速器 HBM 中同时维护四个网络（策略网络 <span class="math inline">\(\pi_\theta\)</span>、价值网络 <span class="math inline">\(V_\phi\)</span>、参考网络 <span class="math inline">\(\pi_{\text{ref}}\)</span> 和奖励网络 <span class="math inline">\(R_\psi\)</span>），每个 GPU 占用 74.4 GB 的静态显存，几乎不留动态余量。GRPO 同时移除价值网络和奖励网络，每个 GPU 仅预留 39.4 GB，并释放出 40.6 GB 的动态余量，用于长时域 KV 缓存和并行的组内轨迹采样。
+</figcaption>
+</figure>
+</div>
+<p>通过移除价值模型，GRPO 将 GPU 内存消耗降低了超过 40%，并彻底消除了价值模型训练的不稳定性，使整个 GPU 内存预算都可用于更长的上下文窗口和更大的轨迹采样组。</p>
+</section>
+<section id="sec-vol3-rlvr-grpo-objective" class="level3">
+<h3 class="anchored" data-anchor-id="sec-vol3-rlvr-grpo-objective">组相对优势</h3>
+<p>对于任务 <span class="math inline">\(q\)</span>，运行时采样 <span class="math inline">\(G\)</span> 条轨迹 <span class="math inline">\(\{o_1, \dots, o_G\}\)</span>，这些轨迹来自生成它们的策略 <span class="math inline">\(\pi_{\theta_{\text{old}}}\)</span>，随后使用验证器 <span class="math inline">\(r_i = R(q, o_i)\)</span> 为每条轨迹评分。每条轨迹的优势是相对于其所在组进行标准化后的奖励：</p>
+<p><span id="eq-vol3-grpo-advantage"><span class="math display">\[A_i = \frac{r_i - \text{mean}(\{r_1, r_2, \dots, r_G\})}{\text{std}(\{r_1, r_2, \dots, r_G\}) + \epsilon} = \frac{r_i - \frac{1}{G}\sum_{j=1}^G r_j}{\sqrt{\frac{1}{G}\sum_{j=1}^G \left(r_j - \frac{1}{G}\sum_{k=1}^G r_k\right)^2} + \epsilon} \tag{1}\]</span></span></p>
+<p>组均值是每个任务各自的基线，用于吸收任务难度的影响。对于简单任务，大多数轨迹都能通过验证，均值接近一，而罕见的失败会获得较大的负优势。对于十六条轨迹中仅有一条通过验证的困难任务，均值为 <span class="math inline">\(0.0625\)</span>，唯一成功的轨迹获得较大的正优势，失败的轨迹则获得较小的负优势。策略因此会朝着在这一特定任务上区分成功与失败的行为方向调整。</p>
+<p>这些优势被纳入一个裁剪代理目标，其中包含一项惩罚，使策略保持接近冻结的参考策略 <span class="math inline">\(\pi_{\text{ref}}\)</span>（<a href="#eq-vol3-grpo-objective" class="quarto-xref">公式&nbsp;2</a>）：</p>
+<p><span id="eq-vol3-grpo-objective"><span class="math display">\[\mathcal{L}_{\text{GRPO}}(\theta) = \mathbb{E}_{q \sim \mathcal{D}, \{o_i\}_{i=1}^G \sim \pi_{\theta_{\text{old}}}(q)} \left[ \frac{1}{G} \sum_{i=1}^G \frac{1}{|o_i|} \sum_{t=1}^{|o_i|} \mathcal{M}_{i,t}(\theta) - \beta D_{\text{KL}}(\pi_\theta \parallel \pi_{\text{ref}}) \right] \tag{2}\]</span></span></p>
+<p>其中，逐 token 的裁剪项为</p>
+<p><span id="eq-vol3-grpo-surrogate"><span class="math display">\[\mathcal{M}_{i,t}(\theta) = \min\left( \frac{\pi_\theta(o_{i,t} \mid q, o_{i,&lt;t})}{\pi_{\theta_{\text{old}}}(o_{i,t} \mid q, o_{i,&lt;t})} A_i, \; \text{clip}\left(\frac{\pi_\theta(o_{i,t} \mid q, o_{i,&lt;t})}{\pi_{\theta_{\text{old}}}(o_{i,t} \mid q, o_{i,&lt;t})}, 1-\epsilon_{\text{clip}}, 1+\epsilon_{\text{clip}}\right) A_i \right) \tag{3}\]</span></span></p>
+<p>该比率比较当前策略对每个采样 token 赋予的概率与采样该 token 的策略所赋予的概率，将其裁剪到 <span class="math inline">\([1-\epsilon_{\text{clip}}, 1+\epsilon_{\text{clip}}]\)</span> 可防止任何一次更新使策略变化过大。轨迹 <span class="math inline">\(i\)</span> 中的每个 token 都具有相同的优势 <span class="math inline">\(A_i\)</span>，因此 GRPO 的信用分配处于轨迹级别；<a href="#sec-vol3-rlvr-credit" class="quarto-xref">节&nbsp;3</a> 的逐轮次信用分配只有在运行时将 <span class="math inline">\(A_i\)</span> 替换为轮次级估计时才会发挥作用。散度项按每个采样 token 估计，而非在整个词表上计算（<a href="#eq-vol3-grpo-kl-estimator" class="quarto-xref">公式&nbsp;4</a>）：</p>
+<p><span id="eq-vol3-grpo-kl-estimator"><span class="math display">\[D_{\text{KL}}(\pi_\theta \parallel \pi_{\text{ref}}) \approx \frac{\pi_{\text{ref}}(o_{i,t} \mid q, o_{i,&lt;t})}{\pi_\theta(o_{i,t} \mid q, o_{i,&lt;t})} - \log \frac{\pi_{\text{ref}}(o_{i,t} \mid q, o_{i,&lt;t})}{\pi_\theta(o_{i,t} \mid q, o_{i,&lt;t})} - 1 \tag{4}\]</span></span></p>
+<p>该估计量始终非负，当两个策略对该 token 赋予的概率一致时为零，并且只需要参考模型对每个生成 token 赋予的概率，即对整条轨迹额外进行一次前向传播。</p>
+<p><a href="#eq-vol3-grpo-advantage" class="quarto-xref">公式&nbsp;1</a> 和 <a href="#eq-vol3-grpo-objective" class="quarto-xref">公式&nbsp;2</a> 中的两种归一化看似中性，实则不然。因子 <span class="math inline">\(1/|o_i|\)</span> 先对每次轨迹采样的各个 token 项取平均，再在组内取平均，这通常被描述为防止长轨迹采样占据主导地位。然而，它对失败轨迹采样的影响恰好相反。对于满足 <span class="math inline">\(A_i &lt; 0\)</span> 的一次轨迹采样，除以 <span class="math inline">\(|o_i|\)</span> 会使每个 token 的惩罚随着轨迹采样长度增加而减小，因此，在错误答案中，目标函数对长答案的惩罚最小；在正确答案中，对短答案的奖励最大。总体上，这会推动失败响应变得更长，也是 <a href="#sec-vol3-rlvr-pathologies" class="quarto-xref">节&nbsp;7</a> 长度失控的原因之一。用常数进行归一化，例如用批次中策略生成的 token 总数进行归一化，可以消除依赖长度的权重。优势中的标准差也有类似的副作用。对于结果几乎一致的组，也就是任务非常容易或非常困难的组，其标准差很小，因此组内少数结果不同的轨迹采样会获得很大的优势值，这类任务的权重也就高于通过率接近 50% 的任务。希望各任务权重相等的实现会去掉这一除法，使用减去均值后的奖励。</p>
+</section>
+<section id="sec-vol3-rlvr-grpo-zero-variance" class="level3">
+<h3 class="anchored" data-anchor-id="sec-vol3-rlvr-grpo-zero-variance">没有信号的组</h3>
+<p>GRPO 的基线存在一个盲点。智能体的奖励通常是二元的，因此一组轨迹采样往往得分完全相同：任务过难时，每次轨迹采样都失败；任务过易时，每次轨迹采样都通过。此时，<span class="math inline">\(r_i = \text{mean}(\{r_j\})\)</span> 对每个 <span class="math inline">\(i\)</span> 都成立，所有优势值均为零，并且</p>
+<p><span class="math display">\[\nabla_\theta \mathcal{L}_{\text{GRPO}}(\theta) \propto \sum_{i=1}^G \sum_{t=1}^{|o_i|} \nabla_\theta \log \pi_\theta(o_{i,t} \mid \cdot) \cdot A_i = 0\]</span></p>
+<p>该组消耗了 <span class="math inline">\(G\)</span> 次完整的轨迹采样，每次都需要沙箱、工具调用和验证器运行，却对更新毫无贡献。一组轨迹采样避免这种情况的概率，就是 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#eq-vol3-trajectory-curation-informative">equation</a></strong> 为拒绝采样推导出的有效信息比例，其中 <span class="math inline">\(k = G\)</span>。如果策略在某个任务上的尝试成功率为 5%，那么一个包含八次轨迹采样的组大约有三分之二的概率无法提供信号。如果批次中的大多数任务都产生结果一致的组，有效批次大小就会趋近于零，而轨迹采样的成本却保持不变。运行时系统从四个方向减少这种浪费：</p>
+<ol type="1">
+<li><strong>动态采样。</strong> 丢弃奖励全部相等的组，并持续采样任务，直到批次中填满能够产生梯度的组，从而使每一步都能使用预定数量的含有效信息的组进行训练。</li>
+<li><strong>难度感知的任务选择。</strong> 跟踪每个任务近期的通过率 <span class="math inline">\(\hat{p}(q)\)</span>，并采样通过率既不接近零也不接近一的任务。二元奖励的方差 <span class="math inline">\(\hat{p}(1-\hat{p})\)</span> 在 <span class="math inline">\(0.5\)</span> 时最大。</li>
+<li><strong>为困难任务使用更大的组。</strong> 一个大小为 <span class="math inline">\(G\)</span> 的组至少包含一次成功的概率为 <span class="math inline">\(1 - (1-p)^G\)</span>，因此，对于通过率低但非零的任务，增大 <span class="math inline">\(G\)</span> 可以将没有信号的组转变为含有效信息的组。</li>
+<li><strong>部分得分。</strong> 当检查可以分解时，例如按通过测试的比例评分，分级奖励可以区分那些在二元奖励下得分相同的轨迹采样，前提是每项局部检查都与完整检查一样受到严密保护。</li>
+</ol>
+<p>GRPO 无需学习得到的评价器，就能将一组经过验证的结果转化为梯度，代价是必须生成完整的组，并丢弃结果一致的组。到目前为止，每次轨迹采样都被视为一个输出 <span class="math inline">\(o_i\)</span>。智能体的轨迹采样并非单个输出，而是策略与环境之间的一段对话，下一节将考察这会带来哪些变化。</p>
+</section>
+</section>
+<section id="sec-vol3-rlvr-multi-turn" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-multi-turn">多轮智能体强化学习</h2>
+<p>单轮数学任务的轨迹采样包含一个提示和一个响应，生成的每个 token 都属于策略。一次修复任务的轨迹采样则包含二十轮交互：策略写出工具调用，运行时系统在沙箱中执行该调用，并将测试日志、文件列表或编译器错误追加到上下文中，随后策略再次生成内容。最终上下文中的很大一部分 token 由环境写入，而非由策略生成。如果直接套用 <a href="#eq-vol3-grpo-objective" class="quarto-xref">公式&nbsp;2</a>，就会对策略从未采样过的 token 计算概率比，因策略预测编译器输出而给予奖励，并将冗长测试日志中的每一行都计入长度归一化。多轮强化学习是将 GRPO 应用于轨迹，需要进行四项调整。</p>
+<section id="屏蔽环境写入的内容" class="level3">
+<h3 class="anchored" data-anchor-id="屏蔽环境写入的内容">屏蔽环境写入的内容</h3>
+<p>替代目标、散度惩罚和长度计数都必须仅涵盖策略输出的 token：其推理、工具调用，以及将控制权交还给运行时的回合结束 token。观测 token 保留在上下文中，为下一回合提供条件，但不对损失作任何贡献。这就是 <strong><a href="../14_fine_tuning/14_fine_tuning.html#sec-vol3-fine-tuning-loss-masking">观测损失掩码</a></strong> 中的观测损失掩码，而观测损失屏蔽（原则 <a href="../parts/learning_principles.html#pri-vol3-action-masked-loss">17</a>）在此处更为重要。在监督训练中，未被屏蔽的观测会教模型模仿工具输出。在强化学习中，它还会将环境文本纳入重要性比率；对于策略从未采样过的 token，其“旧策略概率”毫无意义。</p>
+<p>该掩码要求准确知道哪些 token 是策略采样得到的，这引出了一个细微的要求。轨迹采样工作进程必须在采样时记录所采样的 token ID 及其对数概率，而不能事后对完整交互记录重新分词。对文本重新分词可能会将字符跨越观测插入处的边界合并，也可能通过聊天模板以不同于生成时的方式呈现工具调用（<strong><a href="../14_fine_tuning/14_fine_tuning.html#sec-vol3-fine-tuning-serialization">轨迹序列化</a></strong>），从而产生策略从未输出过的 token 序列。此时，比率比较的就是错误 token 的概率。<strong><a href="15_rlvr.html#tbl-vol3-rlvr-rollout-record">多回合轨迹采样记录</a></strong> 列出了多回合轨迹采样记录为确保训练正确而必须包含的内容，扩展了 <strong><a href="../10_durable_execution/10_durable_execution.html#sec-vol3-persistence-event-sourcing">轨迹日志</a></strong> 中的轨迹日志模式。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-rlvr-rollout-record" style="display:table-caption!important;width:auto!important;position:static!important"><strong>多回合轨迹采样记录</strong>：多回合策略优化要正确计算比率、掩码、信用分配和陈旧程度，轨迹采样记录就必须包含这些字段。</caption>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 38%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>字段</strong></th>
+<th style="text-align: left;"><strong>内容</strong></th>
+<th style="text-align: left;"><strong>训练为何需要该字段</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>任务与环境标识符</strong></td>
+<td style="text-align: left;">任务 ID、环境镜像摘要、随机种子</td>
+<td style="text-align: left;">复现轨迹采样；确保训练任务与评估任务互不重叠</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>策略版本</strong></td>
+<td style="text-align: left;">生成该采样轨迹的权重版本</td>
+<td style="text-align: left;">衡量陈旧程度（<a href="#sec-vol3-rlvr-freshness" class="quarto-xref">节&nbsp;8.4</a>）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>词元 ID</strong></td>
+<td style="text-align: left;">最终上下文中的每个 token，按顺序排列</td>
+<td style="text-align: left;">在与采样完全一致的序列上重新计算概率</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>损失掩码</strong></td>
+<td style="text-align: left;">每个 token 对应一位：是否由策略输出</td>
+<td style="text-align: left;">从替代目标、散度和长度项中排除观测</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>采样对数概率</strong></td>
+<td style="text-align: left;">每个策略 token 在生成策略下的对数概率</td>
+<td style="text-align: left;">重要性比率的分母</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>回合边界</strong></td>
+<td style="text-align: left;">每个回合起止位置的 token 偏移量</td>
+<td style="text-align: left;">回合级信用分配；逐回合诊断</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>结果</strong></td>
+<td style="text-align: left;">验证器判定，或超时、截断、篡改标记</td>
+<td style="text-align: left;">奖励，以及该采样轨迹是否纳入损失计算</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="逐回合信用分配" class="level3">
+<h3 class="anchored" data-anchor-id="逐回合信用分配">逐回合信用分配</h3>
+<p>GRPO 为一条采样轨迹中的所有回合赋予相同的优势。对于较短的交互过程，这已经足够；对于三十回合的修复过程，它会在回合层面重现 <a href="#sec-vol3-rlvr-credit" class="quarto-xref">节&nbsp;3</a> 中的诊断信息抑制现象。有两种切实可行的改进。运行时可以在若干回合边界处计算蒙特卡洛价值，并根据每个回合引起的价值变化为其分配优势，从而仍以终局检查作为判定依据。它也可以添加少量可验证的逐回合信号作为奖励塑形项，例如成功解析的工具调用或正常退出的命令。这些信号成本低廉，但每一个都会成为策略为了达成目标本身而学习追求的目标。因正常退出码而获得奖励的策略会学会运行不可能失败的命令。这类项相对于最终结果应保持较小的权重，而且只能由最终结果决定一条轨迹是否算作成功。</p>
+</section>
+<section id="轨迹采样中的环境耗时" class="level3">
+<h3 class="anchored" data-anchor-id="轨迹采样中的环境耗时">轨迹采样中的环境耗时</h3>
+<p>一个回合的墙钟时间等于模型生成时间加上工具执行时间；对于智能体任务，工具执行时间往往占主导。测试套件或构建可能需要数秒到数分钟。当一条采样轨迹等待工具返回时，其注意力状态要么常驻推理服务器，要么被丢弃，并在观测返回后重新计算，这就是 <strong><a href="../05_kv_cache/05_kv_cache.html#sec-vol3-kvcache-swapping">保留、驱逐、重计算或卸载</a></strong> 中的保留或重算决策。因此，轨迹采样工作进程调度的是回合，而非整条轨迹的采样。多个环境并发运行，推理服务器为任何已获得观测的采样轨迹执行生成，这与智能体运行框架在部署时使用的等待工具期间让出执行权的模式相同（<strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-yielding">等待工具</a></strong>）。一次只生成一条采样轨迹的工作进程，会使模型在每次工具调用的大部分时间里处于空闲状态。</p>
+</section>
+<section id="停滞与截断的采样轨迹" class="level3">
+<h3 class="anchored" data-anchor-id="停滞与截断的采样轨迹">停滞与截断的采样轨迹</h3>
+<p>在大规模训练中，有些轨迹采样永远不会自行结束。测试因死锁而挂起，命令等待永远不会到来的输入，或者策略反复执行同一条失败的命令，而 <strong><a href="../11_failure_recovery/11_failure_recovery.html#sec-vol3-sagas-watchdogs">语义看门狗定时器</a></strong> 中的进度检测机制正是为捕捉这种循环而设计的。因此，每次轨迹采样都在 <strong><a href="../09_agent_harness/09_agent_harness.html#sec-vol3-controlplane-accounting">预算与上限</a></strong> 规定的上限内运行：单次工具调用超时、轮次上限和 token 预算。更棘手的问题是，被截断的轨迹采样应获得什么奖励。将其判为失败，会教会策略在上限内完成任务；当上限与部署预算一致时，这样做是正确的，但也会惩罚那些只需再多几个轮次就能成功的较长方案。在损失计算中屏蔽被截断的轨迹采样，可以消除这种偏差，却浪费了它们消耗的计算资源；而且，如果困难任务更容易被截断，这种做法就会在不知不觉中使训练分布向简单任务偏移。合理的选择是将训练上限设为与部署上限相同，并将截断判为失败，从而让策略在实际可用的预算下学习完成任务。</p>
+</section>
+<section id="在部署运行框架下训练" class="level3">
+<h3 class="anchored" data-anchor-id="在部署运行框架下训练">在部署运行框架下训练</h3>
+<p>最后一项调整将其他三项调整推广为一条通用要求。策略会学习在轨迹采样期间所见的上下文中采取行动。如果部署运行框架在固定轮数后压缩上下文（<strong><a href="../04_context_engineering/04_context_engineering.html#sec-vol3-context-engineering-compaction">上下文压缩</a></strong>）、以特定错误拒绝格式不正确的工具调用，或者执行特定预算限制，那么轨迹采样运行框架就必须采取相同做法，否则策略就是在针对一个它永远不会实际运行于其中的运行框架进行优化。未经上下文压缩训练的策略，可能会依赖压缩时被移除的细节；在更宽松的轮次限制下训练的策略，则会学到在部署时被截断的策略。在多轮强化学习中，运行框架是环境的一部分，训练得到的策略也针对该框架而形成。</p>
+<p>屏蔽观测内容、按采样时的原样记录 token、围绕工具等待安排轮次，并使训练运行框架与部署运行框架保持一致后，GRPO 就能像应用于单次响应一样应用于智能体轨迹。然而，每次轨迹采样都会在沙箱中执行动作，而为其评分的测试也位于同一个沙箱中。下一节将弥合这一缺口。</p>
+</section>
+</section>
+<section id="sec-vol3-rlvr-sandboxing" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-sandboxing">隔离验证器</h2>
+<p>正在接受优化的策略，是其自身奖励的对手。它没有意图，但在数百万次轨迹采样上执行梯度上升，会产生同样的效果。任何能提高得分的动作都会得到强化，无论它是在修复缺陷，还是在改写测试。模型底层的约束机制（原则 <a href="../parts/tool_use_principles.html#pri-vol3-zero-trust-sandboxing">10</a>）已经假定，任何指令都无法保证模型的下一项提议是安全的。强化学习使这一假设成为必然，因为梯度会主动奖励任何能够提高得分的越界行为。这就是内部带有优化器的约束问题 <span class="citation" data-cites="lampson1973note">(<a href="#ref-lampson1973note" role="doc-biblioref">Lampson 1973年</a>)</span>。基于隔离验证器的强化学习（原则 <a href="../parts/learning_principles.html#pri-vol3-verifiable-rewards">18</a>）只有在策略无法触及计算奖励的验证器时，才信任该奖励。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-lampson1973note" class="csl-entry" role="listitem">
+Lampson, Butler W. 1973年. <span>《A note on the confinement problem》</span>. <em>Communications of the ACM</em> 16 (10): 613～15.
+</div></div><section id="作为对手的策略" class="level3">
+<h3 class="anchored" data-anchor-id="作为对手的策略">作为对手的策略</h3>
+<p><strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes">智能体沙箱</a></strong> 中的沙箱已经将策略的动作与宿主机隔离开来。但它本身并不能将这些动作与奖励隔离，因为在朴素设计中，测试就在策略一直编辑的同一个工作区内运行。该工作区内部的威胁模型包含四条路径，每条都是 <strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-threat-model">智能体威胁模型</a></strong> 中沙箱威胁模型的一个特例：</p>
+<ol type="1">
+<li><strong>篡改检查。</strong> 编辑或删除测试文件、预期输出或构建标志，使原本失败的用例通过。</li>
+<li><strong>替换工具。</strong> 设置 <code>PATH</code> 或 <code>PYTHONPATH</code> 等环境变量，植入桩测试运行器，或向真正的测试运行器加载钩子。</li>
+<li><strong>获取隐藏信息。</strong> 读取留在磁盘上的隐藏测试、探测本地服务，或通过网络获取解答。</li>
+<li><strong>制造有利的超时。</strong> 耗尽内存或陷入循环，使运行框架超时；如果运行框架将超时视为失败以外的任何结果，就可能发放奖励。</li>
+</ol>
+<p>出站控制（<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-network">出口控制</a></strong>）封堵了第三条路径中涉及网络的部分。其余部分则要求将策略的工作区与奖励的工作区置于不同的机器上。</p>
+</section>
+<section id="双沙箱隔离区" class="level3">
+<h3 class="anchored" data-anchor-id="双沙箱隔离区">双沙箱隔离区</h3>
+<p>能够封堵这些路径的设计将两个工作区分开，并仅允许不具执行能力的制品在二者之间传递（<a href="#fig-vol3-verification-enclave" class="quarto-xref">图&nbsp;4</a>）。策略在一次性沙箱中工作，其中包含代码仓库和公开测试。轨迹采样结束时，运行时提取源代码树的统一差异补丁，对其进行检查，再将其应用到第二个全新沙箱中；该沙箱包含未经修改的代码仓库和完整测试套件，其中包括策略从未见过的隐藏测试。返回的只有判定结果。<a href="#tbl-vol3-dual-sandbox-boundaries" class="quarto-xref">表&nbsp;1</a> 列出了每一侧可以查看、写入和输出的内容。</p>
+<div id="fig-vol3-verification-enclave" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="三列示意图。左列为智能体工作区，包含一个采用写时复制机制的可写层、一个只读的公开测试挂载点，以及隔离设置。中列为完整性检查关卡，负责计算测试文件的哈希值、提取 git diff，并拒绝涉及测试或构建文件的差异。右列为一个全新的 microVM，负责应用补丁、运行留出的私有测试，并通过单向通道返回 1 或 0 的奖励。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-verification-enclave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig-vol3-verification-enclave.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="图&nbsp;4: 双沙箱验证隔离区：策略的工作区存放代码仓库和公开测试，以只读方式挂载，且不允许出站网络访问。轨迹采样结束时，运行时提取源代码树的差异，拒绝任何涉及测试或构建配置的差异，并将通过检查的补丁应用到一个全新的 microVM 中，其中存放着完整的隐藏测试套件。判定结果通过单向通道返回训练运行框架；任何篡改尝试都会终止轨迹采样，并获得零奖励。"><img src="images/svg/fig-vol3-verification-enclave.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-verification-enclave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;4: <strong>双沙箱验证隔离区</strong>：策略的工作区存放代码仓库和公开测试，以只读方式挂载，且不允许出站网络访问。轨迹采样结束时，运行时提取源代码树的差异，拒绝任何涉及测试或构建配置的差异，并将通过检查的补丁应用到一个全新的 microVM 中，其中存放着完整的隐藏测试套件。判定结果通过单向通道返回训练运行框架；任何篡改尝试都会终止轨迹采样，并获得零奖励。
+</figcaption>
+</figure>
+</div>
+<div id="tbl-vol3-dual-sandbox-boundaries" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-dual-sandbox-boundaries-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;1: <strong>双沙箱边界</strong>：策略工作区与验证隔离区各自能够查看、写入和输出的内容。两者之间唯一传递的产物是经过检查的差异。
+</figcaption>
+<div aria-describedby="tbl-vol3-dual-sandbox-boundaries-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 41%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>属性</strong></th>
+<th style="text-align: left;"><strong>策略工作区</strong></th>
+<th style="text-align: left;"><strong>验证隔离区</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>用途</strong></td>
+<td style="text-align: left;">探索、编辑、本地诊断</td>
+<td style="text-align: left;">对提交的补丁评分</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>文件系统</strong></td>
+<td style="text-align: left;">代码仓库之上的写时复制可写层</td>
+<td style="text-align: left;">原始代码仓库和完整测试套件，只读</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>网络</strong></td>
+<td style="text-align: left;">无出站访问</td>
+<td style="text-align: left;">无</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>可见测试</strong></td>
+<td style="text-align: left;">仅公开示例</td>
+<td style="text-align: left;">公开测试、隐藏测试和回归测试</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>生命周期</strong></td>
+<td style="text-align: left;">一次轨迹采样，随后销毁</td>
+<td style="text-align: left;">一次验证，随后销毁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>输出内容</strong></td>
+<td style="text-align: left;">源代码树的统一差异</td>
+<td style="text-align: left;">判定结果和粗粒度计数</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+<p>生命周期的每个阶段都会封堵一条途径。工作区不含任何隐藏测试，因此无从读取。提取步骤仅接受源代码树内文件的文本差异；它会拒绝二进制文件、环境文件以及测试目录或构建目录下的任何路径，并在公开测试的校验和发生变化时直接拒绝此次轨迹采样。隔离区从干净的快照启动，因此策略预先植入的任何内容都不会留存其中；隔离区通过先检查再应用的步骤应用补丁：</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enclave: validate, apply, and run the hidden suite on a clean checkout</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git apply <span class="at">--check</span> candidate.patch <span class="kw">&amp;&amp;</span> <span class="fu">git</span> apply candidate.patch</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pytest <span class="at">-q</span> tests/hidden/</span></code></pre></div><button title="复制到剪贴板" class="code-copy-button"><i class="bi"></i></button></div>
+<p>无法应用的补丁，或被提取步骤拒绝的补丁，均得零分，且不会运行任何由策略编写的代码。判定结果通过单向通道返回；在多轮轨迹采样期间，对于任何中间检查，策略最多只能收到通过或失败的信号，绝不会收到隐藏测试的名称、断言或堆栈跟踪。将这些信息反馈给策略，会使其能够逐轮拟合隐藏测试，从而将封存的测试变为可见测试。</p>
+<p>隔离区为每次轨迹采样增加了第二层沙箱和一次验证运行，因此，<strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-pooling">沙箱池与重置</a></strong> 中采用池化管理并通过快照恢复的沙箱在这里尤为重要。每次轨迹采样都冷启动一个隔离区，其耗费的实际时间可能比轨迹采样本身还长。验证在普通计算资源而非加速器上运行，其容量必须合理配置，使判定速度跟上生成速度，这正是 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-pipeline">采集流水线架构</a></strong> 所讨论的采集与验证之间的平衡。</p>
+</section>
+<section id="不稳定测试作为奖励噪声" class="level3">
+<h3 class="anchored" data-anchor-id="不稳定测试作为奖励噪声">不稳定测试作为奖励噪声</h3>
+<p>隔离能够阻止蓄意篡改，但也引入了一个统计问题。依赖线程时序、网络模拟、随机种子或浮点容差的测试，有时会让有缺陷的补丁通过。<strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-verification">分阶段验证器级联</a></strong> 将此类测试视为训练集中的标签噪声；在 GRPO 下，它们的影响更为严重，因为组内归一化会放大这些噪声。</p>
+<p>假设一个存在缺陷的补丁以 0.20 的概率通过不稳定测试。在一组 16 次轨迹采样中，若所有采样都提交等价的缺陷补丁，则至少有一次侥幸通过的概率为 <span class="math inline">\(1 - (1 - 0.20)^{16} \approx 0.97\)</span>。当一次轨迹采样通过而其余 15 次失败时，在 <a href="#eq-vol3-grpo-advantage" class="quarto-xref">公式&nbsp;1</a> 下，这次幸运采样的优势为 <span class="math inline">\(\sqrt{G-1} = \sqrt{15} \approx 3.87\)</span>，这是二元奖励组所能产生的最大正优势。梯度会强烈强化这个存在缺陷的补丁，并在大量任务中教会策略编写利用测试竞态的代码。</p>
+<p>隔离区通过三项措施抑制噪声。第一项是 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-verification">分阶段验证器级联</a></strong> 用于准入的“所有运行均通过”共识规则，此处将其应用于奖励。通过测试的补丁会在 3 个采用不同随机种子的新隔离区中重新运行，只有每次运行都通过才算通过。这将误通过率从 0.20 降至 <span class="math inline">\(0.20^{3} = 0.008\)</span>，而额外运行的成本仅由曾通过一次的补丁产生。第二项是在这些运行中打乱测试顺序，使依赖先前测试泄漏状态的补丁失败。第三项是隔离那些在参考解上多次运行却给出不一致结果的测试，将其完全排除在奖励之外，正如 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-verification">分阶段验证器级联</a></strong> 对训练数据所做的那样。</p>
+<p>工作区与奖励计算位于不同机器上，二者之间仅传递不具备执行能力的差异文件，并且不稳定的判定结果受到抑制。在这些条件下，奖励只衡量隐藏测试所检查的内容，不受策略能够触及的任何因素影响。策略再也无法通过任何其他途径提高得分，只能生成通过测试的补丁。这消除了外部漏洞利用，并暴露出内部问题：优化本身使策略退化的各种方式，下一节将对此展开讨论。</p>
+<div id="chk-14-grpo-mechanics" class="callout callout-checkpoint" title="优化智能体轨迹">
+<details class="callout-checkpoint fbx-simplebox fbx-default" open=""><summary><strong>Checkpoint 0.2: 优化智能体轨迹</strong></summary><div>
+<p>在考察优化对策略本身的影响之前，请检查你对训练循环的理解：</p>
+<ul class="task-list">
+<li><label><input type="checkbox"><strong>移除评价器</strong>：GRPO 如何在没有价值模型的情况下计算基线，这需要付出多少次轨迹采样的成本？</label></li>
+<li><label><input type="checkbox"><strong>静默组</strong>：为什么每次轨迹采样得分都相同的组不贡献梯度，运行时可以如何应对？</label></li>
+<li><label><input type="checkbox"><strong>掩码处理</strong>：为什么观测词元必须从重要性比率和长度计数中排除，而不仅仅是从损失中排除？</label></li>
+<li><label><input type="checkbox"><strong>隔离区</strong>：为什么验证隔离区只接受差异文件，为什么隐藏测试的失败信息绝不能进入策略的上下文？</label></li>
+</ul>
+</div></details>
+</div>
+</section>
+<section id="硬性机制不变量与软性奖励信号" class="level3">
+<h3 class="anchored" data-anchor-id="硬性机制不变量与软性奖励信号">硬性机制不变量与软性奖励信号</h3>
+<p>系统设计者经常尝试通过在奖励函数中惩罚不期望的动作来强制落实安全要求和协议遵循要求（例如，对禁止的系统调用扣分）。然而，软性奖励惩罚本质上具有随机性：智能体可能发现，执行一条被禁止的高风险命令能够触发某种漏洞利用，从而获得巨额终局奖励，于是欣然接受微小的中间惩罚。</p>
+<p>不变量闭包原则（<a href="../01_introduction/01_introduction.html#pri-invariant-closure">不变闭包原则</a>）对此作出了形式化表述：不可妥协的安全属性必须通过监督器的硬性防护机制强制保障，而不能依靠软性的优化奖励，<a href="#tbl-vol3-hard-guards-vs-soft-rewards" class="quarto-xref">表&nbsp;2</a> 对二者进行了对比。</p>
+<div id="tbl-vol3-hard-guards-vs-soft-rewards" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-hard-guards-vs-soft-rewards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;2: <strong>纵深防御隔离</strong>：RLVR 系统中硬性运行时隔离区与软性奖励设计的架构对比。
+</figcaption>
+<div aria-describedby="tbl-vol3-hard-guards-vs-soft-rewards-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 35%">
+<col style="width: 24%">
+<col style="width: 28%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">架构层</th>
+<th style="text-align: left;">强制保障机制</th>
+<th style="text-align: left;">失败响应与信号</th>
+<th style="text-align: left;">目标</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>硬性运行时隔离区</strong></td>
+<td style="text-align: left;">虚拟机监控器命名空间、seccomp-bpf、只读挂载</td>
+<td style="text-align: left;">硬故障（<code>SIGSEGV</code>、<code>EPERM</code>、OOM 终止）；立即中止进程</td>
+<td style="text-align: left;">主机绝对安全、零数据外泄、测试夹具保护</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>软性奖励设计</strong></td>
+<td style="text-align: left;">数学损失目标（<span class="math inline">\(R_{\text{outcome}} + R_{\text{format}} - \alpha \cdot \text{Cost}\)</span>）</td>
+<td style="text-align: left;">在整个轨迹采样批次上反向传播的可微梯度更新</td>
+<td style="text-align: left;">优化任务准确率、节约词元、保证工具调用派发的语法有效性</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="sec-vol3-rlvr-pathologies" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-pathologies">训练病态</h2>
+<p>即使一次训练运行得到了良好的隔离，仍可能以两种相反的方式出现问题。第一种是策略停止探索。每个组中的轨迹采样趋于相同的词元序列，组内奖励变得完全一致，尽管许多任务仍未解决，梯度却已消失。另一种是轨迹采样每过一百步就变得更长，用反复重述的推理填满词元预算，而通过率几乎没有变化。两者都是优化稀疏奖励的结果，而且在评估中显现之前很久，就已经能够从训练遥测数据中观察到。<a href="#fig-vol3-entropy-verbosity-regularization" class="quarto-xref">图&nbsp;5</a> 概述了这两种变化轨迹及其正则化后的对应轨迹。</p>
+<div id="fig-vol3-entropy-verbosity-regularization" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="以训练步数为横轴的双面板折线图。面板 a 显示熵从高位降至接近零，词元长度则升至接近最大值。面板 b 显示，在分段长度惩罚下，熵稳定在下限区间，词元长度在目标拐点处趋于平稳。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-entropy-verbosity-regularization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/entropy_verbosity_dynamics.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="图&nbsp;5: 熵坍缩与长度失控：RLVR 两种失效模式及其正则化后对应情形的示意图。(a) 在没有正则化时，策略锁定早期解，策略熵趋近于零，而平均轨迹采样长度不断上升，逼近生成上限。(b) 施加熵下限，并对超出目标预算的长度施加惩罚后，熵稳定在一个能够维持组内多样性的区间内，长度则稳定在目标附近。曲线形状仅表示定性趋势，并非测量结果。"><img src="images/svg/entropy_verbosity_dynamics.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-entropy-verbosity-regularization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;5: <strong>熵坍缩与长度失控</strong>：RLVR 两种失效模式及其正则化后对应情形的示意图。(a) 在没有正则化时，策略锁定早期解，策略熵趋近于零，而平均轨迹采样长度不断上升，逼近生成上限。(b) 施加熵下限，并对超出目标预算的长度施加惩罚后，熵稳定在一个能够维持组内多样性的区间内，长度则稳定在目标附近。曲线形状仅表示定性趋势，并非测量结果。
+</figcaption>
+</figure>
+</div>
+<section id="熵坍缩" class="level3">
+<h3 class="anchored" data-anchor-id="熵坍缩">熵坍缩</h3>
+<p>在每个位置，策略都会定义一个词表上的概率分布，该分布的分散程度由其熵衡量：</p>
+<p><span class="math display">\[\mathcal{H}(\pi_\theta(\cdot \mid s_t)) = -\sum_{v \in \mathcal{V}} \pi_\theta(v \mid s_t) \log \pi_\theta(v \mid s_t)\]</span></p>
+<p>在训练早期，某个特定词元序列碰巧解决了一些任务，获得正优势，其概率随之增加。每次更新都将更多概率集中到该序列上，而在关键位置，分布逐渐集中于单个词元。随着熵降低，一个任务的 <span class="math inline">\(G\)</span> 次轨迹采样变得几乎互为副本，奖励变得完全一致，该组便陷入 <a href="#sec-vol3-rlvr-grpo-zero-variance" class="quarto-xref">节&nbsp;4.3</a> 所述的零方差陷阱。策略再也无法改进，因为它不再采样那些能够揭示更好路径的备选方案。裁剪使坍缩比表面上看起来更容易发生。在对称裁剪下，每次更新中一个词元的概率最多可增至原来的 <span class="math inline">\(1+\epsilon_{\text{clip}}\)</span> 倍。对于概率已经达到 0.9 的词元，这一上限几乎不起约束作用；但对于概率为 0.01 的备选词元，它将增量限制在极小的绝对值内，因此很少被采样的备选词元恢复缓慢，而占主导地位的词元则继续变得更加集中。</p>
+</section>
+<section id="长度失控" class="level3">
+<h3 class="anchored" data-anchor-id="长度失控">长度失控</h3>
+<p>在仅依据结果给予奖励的情况下，相反的病态更为常见。更长的推理提高了最终生成正确答案的概率，正确答案会将功劳归于此前的每个词元，而 <a href="#sec-vol3-rlvr-grpo-objective" class="quarto-xref">节&nbsp;4.2</a> 中的长度归一化对较长的失败轨迹惩罚最轻。平均轨迹采样长度逐渐逼近上限。新增文本大多是重复内容，下面这对示例轨迹就体现了这一点：它们得出了相同的、经验证的答案：</p>
+<pre class="text"><code># Illustrative: two traces with the same verified answer (reward 1)
+Trace A (184 tokens):
+  T(n) = 2T(n/2) + O(n). Master theorem, case 2: a = 2, b = 2, f(n) = Theta(n).
+  Result: Theta(n log n)
+
+Trace B (4,096 tokens):
+  Let me re-read the recurrence. It says T(n) = 2T(n/2) + O(n). Let me check
+  that a = 2. Yes. Let me check that b = 2. Yes. Let me restate the master
+  theorem ... [about 3,900 tokens of restatement and re-checking]
+  Result: Theta(n log n)</code></pre>
+<p>对于智能体而言，长度会带来直接成本。每增加一个 token，就会增加一个生成步骤，并在整个轨迹采样期间保留注意力状态（<strong><a href="../05_kv_cache/05_kv_cache.html#sec-vol3-kvcache-geometry">从上下文 token 到 KV 状态</a></strong>），因此，一个将推理长度增加到四倍的策略，会使每次轨迹采样占用推理服务器的时间大致增加到四倍，并减少服务器能够同时容纳的轨迹采样数量。在多轮回合中，长度失控还会表现为额外的交互轮次：重新读取已读过的文件、重新运行已运行过的命令、迟迟不进行编辑。</p>
+</section>
+<section id="对探索与长度进行正则化" class="level3">
+<h3 class="anchored" data-anchor-id="对探索与长度进行正则化">对探索与长度进行正则化</h3>
+<p><a href="15_rlvr.html#tbl-vol3-rlvr-pathologies">RLVR 训练中的病态现象</a>列出了每种病态现象及其标准应对措施</strong>。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-rlvr-pathologies" style="display:table-caption!important;width:auto!important;position:static!important"><strong>RLVR 训练中的病态现象</strong>：每种病态现象在训练遥测中的症状、成因，以及相应的应对措施。</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 28%">
+<col style="width: 30%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>病态现象</strong></th>
+<th style="text-align: left;"><strong>遥测中的症状</strong></th>
+<th style="text-align: left;"><strong>成因</strong></th>
+<th style="text-align: left;"><strong>应对措施</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>熵坍缩</strong></td>
+<td style="text-align: left;">token 熵下降；零方差组的占比上升</td>
+<td style="text-align: left;">对早期解反复强化；对称裁剪</td>
+<td style="text-align: left;">自适应熵奖励；提高裁剪上界；参考策略惩罚</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>长度失控</strong></td>
+<td style="text-align: left;">平均长度上升，而通过率持平</td>
+<td style="text-align: left;">将终局奖励归因于每个 token；按每次轨迹采样的长度归一化</td>
+<td style="text-align: left;">对超出预算的长度施加惩罚；使用固定分母归一化</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>重复循环</strong></td>
+<td style="text-align: left;">轨迹采样达到 token 上限时结束，并包含重复的 <span class="math inline">\(n\)</span>-gram</td>
+<td style="text-align: left;">重复文本使自身的生成概率进一步提高</td>
+<td style="text-align: left;">在生成过程中检测循环；截断并判为失败</td>
+</tr>
+</tbody>
+</table></div>
+<p>固定熵奖励 <span class="math inline">\(\alpha \sum_t \mathcal{H}(\pi_\theta(\cdot \mid s_t))\)</span> 在实践中并不奏效。足以防止策略在简单任务上发生坍缩的系数，会引入噪声，使策略无法进一步专注于困难任务所需的精确语法。自适应控制器在每个批次调整该系数，使熵趋向目标区间 <span class="math inline">\([\mathcal{H}^*_{\min}, \mathcal{H}^*_{\max}]\)</span>：</p>
+<p><span class="math display">\[\alpha_{k+1} = \operatorname{clip}\left(\alpha_k - \eta_\alpha \cdot \left(\overline{\mathcal{H}}_k - \frac{\mathcal{H}^*_{\min} + \mathcal{H}^*_{\max}}{2}\right), \; \alpha_{\min}, \; \alpha_{\max}\right)\]</span></p>
+<p>当测得的熵 <span class="math inline">\(\overline{\mathcal{H}}_k\)</span> 低于该区间时，<span class="math inline">\(\alpha\)</span> 增大，将概率重新分配给其他选项；当熵较高时，<span class="math inline">\(\alpha\)</span> 衰减，使策略能够集中于已通过验证的解。一项互补的改动针对裁剪本身。将裁剪上界提高到下界之上，即 <span class="math inline">\([1-\epsilon_{\text{low}}, 1+\epsilon_{\text{high}}]\)</span>，其中 <span class="math inline">\(\epsilon_{\text{high}} &gt; \epsilon_{\text{low}}\)</span>，可以让具有正优势的稀有 token 更快地提高概率，从而直接抵消导致坍缩的非对称性。</p>
+<p>对于长度，对每个 token 施加线性惩罚，会抑制困难任务确实需要的长篇推导。阈值惩罚提供一段不受惩罚的预算，仅对超出预算的部分计费：</p>
+<p><span class="math display">\[R_{\text{final}} = R_{\text{task}} - \gamma \cdot \max\left(0, \; T_{\text{tokens}} - T_{\text{budget}}\right)\]</span></p>
+<p>其中，<span class="math inline">\(\gamma\)</span> 的设定应确保达到长度上限的轨迹采样即使答案正确，也无法获得正的净奖励，即 <span class="math inline">\(\gamma \cdot (T_{\max} - T_{\text{budget}}) \ge 1\)</span>。在预算之内，长度不产生成本；超出预算后，每个 token 都有成本。将每次轨迹采样各自的 <span class="math inline">\(1/|o_i|\)</span> 替换为固定分母，可以消除对冗长失败轨迹的结构性偏向，使惩罚项无需与目标函数相抗衡。</p>
+<p>重复循环需要运行时检查，而非奖励项。轨迹采样工作进程在生成过程中跟踪最近的 <span class="math inline">\(n\)</span>-gram；当某个片段在一个窗口内的重复次数超过阈值时，工作进程便停止此次轨迹采样，并将其得分记为零。提前停止比评分更重要，因为如果不停止，陷入循环的轨迹采样会一直占用推理服务器上的槽位，直到达到 token 上限。</p>
+<p>RLVR 所引发的最深刻的行为转变，是自主回溯能力的涌现。在纯监督行为克隆下，执行过程中遇到错误必然会导致遗憾不断累积（<strong><a href="../14_fine_tuning/14_fine_tuning.html#sec-vol3-fine-tuning-exposure-bias">暴露偏差与同策略数据</a></strong>），因为策略只在无瑕疵的轨迹上接受过训练。在 RLVR 下，由于策略仅因通过终局验证测试集而获得奖励，它会发现，识别执行错误并尝试其他工具参数能够带来更高的期望回报。</p>
+<p><a href="15_rlvr.html#fig-vol3-emergent-backtracking">figure</a>展示了涌现出的自我纠错行为的</strong> token 轨迹。</p>
+<div id="fig-vol3-emergent-backtracking" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="包含两个面板的系统示意图：面板 (a) 展示一个有限状态机，表示策略内部的自我验证、回退词元输出，以及工具执行前的分支抑制；面板 (b) 展示跨回退边界的词元级注意力抑制，其中对错误推理的注意力被屏蔽。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-emergent-backtracking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/rlvr_emergent_backtracking.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="图&nbsp;6: 可验证强化学习中涌现的审慎推理与注意力回溯：将测试时搜索编译到自回归权重中的结构机制。(a) 策略 \pi_\theta 内部涌现的审慎推理有限状态机，其中候选轨迹采样（S_{\text{hyp}}）依据不变式规约（I_{\text{spec}}）在 S_{\text{mon}} 中进行验证，失败时触发回退词元（\kappa_{\text{rev}}）和注意力抑制，随后基于验证依据派发至沙箱验证器判定器（S_{\text{oracle}}）。(b) 审慎推理词元流，展示跨回退边界的注意力重新加权：对已被否定分支 B_1 的注意力衰减（\alpha \approx 0.02），同时将注意力权重转移至回退词元和形式化不变式规约。"><img src="images/svg/rlvr_emergent_backtracking.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-emergent-backtracking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;6: <strong>可验证强化学习中涌现的审慎推理与注意力回溯</strong>：将测试时搜索编译到自回归权重中的结构机制。(a) 策略 <span class="math inline">\(\pi_\theta\)</span> 内部涌现的审慎推理有限状态机，其中候选轨迹采样（<span class="math inline">\(S_{\text{hyp}}\)</span>）依据不变式规约（<span class="math inline">\(I_{\text{spec}}\)</span>）在 <span class="math inline">\(S_{\text{mon}}\)</span> 中进行验证，失败时触发回退词元（<span class="math inline">\(\kappa_{\text{rev}}\)</span>）和注意力抑制，随后基于验证依据派发至沙箱验证器判定器（<span class="math inline">\(S_{\text{oracle}}\)</span>）。(b) 审慎推理词元流，展示跨回退边界的注意力重新加权：对已被否定分支 <span class="math inline">\(B_1\)</span> 的注意力衰减（<span class="math inline">\(\alpha \approx 0.02\)</span>），同时将注意力权重转移至回退词元和形式化不变式规约。
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-vol3-rlvr-deliberation" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-vol3-rlvr-deliberation">训练使行为发生哪些变化</h3>
+<p>一旦坍塌和长度失控得到控制，RLVR 就会以多项报告中一致观察到的方式改变策略的输出。在推理任务上，DeepSeek-R1 报告描述了平均响应长度在强化学习过程中持续增长，而训练并未给出任何延长响应的指令；同时，输出中开始出现策略停下来、重新评估先前步骤并改变方法的段落；报告标出了训练中途的一个时点，此类重新评估在该时点突然出现 <span class="citation" data-cites="deepseekai2025deepseekr1">(<a href="#ref-deepseekai2025deepseekr1" role="doc-biblioref"><span class="nocase">DeepSeek-AI 等</span> 2025年</a>)</span>。在智能体轨迹中，与之对应的行为包括：在编辑前重新运行失败的测试，在修补前阅读堆栈跟踪，以及在工具结果与某个假设相矛盾后放弃该假设。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-deepseekai2025deepseekr1" class="csl-entry" role="listitem">
+<span class="nocase">DeepSeek-AI, Daya Guo, Dejian Yang, 等</span>. 2025年. <span>《<span>DeepSeek-R1</span>: Incentivizing reasoning capability in <span>LLMs</span> via reinforcement learning》</span>. <em>arXiv preprint arXiv:2501.12948</em>, 网络首发. https://doi.org/10.48550/arXiv.2501.12948.
+</div></div><p>这些是关于输出的观察，而非关于机制的观察，需要注意两点。出现重新评估的段落并不能证明答案正确；只有验证器才能提供这种证据，而且策略可能学会自我纠正的形式，却未获得其效果。长度增长同样具有歧义。它与长度失控表现为同一种信号，而 <a href="#sec-vol3-rlvr-grpo-objective" class="quarto-xref">节&nbsp;4.2</a> 的归一化偏差可能在没有任何收益的情况下造成这种增长。区分二者是一个评估问题，应根据在相同词元预算下通过率是否提高（<strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation-rigor">统计评估的严谨性</a></strong>）来判断，而非根据输出是否显得更加深思熟虑。</p>
+<p>正则化使策略持续探索，并将其轨迹采样控制在预算内，而验证器则判定由此产生的行为是否有益。这一切都以存在可供策略探索的任务，以及能够针对这些任务运行数百万次轨迹采样的机制为前提。最后一节将讨论这些任务的供给与运行机制。</p>
+</section>
+</section>
+<section id="sec-vol3-rlvr-infrastructure" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-infrastructure">环境与轨迹采样</h2>
+<p>一次训练运行若在每一步采样十六条轨迹，针对一千个任务中的每一个，并持续几千步，就会运行数千万个智能体回合。每个回合都需要一个检查可信的任务、一个每次都能重置到相同起始状态的环境、一个沙箱、一次验证器运行，以及模型运行时间。基础设施的设计受两个事实影响。轨迹采样的耗时在很大程度上由环境决定，而非由模型决定；不同轨迹采样的长度可以相差多个数量级。本节将沿着轨迹采样的流程，从任务一直讲到它所帮助训练的权重。</p>
+<section id="可验证任务从何而来" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="可验证任务从何而来">可验证任务从何而来</h3>
+<p>本章一直假定存在一个具有可信检查的任务池。构建这个任务池占据了 RLVR 项目的大部分工作，而检查的质量限定了训练能够教会策略什么。这个任务池就是 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-fixtures">任务夹具设计</a></strong> 中的测试夹具池，其来源也相同：从代码仓库历史中挖掘的任务，附带从失败转为通过以及始终保持通过的测试 <span class="citation" data-cites="jimenez2024swebench">(<a href="#ref-jimenez2024swebench" role="doc-biblioref">Jimenez 等 2024年</a>)</span>；共享同一判定器模板的人工构造变体；以及退款类任务等有状态工具环境，这些环境根据最终状态评分，并由模拟用户驱动。每个测试夹具都必须事先通过该节的区分能力测试，即拒绝未经修改的初始状态，并接受参考解。<strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-curation">恢复示范筛选</a></strong> 排除在监督训练之外的困难负例在这里也能发挥作用，因为这些负例对应的任务正是当前策略无法完成的任务。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-jimenez2024swebench" class="csl-entry" role="listitem">
+Jimenez, Carlos E., John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, 和 Karthik Narasimhan. 2024年. <span>《SWE-bench: Can Language Models Resolve Real-World GitHub Issues?》</span> <em>International Conference on Learning Representations (ICLR)</em>.
+</div></div><p>强化学习使三项数据策展要求从良好实践上升为必要条件。首先是可复现性，因为如果一个测试夹具的测试在参考解上无法确定性地通过，或者它试图从不允许出站访问的沙箱中访问网络，就会将噪声直接注入优势值，而组归一化会进一步放大这些噪声（<a href="#sec-vol3-rlvr-sandboxing" class="quarto-xref">节&nbsp;6</a>）。其次是分离性，因为优化器比模仿器搜索得更深入，因此必须遵循 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-evaluation">数据集划分卫生验证</a></strong> 的数据划分规范，在代码仓库和问题两个层面上，确保训练任务与所有评估任务互不重叠。在基准自身的代码仓库上训练的策略，其报告的性能提升衡量的是记忆，而非技能。最后是难度。策略总能解决或始终无法解决的任务会产生 <a href="#sec-vol3-rlvr-grpo-zero-variance" class="quarto-xref">节&nbsp;4.3</a> 中所述的无信号组，因此任务池必须持续保有处于有效信息区间内的任务，并随着策略的改进而更新；更新周期应以梯度步数计，而非自我改进循环中的训练轮次。</p>
+</section>
+<section id="轨迹采样的时间花在哪里" class="level3">
+<h3 class="anchored" data-anchor-id="轨迹采样的时间花在哪里">轨迹采样的时间花在哪里</h3>
+<p>有了任务之后，下一个问题是一次轨迹采样的时间花在哪里。数据策展已经要求重置时间仅占回合时间的一小部分（<strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-fixtures">任务夹具设计</a></strong>）。这里的要求更为严格，因为强化学习的轨迹采样持续时间短，且执行次数以百万计；下文的算例将以秒为单位核算一个环境的运行周期，说明这一点。</p>
+<div id="nbk-14-exploration-reset-goodput" class="callout callout-notebook" title="轨迹采样时间与环境重置">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>粗略估算 0.3: 轨迹采样时间与环境重置</strong></summary><div><strong>问题</strong>：一个包含 256 个环境的资源池执行 20 轮的轨迹采样。每轮在模型上耗时 120 ms，在工具上耗时 80 ms，验证器在结束时耗时 0.5 s。从头重新创建环境耗时 3.5 s；恢复写时复制快照耗时 15 ms。在这两种重置方式下，每个环境用于有效工作的时间占比是多少，资源池每小时完成多少次轨迹采样？<p></p>
+<p><strong>变量</strong>：</p>
+<ul>
+<li>每次轨迹采样的有效工作时间，即各轮耗时加上验证器耗时：</li>
+</ul>
+<p><span class="math display">\[T_{\text{useful}} = 20 \times (120 + 80)\text{ ms} + 0.5\text{ s} = 4.5\text{ s}\]</span></p>
+<p><strong>数学计算</strong>：</p>
+<p><strong>冷启动重建</strong>：</p>
+<p><span class="math display">\[T_{\text{cycle}} = 4.5 + 3.5 = 8\text{ s}, \qquad \frac{4.5}{8} = 56.25\%\]</span></p>
+<p><span class="math display">\[\frac{256 \times 3,600\text{ s}}{8\text{ s}} = 115,200\text{ rollouts per hour}\]</span></p>
+<p><strong>快照恢复</strong>：</p>
+<p><span class="math display">\[T_{\text{cycle}} = 4.5 + 0.015 = 4.515\text{ s}, \qquad \frac{4.5}{4.515} = 99.7\%\]</span></p>
+<p><span class="math display">\[\frac{256 \times 3,600\text{ s}}{4.515\text{ s}} \approx 204,120\text{ rollouts per hour}\]</span></p>
+<p><strong>结果</strong>：在相同的环境和模型下，快照恢复每小时完成的轨迹采样次数是冷启动重建的 1.77 倍。</p>
+<p><strong>系统洞见</strong>：重置位于每次轨迹采样的关键路径上，因此，资源池中耗时为 <strong><a href="../08_sandboxes/08_sandboxes.html#sec-vol3-sandboxes-pooling">沙箱池与重置</a></strong> 的快照恢复几乎使训练吞吐量翻倍，而无需改动模型。同样的核算表明，工具耗时占每轮时间的 40%；对于智能体强化学习，环境速度就是训练速度。</p>
+</div></details>
+</div>
+<p>即使重置很快，轨迹采样的长度仍然差异巨大。在同一个组内，一次轨迹采样可能在两轮后就未通过语法检查，而另一次则经历漫长的调试过程，直到达到轮数上限；每轮都运行完整测试套件的轨迹采样，其耗时可能是不这样做的轨迹采样的一百倍。如果训练器在更新前等待一个训练步的所有轨迹采样完成，那么该训练步的耗时就由批次中最慢的轨迹采样决定：</p>
+<p><span class="math display">\[T_{\text{step}} = \max_{i} T_{\text{rollout}}(\tau_i) + T_{\text{train}}\]</span></p>
+<p>在耗时最长的轨迹采样完成之前，所有生成器和训练器都处于空闲状态。耗时分布的尾部越重，空闲时间占比就越大；而智能体轨迹采样的耗时分布具有重尾特性，因为工具耗时本身就具有重尾特性。</p>
+</section>
+<section id="将轨迹采样与训练分离" class="level3">
+<h3 class="anchored" data-anchor-id="将轨迹采样与训练分离">将轨迹采样与训练分离</h3>
+<p>循环的两个部分具有不同的工作负载，使用同一个加速器资源池来承担两者，会迫使双方都接受对方的约束。生成过程逐步产生词元，服务于许多独立的轨迹采样过程；这些过程何时开始、何时因工具调用而暂停、何时结束，都难以预测。生成受限于内存带宽（原理 <a href="../parts/model_principles.html#pri-vol3-memory-bandwidth-decoding">1</a>，推导见 <strong><a href="../backmatter/appendix_inference.html#sec-vol3-appendix-inference-roofline">为什么输出的成本高于输入</a></strong>），其内存保存每次轨迹采样的注意力状态。训练则以同步步骤处理整批已完成的轨迹采样，其内存保存权重、梯度和优化器状态。因此，大多数大型 RLVR 系统在独立的资源池中运行生成和训练，如 <strong><a href="15_rlvr.html#tbl-vol3-disaggregated-contrast">轨迹采样资源池与训练资源池</a></strong> 所概述，并通过一个存放已完成且经过验证的轨迹采样结果的队列将二者连接起来。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-disaggregated-contrast" style="display:table-caption!important;width:auto!important;position:static!important"><strong>轨迹采样资源池与训练资源池</strong>：从工作单元、运行节奏、内存保存的内容以及扩展所取决的因素，对比 RLVR 循环的两个部分。</caption>
+<colgroup>
+<col style="width: 19%">
+<col style="width: 41%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>属性</strong></th>
+<th style="text-align: left;"><strong>轨迹采样资源池</strong></th>
+<th style="text-align: left;"><strong>训练资源池</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>工作单元</strong></td>
+<td style="text-align: left;">一次轨迹采样中的一轮，其间穿插工具等待</td>
+<td style="text-align: left;">对一批已完成的轨迹采样执行一次梯度更新</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>运行节奏</strong></td>
+<td style="text-align: left;">异步；轨迹采样随各自任务的完成而结束</td>
+<td style="text-align: left;">同步步骤</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>内存保存的内容</strong></td>
+<td style="text-align: left;">权重和进行中的轨迹采样的注意力状态</td>
+<td style="text-align: left;">权重、梯度和优化器状态</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>扩展取决于</strong></td>
+<td style="text-align: left;">并发轨迹采样数和环境数</td>
+<td style="text-align: left;">模型大小和批次大小</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>组内共享的内容</strong></td>
+<td style="text-align: left;">任务提示词，只需预填充一次即可供全部 <span class="math inline">\(G\)</span> 次轨迹采样使用</td>
+<td style="text-align: left;">无</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>接收的内容</strong></td>
+<td style="text-align: left;">每个策略版本获准使用后更新的权重</td>
+<td style="text-align: left;">队列中经过验证的轨迹采样结果</td>
+</tr>
+</tbody>
+</table></div>
+<p>有一种节省计算的方法可直接用于 GRPO 的分组。同一任务的全部 <span class="math inline">\(G\)</span> 次轨迹采样都以相同的提示词开始，其中包含任务描述、代码仓库上下文和工具定义，长度通常达数千个词元。由于注意力状态由词元前缀决定（原理 <a href="../parts/memory_principles.html#pri-vol3-prefix-coherence">5</a>），组内的这一状态完全相同，因此轨迹采样资源池只计算一次，随后由 <span class="math inline">\(G\)</span> 次轨迹采样共享；只有在各自采样后续内容时，才开始出现分歧。这就是将 <strong><a href="../05_kv_cache/05_kv_cache.html#sec-vol3-kvcache-radix-tree">跨轮次前缀缓存</a></strong> 中的前缀缓存和写时复制分叉应用于一个组，从而在每 <span class="math inline">\(G-1\)</span> 次提示词预填充中省去 <span class="math inline">\(G\)</span> 次。</p>
+</section>
+<section id="sec-vol3-rlvr-freshness" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-vol3-rlvr-freshness">限制策略陈旧程度</h3>
+<p>将资源池分离后，慢任务造成的同步屏障得以消除，因为训练器会使用队列中已有的已完成轨迹采样结果，而生成器则持续生成 <span class="citation" data-cites="mnih2016asynchronous espeholt2018impala">(<a href="#ref-mnih2016asynchronous" role="doc-biblioref">Mnih 等 2016年</a>; <a href="#ref-espeholt2018impala" role="doc-biblioref">Espeholt 等 2018年</a>)</span>。这也引入了一个新问题。在一次轨迹采样的生成、执行和验证过程中，训练器仍在持续更新，因此，当该轨迹采样结果被使用时，生成它的策略已经是旧版本。<a href="#fig-vol3-asynchronous-freshness-pipeline" class="quarto-xref">图&nbsp;7</a> 展示了两种调度方式，以及限制这一滞后程度的门控机制。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-mnih2016asynchronous" class="csl-entry" role="listitem">
+Mnih, Volodymyr, Adrià Puigdomènech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, 和 Koray Kavukcuoglu. 2016年. <span>《Asynchronous Methods for Deep Reinforcement Learning》</span>. <em>Proceedings of the 33rd International Conference on Machine Learning (ICML)</em>, 1928～37.
+</div></div><div id="fig-vol3-asynchronous-freshness-pipeline" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="由两部分组成的示意图。a 部分比较了同步与异步时间线：在同步时间线中，训练器空闲等待，直到一条包含 4,096 个 token 的拖尾轨迹完成；在异步时间线中，陈旧度为 1 或 2 的采样轨迹被接收，而一条陈旧度为 4 的轨迹被隔离。b 部分展示了轨迹采样池将轨迹流式送入有界队列，随后经过新鲜度准入门控，进入训练引擎；训练引擎设有发布门控，将新权重广播回轨迹采样池。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-asynchronous-freshness-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/asynchronous-freshness-pipeline.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="图&nbsp;7: 异步轨迹采样与新鲜度门控：(a) 在同步调度中，训练器在屏障处空闲等待，直到耗时最长的轨迹采样完成；在异步调度中，训练器持续利用陆续到达的采样轨迹进行训练，其中部分轨迹由较旧的策略生成。(b) 已完成的采样轨迹携带生成它们的策略版本，进入有界队列。只有当训练器自轨迹生成以来最多推进了 \Delta v_{\max} 个版本时，新鲜度门控才允许该轨迹进入；训练器使用裁剪后的重要性比率校正残余滞后，发布门控则在每个新策略版本广播回轨迹采样池之前对其进行评估。"><img src="images/svg/asynchronous-freshness-pipeline.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-asynchronous-freshness-pipeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;7: <strong>异步轨迹采样与新鲜度门控</strong>：(a) 在同步调度中，训练器在屏障处空闲等待，直到耗时最长的轨迹采样完成；在异步调度中，训练器持续利用陆续到达的采样轨迹进行训练，其中部分轨迹由较旧的策略生成。(b) 已完成的采样轨迹携带生成它们的策略版本，进入有界队列。只有当训练器自轨迹生成以来最多推进了 <span class="math inline">\(\Delta v_{\max}\)</span> 个版本时，新鲜度门控才允许该轨迹进入；训练器使用裁剪后的重要性比率校正残余滞后，发布门控则在每个新策略版本广播回轨迹采样池之前对其进行评估。
+</figcaption>
+</figure>
+</div>
+<p>令 <span class="math inline">\(v\)</span> 表示训练器的更新步数。每条采样轨迹都记录生成它的策略版本 <span class="math inline">\(v_{\text{rollout}}\)</span>（<strong><a href="15_rlvr.html#tbl-vol3-rlvr-rollout-record">多回合轨迹采样记录</a></strong>）。当它到达版本为 <span class="math inline">\(v_{\text{trainer}}\)</span> 的训练器时，其陈旧度为</p>
+<p><span class="math display">\[\Delta v = v_{\text{trainer}} - v_{\text{rollout}} \approx \left\lfloor \frac{\Delta t_{\text{rollout}}}{t_{\text{step}}} \right\rfloor\]</span></p>
+<p>其中，<span class="math inline">\(\Delta t_{\text{rollout}}\)</span> 是从轨迹的第一个 token 生成到轨迹到达训练器所经历的时间，涵盖生成、工具调用、验证和排队；<span class="math inline">\(t_{\text{step}}\)</span> 是每个训练步骤所需的时间。长智能体轨迹恰恰是返回时已经陈旧的那些轨迹。随着 <span class="math inline">\(\Delta v\)</span> 增大，当前策略对轨迹中各 token 赋予的概率逐渐偏离采样时的概率，重要性比率</p>
+<p><span class="math display">\[\rho_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{rollout}}}(a_t \mid s_t)}\]</span></p>
+<p>也随之偏离 1。该比率乘在每个 token 的梯度上；对于一条长轨迹，少数概率急剧上升的 token 会产生极大的比率，进而造成极大的更新。两种约束可以限制这种危害。准入门控直接丢弃任何满足 <span class="math inline">\(\Delta v &gt; \Delta v_{\max}\)</span> 的采样轨迹。<a href="#eq-vol3-grpo-surrogate" class="quarto-xref">公式&nbsp;3</a> 的裁剪替代目标使用 <span class="math inline">\(\rho_t\)</span> 相对于所记录的采样概率进行计算，限制了保留下来的轨迹中任意单个 token 的影响；这与 actor-learner 系统用于离策略校正的截断重要性权重密切相关 <span class="citation" data-cites="espeholt2018impala">(<a href="#ref-espeholt2018impala" role="doc-biblioref">Espeholt 等 2018年</a>)</span>。此类有界陈旧度机制在分布式训练中已有悠久历史：工作节点读取的参数最多滞后固定数量的步骤 <span class="citation" data-cites="ho2013more">(<a href="#ref-ho2013more" role="doc-biblioref">Ho 等 2013年</a>)</span>。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-espeholt2018impala" class="csl-entry" role="listitem">
+Espeholt, Lasse, Hubert Soyer, R’emi Munos, Karen Simonyan, Vlad Mnih, Tom Ward, Yotam Doron, 等. 2018年. <span>《<span>IMPALA</span>: Scalable Distributed Deep-<span>RL</span> with Importance Weighted Actor-Learner Architectures》</span>. <em>Proceedings of the 35th International Conference on Machine Learning (ICML)</em>, 1407～16.
+</div><div id="ref-ho2013more" class="csl-entry" role="listitem">
+Ho, Qirong, James Cipar, Henggang Cui, Seunghak Lee, Jin Kyu Kim, Phillip B. Gibbons, Garth A. Gibson, Greg Ganger, 和 Eric P. Xing. 2013年. <span>《More Effective Distributed <span>ML</span> via a Stale Synchronous Parallel Parameter Server》</span>. <em>Advances in Neural Information Processing Systems (NeurIPS)</em> 26.
+</div></div><p>选择 <span class="math inline">\(\Delta v_{\max}\)</span> 是在浪费与漂移之间进行权衡。严格的上限，例如一个或两个版本，可以使比率保持在 1 附近，但会丢弃长轨迹；而在智能体强化学习中，长轨迹更多地对应困难任务，因此会使训练分布偏向简单任务。宽松的上限会保留这些轨迹，但依赖裁剪来抑制漂移，这也会抑制它们的学习信号。<span class="math inline">\(\Delta v_{\max} = 0\)</span> 对应同步调度。在实践中，运行时系统会保持较小的上限，转而缩短 <span class="math inline">\(\Delta t_{\text{rollout}}\)</span>，具体通过更快的环境、回合数上限，以及向轨迹采样池快速广播新权重来实现，从源头上减少到达时已经陈旧的轨迹。</p>
+</section>
+<section id="轨迹采样与训练器的分离式架构" class="level3">
+<h3 class="anchored" data-anchor-id="轨迹采样与训练器的分离式架构">轨迹采样与训练器的分离式架构</h3>
+<p>在隔离的沙箱中生成数千条多轮智能体轨迹，是一项 I/O 密集且受内存限制的工作负载；而模型梯度反向传播则受计算能力限制，并且对网络带宽的需求很高。尝试将轨迹采样和梯度训练部署在同一 GPU 集群上，会导致等待轨迹期间 GPU 利用率严重不足。</p>
+<p>现代 RLVR 基础设施通过将执行拆分到两个专用集群来解决这一问题：一个针对推理优化的轨迹采样引擎，运行支持 KV 前缀缓存的高吞吐量引擎；另一个是分布式训练集群，执行 Megatron-LM 或 FSDP 梯度更新。这种分离式架构如 <a href="#fig-vol3-disaggregated-rollout" class="quarto-xref">图&nbsp;8</a> 所示。</p>
+<div id="fig-vol3-disaggregated-rollout" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="五阶段分布式系统架构示意图，展示了采用基数树 KV 缓存的提示预填充、并行自回归解码工作节点、并行验证 microVM、主机管理的优势值代理，以及通过高速 RDMA 连接的分布式梯度训练集群。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vol3-disaggregated-rollout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/svg/fig-vol3-disaggregated-rollout.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="图&nbsp;8: 解耦式轨迹采样集群架构：端到端分布式系统拓扑，将高吞吐量的推理轨迹采样工作节点与计算密集型的梯度训练工作节点解耦。轨迹采样工作节点利用基数树 KV 缓存复用，使提示前缀在 G 个组内补全中仅计算一次，将已完成的轨迹流式传输到沙箱化的验证隔离区，并将归一化优势值推送至主机锁页内存中的回放缓冲区，由训练集群通过 RDMA 异步读取。"><img src="images/svg/fig-vol3-disaggregated-rollout.svg" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vol3-disaggregated-rollout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+图&nbsp;8: <strong>解耦式轨迹采样集群架构</strong>：端到端分布式系统拓扑，将高吞吐量的推理轨迹采样工作节点与计算密集型的梯度训练工作节点解耦。轨迹采样工作节点利用基数树 KV 缓存复用，使提示前缀在 <span class="math inline">\(G\)</span> 个组内补全中仅计算一次，将已完成的轨迹流式传输到沙箱化的验证隔离区，并将归一化优势值推送至主机锁页内存中的回放缓冲区，由训练集群通过 RDMA 异步读取。
+</figcaption>
+</figure>
+</div>
+<p><a href="#tbl-vol3-sync-vs-async" class="quarto-xref">表&nbsp;3</a> 对比了同步步进锁定循环与异步流式队列之间的同步权衡。</p>
+<div id="tbl-vol3-sync-vs-async" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vol3-sync-vs-async-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+表&nbsp;3: <strong>同步锁步与异步流式流水线架构</strong>：同步屏障、加速器有效吞吐量与离策略陈旧性特征。
+</figcaption>
+<div aria-describedby="tbl-vol3-sync-vs-async-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 39%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">架构维度</th>
+<th style="text-align: left;">同步锁步架构</th>
+<th style="text-align: left;">异步流式架构</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>集群耦合</strong></td>
+<td style="text-align: left;">严格的全局屏障；推理与训练交替暂停</td>
+<td style="text-align: left;">完全解耦；通过环形暂存缓冲区持续流式传输</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>加速器有效吞吐量</strong></td>
+<td style="text-align: left;">较低（<span class="math inline">\(15\%\text{--}35\%\)</span> MFU），原因是长尾慢任务造成的空泡</td>
+<td style="text-align: left;">较高（<span class="math inline">\(60\%\text{--}85\%\)</span> MFU）；流水线空泡时间接近零</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>离策略陈旧性</strong></td>
+<td style="text-align: left;">严格为零（<span class="math inline">\(\Delta v = 0\)</span>）；数据同分布</td>
+<td style="text-align: left;">非零（<span class="math inline">\(\Delta v \ge 1\)</span>）；数据分布滞后于当前参数</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>重要性采样</strong></td>
+<td style="text-align: left;">无需使用；标准同策略梯度估计量成立</td>
+<td style="text-align: left;">必须使用；通过词元级重要性权重裁剪限制方差</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>对慢任务的敏感性</strong></td>
+<td style="text-align: left;">严重；步延迟受最坏情况下的轨迹尾部耗时制约</td>
+<td style="text-align: left;">极低；耗时较长的轨迹被异步接收或丢弃</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>内存压力</strong></td>
+<td style="text-align: left;">批次屏障期间存在大量临时 GPU HBM 分配</td>
+<td style="text-align: left;">环形回放队列中的主机锁页 DRAM 用量恒定</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</figure>
+</div>
+</section>
+<section id="同组慢任务的延迟差异" class="level3">
+<h3 class="anchored" data-anchor-id="同组慢任务的延迟差异">同组慢任务的延迟差异</h3>
+<p>在 GRPO 等组相对算法中，对一个提示进行梯度更新，需要该组中的全部 <span class="math inline">\(G\)</span> 次轨迹采样完成后，才能计算组均值 <span class="math inline">\(\mu_{\text{group}}\)</span> 和标准差 <span class="math inline">\(\sigma_{\text{group}}\)</span>。在多轮编码环境中，轨迹执行时间可能相差数个数量级（从简单的 1 轮语法检查到 30 轮测试套件），同组执行时间由极端慢任务决定： <span class="math display">\[
+T_{\text{cohort}} = \max_{j \in \{1, \dots, G\}} T_j
+\]</span> 不同队列规模下的实测延迟差异详见 <strong><a href="15_rlvr.html#tbl-vol3-cohort-latency-disparity">轨迹采样队列执行延迟差异</a></strong>。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-cohort-latency-disparity" style="display:table-caption!important;width:auto!important;position:static!important"><strong>轨迹采样队列执行延迟差异</strong>：队列内轨迹长度不一导致的尾延迟放大和 GPU 空闲等待（<span class="math inline">\(G=4\)</span>）。</caption>
+<colgroup>
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 19%">
+<col style="width: 28%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">轨迹采样工作进程</th>
+<th style="text-align: left;">生成的 token 数</th>
+<th style="text-align: left;">终止原因</th>
+<th style="text-align: left;">执行时间特征</th>
+<th style="text-align: left;">同步屏障空闲开销</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>工作进程 <span class="math inline">\(\tau_1\)</span></strong></td>
+<td style="text-align: left;">48 个 token</td>
+<td style="text-align: left;">提前失败（语法错误）</td>
+<td style="text-align: left;">快速退出（<span class="math inline">\(\sim 0.2\ \text{s}\)</span>）</td>
+<td style="text-align: left;">4,048 个 token 槽位空闲等待（<span class="math inline">\(98.8\%\)</span> 空闲）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>工作进程 <span class="math inline">\(\tau_2\)</span></strong></td>
+<td style="text-align: left;">512 个 token</td>
+<td style="text-align: left;">提前成功（测试通过）</td>
+<td style="text-align: left;">正常完成（<span class="math inline">\(\sim 2.1\ \text{s}\)</span>）</td>
+<td style="text-align: left;">3,584 个 token 槽位空闲等待（<span class="math inline">\(87.5\%\)</span> 空闲）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>工作进程 <span class="math inline">\(\tau_3\)</span></strong></td>
+<td style="text-align: left;">1,024 个 token</td>
+<td style="text-align: left;">多轮重构</td>
+<td style="text-align: left;">延长搜索（<span class="math inline">\(\sim 4.2\ \text{s}\)</span>）</td>
+<td style="text-align: left;">3,072 个 token 槽位空闲等待（<span class="math inline">\(75.0\%\)</span> 空闲）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>工作进程 <span class="math inline">\(\tau_4\)</span></strong></td>
+<td style="text-align: left;">4,096 个 token</td>
+<td style="text-align: left;">达到最大深度而超时（<span class="math inline">\(T_{\max}\)</span>）</td>
+<td style="text-align: left;">慢工作进程的最坏情况（<span class="math inline">\(\sim 16.8\ \text{s}\)</span>）</td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span> 个槽位空闲（仍在执行、使屏障等待的慢工作进程）</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="发布门禁隔离环境" class="level3">
+<h3 class="anchored" data-anchor-id="发布门禁隔离环境">发布门禁隔离环境</h3>
+<p>将新训练的 RLVR 检查点晋级至轨迹采样池，需要通过自动化发布门禁，以确保策略没有对验证器过拟合，也没有发生灾难性的能力崩溃。发布门禁的验证标准列于 <strong><a href="15_rlvr.html#tbl-vol3-release-gate-enclaves">确定性发布门禁评估隔离环境</a></strong>。</p>
+<div class="zh-table-scroll" tabindex="0" role="region" aria-label="表格，可横向滚动"><table class="caption-top table">
+<caption id="tbl-vol3-release-gate-enclaves" style="display:table-caption!important;width:auto!important;position:static!important"><strong>确定性发布门禁评估隔离环境</strong>：约束检查点晋级的测试领域、基准测试目标和发布通过条件。</caption>
+<colgroup>
+<col style="width: 12%">
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 27%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">评估隔离环境</th>
+<th style="text-align: left;">测试套件与基准目标</th>
+<th style="text-align: left;">验证判定机制</th>
+<th style="text-align: left;">门禁通过阈值</th>
+<th style="text-align: left;">门禁失败后的缓解措施</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>核心领域基准</strong></td>
+<td style="text-align: left;">256 项未见过的软件工程任务</td>
+<td style="text-align: left;">沙箱编译与测试套件运行器</td>
+<td style="text-align: left;">通过率 <span class="math inline">\(\ge \text{Baseline} - \epsilon\)</span>（<span class="math inline">\(\epsilon \le 0.5\%\)</span>）</td>
+<td style="text-align: left;">暂停晋级；触发学习率衰减</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>回归测试套件</strong></td>
+<td style="text-align: left;">256 项形式化多步推理任务</td>
+<td style="text-align: left;">形式化证明器（Lean 4）与符号检查器</td>
+<td style="text-align: left;">黄金参考任务上的通过率 <span class="math inline">\(\ge 100\%\)</span></td>
+<td style="text-align: left;">拒绝该检查点；恢复至上一个有效发布版本的指针</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>契约不变量套件</strong></td>
+<td style="text-align: left;">程序化模式验证测试</td>
+<td style="text-align: left;">严格的 JSON 模式解析器</td>
+<td style="text-align: left;">格式漂移为零（100% 严格合规）</td>
+<td style="text-align: left;">回滚策略权重；检查分词器和提示适配层</td>
+</tr>
+</tbody>
+</table></div>
+</section>
+<section id="sec-vol3-rlvr-release-gating" class="level3">
+<h3 class="anchored" data-anchor-id="sec-vol3-rlvr-release-gating">对新策略版本实施门禁</h3>
+<p>异步循环还有一个风险。每个新版本的权重都会广播到轨迹采样池，因此，一个有问题的版本不仅会得分偏低，还会生成后续批次的训练数据。如果某个版本学会了利用格式漏洞、退化为循环，或丧失了生成格式正确的工具调用的能力，它就会使队列充满退化的轨迹采样结果；验证器拒绝这些结果，各组不再产生有效反馈，而恢复则需要回滚权重并丢弃该问题版本生成的所有轨迹采样结果。训练损失无法揭示这一点；强化学习损失噪声较大，并不能反映任务成功率。</p>
+<p>因此，新版本必须通过 <strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation-releases">分阶段金丝雀部署</a></strong> 中的发布门禁，才能晋级至轨迹采样池，并在之后进入部署，而不能直接从优化器进入这些阶段。对于 RLVR，门禁会在奖励机制从未接触过的留出环境中检查三项内容：</p>
+<ol type="1">
+<li><strong>目标能力。</strong> 对于与训练任务同类的留出任务，新策略经验证的通过率必须在明确规定的容差范围内达到当前策略的水平，并采用 <strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation-rigor">统计评估的严谨性</a></strong> 中的试验次数和置信区间。</li>
+<li><strong>其他方面无回归。</strong> 训练分布之外的回归测试套件应覆盖其他语言、其他工具类别和指令遵循，其表现不得低于基线。针对某一任务类别的强化学习可能削弱其他类别的能力。</li>
+<li><strong>契约合规性。</strong> 新版本在留出测试套件上生成的每一次工具调用，都必须能够依据其模式进行解析。策略的格式漂移会破坏智能体运行框架，而不仅仅是影响得分。</li>
+</ol>
+<p>门禁还应报告恰当的统计指标。强化学习可以提高 pass@1，却不提高 pass@<span class="math inline">\(k\)</span>（在 <span class="math inline">\(k\)</span> 较大时），因为它可能只是将概率集中到初始策略偶尔已能采样到的解上，而没有找到新的解。同时报告这两项指标，以及重复运行中的 pass<span class="math inline">\(^k\)</span> 可靠性（<strong><a href="../12_evaluation/12_evaluation.html#sec-vol3-evaluation-rigor">统计评估的严谨性</a></strong>），能够区分策略是变得更可靠，还是能力变得更强；实际部署通常对前者的需求与对后者的需求同样迫切。</p>
+<p>环境池、彼此分离的轨迹采样池与训练池、新鲜度门控和发布门控，使 RLVR 成为生产系统，而不再只是实验。接下来需要讨论的是团队在构建此类系统时容易产生的误判。</p>
+</section>
+</section>
+<section id="sec-vol3-rlvr-fallacies" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-fallacies">谬误与陷阱</h2>
+<p>基于验证器的强化学习，其失败方式在训练曲线上往往看起来像是成功。以下误判反复出现，是因为它们都源于对奖励、输出长度或轨迹采样运行框架的过度信任。</p>
+<div class="fallacy-pitfall">
+<p><strong>谬误：</strong> <em>可验证的奖励无法被钻空子。</em></p>
+<p>确定性检查无法被奉承，但错误的产物也可能满足其要求。检查退出码的奖励，可以被一个以零退出的桩程序满足；检查输出文件是否存在的奖励，可以被一个空文件满足；覆盖不足的测试套件，可以被仅处理测试输入的代码满足。在强化学习中，策略恰恰会搜索这些漏洞（<a href="#sec-vol3-rlvr-rewards" class="quarto-xref">节&nbsp;2</a>）。防御方法是在用任务开展训练之前，将每个任务的检查机制视为攻击面：为 <strong><a href="../13_trajectory_curation/13_trajectory_curation.html#sec-vol3-flywheel-fixtures">任务夹具设计</a></strong> 中的辨别测试补充刻意构造的错误解答，要求检查机制必须拒绝这些解答；使用隐藏的 fail-to-pass 和 pass-to-pass 测试评分；并在奖励机制从未接触过的留出环境中评估训练后的策略（<a href="#sec-vol3-rlvr-release-gating" class="quarto-xref">节&nbsp;8.8</a>）。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱：</strong> <em>在智能体的工作区内运行验证器。</em></p>
+<p>在策略一直编辑的工作区中运行测试，可以省去第二个沙箱和补丁传输，却也让策略获得了对自身奖励的写入权限。策略最终会修改断言、删除失败的测试，或在测试运行器中植入钩子；由于每种钻空子的做法都比真正修复更短，它们便会胜出（<a href="#sec-vol3-rlvr-sandboxing" class="quarto-xref">节&nbsp;6</a>）。指令或惩罚等模型侧措施，只能降低篡改的概率。真正的保证来自隔离执行区：工作区中不存放任何隐藏测试，只有经过检查的差异补丁可以离开工作区，而判定结果则由一个包含干净代码检出的全新沙箱计算得出。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>谬误：</strong> <em>更长的推理轨迹表明，强化学习带来了更深入的问题求解。</em></p>
+<p>强化学习会因多种原因导致长度增加，其中只有一种是有益的。终止奖励将正确轨迹中的每个 token 都计入贡献；按每次轨迹采样进行的长度归一化，对较长失败轨迹的惩罚最轻（<a href="#sec-vol3-rlvr-grpo-objective" class="quarto-xref">节&nbsp;4.2</a>）；重复文本则会提高自身再次出现的概率。已有报告中的重新评估行为确实存在（<a href="#sec-vol3-rlvr-deliberation" class="quarto-xref">节&nbsp;7.4</a>），但输出中出现这种行为，并不能证明输出正确。对于智能体而言，额外的长度会消耗轨迹采样时间、服务器容量，并增加部署时的延迟。检验标准是在相同 token 预算下的通过率，而非轨迹长度。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱：</strong> <em>使用每次轨迹采样都通过或每次轨迹采样都失败的任务进行训练。</em></p>
+<p>如果一组轨迹采样的得分完全相同，那么每次轨迹采样的优势值都为零，对梯度没有任何贡献，尽管已经为 <span class="math inline">\(G\)</span> 次完整的轨迹采样及其沙箱和验证器运行付出了成本（<a href="#sec-vol3-rlvr-grpo-zero-variance" class="quarto-xref">节&nbsp;4.3</a>）。随着策略改进，从固定数据集中均匀采样的任务池会逐渐进入这种状态：简单任务的通过率趋于饱和，而不可能完成或存在缺陷的任务始终无法产生成功结果。跟踪每个任务近期的通过率，从通过率既不为零也不为一的区间中采样，更新任务池，并让每个批次都由能产生梯度的组构成，可以确保轨迹采样预算始终用于仍能提供学习信号的任务。</p>
+</div>
+<div class="fallacy-pitfall">
+<p><strong>陷阱：</strong> <em>使用与部署时不同的运行框架采集训练轨迹。</em></p>
+<p>如果轨迹采样运行框架跳过上下文压缩、使用不同的模板呈现工具调用、允许更多轮交互，或在训练前对交互记录重新分词，就会得到一个针对永远不会遇到的上下文进行优化的策略（<a href="#sec-vol3-rlvr-multi-turn" class="quarto-xref">节&nbsp;5</a>）。这种不匹配的表现是：策略在训练中得分很高，却在部署后性能下降，而任何训练指标都无法解释其原因。轨迹采样应通过部署所用的运行框架执行，采用部署时的预算，记录策略实际采样的 token，并对环境写入的所有内容进行掩码处理。</p>
+</div>
+</section>
+<section id="sec-vol3-rlvr-summary" class="level2">
+<h2 class="anchored" data-anchor-id="sec-vol3-rlvr-summary">总结</h2>
+<p>监督微调止步于示范所覆盖的范围；只要存在能够判定轨迹是否成功的检查，可验证奖励强化学习就能超越这一范围。代价是，检查本身成为了优化目标。本章依次探讨了由此产生的后果。由封闭的确定性检查构建的奖励决定得分，而格式项、部分得分以及学习型评判器或基于评分准则的评判器仅对其加以塑造；对危险动作的惩罚永远不能替代能够阻止这些动作的沙箱。终局奖励能够说明三十轮交互是否成功，却无法指出哪些轮次作出了贡献，因此，信用分配要么依赖策略可以钻空子的学习型步骤评分，要么依赖蒙特卡洛续采样，而后者的 token 成本随时域长度的平方增长。GRPO 用组内统计量替代学习型评价器，代价是需要整组轨迹采样，而且无法从结果一致的组中获得信号。多轮回合要求屏蔽环境写入的内容，记录策略实际采样的内容，并在部署时使用的智能体运行框架下训练。验证器必须位于独立的隔离区内，仅接收经过检查的差异补丁，并抑制不稳定的判定。一旦策略无法触及奖励机制，剩余的失效便来自内部，即熵坍塌和长度失控；剩余的成本则来自环境，因为工具耗时、重置耗时以及呈重尾分布的轨迹采样决定了训练节奏，促使轨迹采样与训练在不同的资源池中运行，并受到新鲜度门控和发布门控的约束。</p>
+<div id="callout-takeaways*-0.2" class="callout callout-takeaways" title="针对策略无法触及的检查进行优化">
+<details class="callout-takeaways fbx-simplebox fbx-default" open=""><summary><strong>要点回顾: 针对策略无法触及的检查进行优化</strong></summary><div>
+<ul>
+<li><strong>只有存在检查时，奖励才能替代示范</strong>：RLVR 能够在具有可信检查且初始通过率大于零的任务上改进智能体；对于策略从未解决过的任务，无论进行多少次轨迹采样，都不会产生梯度。</li>
+<li><strong>奖励什么，策略就学习什么</strong>：只要检查与意图之间存在策略可利用的漏洞，奖励投机就是预期结果。确定性检查决定奖励；学习型评判器和格式项仅对其加以塑造，而惩罚能够降低不安全动作的概率，却无法阻止这些动作。</li>
+<li><strong>将验证器置于边界的另一侧</strong>：策略的工作区中不存放任何隐藏测试，只有经过检查的差异补丁才能传入全新的隔离区，返回的也只有判定结果。不稳定的测试需要通过重复运行取得一致判定，因为组内归一化会将一次侥幸通过转化为组内最大的优势。</li>
+<li><strong>组基线以轨迹采样换取评价器的省略</strong>：GRPO 不需要价值模型，但每个任务要耗费 <span class="math inline">\(G\)</span> 次轨迹采样，无法从结果一致的组中获得信号，而且其归一化会引入长度偏差和难度偏差，需要运行时加以校正。</li>
+<li><strong>多轮强化学习使策略适应其智能体运行框架</strong>：在损失、比率和长度计数中屏蔽观测 token，记录采样所得的 token ID 及其概率，并在部署时使用的智能体运行框架和预算下进行轨迹采样。</li>
+<li><strong>环境耗时就是训练耗时</strong>：工具调用、重置以及呈重尾分布的轨迹采样长度决定了吞吐量，因此轨迹采样和训练在不同的资源池中运行，数据陈旧程度由新鲜度门控限制，而每个新版本的权重在生成更多数据之前都必须通过发布门控。</li>
+</ul>
+</div></details>
+</div>
+<p>将优化器置于沙箱内并使其以奖励为目标，使针对隔离验证器的强化学习（原则 <a href="../parts/learning_principles.html#pri-vol3-verifiable-rewards">18</a>）落实为三项具体要求。验证器在仅接收补丁的独立隔离区中运行，留出测试限定了奖励能够教会策略的内容，而组相对梯度只存在于策略在部分尝试中成功、在另一些尝试中失败的任务上。双沙箱隔离区将模型底层的遏制机制（原则 <a href="../parts/tool_use_principles.html#pri-vol3-zero-trust-sandboxing">10</a>）从宿主扩展到了奖励本身，而发布门控则将验证不对称性（原则 <a href="../parts/model_principles.html#pri-vol3-verification-asymmetry">3</a>）从单次决策延伸到了每个新版本的权重。</p>
+<div id="callout-chapter-connection*-0.3" class="callout callout-chapter-connection" title="从一个更好的智能体到多个智能体">
+<p></p><details class="callout-chapter-connection fbx-simplebox fbx-default" open=""><summary><strong>后续内容: 从一个更好的智能体到多个智能体</strong></summary><div>在什么情况下，将一个任务拆分给多个智能体，会优于给单个智能体相同的预算？<p></p>
+<p>第五部分以一个更好的单智能体收尾：其策略基于经过验证的轨迹筛选构建，经过微调以执行动作，并针对其无法触及的检查进行优化。如今，它的权重使提出能够通过检查的方案更有可能，但并未赋予它任何新的权限；它仍然使用一个上下文，在同一段实际耗时内运行一条轨迹。有些任务会同时使这三者承压，例如状态量超出单个上下文容量的代码仓库迁移，或可以并发运行的独立子任务。将此类任务拆分给多个智能体，会使每一项 H·S·A 暴露成倍增加，并带来协调这些智能体的成本。<strong><a href="../16_multi_agent/16_multi_agent.html#sec-vol3-multi-agent">多智能体协同</a></strong> 由此开启第六部分《规模化智能体》，探讨相较于预算相同的单智能体，这种协同开销何时能够带来足以抵偿自身的收益，以及在能够抵偿时，协同机制必须强制落实哪些约束。</p>
+</div></details>
+</div>
+
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("http:\/\/127\.0\.0\.1:8083\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol3_zh/14_fine_tuning/14_fine_tuning.html" class="pagination-link" aria-label="轨迹微调">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">轨迹微调</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol3_zh/parts/scale_principles.html" class="pagination-link" aria-label="第六部分：规模化智能体">
+        <span class="nav-page-text">第六部分：规模化智能体</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>《智能体机器学习系统》第三卷 · 简体中文本地版</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>

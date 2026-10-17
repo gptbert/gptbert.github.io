@@ -1,0 +1,4016 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>规模化机器学习系统</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../vol2_zh/backmatter/appendix_assumptions.html" rel="prev">
+<link href="../../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles" data-zh-highlighting="true">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" data-zh-highlighting="true">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" data-zh-highlighting="true">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-3449ea8028b621b1ea0f365a2cf6855f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light" data-zh-bootstrap="true">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-68c613c62467269ad621fbab36ffc500.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" data-mode="dark" data-zh-bootstrap="true">
+<link href="../../../site_libs/bootstrap/bootstrap-3449ea8028b621b1ea0f365a2cf6855f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" data-mode="light" data-zh-bootstrap="true">
+<link href="../../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "没有结果",
+    "search-matching-documents-text": "匹配的文档",
+    "search-copy-link-title": "复制搜索链接",
+    "search-hide-matches-text": "隐藏其它匹配结果",
+    "search-more-match-text": "更多匹配结果",
+    "search-more-matches-text": "更多匹配结果",
+    "search-clear-button-title": "清除",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "取消",
+    "search-submit-button-title": "提交",
+    "search-label": "搜索"
+  }
+}</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+<!-- Shared head includes — MLSysBook ecosystem -->
+
+<!--
+  theme-persist (inline, sync) — applies stored color-scheme before first paint.
+  Inlined deliberately: runs before any other <script>, no extra round-trip,
+  and avoids per-subsite asset path differences. Canonical source:
+  shared/scripts/theme-persist.js (kept identical for documentation/testability).
+  If you change one, mirror the change to the other.
+-->
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'quarto-color-scheme';
+  // Quarto's toggle writes 'alternate'/'default' (alternate = dark, the
+  // layered sheet); sibling non-Quarto sites write 'dark'/'light'. Both
+  // hit the same key, so we accept either. Quarto's own startup still
+  // checks `=== 'alternate'`, so we mirror onto <html> rather than rewrite.
+  function normalize(v) {
+    if (v === 'dark' || v === 'alternate') return 'dark';
+    if (v === 'light' || v === 'default') return 'light';
+    return null;
+  }
+  function preferredScheme() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) return n;
+    } catch (e) {}
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  function apply(scheme) {
+    var html = document.documentElement;
+    if (!html) return;
+    html.setAttribute('data-bs-theme', scheme);
+    html.setAttribute('data-quarto-color-scheme', scheme);
+    html.style.colorScheme = scheme;
+    // Bridge to legacy `.quarto-dark` body class — about.css,
+    // community.css, and newsletter.css key their dark-mode CSS
+    // variables off `.quarto-dark { ... }`. Quarto's own toggle adds
+    // that class on click, but the OS-pref / first-paint path never
+    // does. Mirror the scheme onto body so those CSS variables fire
+    // on every dark path, not just toggle clicks. body may not exist
+    // yet on the first call (this script runs in <head>); a
+    // MutationObserver below catches it as soon as it parses.
+    var body = document.body;
+    if (body) body.classList.toggle('quarto-dark', scheme === 'dark');
+  }
+  apply(preferredScheme());
+  // Catch the FOUC window between <head> apply() and DOMContentLoaded:
+  // <body> may not exist yet at first apply(), but as soon as the
+  // parser appends it we want the legacy class bridge in place so any
+  // CSS keyed on `.quarto-dark` paints correctly on first render.
+  if (!document.body) {
+    var earlyObserver = new MutationObserver(function () {
+      if (document.body) {
+        apply(preferredScheme());
+        earlyObserver.disconnect();
+      }
+    });
+    earlyObserver.observe(document.documentElement, { childList: true });
+  }
+  // Quarto's toggle updates localStorage but not <html>, so wrap it to
+  // mirror the new value onto data-bs-theme; otherwise clicking the toggle
+  // leaves CSS keyed off [data-bs-theme="dark"] rendering against the wrong
+  // stylesheet until the next reload.
+  function syncFromStorage() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) apply(n);
+    } catch (e) {}
+  }
+  function wrapToggle() {
+    var orig = window.quartoToggleColorScheme;
+    if (typeof orig !== 'function' || orig.__mlsbWrapped) return;
+    var wrapped = function () { var r = orig.apply(this, arguments); syncFromStorage(); return r; };
+    wrapped.__mlsbWrapped = true;
+    window.quartoToggleColorScheme = wrapped;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { wrapToggle(); syncFromStorage(); });
+  } else {
+    wrapToggle(); syncFromStorage();
+  }
+  // Defend the legacy `.quarto-dark` body class against Quarto's own
+  // `toggleBodyColor(mode)`, which runs *after* this script and re-asserts
+  // the body class based on `mode` — and `mode` defaults to 'light' when
+  // there's no stored quarto-color-scheme value, even when the OS / first
+  // paint already resolved to dark via `data-bs-theme`. Without this
+  // observer, on every fresh visit Quarto would clobber our bridge and
+  // restore `.quarto-light`, leaving `.quarto-dark`-keyed CSS variables
+  // (about/community/newsletter pages) at their light-mode defaults
+  // against the dark `data-bs-theme="dark"` background.
+  function bridgeBody() {
+    var body = document.body;
+    if (!body) return;
+    var wantDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    if (wantDark && !body.classList.contains('quarto-dark')) {
+      body.classList.add('quarto-dark');
+      body.classList.remove('quarto-light');
+    } else if (!wantDark && body.classList.contains('quarto-dark')) {
+      body.classList.remove('quarto-dark');
+      body.classList.add('quarto-light');
+    }
+  }
+  function watchBody() {
+    if (!document.body) return;
+    bridgeBody();
+    var bodyObs = new MutationObserver(bridgeBody);
+    bodyObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var htmlObs = new MutationObserver(bridgeBody);
+    htmlObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watchBody);
+  } else {
+    watchBody();
+  }
+  window.addEventListener('storage', function (ev) {
+    if (ev.key !== STORAGE_KEY) return;
+    var n = normalize(ev.newValue);
+    if (n) apply(n);
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (ev) {
+        try { if (window.localStorage.getItem(STORAGE_KEY)) return; } catch (e) {}
+        apply(ev.matches ? 'dark' : 'light');
+      });
+    } catch (e) {}
+  }
+})();
+</script>
+
+<!--
+  Build-stamp styling. Tiny, neutral, dark-mode aware. The actual stamp text
+  is injected by shared/scripts/inject-build-stamp.sh into footer markup
+  containing the literal MLSB_BUILD_STAMP HTML-comment token (see that
+  script for the exact pattern — we cannot write it here because HTML
+  comments cannot nest and the inner closer would terminate this block).
+-->
+<style>
+.mlsb-build-stamp {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+[data-bs-theme="dark"] .mlsb-build-stamp { opacity: 0.5; }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="icon" href="https://mlsysbook.ai/vol1/assets/images/icons/favicon.png" type="image/png">
+<meta name="author" content="Vijay Janapa Reddi">
+
+<!-- Schema.org JSON-LD structured data for Google Knowledge Graph & Rich Snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mlsysbook.ai/#website",
+      "url": "https://mlsysbook.ai/",
+      "name": "Machine Learning Systems",
+      "description": "The AI Engineering Textbook Series: Foundations, Scaling, Agentic AI, and Physical AI.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Harvard Edge Computing Lab",
+        "url": "https://edge.seas.harvard.edu"
+      }
+    },
+    {
+      "@type": "BookSeries",
+      "@id": "https://mlsysbook.ai/#bookseries",
+      "name": "Machine Learning Systems: Principles and Practices of Engineering Artificially Intelligent Systems",
+      "alternateName": ["MLSysBook", "Machine Learning Systems", "AI Engineering Textbook"],
+      "url": "https://mlsysbook.ai/",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Vijay Janapa Reddi",
+        "jobTitle": "Gordon McKay Professor of Electrical Engineering and Computer Science",
+        "worksFor": {
+          "@type": "EducationalOrganization",
+          "name": "Harvard University",
+          "sameAs": "https://www.harvard.edu"
+        },
+        "sameAs": [
+          "https://profvjreddi.github.io/homepage/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MIT Press",
+        "url": "https://mitpress.mit.edu"
+      },
+      "hasPart": [
+        {
+          "@type": "Book",
+          "name": "Volume I: Introduction to Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol1/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Foundations, Lifecycle, Data Engineering, Training, Inference, Benchmarking, and Responsible AI"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume II: Scaling Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol2/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Distributed Training, Accelerator Architecture, Parallelism, Memory Systems, and Serving"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume III: Agentic Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol3/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Autonomous Agents, Deliberation, Working Sets, Virtual Memory, RAG, RLVR, and Multi-Agent Systems"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume IV: Physical AI Systems",
+          "url": "https://mlsysbook.ai/vol4/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Physical AI, Embodied AI, Closed-Loop Dynamics, Actuation, Control Barrier Functions, and Robotics"
+        }
+      ]
+    },
+    {
+      "@type": "Course",
+      "@id": "https://mlsysbook.ai/#course",
+      "name": "CS249r: Machine Learning Systems",
+      "description": "Harvard University course on principles and practices of engineering artificially intelligent systems.",
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "Harvard University",
+        "sameAs": "https://www.harvard.edu"
+      }
+    }
+  ]
+}
+</script>
+
+<!--
+  navbar-theme-toggle-relocate — moves the Quarto theme toggle into the
+  navbar's right-side .navbar-nav group at page load, so it collapses into
+  the hamburger menu alongside Subscribe/Star/Support/GitHub at narrow widths
+  instead of being stranded in the middle by Quarto's mx-auto brand layout.
+
+  Why JS: Quarto auto-injects the toggle into .quarto-navbar-tools (outside
+  .navbar-collapse). CSS can't move DOM nodes between containers, and CSS
+  positioning hacks (absolute/right: 50px) fight Bootstrap's responsive
+  layout below 992px. Moving the node once at startup is the standard
+  approach used across Quarto-based sites with the same problem.
+-->
+<script>
+(function () {
+  'use strict';
+  function relocateThemeToggle() {
+    var tools = document.querySelector('.quarto-navbar-tools');
+    if (!tools) return;
+    var toggle = tools.querySelector('.quarto-color-scheme-toggle');
+    if (!toggle) return;
+    var navRight = document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav.ms-auto'
+    ) || document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav:last-of-type'
+    );
+    if (!navRight) return;
+    var li = document.createElement('li');
+    li.className = 'nav-item navbar-theme-toggle-item';
+    toggle.classList.add('nav-link');
+    li.appendChild(toggle);
+    navRight.appendChild(li);
+    tools.style.display = 'none';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', relocateThemeToggle);
+  } else {
+    relocateThemeToggle();
+  }
+})();
+</script>
+
+<!--
+  navbar-brand-href-fix — force the navbar brand link to the ecosystem root
+  (https://mlsysbook.ai/) on every subsite.
+
+  Quarto sets each subsite's `site-url` to `https://mlsysbook.ai/<subsite>/`
+  and then relativizes any navbar.href value that lives inside the
+  site-url's domain. The shared `href: https://mlsysbook.ai/` in
+  navbar-common.yml therefore gets emitted as `./index.html`, which on
+  vol1/vol2/tinytorch/etc. resolves to *that subsite's* root rather than
+  the ecosystem landing page. Override the brand link href in JS after
+  Quarto's render: this is a one-line user-experience fix that does not
+  fight Quarto's URL machinery.
+-->
+<script>
+(function () {
+  'use strict';
+  function fixBrandHref() {
+    var brand = document.querySelectorAll(
+      '.navbar .navbar-brand, .navbar .navbar-brand-logo'
+    );
+    for (var i = 0; i < brand.length; i++) {
+      brand[i].setAttribute('href', 'https://mlsysbook.ai/');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixBrandHref);
+  } else {
+    fixBrandHref();
+  }
+})();
+</script>
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="apple-touch-icon" href="../../../shared/assets/images/icons/favicon.png">
+<meta name="theme-color" content="#1F407A">
+<!-- Release identity (rendered into the footer pill below).
+     The publish workflow drops release-manifest.json at
+     /vol2_zh/release-manifest.json before deploy. -->
+
+<!-- SocratiQ bundle: -->
+<!-- <script type="module" src="/tools/scripts/socratiQ/bundle.js" defer></script> -->
+<script src="/books/mlsys/shared/assets/scripts/sidebar-auto-collapse.js" defer=""></script>
+<script src="/books/mlsys/shared/assets/scripts/version-link.js" defer=""></script>
+<script src="/books/mlsys/shared/assets/scripts/subscribe-modal.js" defer=""></script>
+<style>
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="/books/mlsys/shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="规模化机器学习系统">
+<meta property="og:description" content="第二卷：规模化机器学习系统。分布式训练、集群运行与负责任部署。">
+<meta property="og:image" content="https://gptbert.com/books/mlsys/vol2/vol2_zh/backmatter/glossary/vol2_zh/covers/cover-hardcover-book-vol2.png">
+<meta property="og:site_name" content="规模化机器学习系统">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:title" content="规模化机器学习系统">
+<meta name="twitter:description" content="第二卷：规模化机器学习系统。分布式训练、集群运行与负责任部署。">
+<meta name="twitter:image" content="https://gptbert.com/books/mlsys/vol2/vol2_zh/backmatter/glossary/vol2_zh/covers/cover-hardcover-book-vol2.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<style id="zh-library-layout-fixes">
+#quarto-content table>caption,body table>caption{display:table-caption!important;width:auto!important;caption-side:top;position:static!important}
+.zh-table-scroll{max-width:100%;overflow-x:auto;margin-block:1em}.zh-table-scroll table{margin-block:0}
+#quarto-document-content{min-width:0}#quarto-document-content pre{max-width:100%;overflow-x:auto}
+body p,body li{overflow-wrap:anywhere}
+body :not(pre)>code{white-space:pre-wrap!important;overflow-wrap:anywhere!important;word-break:break-word}
+mjx-container[display="true"]{max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:4px}
+img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}.zh-original-heading{font-size:1.2rem;color:var(--bs-secondary-color);margin-top:.5em}
+
+/* MathJax sets an intrinsic min-width on numbered display equations. */
+.math.display{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding-block:6px}
+.math.display>mjx-container[display="true"]{max-width:none;overflow:visible}
+/* Keep inline equations scrollable as well as display equations. */
+.math.inline{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;padding-block:2px}
+.math.inline mjx-container{max-width:100%}
+.pseudocode-container,.ps-root{max-width:100%;overflow-x:auto}
+body.quarto-dark{--bs-body-bg:#181c1f;--bs-body-color:#e3e8ec;--bs-secondary-color:#b5c0c8;--bs-border-color:#58636d;--bs-link-color:#9ec5fe;color-scheme:dark;background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-light{color-scheme:light}
+body.quarto-dark #quarto-content,body.quarto-dark main{background-color:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6)}
+body.quarto-dark .table{--bs-table-color:#e3e8ec;--bs-table-bg:#1e2428;--bs-table-striped-color:#e3e8ec;--bs-table-striped-bg:#293138;color:#e3e8ec}
+body.quarto-light .callout,body.quarto-light .callout-body,body.quarto-light .callout details>div{background:#f7faf9!important;color:#212529!important}
+body.quarto-light .callout-header,body.quarto-light .callout-title-container,body.quarto-light .callout summary{background:#e7f1ed!important;color:#173c32!important}
+body.quarto-dark .callout,body.quarto-dark .callout-body,body.quarto-dark .callout details>div{background:#1e2428!important;color:#e3e8ec!important}
+body.quarto-dark .callout-header,body.quarto-dark .callout-title-container,body.quarto-dark .callout summary{background:#253b36!important;color:#e3e8ec!important}
+body.quarto-dark caption,body.quarto-dark figcaption{color:var(--bs-body-color,#dee2e6)!important}
+body.quarto-dark .quarto-secondary-nav{background:var(--bs-body-bg,#212529);color:var(--bs-body-color,#dee2e6);border-bottom:1px solid #ffffff26}
+body.quarto-dark .quarto-secondary-nav .quarto-btn-toggle,body.quarto-dark .quarto-secondary-nav .bi{color:#e3e8ec!important}
+#quarto-header .navbar-brand{color:#f4f7fa!important}
+body.quarto-dark .quarto-secondary-nav a{color:var(--bs-link-color,#9ec5fe)}
+body.quarto-dark main img,body.quarto-dark .quarto-figure img{background:#fff;border-radius:4px}
+.zh-table-scroll{overscroll-behavior-x:contain;scrollbar-width:thin}
+@media(max-width:767px){
+ .zh-table-scroll table{min-width:32rem;font-size:.9rem}
+ .zh-table-scroll{border:1px solid var(--bs-border-color,#adb5bd);border-radius:4px}
+ .zh-table-scroll:focus-visible{outline:2px solid var(--bs-link-color,#0d6efd);outline-offset:2px}
+ #quarto-sidebar .sidebar-menu-container{max-height:calc(100dvh - 130px);overflow-y:auto;overscroll-behavior-y:contain;padding-bottom:24px}
+ #quarto-sidebar .sidebar-item-text{white-space:normal;overflow-wrap:anywhere;padding-block:8px}
+ #quarto-header button,#quarto-header .quarto-color-scheme-toggle{min-width:44px;min-height:44px}
+ #quarto-header .quarto-color-scheme-toggle{display:inline-flex;align-items:center;justify-content:center}
+ #quarto-toc-toggle{max-height:60dvh;overflow-y:auto}
+ #zh-library-back{right:10px!important;bottom:max(10px,env(safe-area-inset-bottom))!important;padding:8px 12px!important;font-size:12px!important}
+ img{max-width:100%!important;object-fit:contain}
+ .quarto-layout-panel,.quarto-layout-row,.quarto-layout-cell{min-width:0;max-width:100%}
+}
+</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link[data-zh-bootstrap]:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.hasAttribute("data-zh-bootstrap")) {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link[data-zh-highlighting].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link[data-zh-bootstrap].quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../shared/assets/images/icons/logo-seas-shield.png" alt="" class="navbar-logo light-content">
+    <img src="../../../shared/assets/images/icons/logo-seas-shield.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Machine Learning Systems</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="搜索"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="展开或折叠导航栏" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../../index.html" aria-current="page"> 
+<span class="menu-text">中文首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../vol2_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">引言</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://mlsysbook.ai/vol2/"> 
+<span class="menu-text">英文原版</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="切换深色模式"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../vol2_zh/backmatter/glossary/glossary.html">术语表</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="展开或折叠侧边栏导航" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献词</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者的话</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">记号</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../vol2_zh/parts/fleet_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第一部分：集群</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/02_compute_infrastructure/02_compute_infrastructure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">计算基础设施</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/03_network_fabrics/03_network_fabrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络互连结构</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/04_data_storage/04_data_storage.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据存储</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../vol2_zh/parts/distributed_ml_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第二部分：分布式机器学习</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/05_distributed_training/05_distributed_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">分布式训练</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/06_collective_communication/06_collective_communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">集合通信</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/07_fault_tolerance/07_fault_tolerance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">容错</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/08_fleet_orchestration/08_fleet_orchestration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">集群编排</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../vol2_zh/parts/deployment_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第三部分：规模化部署</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/09_performance_engineering/09_performance_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">性能工程</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/10_inference/10_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">在大规模下运行推理</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/11_edge_intelligence/11_edge_intelligence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">边缘智能</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/12_ops_scale/12_ops_scale.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">规模化机器学习运维</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../../vol2_zh/parts/responsible_fleet_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第四部分：负责任的集群</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/13_security_privacy/13_security_privacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">安全与隐私</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/14_robust_ai/14_robust_ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Robust AI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/15_sustainable_ai/15_sustainable_ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sustainable AI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/16_responsible_ai/16_responsible_ai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">责任人工智能</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/17_conclusion/17_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结论</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">附录</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="展开或折叠此栏">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/appendix_dam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">单机基础（D·A·M）</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/appendix_c3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">C³ 分类法</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/appendix_fleet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">集群基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/appendix_communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">通信基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/appendix_reliability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可靠性基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/appendix_inference.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">推理基础</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/appendix_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">系统假设</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol2_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-glossary" id="toc-sec-glossary" class="nav-link active" data-scroll-target="#sec-glossary">术语表</a>
+  <ul>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems--86ed" id="toc-sec-glossary-volume-ii-scalable-systems--86ed" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems--86ed">A</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-b-4eba" id="toc-sec-glossary-volume-ii-scalable-systems-b-4eba" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-b-4eba">B</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-c-dd8c" id="toc-sec-glossary-volume-ii-scalable-systems-c-dd8c" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-c-dd8c">C</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems--6294" id="toc-sec-glossary-volume-ii-scalable-systems--6294" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems--6294">D</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-e-da15" id="toc-sec-glossary-volume-ii-scalable-systems-e-da15" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-e-da15">E</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-f-d0dc" id="toc-sec-glossary-volume-ii-scalable-systems-f-d0dc" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-f-d0dc">F</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-g-94a4" id="toc-sec-glossary-volume-ii-scalable-systems-g-94a4" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-g-94a4">G</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-h-de56" id="toc-sec-glossary-volume-ii-scalable-systems-h-de56" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-h-de56">H</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems--39ec" id="toc-sec-glossary-volume-ii-scalable-systems--39ec" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems--39ec">I</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-k-adf5" id="toc-sec-glossary-volume-ii-scalable-systems-k-adf5" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-k-adf5">K</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-l-b5d6" id="toc-sec-glossary-volume-ii-scalable-systems-l-b5d6" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-l-b5d6">L</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems--fc9b" id="toc-sec-glossary-volume-ii-scalable-systems--fc9b" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems--fc9b">M</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-n-faa6" id="toc-sec-glossary-volume-ii-scalable-systems-n-faa6" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-n-faa6">N</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems--1d6f" id="toc-sec-glossary-volume-ii-scalable-systems--1d6f" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems--1d6f">O</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-p-6377" id="toc-sec-glossary-volume-ii-scalable-systems-p-6377" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-p-6377">P</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-q-3a81" id="toc-sec-glossary-volume-ii-scalable-systems-q-3a81" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-q-3a81">Q</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-r-514e" id="toc-sec-glossary-volume-ii-scalable-systems-r-514e" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-r-514e">R</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems--ef85" id="toc-sec-glossary-volume-ii-scalable-systems--ef85" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems--ef85">S</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems--e763" id="toc-sec-glossary-volume-ii-scalable-systems--e763" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems--e763">T</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-v-50cc" id="toc-sec-glossary-volume-ii-scalable-systems-v-50cc" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-v-50cc">V</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-w-ec5f" id="toc-sec-glossary-volume-ii-scalable-systems-w-ec5f" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-w-ec5f">W</a></li>
+  <li><a href="#sec-glossary-volume-ii-scalable-systems-z-38c9" id="toc-sec-glossary-volume-ii-scalable-systems-z-38c9" class="nav-link" data-scroll-target="#sec-glossary-volume-ii-scalable-systems-z-38c9">Z</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+
+<section id="sec-glossary" class="level1 unnumbered">
+<h1 class="unnumbered">术语表</h1>
+<p>本术语表定义了本书中使用的关键术语。术语按字母顺序排列。</p>
+<section id="sec-glossary-volume-ii-scalable-systems--86ed" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems--86ed">A</h2>
+<dl>
+<dt><strong>自适应路由</strong></dt>
+<dd>
+一种路由机制，依据当前网络条件（如队列占用情况）在可用路径之间进行选择，以避免热点，同时保持传输的排序要求。
+</dd>
+<dt><strong>问责性</strong></dt>
+<dd>
+使个人或组织对人工智能系统的结果负责的各种机制，涉及可追溯性、文档记录、审计，以及补救损害的能力。
+</dd>
+<dt><strong>激活检查点</strong></dt>
+<dd>
+一种节省内存的训练技术，仅保存选定的激活值，并在反向传播期间重新计算其余激活值，以额外的计算换取更低的内存使用。
+</dd>
+<dt><strong>适配器模块</strong></dt>
+<dd>
+插入到预训练模型冻结层之间的小型可训练神经网络组件，用于在不修改基础架构的前提下实现轻量级适配。
+</dd>
+<dt><strong>自适应资源模式</strong></dt>
+<dd>
+一种设计模式，使系统能够根据资源可用性的变化动态调整自身操作，通过依据计算负载、网络带宽和存储容量进行扩容或缩容，确保效率与韧性。
+</dd>
+<dt><strong>先进封装</strong></dt>
+<dd>
+半导体集成技术，如 2.5D 中介层、chiplet 和 3D 堆叠，用于以传统电路板无法提供的更短、更密集的互连来连接多个 die。
+</dd>
+<dt><strong>对抗性攻击</strong></dt>
+<dd>
+一种攻击类型，精心构造的输入旨在使机器学习模型产生错误预测，同时与人类看来合法的數據几乎无法区分。
+</dd>
+<dt><strong>对抗性样本</strong></dt>
+<dd>
+一种恶意修改的输入，旨在诱使机器学习模型产生错误预测，通常通过对合法数据添加微小、不可察觉的扰动来构造。
+</dd>
+<dt><strong>对抗性训练</strong></dt>
+<dd>
+一种防御技术，通过在对抗性样本上进行训练来提升模型的鲁棒性及其正确分类对抗性输入的能力。
+</dd>
+<dt><strong>AGI</strong></dt>
+<dd>
+通用人工智能——计算系统，在所有知识领域和推理方面达到或超过人类认知能力，能够在不针对特定任务训练的情况下跨多样的问题领域进行泛化。
+</dd>
+<dt><strong>AI for good</strong></dt>
+<dd>
+机器学习系统的设计、开发与部署，旨在应对重要的社会和环境挑战，以提升人类福祉、促进可持续发展并贡献于全球发展目标。
+</dd>
+<dt><strong>算法公平性</strong></dt>
+<dd>
+一项原则：自动化系统不应基于种族、性别或年龄等受保护属性对个体或群体产生不成比例的劣势。
+</dd>
+<dt><strong>AllGather</strong></dt>
+<dd>
+一种集合通信操作，收集每个 rank 的分片，并将合并后的结果提供给每个 rank。
+</dd>
+<dt><strong>AllReduce</strong></dt>
+<dd>
+一种集合通信操作，在 rank 之间执行归约并将归约结果返回给每个 rank，常用于梯度同步。
+</dd>
+<dt><strong>AllToAll</strong></dt>
+<dd>
+一种集合通信操作，每个 rank 向所有其他 rank 发送各自不同的数据，并从每个 rank 接收各自不同的数据。
+</dd>
+<dt><strong>alpha-beta 模型</strong></dt>
+<dd>
+一种通信成本模型，将固定启动延迟与随消息大小变化的传输时间分离开来，以估算数据传输成本。
+</dd>
+<dt><strong>异常检测</strong></dt>
+<dd>
+识别数据中不符合预期行为的模式，常用于检测系统中的离群点、故障或恶意活动。
+</dd>
+<dt><strong>匿名化</strong></dt>
+<dd>
+从数据集中移除或修改个人可识别信息以保护个人隐私的过程，但通常不足以抵御精明的再识别攻击。
+</dd>
+<dt><strong>算术强度</strong></dt>
+<dd>
+每移动一个字节数据所执行的计算量，通常以 FLOP/byte 衡量。
+</dd>
+<dt><strong>通用人工智能</strong></dt>
+<dd>
+一种假设形式的人工智能，在所有领域达到或超过人类认知能力，代表当前窄人工智能系统之外的人工智能研究的终极目标。
+</dd>
+<dt><strong>人工智能</strong></dt>
+<dd>
+计算机科学的一个广泛领域，专注于构建能够执行通常需人类智能才能完成的任务的系统，包括学习、推理和决策。
+</dd>
+<dt><strong>攻击分类法</strong></dt>
+<dd>
+对针对机器学习系统的安全威胁和对抗性攻击进行的系统性分类，按方法、目标和影响组织威胁，以指导防御策略。
+</dd>
+<dt><strong>自编码器</strong></dt>
+<dd>
+一种神经网络架构，通过最小化重建误差来学习压缩的数据表示，常用于异常检测和降维。
+</dd>
+<dt><strong>自动化偏见</strong></dt>
+<dd>
+人类即使面对明显错误也过度依赖自动化系统输出的倾向，可能损害人工监督。
+</dd>
+<dt><strong>AutoML</strong></dt>
+<dd>
+自动化机器学习，使用算法来自动化将机器学习应用于现实世界问题的过程，包括特征工程、模型选择和超参数调优。
+</dd>
+<dt><strong>可用性</strong></dt>
+<dd>
+存储服务在客户端需要时能够响应的属性；它与已确认数据在故障后是否仍然存活、读取是否返回最新已提交版本是不同概念。
+</dd>
+<dt><strong>可用性攻击</strong></dt>
+<dd>
+一种数据投毒攻击类型，旨在通过引入噪声或跨多个类别损坏训练数据来降低机器学习模型的整体性能。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-b-4eba" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-b-4eba">B</h2>
+<dl>
+<dt><strong>后门攻击</strong></dt>
+<dd>
+一种数据投毒类型，将隐藏触发器嵌入训练数据，导致模型在推理时遇到特定模式时表现出恶意行为。
+</dd>
+<dt><strong>补货调度</strong></dt>
+<dd>
+一种调度策略：当运行较小的任务不会延迟已预留的较大任务时，在空闲时段运行较小的任务。
+</dd>
+<dt><strong>反向压力</strong></dt>
+<dd>
+一种控制响应：当下游阶段无法维持上游到达速率时，减慢准入或限制在途工作。
+</dd>
+<dt><strong>反向传播</strong></dt>
+<dd>
+计算神经网络梯度的算法，通过将误差信号沿层反向传播得到；对训练至关重要，但在资源受限设备上计算代价高昂。
+</dd>
+<dt><strong>带宽层级</strong></dt>
+<dd>
+计算系统内部及系统之间的数据移动层级有序集合，从片上存储器经设备、节点、机架和 pod 互连，其带宽通常随物理距离增加而降低。
+</dd>
+<dt><strong>贝叶斯神经网络</strong></dt>
+<dd>
+在其权重上 incorporate 概率分布的神经网络，从而支持对预测的不确定性量化和更稳健的决策。
+</dd>
+<dt><strong>偏见检测</strong></dt>
+<dd>
+用于识别机器学习系统输出中针对不同人口统计群体的不公平歧视或差别对待的系统性方法。
+</dd>
+<dt><strong>偏见缓解</strong></dt>
+<dd>
+旨在减少机器学习系统中不公平歧视的技术与干预措施，应用于数据采集、模型训练或后处理阶段。
+</dd>
+<dt><strong>仅偏置适配</strong></dt>
+<dd>
+一种轻量训练策略：冻结所有模型权重，仅更新标量偏置项，大幅降低设备端学习的内存需求与计算开销。
+</dd>
+<dt><strong>装箱</strong></dt>
+<dd>
+将具有资源需求的任务分配到固定容量的节点或集群；在 ML 集群中，这通常跨越 GPU、内存、CPU、网络局部性和拓扑。
+</dd>
+<dt><strong>生物多样性监测</strong></dt>
+<dd>
+利用相机陷阱和传感器网络等技术对生物多样性进行系统性观测与测量，以跟踪物种种群、栖息地变化和保护成效。
+</dd>
+<dt><strong>二分带宽</strong></dt>
+<dd>
+将网络平分为两半的任意切分所穿越的最小聚合链路容量，界定全局通信的最坏情况吞吐量。
+</dd>
+<dt><strong>比特翻转</strong></dt>
+<dd>
+一种硬件故障：存储器或寄存器中的单个比特意外地从 0 变为 1 或反之，可能损坏数据或计算。
+</dd>
+<dt><strong>黑盒攻击</strong></dt>
+<dd>
+一种对抗性攻击：攻击者不了解模型的内部架构、参数或训练数据，只能依靠查询模型并观察输出来进行攻击。
+</dd>
+<dt><strong>脑机接口</strong></dt>
+<dd>
+大脑与外部设备之间的直接通信通路，通过神经信号实现对计算机或假肢的控制，代表机器学习与神经技术的融合。
+</dd>
+<dt><strong>内置自测试（BIST）</strong></dt>
+<dd>
+硬件测试机制，使组件能够利用专用电路和预定义测试图案自行检测故障。
+</dd>
+<dt><strong>批量同步并行（BSP）</strong></dt>
+<dd>
+一种并行执行模型：工作者先执行本地计算、通信，然后在全局屏障处等待，再进入下一步。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-c-dd8c" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-c-dd8c">C</h2>
+<dl>
+<dt><strong>C³ 分类法</strong></dt>
+<dd>
+一种诊断框架，将分布式执行的开销划分为计算、通信和协同。它识别出限制有用集群吞吐量的维度，以及优化将开销转移到何处。
+</dd>
+<dt><strong>缓存计时攻击</strong></dt>
+<dd>
+一种侧信道攻击类型，利用内存缓存访问模式的差异来推断关于程序执行或数据的敏感信息。
+</dd>
+<dt><strong>金丝雀部署</strong></dt>
+<dd>
+一种发布模式：将一小部分流量导向新的模型或服务版本，监控其行为，然后进行扩展或回滚。
+</dd>
+<dt><strong>CAP 定理</strong></dt>
+<dd>
+分布式系统的一个结论：在网络分区下，系统必须在严格一致性与可用性之间做出选择。
+</dd>
+<dt><strong>碳感知调度</strong></dt>
+<dd>
+一种计算方法：根据电网的碳强度调度 AI 工作负载，优先在可再生能源供应最充足时执行。
+</dd>
+<dt><strong>碳足迹</strong></dt>
+<dd>
+由个人、组织、活动或产品直接和间接产生的温室气体排放总量，通常以 CO<sub>2</sub>-当量计量。
+</dd>
+<dt><strong>碳强度</strong></dt>
+<dd>
+与单位电力相关的温室气体排放，通常以每千瓦时 CO<sub>2</sub>-当量克数计量。
+</dd>
+<dt><strong>碳使用效率（CUE）</strong></dt>
+<dd>
+数据中心可持续性指标，将碳排放与 IT 能耗相关联，类似于设施能耗开销的电能使用效率。
+</dd>
+<dt><strong>时钟门控</strong></dt>
+<dd>
+一种电路技术：向不活跃的逻辑块抑制时钟信号，从而降低动态功耗，而无需改变活动块的供电电压或时钟频率。
+</dd>
+<dt><strong>灾难性遗忘</strong></dt>
+<dd>
+神经网络在适应新任务时丢失先前所学知识的现象，这是持续设备端学习场景中的关键挑战。
+</dd>
+<dt><strong>认证鲁棒性</strong></dt>
+<dd>
+一种形式化保证：对于指定半径或范数界限内的所有允许扰动，模型预测保持不变。
+</dd>
+<dt><strong>检查点与重启机制</strong></dt>
+<dd>
+周期性保存程序状态的技术，使系统在故障后能够从最后一次保存的状态恢复，从而提高系统可靠性。
+</dd>
+<dt><strong>分块预填充</strong></dt>
+<dd>
+一种 LLM 服务技术：将长提示词处理拆分为较小的块，使预填充工作可以与解码工作交错执行。
+</dd>
+<dt><strong>客户端调度</strong></dt>
+<dd>
+选择参与联邦学习轮次的设备的过程，依据可用性、数据质量和资源约束，以确保模型更新具有代表性。
+</dd>
+<dt><strong>云 ML</strong></dt>
+<dd>
+使用云计算基础设施为训练和推理提供可扩展计算资源的机器学习系统，通常提供高带宽连接和可观的计算能力。
+</dd>
+<dt><strong>集合操作</strong></dt>
+<dd>
+一种群体通信模式：所有 rank 参与，以聚合、广播或重新分发数据。
+</dd>
+<dt><strong>组合逻辑</strong></dt>
+<dd>
+数字逻辑电路：输出仅取决于当前输入状态，不依赖任何历史状态或记忆单元。
+</dd>
+<dt><strong>通信强度（CI）</strong></dt>
+<dd>
+跨网络传输的字节数与本地浮点运算量之比。它将算术强度推理从设备的存储层级扩展到分布式系统的网络互连结构。
+</dd>
+<dt><strong>复合 AI 系统</strong></dt>
+<dd>
+结合多个专用模型、工具和组件的 AI 架构，通过系统性集成实现复杂能力，而非依赖单一单体模型。
+</dd>
+<dt><strong>Compute Express Link（CXL）</strong></dt>
+<dd>
+一种缓存一致性互连标准，使 CPU、加速器与内存设备能够通过 PCIe 派生链路共享或池化内存。
+</dd>
+<dt><strong>概念瓶颈模型</strong></dt>
+<dd>
+一种神经网络架构：先预测可解释的中间概念，再做出最终预测，将深度学习的强大能力与可解释性结合起来。
+</dd>
+<dt><strong>概念漂移</strong></dt>
+<dd>
+输入特征与目标输出之间关系随时间的变化，需要模型进行适配以维持性能。
+</dd>
+<dt><strong>保护技术</strong></dt>
+<dd>
+为保护与监测野生动物和生态系统而设计的技术方案，包括相机陷阱、传感器网络和卫星监测系统，用于跟踪动物行为并检测威胁。
+</dd>
+<dt><strong>一致性哈希</strong></dt>
+<dd>
+一种基于哈希的路由方法：在增加或删除副本时，将键或会话映射到稳定副本，同时最小化重新映射。
+</dd>
+<dt><strong>一致性</strong></dt>
+<dd>
+决定读操作在写操作重叠或副本不一致时可能观察到哪个版本的约定。
+</dd>
+<dt><strong>宪法式 AI</strong></dt>
+<dd>
+一种训练方法：模型通过学习依据一组原则对响应进行评判来改进自身输出，从而实现迭代式自我完善，在保持有帮助性的同时减少有害内容。
+</dd>
+<dt><strong>持续学习</strong></dt>
+<dd>
+机器学习系统从数据流中持续学习并保留先前获得知识的能力，应对神经网络中的灾难性遗忘挑战。
+</dd>
+<dt><strong>连续批处理</strong></dt>
+<dd>
+一种 LLM 服务调度器：在迭代边界处移除已完成序列并接纳新请求，而不是等待整个批次完成。
+</dd>
+<dt><strong>通信—计算重叠</strong></dt>
+<dd>
+数据传输与有用计算的并发执行，使通信延迟被依赖已满足的工作所隐藏。
+</dd>
+<dt><strong>拥塞控制</strong></dt>
+<dd>
+根据负载调节流量注入或路由的机制，防止共享互连结构中持续队列、丢包和尾延迟放大。
+</dd>
+<dt><strong>冷却效率</strong></dt>
+<dd>
+数据中心冷却系统从计算设备移除热量的效率，通常以移除热量与冷却能耗之比计量。
+</dd>
+<dt><strong>反事实解释</strong></dt>
+<dd>
+解释模型输出在特定输入特征被修改后会如何变化，对理解决策边界尤其有用。
+</dd>
+<dt><strong>协变量偏移</strong></dt>
+<dd>
+一种分布偏移类型：输入分布发生变化，而输入与输出之间的条件关系保持稳定。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems--6294" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems--6294">D</h2>
+<dl>
+<dt><strong>数据中心</strong></dt>
+<dd>
+容纳计算机系统及相关组件（如电信和存储系统）的设施，通常包括冗余电源、冷却系统和网络连接。
+</dd>
+<dt><strong>数据压缩</strong></dt>
+<dd>
+通过编码、量化或特征提取来减少训练数据的大小与复杂度的技术，以支持在内存受限设备上的高效存储与处理。
+</dd>
+<dt><strong>数据并行</strong></dt>
+<dd>
+一种训练策略：每个工作者持有完整模型副本，处理不同的数据分片，并在应用相同更新前同步梯度。
+</dd>
+<dt><strong>数据投毒</strong></dt>
+<dd>
+一种攻击方法：攻击者向训练数据集中注入精心构造的恶意数据点，以有目标或系统性的方式操纵模型行为。
+</dd>
+<dt><strong>数据清理</strong></dt>
+<dd>
+有意且永久地删除或销毁存储在内存设备中的数据的过程，使其不可恢复，从而确保数据安全。
+</dd>
+<dt><strong>解码阶段</strong></dt>
+<dd>
+LLM 推理中的自回归生成阶段，利用 KV 缓存逐步生成词元，每次生成一个，通常受内存带宽限制。
+</dd>
+<dt><strong>深度学习</strong></dt>
+<dd>
+机器学习的一个子集，使用具有多个隐藏层的神经网络，从数据中自动学习层次化表示。
+</dd>
+<dt><strong>防御性蒸馏</strong></dt>
+<dd>
+一种使用软标签训练学生模型以模仿教师模型行为的技术，可降低对对抗扰动的敏感性。
+</dd>
+<dt><strong>人口统计均等</strong></dt>
+<dd>
+一种公平性准则，要求获得正向预测的概率与受保护属性所对应的群体归属无关。
+</dd>
+<dt><strong>Dennard 缩放</strong></dt>
+<dd>
+一项历史观察：随着晶体管尺寸缩小，其功率密度保持大致恒定，因此可以增加晶体管数量，而不会使功耗按比例增加。
+</dd>
+<dt><strong>深度可分离卷积</strong></dt>
+<dd>
+一种将标准卷积分解为逐通道操作和逐点操作的计算技术，可将参数量和计算量减少约 8–9<span class="math inline">\(\times\)</span>，这一幅度适用于典型的 <span class="math inline">\(3{\times}3\)</span> 高通道数移动端网络层。
+</dd>
+<dt><strong>差分隐私</strong></dt>
+<dd>
+一种通过向计算中添加经过校准的噪声来提供形式化隐私保证的数学框架，确保纳入或排除任何个人的数据对输出的影响均受到可证明的限制。
+</dd>
+<dt><strong>差分隐私随机梯度下降（DP-SGD）</strong></dt>
+<dd>
+一种对每个样本的梯度进行裁剪并添加经过校准的噪声，以提供差分隐私保证的训练算法。
+</dd>
+<dt><strong>数字鸿沟</strong></dt>
+<dd>
+能够获取现代信息与通信技术的人群与无法获取这些技术的人群之间的差距，尤其影响服务不足的社区从数字解决方案中获益的能力。
+</dd>
+<dt><strong>数字孪生</strong></dt>
+<dd>
+物理系统的虚拟表示，利用实时数据和机器学习来映射、预测并优化其对应物理系统的行为。
+</dd>
+<dt><strong>开销转移</strong></dt>
+<dd>
+指降低分布式系统的一项成本往往会将压力转移到系统的其他部分，而非消除压力的原则。例如，减少同步屏障可以缩短协同时间，同时增加状态陈旧程度或恢复复杂度。
+</dd>
+<dt><strong>解耦服务</strong></dt>
+<dd>
+一种服务架构，将预填充和解码工作分别安排在不同的资源池或硬件上，这些资源池或硬件针对两类工作各自的瓶颈进行了优化。
+</dd>
+<dt><strong>灾害响应系统</strong></dt>
+<dd>
+利用机器学习，通过卫星影像分析、传感器网络和资源分配优化来检测、预测并响应自然灾害的自动化系统。
+</dd>
+<dt><strong>分布式检查点</strong></dt>
+<dd>
+一种检查点模式，各工作节点在协同协议下并行写入各自负责的训练状态部分。
+</dd>
+<dt><strong>分布式知识模式</strong></dt>
+<dd>
+一种面向去中心化节点之间的集体学习与推理的设计模式，强调点对点知识共享和协作式模型改进，同时保持运行独立性。
+</dd>
+<dt><strong>分布式追踪</strong></dt>
+<dd>
+一种利用传播的追踪上下文，跨多个服务或组件追踪请求的可观测性技术。
+</dd>
+<dt><strong>分布式训练</strong></dt>
+<dd>
+在多个计算节点或设备上训练机器学习模型的做法，旨在缩短训练时间并支持更大的模型架构。
+</dd>
+<dt><strong>分布偏移</strong></dt>
+<dd>
+模型部署期间遇到的数据与训练分布不同的现象，可能导致模型性能下降。
+</dd>
+<dt><strong>分布偏移类型</strong></dt>
+<dd>
+对数据分布变化的形式化分类，包括协变量偏移、标签偏移、概念漂移和域偏移，每种类型都需要特定的适应技术。
+</dd>
+<dt><strong>域适应</strong></dt>
+<dd>
+使在一个域上训练的模型能够在另一个不同但相关的域上表现良好的机器学习技术，用于应对分布不匹配问题。
+</dd>
+<dt><strong>领域专用 AI 应用</strong></dt>
+<dd>
+针对医疗、农业、教育或灾害响应等特定领域定制的机器学习解决方案，旨在应对各领域独特的挑战与约束。
+</dd>
+<dt><strong>双模冗余（DMR）</strong></dt>
+<dd>
+一种容错技术，在两个独立系统上重复执行同一计算并比较其输出。输出不一致可以检测出故障，但若无其他机制，则无法识别或纠正错误结果。
+</dd>
+<dt><strong>两用困境</strong></dt>
+<dd>
+对于既可能用于有益用途、也可能用于有害用途的技术，如何减少其滥用所带来的挑战，在 AI 安全领域尤为突出。
+</dd>
+<dt><strong>动态批处理</strong></dt>
+<dd>
+一种服务技术，将新到达的请求在短时间内聚合成批次，以提高吞吐量，同时控制由此增加的延迟。
+</dd>
+<dt><strong>动态电压与频率调节（DVFS）</strong></dt>
+<dd>
+一种电源管理技术，通过调整处理器的供电电压和时钟频率，在执行速度、能耗和散热余量之间进行权衡。
+</dd>
+<dt><strong>持久性</strong></dt>
+<dd>
+指已确认的数据在存储契约所涵盖的故障发生后仍可恢复的属性。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-e-da15" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-e-da15">E</h2>
+<dl>
+<dt><strong>边缘 AI</strong></dt>
+<dd>
+将人工智能算法直接部署到智能手机、IoT 传感器和嵌入式系统等边缘设备上，从而无需连接云端即可进行实时处理。
+</dd>
+<dt><strong>边缘计算</strong></dt>
+<dd>
+一种分布式计算范式，将计算与数据存储靠近数据源，从而实现低延迟的实时处理并降低带宽需求。
+</dd>
+<dt><strong>边缘机器学习</strong></dt>
+<dd>
+在网络边缘执行推理、有时还执行训练的机器学习系统，通常部署在智能手机或嵌入式系统等算力受限的设备上。
+</dd>
+<dt><strong>边缘训练</strong></dt>
+<dd>
+直接在边缘设备上训练或微调机器学习模型的过程，可在无需向云服务器传输数据的情况下实现个性化与自适应。
+</dd>
+<dt><strong>等代价多路径（ECMP）</strong></dt>
+<dd>
+一种路由方法，将流量哈希到多条路由代价相同的路径上；持久的大流量仍可能碰撞在同一条路径上，即使其他路径仍有大量空闲容量。
+</dd>
+<dt><strong>弹性训练</strong></dt>
+<dd>
+可随工作节点加入、离开、故障或被替换而继续进行的训练，通过调整进程组规模并重新分配状态或数据来实现。
+</dd>
+<dt><strong>电迁移</strong></dt>
+<dd>
+导体中的金属原子在电场作用下发生移动，可能随时间导致永久性硬件故障。
+</dd>
+<dt><strong>隐含碳</strong></dt>
+<dd>
+产品在开始运行之前，其制造、运输和安装过程中产生的全部温室气体排放。
+</dd>
+<dt><strong>精确一次结果</strong></dt>
+<dd>
+一种应用层面的结果，重放既不会丢失也不会重复某个效果，通常借助稳定标识符以及幂等或事务性写入来实现，而非仅依赖传输层的投递。
+</dd>
+<dt><strong>事件时间</strong></dt>
+<dd>
+事件在其来源处发生的时间，区别于系统处理该事件的时间。
+</dd>
+<dt><strong>涌现能力</strong></dt>
+<dd>
+神经网络在特定参数阈值处突然出现的各种能力，例如推理与算术能力会不连续地涌现，而非随规模增大而逐步提升。
+</dd>
+<dt><strong>能效</strong></dt>
+<dd>
+有用输出与能量输入之比，用于衡量系统将能量转化为所需计算工作的有效性。
+</dd>
+<dt><strong>能量尺度不变性</strong></dt>
+<dd>
+要求将有用计算与计算、冷却和网络传输所消耗的总能量相比较进行评估。它在集群定律的时间分解之外，补充了分布式效率的能耗侧度量。
+</dd>
+<dt><strong>集成学习方法</strong></dt>
+<dd>
+机器学习方法，通过结合多个模型的预测结果来提高准确率、鲁棒性和可靠性，相对于单个模型有所改善。
+</dd>
+<dt><strong>环境影响测量</strong></dt>
+<dd>
+对人工智能系统生态影响的系统性跟踪与量化，涵盖完整系统生命周期内的能耗、碳排放和资源消耗。
+</dd>
+<dt><strong>环境监测</strong></dt>
+<dd>
+利用传感器网络和机器学习系统性采集与分析环境数据，以跟踪生态系统健康、污染水平和气候变化影响。
+</dd>
+<dt><strong>机会均等</strong></dt>
+<dd>
+一种公平性准则，关注确保各群体之间的真正阳性率相等，从而保证合格个体无论属于哪个群体都得到同等对待。
+</dd>
+<dt><strong>均等机会</strong></dt>
+<dd>
+一种公平性定义，要求不同人口统计群体之间的真正阳性率和假阳性率相等。
+</dd>
+<dt><strong>纠错码</strong></dt>
+<dd>
+用于数据存储与传输中检测并纠正错误的方法，可提高系统可靠性与数据完整性。
+</dd>
+<dt><strong>误差反馈</strong></dt>
+<dd>
+一种梯度压缩技术，存储压缩残差并在后续更新中重新注入，以降低收敛误差。
+</dd>
+<dt><strong>ESP32</strong></dt>
+<dd>
+一款广泛应用于物联网应用的低成本微控制器，配备 240 MHz 处理器和 520 KB SRAM，常用于算力受限的社会影响类应用。
+</dd>
+<dt><strong>精确模型窃取</strong></dt>
+<dd>
+一种攻击，旨在提取机器学习模型的精确内部结构、参数与架构，从而完整复现原始模型。
+</dd>
+<dt><strong>经验回放</strong></dt>
+<dd>
+一种基于记忆的技术，将过去的训练样本存储在缓冲区中，以防止灾难性遗忘并稳定流式或持续学习场景中的学习过程。
+</dd>
+<dt><strong>专家坍缩</strong></dt>
+<dd>
+混合专家模型中的一种训练病理现象：只有少数专家接收到显著的训练信号，导致其他专家被闲置，并降低模型的有效容量。
+</dd>
+<dt><strong>专家并行</strong></dt>
+<dd>
+一种针对混合专家模型的策略，将专家分布到各工作节点，并将 token 路由至所选专家。
+</dd>
+<dt><strong>可解释性</strong></dt>
+<dd>
+利益相关方借助事后解释技术来理解机器学习模型如何产生输出的能力。
+</dd>
+<dt><strong>可解释人工智能</strong></dt>
+<dd>
+设计为对其决策与预测提供清晰、可解释解释的人工智能系统，以应对复杂机器学习模型的“黑箱”问题。
+</dd>
+<dt><strong>外部记忆</strong></dt>
+<dd>
+使神经网络能够访问和操作外部存储系统的机制，将其工作记忆扩展到参数存储之外，从而支持更复杂的推理与信息检索。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-f-d0dc" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-f-d0dc">F</h2>
+<dl>
+<dt><strong>F1 分数</strong></dt>
+<dd>
+一种模型准确率度量，将精确率与召回率合并为单一指标，计算方式是二者的调和平均。
+</dd>
+<dt><strong>公平性约束</strong></dt>
+<dd>
+为机器学习系统中各人口统计群体获得公平对待而设计的技术与政策限制。
+</dd>
+<dt><strong>快速梯度符号法（FGSM）</strong></dt>
+<dd>
+一种基于梯度的对抗性攻击，通过在梯度方向上添加微小扰动来生成对抗样本。
+</dd>
+<dt><strong>胖树拓扑</strong></dt>
+<dd>
+一种 Clos 风格的分层网络拓扑，其聚合容量向脊节点方向增加，从而提供高二分带宽与多路径路由。
+</dd>
+<dt><strong>前向纠错（FEC）</strong></dt>
+<dd>
+一种冗余编码方式，接收方无需重传即可重建受损链路符号，以编码开销和延迟换取高信令速率下的可靠运行。
+</dd>
+<dt><strong>故障注入攻击</strong></dt>
+<dd>
+一种物理攻击，通过电压操纵或电磁干扰等技术故意扰乱硬件操作，以诱发计算错误并破坏系统完整性。
+</dd>
+<dt><strong>容错</strong></dt>
+<dd>
+系统在部分组件发生故障或遇到错误时仍能继续正确运行的能力。
+</dd>
+<dt><strong>特征库</strong></dt>
+<dd>
+用于定义、计算、存储和提供可复用机器学习特征的系统，在训练与推理中保持一致的服务。
+</dd>
+<dt><strong>联邦平均</strong></dt>
+<dd>
+联邦学习的标准算法，依据各客户端本地数据集大小对客户端模型更新进行加权平均，从而得到全局模型。
+</dd>
+<dt><strong>联邦学习</strong></dt>
+<dd>
+一种机器学习方法，在去中心化的数据源之间训练算法而无需将数据集中，从而提升隐私性并降低数据传输的能耗成本。
+</dd>
+<dt><strong>小样本学习</strong></dt>
+<dd>
+一种机器学习范式，使模型仅凭少量带标签示例即可适应新任务，对数据稀疏的端侧场景至关重要。
+</dd>
+<dt><strong>FlashAttention</strong></dt>
+<dd>
+一种分块注意力算法，避免显式生成完整的注意力矩阵，通过在线 softmax 与感知内存的块处理来降低内存流量。
+</dd>
+<dt><strong>集群定律</strong></dt>
+<dd>
+一种分布式步时模型，将执行分解为理想划分的本地计算、通信、同步与重叠。它解释了为何继续增加加速器最终会收益递减。
+</dd>
+<dt><strong>集群栈</strong></dt>
+<dd>
+本书对机器学习集群的分层模型，自基础设施经分布与推理服务直至治理。较低层的约束限制了其上方各层可用的选择。
+</dd>
+<dt><strong>FLOP/s</strong></dt>
+<dd>
+每秒浮点运算次数，用于衡量系统每秒执行的浮点算术运算数量，是一种吞吐量度量。
+</dd>
+<dt><strong>基础模型</strong></dt>
+<dd>
+如 GPT 与 BERT 等大规模预训练模型，可针对多种下游任务进行适配，作为多个应用的基础。
+</dd>
+<dt><strong>全切分数据并行（FSDP）</strong></dt>
+<dd>
+一种切分式数据并行方法，将模型状态切分并分布到各工作节点，仅在计算需要时才收集参数。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-g-94a4" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-g-94a4">G</h2>
+<dl>
+<dt>** gangs 调度**</dt>
+<dd>
+一种调度策略，将分布式作业的所有工作节点或资源统一分配，使该作业能够作为一个整体启动并推进。
+</dd>
+<dt><strong>GDPR</strong></dt>
+<dd>
+《通用数据保护条例》，欧盟法律，对个人数据处理施加严格要求，并显著影响隐私保护型机器学习的设计。
+</dd>
+<dt><strong>生成对抗网络</strong></dt>
+<dd>
+一类机器学习系统，其中两个神经网络相互竞争，一个生成伪造数据，另一个尝试检测该伪造数据，从而产生高度逼真的合成数据。
+</dd>
+<dt><strong>通用性税</strong></dt>
+<dd>
+通用处理器为支持多样化负载而付出的面积、功耗与控制开销，而非用于加速专用负载中的主导运算。
+</dd>
+<dt><strong>毛刺</strong></dt>
+<dd>
+电压、电流或信号上的瞬时偏差，可能导致数字系统与电路产生错误操作。
+</dd>
+<dt><strong>治理框架</strong></dt>
+<dd>
+用于管理负责任的人工智能开发的系统性方法，包括政策、程序、监督机制与问责结构。
+</dd>
+<dt><strong>GPU</strong></dt>
+<dd>
+图形处理器，一种专用电子电路，用于快速操作与修改内存以加速图像生成及 AI 训练等并行处理任务。
+</dd>
+<dt><strong>GPUDirect RDMA</strong></dt>
+<dd>
+一条直接数据通路，使支持 RDMA 的网络适配器能够在不经过主机内存的情况下将数据传输至或从 GPU 内存中读取。
+</dd>
+<dt><strong>GPUDirect Storage（GDS）</strong></dt>
+<dd>
+一条存储数据通路，在存储设备与 GPU 内存之间实现直接 DMA，绕过 CPU 与主机 DRAM 的瓶颈。
+</dd>
+<dt><strong>梯度累积</strong></dt>
+<dd>
+一种在优化器步骤或同步之前累积多个 microbatch 梯度的技术。
+</dd>
+<dt><strong>梯度下降</strong></dt>
+<dd>
+一种优化算法，通过沿损失函数梯度的反方向迭代更新模型参数，是神经网络训练的基础。
+</dd>
+<dt><strong>梯度反转攻击</strong></dt>
+<dd>
+一种攻击，从共享的梯度或模型更新中重建敏感的训练样本或特征。
+</dd>
+<dt><strong>梯度陈旧</strong></dt>
+<dd>
+梯度计算时刻与梯度应用时刻之间以更新或步数计量的延迟。
+</dd>
+<dt><strong>绿色 AI 指标</strong></dt>
+<dd>
+专门用于衡量人工智能系统环境影响的性能指标，涵盖机器学习全生命周期中的碳足迹、能效与资源利用。
+</dd>
+<dt><strong>绿色计算</strong></dt>
+<dd>
+以环境负责任的方式设计、制造、使用和处置计算机与计算机系统。
+</dd>
+<dt><strong>灰盒攻击</strong></dt>
+<dd>
+一种对抗性攻击，攻击者对模型仅掌握部分信息，例如知道架构但不知道具体参数或训练数据。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-h-de56" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-h-de56">H</h2>
+<dl>
+<dt><strong>幻觉</strong></dt>
+<dd>
+生成模型的一种失效形式，输出流畅且自信，但缺乏依据、系虚构或存在事实性错误。
+</dd>
+<dt><strong>硬件约束优化</strong></dt>
+<dd>
+用于将机器学习算法与模型适配到移动与嵌入式设备的内存、计算和功耗限制之内的技术。
+</dd>
+<dt><strong>硬件冗余</strong></dt>
+<dd>
+对关键硬件组件进行复制，以通过投票机制提供备份功能并提升系统可靠性。
+</dd>
+<dt><strong>硬件木马</strong></dt>
+<dd>
+在制造过程中嵌入硬件组件中的恶意修改，在正常条件下保持潜伏，但在满足特定条件时触发有害行为。
+</dd>
+<dt><strong>心跳机制</strong></dt>
+<dd>
+系统组件之间周期性发送的信号，用于监测健康状态并检测故障，从而支持及时的故障检测与恢复。
+</dd>
+<dt><strong>分层 AllReduce</strong></dt>
+<dd>
+一种 AllReduce 分解方式，先在快速本地域内完成归约，再经由较慢的节点间或机架间链路通信。
+</dd>
+<dt><strong>分层处理模式</strong></dt>
+<dd>
+一种设计模式，将系统划分为边缘、区域、云等层级，依据可用资源与能力分配职责，从而优化整个计算谱系中的资源使用。
+</dd>
+<dt><strong>高带宽内存（HBM）</strong></dt>
+<dd>
+一种 3D 堆叠的 DRAM 架构，通过极宽且极短的互连提供靠近加速器的较高内存带宽。
+</dd>
+<dt><strong>同态加密</strong></dt>
+<dd>
+一种密码学技术，允许在未解密的情况下直接对加密数据进行计算，从而支持隐私保护型机器学习推理。
+</dd>
+<dt><strong>热备部件</strong></dt>
+<dd>
+保持待命、可在不中断系统运行的情况下即时替换故障部件的备份组件，提供冗余能力。
+</dd>
+<dt><strong>Huber 损失</strong></dt>
+<dd>
+一种用于回归的鲁棒损失函数，相比平方误差损失对离群点不那么敏感，从而提升训练稳定性。
+</dd>
+<dt><strong>人机协同</strong></dt>
+<dd>
+人类与人工智能系统之间的协同合作，双方各自发挥独特优势，比单独任一方更能有效地解决复杂问题。
+</dd>
+<dt><strong>人工监督</strong></dt>
+<dd>
+一项原则，即人类判断应当监督、纠正或中止自动化决策，以维持对人工智能系统有意义的人工控制。
+</dd>
+<dt><strong>超参数优化</strong></dt>
+<dd>
+寻找超参数（学习率、批大小、网络架构参数）最优配置的过程，这些超参数控制机器学习训练过程。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems--39ec" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems--39ec">I</h2>
+<dl>
+<dt><strong>幂等写入</strong></dt>
+<dd>
+一种写入操作，以相同稳定标识符重复执行时产生的存储结果与单次执行完全相同，从而使不确定故障后的重放成为安全操作。
+</dd>
+<dt><strong>影响评估框架</strong></dt>
+<dd>
+用于评估人工智能部署在人道主义与发展场景中潜在社会、经济与环境影响的系统性方法。
+</dd>
+<dt><strong>推理</strong></dt>
+<dd>
+机器学习中的一个阶段，使用训练好的模型对新的、此前未见过的数据进行预测或生成输出。
+</dd>
+<dt><strong>InfiniBand</strong></dt>
+<dd>
+一种高性能、低延迟的互连，广泛用于 HPC 与机器学习训练集群，并原生支持 RDMA 与基于信用的流量控制。
+</dd>
+<dt><strong>入站拥塞</strong></dt>
+<dd>
+一种多对一的流量突发，同时发送方淹没单一目的地的出口或接收方，迅速填满共享缓冲区并推高尾延迟。
+</dd>
+<dt><strong>间歇性故障</strong></dt>
+<dd>
+发生得零星且不可预测的硬件故障，出现与消失之间没有稳定模式，使得诊断困难。
+</dd>
+<dt><strong>可解释性</strong></dt>
+<dd>
+人类能够理解机器学习模型预测背后推理程度的高低，常指那些本身具有透明性的模型。
+</dd>
+<dt><strong>物联网传感器</strong></dt>
+<dd>
+物联网设备，用于采集并传输环境或行为数据，通常运行在有限的功耗预算下，并采用低带宽通信协议。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-k-adf5" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-k-adf5">K</h2>
+<dl>
+<dt><strong>k-匿名性</strong></dt>
+<dd>
+一种隐私保证，在泛化或抑制准标识符后，每条已发布记录都无法与至少 <span class="math inline">\(k - 1\)</span> 条其他记录区分。
+</dd>
+<dt><strong>知识蒸馏</strong></dt>
+<dd>
+一种技术，大型复杂的“教师”模型将其学到的知识迁移至更小、更高效的“学生”模型，在保持性能的同时降低计算需求。
+</dd>
+<dt><strong>KV 缓存</strong></dt>
+<dd>
+一种内存缓冲区，用于存储先前计算出的 transformer 键与值张量，使自回归生成无需为每个 token 重新计算注意力历史。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-l-b5d6" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-l-b5d6">L</h2>
+<dl>
+<dt><strong>标签偏移</strong></dt>
+<dd>
+一种分布偏移类型，其中目标标签的分布 <span class="math inline">\(p(y)\)</span> 发生变化，而类别条件特征分布 <span class="math inline">\(p(x \mid y)\)</span> 保持不变。
+</dd>
+<dt><strong>大语言模型（LLMs）</strong></dt>
+<dd>
+在海量文本语料上训练出的具有数十亿或数千亿参数的神经网络，能够在多个领域与任务中理解并生成类人文本。
+</dd>
+<dt><strong>生命周期评估</strong></dt>
+<dd>
+一种系统评估产品或系统在整个生命周期内环境影响的方法，涵盖从原材料开采到废弃处理的完整过程。
+</dd>
+<dt><strong>灯塔架构</strong></dt>
+<dd>
+一种反复使用的工作负载，用于暴露某个系统层面的约束，贯穿各章。该架构保持连续性，同时允许每章从不同的工程视角考察同一工作负载。
+</dd>
+<dt><strong>负载均衡</strong></dt>
+<dd>
+专家模型中用于确保计算负载与训练信号在专家之间均匀分布的技术，从而防止专家坍塌并维持模型效率。
+</dd>
+<dt><strong>LogP 模型</strong></dt>
+<dd>
+一种通信模型，用延迟、开销、间隔和处理器数量来表示消息传递与重叠，以便进行推理。
+</dd>
+<dt><strong>查找表</strong></dt>
+<dd>
+一种数据结构，用更简单的数组索引操作替代运行时计算，常用于性能优化。
+</dd>
+<dt><strong>LoRa</strong></dt>
+<dd>
+一种低功耗、广域的物理层无线电调制。LoRaWAN 是使用 LoRa 无线电的网络协议；可达范围取决于频率规划、发射功率、天线、地形、干扰和链路预算。
+</dd>
+<dt><strong>低秩适配</strong></dt>
+<dd>
+一种参数高效的微调方法，用低秩矩阵近似权重更新，从而减少可训练参数，同时保持适配能力。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems--fc9b" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems--fc9b">M</h2>
+<dl>
+<dt><strong>机器意识</strong></dt>
+<dd>
+人工系统中意识涌现的假想情形，代表一个前沿研究领域，探讨机器是否能够发展出主观体验。
+</dd>
+<dt><strong>机器学习</strong></dt>
+<dd>
+人工智能的一个子集，使计算机能够从数据中学习并做出决策，而无需针对每个具体任务进行显式编程。
+</dd>
+<dt><strong>机器学习集群</strong></dt>
+<dd>
+由加速器、存储、网络互连结构和控制软件组成的分布式系统，被设计为作为一个连贯的计算机器运行。
+</dd>
+<dt><strong>机器学习生命周期</strong></dt>
+<dd>
+开发、部署和维护机器学习系统的完整过程，涵盖从数据采集到模型退役。
+</dd>
+<dt><strong>机器学习运维（MLOps）</strong></dt>
+<dd>
+通过自动化流水线可靠、高效地部署和维护机器学习模型的生产实践。
+</dd>
+<dt><strong>机器学习安全</strong></dt>
+<dd>
+在整个机器学习生命周期中，保护数据、模型和基础设施免受未经授权的访问、篡改或干扰。
+</dd>
+<dt><strong>机器遗忘</strong></dt>
+<dd>
+从已训练模型中移除特定数据点影响的技术，无需完全重新训练，支持数据删除权。
+</dd>
+<dt><strong>边际排放</strong></dt>
+<dd>
+由电力需求的增量增加所导致的排放，通常来自电网中下一个被调度的发电机组。
+</dd>
+<dt><strong>平均无故障时间（MTBF）</strong></dt>
+<dd>
+可修复部件或系统中相邻两次故障之间的预期运行时间。
+</dd>
+<dt><strong>兆瓦时</strong></dt>
+<dd>
+能量单位，等于一兆瓦功率持续一小时所消耗的能量，常用于计量数据中心等大型设施的用电量。
+</dd>
+<dt><strong>成员推断攻击</strong></dt>
+<dd>
+一种隐私攻击，通过分析模型的行为和输出，试图判断某个特定数据点是否被纳入模型的训练数据集。
+</dd>
+<dt><strong>元学习</strong></dt>
+<dd>
+学习如何学习的过程，模型被训练为以最少数据快速适应新任务，尤其适用于端侧系统的个性化。
+</dd>
+<dt><strong>微控制器</strong></dt>
+<dd>
+一种紧凑型集成电路，用于控制嵌入式系统中的特定操作，通常具有有限的处理能力和内存，但针对低功耗和实时应用进行了优化。
+</dd>
+<dt><strong>极小极大</strong></dt>
+<dd>
+博弈论中使用的决策策略，试图在对抗性场景中最小化最大可能损失。
+</dd>
+<dt><strong>混合精度训练</strong></dt>
+<dd>
+一种技术，为神经网络训练的不同部分使用不同的数值精度，通常结合 16 位和 32 位浮点运算，以降低内存使用并提高训练速度。
+</dd>
+<dt><strong>专家混合</strong></dt>
+<dd>
+一种架构方法，使用多个专用子模型（专家）配合门控机制将输入路由到最相关的专家，从而在保持稀疏性的同时实现高效扩展。
+</dd>
+<dt><strong>移动机器学习</strong></dt>
+<dd>
+针对智能手机和平板电脑等移动设备优化的机器学习系统，在端侧处理中平衡计算效率与推理精度。
+</dd>
+<dt><strong>移动优化架构</strong></dt>
+<dd>
+专门为移动部署设计的神经网络架构，强调参数效率、计算速度和能耗节约。
+</dd>
+<dt><strong>MobileNet</strong></dt>
+<dd>
+一个面向移动设备的高效神经网络架构家族，使用深度可分离卷积实现模型规模和计算量的显著降低。
+</dd>
+<dt><strong>模式坍塌</strong></dt>
+<dd>
+生成模型中的一种失效模式，模型仅产生有限种类的输出，忽略了训练数据中的多样性，未能捕捉完整分布。
+</dd>
+<dt><strong>模型卡片</strong></dt>
+<dd>
+文档框架，为机器学习模型提供结构化信息，包括预期用途、性能特征和局限性。
+</dd>
+<dt><strong>模型压缩</strong></dt>
+<dd>
+通过量化、剪枝和知识蒸馏等方法降低机器学习模型的规模和计算需求的技术，以支持在资源受限设备上部署。
+</dd>
+<dt><strong>模型提取</strong></dt>
+<dd>
+通过系统性地查询模型 API 观察其输入输出行为，从而窃取或重建机器学习模型的过程。
+</dd>
+<dt><strong>模型 FLOPs 利用率（MFU）</strong></dt>
+<dd>
+硬件峰值 FLOP/s 中用于有效模型计算的比例（按墙钟时间衡量），用于衡量持续训练或服务的效率。
+</dd>
+<dt><strong>模型反演攻击</strong></dt>
+<dd>
+一种攻击，通过分析模型的输出和置信度分数，试图重建训练数据或推断关于数据集的敏感信息。
+</dd>
+<dt><strong>模型剪枝</strong></dt>
+<dd>
+从已训练神经网络中移除不必要的权重、神经元或连接的过程，以降低其规模和计算需求。
+</dd>
+<dt><strong>模型量化</strong></dt>
+<dd>
+一种降低模型参数精度（通常从 32 位降至 8 位或更低）的技术，从而减小模型规模和计算需求，同时保持可接受的精度。
+</dd>
+<dt><strong>模型注册表</strong></dt>
+<dd>
+模型制品、版本、元数据、血缘、依赖关系和生命周期状态的中央目录。
+</dd>
+<dt><strong>模型不确定性</strong></dt>
+<dd>
+机器学习模型无法充分捕捉底层数据生成过程全部复杂性的不足，导致预测不确定性。
+</dd>
+<dt><strong>模型水印</strong></dt>
+<dd>
+一种将可验证的所有权签名嵌入机器学习模型的技术，可用于检测未经授权使用或证明知识产权盗窃。
+</dd>
+<dt><strong>Monte Carlo 丢弃</strong></dt>
+<dd>
+一种技术，在推理时以不同的丢弃掩码执行多次前向传播，以估计预测不确定性。
+</dd>
+<dt><strong>摩尔定律</strong></dt>
+<dd>
+观察到的现象：单片微芯片上的晶体管数量约每两年翻一番，在历史扩展假设下降低了每个晶体管的成本。
+</dd>
+<dt><strong>多智能体方法</strong></dt>
+<dd>
+一种系统架构，多个 AI 智能体协作、协商或竞争以解决复杂问题，从而在不同组件间实现分工和专业化能力。
+</dd>
+<dt><strong>多实例 GPU（MIG）</strong></dt>
+<dd>
+NVIDIA 将一块 GPU 划分为具有独立计算和内存资源的隔离硬件切片的一种机制。
+</dd>
+<dt><strong>多校准</strong></dt>
+<dd>
+一种公平性技术，确保模型预测在相互交叉的子群体之间保持一致校准，以应对复杂的 demographic 交互。
+</dd>
+<dt><strong>多模态 AI</strong></dt>
+<dd>
+能够同时处理和理解多种类型数据的 AI 系统，如文本、图像、音频和视频，从而实现更全面的理解与交互。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-n-faa6" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-n-faa6">N</h2>
+<dl>
+<dt><strong>窄人工智能</strong></dt>
+<dd>
+设计用于出色完成特定、定义明确任务的 AI 系统，但缺乏在多样化问题领域之间泛化的能力，与通用人工智能形成对比。
+</dd>
+<dt><strong>NCCL</strong></dt>
+<dd>
+NVIDIA Collective Communications Library，一种面向拓扑感知的集合通信 GPU 通信库。
+</dd>
+<dt><strong>神经网络架构搜索</strong></dt>
+<dd>
+用于设计最优神经网络架构的自动化方法，利用算法探索可能的网络设计空间并找出表现最佳的结构。
+</dd>
+<dt><strong>神经网络引擎</strong></dt>
+<dd>
+专为机器学习推理和训练设计的专用硬件加速器，如 Apple 的 Neural Engine 或 Google 的 Edge TPU，针对端侧 AI 工作负载进行了优化。
+</dd>
+<dt><strong>神经网络</strong></dt>
+<dd>
+一种受生物神经网络启发的计算模型，由互联节点（神经元）按层组织，能够从数据中学习复杂模式。
+</dd>
+<dt><strong>神经网络处理单元（NPU）</strong></dt>
+<dd>
+用于神经网络工作负载的专用加速器，通常针对边缘设备上的低功耗矩阵和张量运算进行优化。
+</dd>
+<dt><strong>网络互连结构</strong></dt>
+<dd>
+连接计算节点并决定分布式通信带宽、延迟和失效行为的链路、交换机、路由和传输机制。
+</dd>
+<dt><strong>非阻塞互连结构</strong></dt>
+<dd>
+一种网络，其内部容量允许任意可行的端点对组合以满线速率通信，而互连结构内部不存在拥塞。
+</dd>
+<dt><strong>类脑计算</strong></dt>
+<dd>
+受生物神经网络结构和功能启发的计算架构，设计用于比传统数字计算机更高效地处理信息。
+</dd>
+<dt><strong>非独立同分布数据</strong></dt>
+<dd>
+样本既不独立、也不同分布，或两者兼有的数据。跨设备或时间，客户端可能来自不同的分布，为联邦学习的收敛与泛化带来挑战。
+</dd>
+<dt><strong>非易失性内存扩展（NVMe）</strong></dt>
+<dd>
+一种面向通过 PCIe 挂载的 SSD 的高性能协议，常用作机器学习存储层级中的本地缓存或检查点暂存层。
+</dd>
+<dt><strong>NVLink</strong></dt>
+<dd>
+一种高带宽的 NVIDIA 互连，用于节点内 GPU 到 GPU 的通信。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems--1d6f" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems--1d6f">O</h2>
+<dl>
+<dt><strong>对象存储</strong></dt>
+<dd>
+一种存储模型，将数据作为带元数据并通过网络 API 访问的对象进行管理，常用于持久且成本较低的容量。
+</dd>
+<dt><strong>端侧学习</strong></dt>
+<dd>
+直接在已部署的硬件设备上进行的本地模型适配或训练，不依赖与集中服务器的持续连接。
+</dd>
+<dt><strong>运行碳</strong></dt>
+<dd>
+系统在运行过程中产生的排放，主要来自训练、推理、冷却和设施运营期间消耗的电力。
+</dd>
+<dt><strong>超额订阅</strong></dt>
+<dd>
+一种拓扑设计，其中聚合的下游容量超过上游容量，从而降低交换机成本，但在并发流量下形成共享带宽瓶颈。
+</dd>
+<dt><strong>算子融合</strong></dt>
+<dd>
+一种优化，将相邻操作合并为更少的内核，使中间值保留在芯片上，从而降低内存流量或启动开销。
+</dd>
+<dt><strong>编排</strong></dt>
+<dd>
+对集群资源和工作负载的协调，包括调度、放置、扩展、排序、恢复以及跨分布式基础设施的资源分配。
+</dd>
+<dt><strong>氧化层击穿</strong></dt>
+<dd>
+晶体管中氧化层因电场应力过大而失效，导致永久性硬件故障。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-p-6377" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-p-6377">P</h2>
+<dl>
+<dt><strong>PagedAttention</strong></dt>
+<dd>
+一种 KV 缓存内存管理技术，将逻辑 token 块映射到非连续的物理 GPU 内存页，以减少碎片。
+</dd>
+<dt><strong>并行文件系统（PFS）</strong></dt>
+<dd>
+一种分布式文件系统，将数据跨多个存储服务器分条，以提供超过单设备的聚合吞吐量。
+</dd>
+<dt><strong>分区倾斜</strong></dt>
+<dd>
+记录或键的分布不均，导致某个分布式流水线分区承担不成比例的负载，并决定该阶段的完成时间。
+</dd>
+<dt><strong>参数</strong></dt>
+<dd>
+机器学习模型中的可学习变量，例如神经网络中的权重和偏置，在训练期间被调整以优化性能。
+</dd>
+<dt><strong>参数高效微调（PEFT）</strong></dt>
+<dd>
+适配方法，仅更新一小部分参数或新增模块，同时保持大部分预训练权重冻结。
+</dd>
+<dt><strong>永久性故障</strong></dt>
+<dd>
+硬件缺陷，会不可逆地持续存在直至修复或部件更换，并一致地影响系统行为。
+</dd>
+<dt><strong>个性化层</strong></dt>
+<dd>
+模型组件，通常是最后的分类层，被本地适配为面向用户特定数据，同时保持共享骨干层冻结。
+</dd>
+<dt><strong>物理攻击</strong></dt>
+<dd>
+直接操纵或篡改计算硬件以破坏机器学习系统的安全性和完整性，绕过传统软件防御。
+</dd>
+<dt><strong>流水线并行</strong></dt>
+<dd>
+一种分布式训练策略，将层划分为顺序阶段，并使用微批次在各设备间重叠工作。
+</dd>
+<dt><strong>时点连接</strong></dt>
+<dd>
+一种连接，按事件时间戳检索特征值，从而防止训练集中出现未来数据泄漏。
+</dd>
+<dt><strong>事后解释</strong></dt>
+<dd>
+模型训练后应用的解释方法，将模型视为黑箱，并从输入输出行为推断推理模式。
+</dd>
+<dt><strong>电源使用效率</strong></dt>
+<dd>
+用于确定数据中心能效的指标，计算为设施总能耗与 IT 设备能耗之比。
+</dd>
+<dt><strong>精准农业</strong></dt>
+<dd>
+利用包括 GPS、传感器和机器学习在内的技术，通过精确监测和管理水、化肥和农药等作物投入来优化耕作实践。
+</dd>
+<dt><strong>预填充阶段</strong></dt>
+<dd>
+LLM 推理的初始阶段，处理提示词并填充 KV 缓存，通常由计算主导。
+</dd>
+<dt><strong>最小权限原则</strong></dt>
+<dd>
+一种安全概念，用户仅被授予完成其职能所需的最低访问级别，从而降低安全风险。
+</dd>
+<dt><strong>优先级流量控制（PFC）</strong></dt>
+<dd>
+一种以太网链路层机制，按优先级类别暂停流量以防止丢包，从而以运行成本实现无丢包 RoCE。
+</dd>
+<dt><strong>隐私预算</strong></dt>
+<dd>
+差分隐私中的一个概念，表示所有查询或计算允许发生的隐私损失总量，每次操作消耗其中一部分有限预算。
+</dd>
+<dt><strong>隐私保护机器学习</strong></dt>
+<dd>
+使机器学习得以开展同时保护训练或推理所用个人数据隐私的技术与方法。
+</dd>
+<dt><strong>隐私保护技术</strong></dt>
+<dd>
+旨在保护机器学习中的个人隐私的方法，包括差分隐私、联邦学习和本地处理。
+</dd>
+<dt><strong>隐私—效用权衡</strong></dt>
+<dd>
+在保护个人隐私与保持数据对机器学习的效用之间的根本张力，需要通过差分隐私等技术进行谨慎权衡。
+</dd>
+<dt><strong>渐进增强模式</strong></dt>
+<dd>
+一种设计模式，在最低资源条件下建立基础功能，并随着更多资源可用而逐步纳入高级功能。
+</dd>
+<dt><strong>投影梯度下降（PGD）</strong></dt>
+<dd>
+一种基于梯度的迭代对抗攻击，反复扰动输入并将其投影回允许的范数球内。
+</dd>
+<dt><strong>提示词工程</strong></dt>
+<dd>
+设计与优化文本提示词的实践，以有效与大型语言模型通信并从 AI 系统获得期望输出。
+</dd>
+<dt><strong>提示词注入</strong></dt>
+<dd>
+一种攻击，嵌入在用户或检索内容中的对抗性指令导致 LLM 忽略既定约束。
+</dd>
+<dt><strong>剪枝</strong></dt>
+<dd>
+一种模型压缩技术，从神经网络中移除不必要的连接或神经元，以在不显著影响性能的前提下减小模型规模和计算需求。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-q-3a81" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-q-3a81">Q</h2>
+<dl>
+<dt><strong>量化</strong></dt>
+<dd>
+将模型权重和激活值从浮点表示降低到更低比特表示的过程，以降低内存占用并加速边缘设备上的计算。
+</dd>
+<dt><strong>感知量化训练（QAT）</strong></dt>
+<dd>
+一种模拟低精度算术的训练方法，使模型在部署后使用量化权重或激活值时仍能保持精度。
+</dd>
+<dt><strong>量子机器学习</strong></dt>
+<dd>
+量子计算与机器学习的交叉领域，探讨量子算法和量子计算机如何增强或变革机器学习任务。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-r-514e" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-r-514e">R</h2>
+<dl>
+<dt><strong>面向轨线的拓扑</strong></dt>
+<dd>
+一种集群布线模式，通过专用网络轨连接各节点间对应的加速器秩，使物理路径与可预测的集合通信流量相匹配。
+</dd>
+<dt><strong>随机平滑</strong></dt>
+<dd>
+一种认证防御方法，通过对输入添加噪声后的版本进行分类，以获得概率性鲁棒性保证。
+</dd>
+<dt><strong>RoCE（RDMA over Converged Ethernet）</strong></dt>
+<dd>
+一种协议，在以太网上传输远程直接内存访问语义，依赖对低丢包或无丢包行为的精心管理。
+</dd>
+<dt><strong>ReduceScatter</strong></dt>
+<dd>
+一种集合通信操作，在各秩之间对输入执行归约，并将归约结果的各个不同分片散列回各秩。
+</dd>
+<dt><strong>正则化</strong></dt>
+<dd>
+机器学习中用于防止过拟合的方法，通过在损失函数中添加惩罚项来约束模型复杂度。
+</dd>
+<dt><strong>可靠性缺口</strong></dt>
+<dd>
+组件可靠性与大型、强耦合任务中所有必需组件都保持可用的概率之间的差异，后者低得多。该缺口随集群规模和任务时长增加而扩大。
+</dd>
+<dt><strong>远程直接内存访问（RDMA）</strong></dt>
+<dd>
+一种网络机制，使一台机器无需经由内核在中断路径上进行拷贝即可读取或写入另一台机器的内存。
+</dd>
+<dt><strong>可再生能源</strong></dt>
+<dd>
+从自然补充的可再生资源中收集的能量，包括太阳能、风能、水电、地热和生物质来源。
+</dd>
+<dt><strong>资源受限环境</strong></dt>
+<dd>
+计算能力、网络带宽或电力可用性受到限制部署场景，通常需要使用专门的系统设计和技术优化方法。
+</dd>
+<dt><strong>资源悖论</strong></dt>
+<dd>
+社会影响应用中面临的挑战：需求最大的地区往往缺乏传统技术部署所需的基础设施，需要创新的工程解决方案。
+</dd>
+<dt><strong>负责任的人工智能</strong></dt>
+<dd>
+以合乎伦理、公平、透明且有利于社会的方式开发和部署人工智能系统，同时尽可能减少潜在危害和偏见。
+</dd>
+<dt><strong>奖励黑客</strong></dt>
+<dd>
+人工智能系统利用奖励函数中未被预期的方面来最大化分数，同时违背预期目标的现象。
+</dd>
+<dt><strong>环形 AllReduce</strong></dt>
+<dd>
+一种带宽高效的 AllReduce 算法，将秩排列成逻辑环，并使用归约—散列加全收集阶段。
+</dd>
+<dt><strong>RLHF</strong></dt>
+<dd>
+基于人类反馈的强化学习——一种利用人类偏好引导模型行为的训练方法，使人工智能系统更好地与人类价值观和意图保持一致。
+</dd>
+<dt><strong>鲁棒人工智能</strong></dt>
+<dd>
+人工智能系统在内部错误、外部扰动和环境变化下保持性能与可靠性的能力。
+</dd>
+<dt><strong>鲁棒性</strong></dt>
+<dd>
+模型在输入变化、环境变化或对抗条件下保持稳定且一致性能的能力。
+</dd>
+<dt><strong>鲁棒性指标</strong></dt>
+<dd>
+用于评估模型在各种扰动下稳定性的定量指标，包括对抗准确率、认证鲁棒性界，以及分布偏移下的性能。
+</dd>
+<dt><strong>山脊点</strong></dt>
+<dd>
+roofline 模型中性能从带宽受限过渡到计算受限的算术强度，等于峰值计算吞吐量除以内存带宽。
+</dd>
+<dt><strong>roofline 模型</strong></dt>
+<dd>
+一种性能模型，将算术强度与峰值计算能力和内存带宽进行比较，以识别计算受限和带宽受限的形态。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems--ef85" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems--ef85">S</h2>
+<dl>
+<dt><strong>规模时刻</strong></dt>
+<dd>
+工作负载超出单台机器、转而由集群级通信、可靠性、能量和协同约束所支配的定性转变点。
+</dd>
+<dt><strong>规模定律</strong></dt>
+<dd>
+数学关系，展示了模型规模、数据集规模、计算预算与性能之间的幂律缩放，表明增加资源可带来可预测的性能提升。
+</dd>
+<dt><strong>扫描链</strong></dt>
+<dd>
+处理器中的专用测试路径，为全面的硬件测试和故障检测提供对内部寄存器和逻辑的访问。
+</dd>
+<dt><strong>范围 1 排放</strong></dt>
+<dd>
+组织拥有或控制的来源直接产生的温室气体排放，例如现场燃料燃烧和公司车辆。
+</dd>
+<dt><strong>范围 2 排放</strong></dt>
+<dd>
+组织所消耗的购买电力、蒸汽、供暖或制冷在生产过程中产生的间接温室气体排放。
+</dd>
+<dt><strong>范围 3 排放</strong></dt>
+<dd>
+组织价值链中发生的所有其他间接温室气体排放，包括制造、运输和报废处置。
+</dd>
+<dt><strong>符号速率</strong></dt>
+<dd>
+链路上每秒传输的符号数；多级调制在每个符号中承载多个比特，而不会使这一物理跃迁速率按比例增加。
+</dd>
+<dt><strong>交换器端口数</strong></dt>
+<dd>
+网络交换器上的端口数量，它限制了端点扇出、拓扑深度以及给定集群规模所需的交换层级数量。
+</dd>
+<dt><strong>安全聚合</strong></dt>
+<dd>
+一种密码学协议，使联邦学习服务器能够在不访问各个客户端贡献的情况下计算聚合模型更新，从而增强隐私保护。
+</dd>
+<dt><strong>安全启动</strong></dt>
+<dd>
+一种由硬件支持的启动过程，在执行前对固件和软件进行密码学验证。
+</dd>
+<dt><strong>安全计算</strong></dt>
+<dd>
+密码学协议，使多方能够在不向彼此泄露各自私有输入的情况下联合计算这些输入上的函数。
+</dd>
+<dt><strong>多方安全计算</strong></dt>
+<dd>
+一种密码学方法，使多方能够在不向彼此泄露各自私有输入的情况下联合计算这些输入上的函数。
+</dd>
+<dt><strong>选择性计算</strong></dt>
+<dd>
+计算策略，根据输入复杂度或当前需求动态分配处理资源，通过避免不必要的计算来提高效率。
+</dd>
+<dt><strong>自我精化</strong></dt>
+<dd>
+一种训练方法，模型通过评价和精化自身的初始响应来迭代改进输出，从而实现持续改进并更好地与期望行为保持一致。
+</dd>
+<dt><strong>自监督学习</strong></dt>
+<dd>
+一种机器学习范式，模型通过从输入的其他部分预测输入的一部分，从无标注数据中学习表示，从而降低对人工标注数据集的依赖。
+</dd>
+<dt><strong>服务级别目标（SLO）</strong></dt>
+<dd>
+服务行为的可测量目标，例如延迟、新鲜度、可用性或模型质量。
+</dd>
+<dt><strong>SHAP</strong></dt>
+<dd>
+SHapley Additive exPlanations，一种基于合作博弈论中 Shapley 值的特征归因框架。
+</dd>
+<dt><strong>分片检查点</strong></dt>
+<dd>
+一种检查点方法，每个工作节点仅保存其被分配给自身的模型、梯度或优化器分片。
+</dd>
+<dt><strong>侧信道攻击</strong></dt>
+<dd>
+一种利用计算系统物理实现中泄漏的信息发起的攻击，例如功耗、电磁辐射或时序变化。
+</dd>
+<dt><strong>静默数据损坏（SDC）</strong></dt>
+<dd>
+计算或数据传输过程中未被检测到的错误，这些错误会在系统各层之间传播而不会触发告警，可能损害结果。
+</dd>
+<dt><strong>小农户</strong></dt>
+<dd>
+在面积小于 2 公顷的耕地上经营的农户，他们生产全球粮食供应的重要部分，但往往缺乏现代农业技术和信贷。
+</dd>
+<dt><strong>社会影响测量</strong></dt>
+<dd>
+对人工智能应用如何影响社区和个人的系统性评估，包括可及性、公平性、有效性和非预期后果等指标。
+</dd>
+<dt><strong>软件故障</strong></dt>
+<dd>
+由缺陷、bug 或设计疏漏导致的软件系统非预期行为，可能损害性能或危及安全性。
+</dd>
+<dt><strong>稀疏训练</strong></dt>
+<dd>
+一种训练方法，在整个训练过程中保持神经网络权重的稀疏性，从而降低计算需求和内存占用。
+</dd>
+<dt><strong>稀疏更新</strong></dt>
+<dd>
+一种训练策略，根据参数的重要性或对性能的贡献，仅选择性更新模型参数子集，从而降低计算和内存开销。
+</dd>
+<dt><strong>规格博弈</strong></dt>
+<dd>
+人工智能系统找到出乎意料的方式来实现高奖励，这些方式在技术上满足目标函数，但违背了预期目的。
+</dd>
+<dt><strong>投机解码</strong></dt>
+<dd>
+一种服务优化，较小的草稿模型提出令牌，较大的目标模型并行验证这些令牌。
+</dd>
+<dt><strong>投机执行</strong></dt>
+<dd>
+处理器中的一种性能优化，在执行指令确认其是否被需要之前先执行，这可能无意地通过微架构侧信道泄露敏感数据。
+</dd>
+<dt><strong>陈旧同步并行（SSP）</strong></dt>
+<dd>
+一种同步模型，允许较快的工作节点在较慢的工作节点之前推进有限数量的步。
+</dd>
+<dt><strong>状态空间模型</strong></dt>
+<dd>
+一类神经架构，通过维护压缩的内存表示并增量更新来处理序列，相比 Transformer 注意力机制具有线性缩放优势。
+</dd>
+<dt><strong>随机计算</strong></dt>
+<dd>
+计算技术，利用随机比特和概率运算执行算术运算，可能比传统方法提供更好的容错性。
+</dd>
+<dt><strong>拖慢者</strong></dt>
+<dd>
+正确但缓慢的工作节点，会拖慢分布式任务中其余部分的同步进度。
+</dd>
+<dt><strong>常陷故障</strong></dt>
+<dd>
+一种永久性硬件故障，信号线无论输入如何都固定在逻辑 0 或 1，导致计算结果错误。
+</dd>
+<dt><strong>供应链攻击</strong></dt>
+<dd>
+一种在制造、分发或集成过程中破坏硬件或软件组件的攻击，可能影响多个下游系统。
+</dd>
+<dt><strong>可持续人工智能</strong></dt>
+<dd>
+开发和部署人工智能系统的实践，在保持有效性和可及性的同时最大限度地减少环境影响。
+</dd>
+<dt><strong>可持续发展目标</strong></dt>
+<dd>
+联合国采纳的 17 项全球目标，旨在到 2030 年前应对紧迫的社会、经济和环境挑战，为具有社会公益的人工智能应用提供框架。
+</dd>
+<dt><strong>群体智能</strong></dt>
+<dd>
+由去中心化、自组织系统涌现出的集体智能，常受生物群体启发，并应用于分布式机器学习系统和机器人技术。
+</dd>
+<dt><strong>同步紧耦合</strong></dt>
+<dd>
+一种执行模式，工作节点必须协调共享进度，通常在同步屏障处进行，因此一个缓慢或失败的参与者可能拖慢整个任务。
+</dd>
+<dt><strong>脉冲阵列</strong></dt>
+<dd>
+由处理单元组成的规则网格，在相邻单元之间传递操作数和中间结果，从而以有限的片外数据移动实现高吞吐矩阵运算。
+</dd>
+<dt><strong>合成数据生成</strong></dt>
+<dd>
+创建人工数据集，近似真实数据的统计特性，同时降低隐私风险并避免直接暴露敏感信息。
+</dd>
+<dt><strong>系统级可持续性</strong></dt>
+<dd>
+一种整体性的环境责任方法，考虑从数据中心到边缘设备在内的整个人工智能基础设施生态系统，而不是孤立地优化各个组件。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems--e763" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems--e763">T</h2>
+<dl>
+<dt><strong>尾延迟</strong></dt>
+<dd>
+高百分位请求延迟，例如 P99，用于捕捉影响分布式服务可靠性的罕见慢响应。
+</dd>
+<dt><strong>定向攻击</strong></dt>
+<dd>
+一种数据投毒攻击类型，旨在使特定输入或类别被错误分类，同时基本保持模型的整体性能不变。
+</dd>
+<dt><strong>Tensor Core</strong></dt>
+<dd>
+一种专为混合精度张量运算优化的专用矩阵乘加硬件单元。
+</dd>
+<dt><strong>张量并行</strong></dt>
+<dd>
+一种模型并行策略，将张量运算或层权重拆分到各设备，并通过集合通信合并部分结果。
+</dd>
+<dt><strong>热设计功耗（TDP）</strong></dt>
+<dd>
+冷却系统被设计为在处理器或加速器的规定工作包络下持续移除的热负荷。
+</dd>
+<dt><strong>热应力</strong></dt>
+<dd>
+由反复在高低温度之间循环造成的硬件劣化，导致材料疲劳和潜在故障。
+</dd>
+<dt><strong>威胁建模</strong></dt>
+<dd>
+一种结构化的安全分析，识别系统的资产、攻击者能力、攻击路径和防御优先级。
+</dd>
+<dt><strong>每个输出令牌的耗时（TPOT）</strong></dt>
+<dd>
+首个生成令牌之后的每个令牌延迟，控制流式大语言模型输出的节奏。
+</dd>
+<dt><strong>首令牌时间（TTFT）</strong></dt>
+<dd>
+从请求到达至首个生成令牌出现之间的延迟。
+</dd>
+<dt><strong>TinyML</strong></dt>
+<dd>
+一个专注于将机器学习模型部署到微控制器和极资源受限设备上的领域，这些设备仅有千字节级内存和毫瓦级功耗。
+</dd>
+<dt><strong>感知拓扑调度</strong></dt>
+<dd>
+一种布局方式，考虑 GPU 与互连的局部性，例如 NVLink 域、机架、轨线或交换器层级。
+</dd>
+<dt><strong>TPU</strong></dt>
+<dd>
+Tensor Processing Unit，由 Google 专门开发的专用人工智能加速器芯片，专为机器学习工作负载设计，尤其是神经网络计算。
+</dd>
+<dt><strong>训练</strong></dt>
+<dd>
+向机器学习模型展示示例并依据性能反馈调整其参数，从而教会模型进行预测的过程。
+</dd>
+<dt><strong>训练—服务偏差</strong></dt>
+<dd>
+训练阶段与服务阶段在特征或数据计算上的不一致，导致生产输入与模型所学到的内容不同。
+</dd>
+<dt><strong>迁移学习</strong></dt>
+<dd>
+一种机器学习技术，利用预训练模型在一个任务上学到的知识来改进相关任务的学习，从而在数据有限的情况下实现高效适应。
+</dd>
+<dt><strong>Transformer</strong></dt>
+<dd>
+一种使用自注意力机制处理序列数据的神经网络架构，构成许多现代语言模型的基础。
+</dd>
+<dt><strong>Transformer 架构</strong></dt>
+<dd>
+一种基于注意力机制的神经网络架构，已彻底改变自然语言处理，并越来越多地应用于计算机视觉等其他领域。
+</dd>
+<dt><strong>瞬态故障</strong></dt>
+<dd>
+临时硬件故障，不会持续或造成永久性损坏，但若处理不当可能导致计算结果错误。
+</dd>
+<dt><strong>透明度</strong></dt>
+<dd>
+关于人工智能系统如何构建、训练、验证和部署的开放性，包括披露数据来源、设计假设和局限性。
+</dd>
+<dt><strong>Tree AllReduce</strong></dt>
+<dd>
+一种 AllReduce 算法，使用树形归约和广播阶段以降低延迟，通常以带宽效率为代价。
+</dd>
+<dt><strong>三重模冗余（TMR）</strong></dt>
+<dd>
+一种容错技术，运行计算的三个副本并使用多数表决来屏蔽一个独立的错误结果；它不保证在多重或共模故障下正确。
+</dd>
+<dt><strong>可信执行环境</strong></dt>
+<dd>
+处理器内的安全区域，为代码和数据提供基于硬件的保护，确保即使来自特权系统软件也能保证机密性和完整性。
+</dd>
+<dt><strong>两阶段提交（2PC）</strong></dt>
+<dd>
+一种协调协议，包含准备和提交阶段，确保参与者原子提交或中止。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-v-50cc" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-v-50cc">V</h2>
+<dl>
+<dt><strong>价值对齐</strong></dt>
+<dd>
+人工智能系统应追求与人类意图和伦理规范一致的目标的原则，涉及将人类价值观编码进机器目标这一挑战。
+</dd>
+<dt><strong>价值敏感设计</strong></dt>
+<dd>
+一种通过系统性的利益相关方参与和对系统影响的伦理考量，将人类价值观纳入技术设计的方法论。
+</dd>
+<dt><strong>虫媒传染病</strong></dt>
+<dd>
+由昆虫或其他媒介传播的疾病，例如由蚊子传播的疟疾，可以使用基于机器学习的检测系统进行监测和控制。
+</dd>
+<dt><strong>视觉—语言模型</strong></dt>
+<dd>
+能够同时理解和推理视觉与文本信息的人工智能系统，使图像描述、视觉问答和多模态理解等任务成为可能。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-w-ec5f" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-w-ec5f">W</h2>
+<dl>
+<dt><strong>仓库级计算机（WSC）</strong></dt>
+<dd>
+一种按整栋建筑规模运行的计算系统，作为一台连贯机器使用，将网络互连结构和存储层级视为系统级资源。
+</dd>
+<dt><strong>晶圆级引擎（WSE）</strong></dt>
+<dd>
+一种加速器架构，在硅片的大部分或全部区域集成计算、内存和通信，以降低跨越独立封装边界的带宽和延迟成本。
+</dd>
+<dt><strong>看门狗定时器</strong></dt>
+<dd>
+一种硬件组件，监控系统执行，并在系统无响应或卡死时触发恢复动作。
+</dd>
+<dt><strong>水印</strong></dt>
+<dd>
+流式系统对事件时间是否已推进到足以关闭窗口的估计，并针对稍后到达的事件采用显式策略。
+</dd>
+<dt><strong>用水有效性</strong></dt>
+<dd>
+衡量数据中心用水效率的指标，计算为总用水量的比值与 IT 设备能耗。
+</dd>
+<dt><strong>权重冻结</strong></dt>
+<dd>
+一种技术，在训练期间固定大部分模型参数，仅允许特定层或组件更新，从而降低设备端适应的计算需求。
+</dd>
+<dt><strong>白盒攻击</strong></dt>
+<dd>
+一种对抗性攻击，攻击者完全了解模型的架构、参数、训练数据和内部工作机制，从而能够实施高度有效的攻击策略。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-volume-ii-scalable-systems-z-38c9" class="level2">
+<h2 class="anchored" data-anchor-id="sec-glossary-volume-ii-scalable-systems-z-38c9">Z</h2>
+<dl>
+<dt><strong>ZeRO（Zero Redundancy Optimizer）</strong></dt>
+<dd>
+一种内存缩减技术，将优化器状态、梯度以及可选的参数分片到数据并行工作节点。
+</dd>
+<dt><strong>零日漏洞</strong></dt>
+<dd>
+软件或硬件中此前未知的安全缺陷，攻击者可以在开发者有机会编写和分发补丁之前加以利用。
+</dd>
+<dt><strong>零样本学习</strong></dt>
+<dd>
+机器学习模型在缺少任务特定训练示例的情况下执行任务或识别类别的能力，通常使用预训练期间学到的表示。
+</dd>
+</dl>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> 回到顶部</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "已复制");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "已复制");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/mlsysbook\.ai\/vol2_zh\/");
+      var isInternal = (href) => {
+          return new URL(href, window.location.href).origin === window.location.origin || filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../vol2_zh/backmatter/appendix_assumptions.html" class="pagination-link" aria-label="系统假设">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">系统假设</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2024-2026 Harvard University. Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC-BY-NC-SA 4.0</a><br> <!-- MLSB_BUILD_STAMP --></p>
+</div>   
+    <div class="nav-footer-center">
+<p>简体中文译本 · <a href="https://mlsysbook.ai/vol2/">英文原版</a></p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ <span class="release-pill" data-release-pill=""></span>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/harvard-edge/cs249r_book">
+      <i class="bi bi-github" role="img" aria-label="View source on GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/harvard-edge/cs249r_book">
+      <i class="bi bi-star" role="img" aria-label="Star this repository">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 三卷书架</a>
+</body></html>
