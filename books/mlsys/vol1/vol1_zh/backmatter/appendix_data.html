@@ -1,0 +1,2818 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>机器学习系统导论</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol1_zh/backmatter/appendix_algorithm.html" rel="next">
+<link href="../../vol1_zh/backmatter/appendix_dam.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-9890ab0e7b279b2f92e6572d8f7c6ba2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-M21L0CBCVN"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-M21L0CBCVN', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+<!-- Shared head includes — MLSysBook ecosystem -->
+
+<!--
+  theme-persist (inline, sync) — applies stored color-scheme before first paint.
+  Inlined deliberately: runs before any other <script>, no extra round-trip,
+  and avoids per-subsite asset path differences. Canonical source:
+  shared/scripts/theme-persist.js (kept identical for documentation/testability).
+  If you change one, mirror the change to the other.
+-->
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'quarto-color-scheme';
+  // Quarto's toggle writes 'alternate'/'default' (alternate = dark, the
+  // layered sheet); sibling non-Quarto sites write 'dark'/'light'. Both
+  // hit the same key, so we accept either. Quarto's own startup still
+  // checks `=== 'alternate'`, so we mirror onto <html> rather than rewrite.
+  function normalize(v) {
+    if (v === 'dark' || v === 'alternate') return 'dark';
+    if (v === 'light' || v === 'default') return 'light';
+    return null;
+  }
+  function preferredScheme() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) return n;
+    } catch (e) {}
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  function apply(scheme) {
+    var html = document.documentElement;
+    if (!html) return;
+    html.setAttribute('data-bs-theme', scheme);
+    html.setAttribute('data-quarto-color-scheme', scheme);
+    html.style.colorScheme = scheme;
+    // Bridge to legacy `.quarto-dark` body class — about.css,
+    // community.css, and newsletter.css key their dark-mode CSS
+    // variables off `.quarto-dark { ... }`. Quarto's own toggle adds
+    // that class on click, but the OS-pref / first-paint path never
+    // does. Mirror the scheme onto body so those CSS variables fire
+    // on every dark path, not just toggle clicks. body may not exist
+    // yet on the first call (this script runs in <head>); a
+    // MutationObserver below catches it as soon as it parses.
+    var body = document.body;
+    if (body) body.classList.toggle('quarto-dark', scheme === 'dark');
+  }
+  apply(preferredScheme());
+  // Catch the FOUC window between <head> apply() and DOMContentLoaded:
+  // <body> may not exist yet at first apply(), but as soon as the
+  // parser appends it we want the legacy class bridge in place so any
+  // CSS keyed on `.quarto-dark` paints correctly on first render.
+  if (!document.body) {
+    var earlyObserver = new MutationObserver(function () {
+      if (document.body) {
+        apply(preferredScheme());
+        earlyObserver.disconnect();
+      }
+    });
+    earlyObserver.observe(document.documentElement, { childList: true });
+  }
+  // Quarto's toggle updates localStorage but not <html>, so wrap it to
+  // mirror the new value onto data-bs-theme; otherwise clicking the toggle
+  // leaves CSS keyed off [data-bs-theme="dark"] rendering against the wrong
+  // stylesheet until the next reload.
+  function syncFromStorage() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) apply(n);
+    } catch (e) {}
+  }
+  function wrapToggle() {
+    var orig = window.quartoToggleColorScheme;
+    if (typeof orig !== 'function' || orig.__mlsbWrapped) return;
+    var wrapped = function () { var r = orig.apply(this, arguments); syncFromStorage(); return r; };
+    wrapped.__mlsbWrapped = true;
+    window.quartoToggleColorScheme = wrapped;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { wrapToggle(); syncFromStorage(); });
+  } else {
+    wrapToggle(); syncFromStorage();
+  }
+  // Defend the legacy `.quarto-dark` body class against Quarto's own
+  // `toggleBodyColor(mode)`, which runs *after* this script and re-asserts
+  // the body class based on `mode` — and `mode` defaults to 'light' when
+  // there's no stored quarto-color-scheme value, even when the OS / first
+  // paint already resolved to dark via `data-bs-theme`. Without this
+  // observer, on every fresh visit Quarto would clobber our bridge and
+  // restore `.quarto-light`, leaving `.quarto-dark`-keyed CSS variables
+  // (about/community/newsletter pages) at their light-mode defaults
+  // against the dark `data-bs-theme="dark"` background.
+  function bridgeBody() {
+    var body = document.body;
+    if (!body) return;
+    var wantDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    if (wantDark && !body.classList.contains('quarto-dark')) {
+      body.classList.add('quarto-dark');
+      body.classList.remove('quarto-light');
+    } else if (!wantDark && body.classList.contains('quarto-dark')) {
+      body.classList.remove('quarto-dark');
+      body.classList.add('quarto-light');
+    }
+  }
+  function watchBody() {
+    if (!document.body) return;
+    bridgeBody();
+    var bodyObs = new MutationObserver(bridgeBody);
+    bodyObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var htmlObs = new MutationObserver(bridgeBody);
+    htmlObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watchBody);
+  } else {
+    watchBody();
+  }
+  window.addEventListener('storage', function (ev) {
+    if (ev.key !== STORAGE_KEY) return;
+    var n = normalize(ev.newValue);
+    if (n) apply(n);
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (ev) {
+        try { if (window.localStorage.getItem(STORAGE_KEY)) return; } catch (e) {}
+        apply(ev.matches ? 'dark' : 'light');
+      });
+    } catch (e) {}
+  }
+})();
+</script>
+
+<!--
+  Build-stamp styling. Tiny, neutral, dark-mode aware. The actual stamp text
+  is injected by shared/scripts/inject-build-stamp.sh into footer markup
+  containing the literal MLSB_BUILD_STAMP HTML-comment token (see that
+  script for the exact pattern — we cannot write it here because HTML
+  comments cannot nest and the inner closer would terminate this block).
+-->
+<style>
+.mlsb-build-stamp {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+[data-bs-theme="dark"] .mlsb-build-stamp { opacity: 0.5; }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="icon" href="https://mlsysbook.ai/vol1/assets/images/icons/favicon.png" type="image/png">
+<meta name="author" content="Vijay Janapa Reddi">
+
+<!-- Schema.org JSON-LD structured data for Google Knowledge Graph & Rich Snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mlsysbook.ai/#website",
+      "url": "https://mlsysbook.ai/",
+      "name": "Machine Learning Systems",
+      "description": "The AI Engineering Textbook Series: Foundations, Scaling, Agentic AI, and Physical AI.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Harvard Edge Computing Lab",
+        "url": "https://edge.seas.harvard.edu"
+      }
+    },
+    {
+      "@type": "BookSeries",
+      "@id": "https://mlsysbook.ai/#bookseries",
+      "name": "Machine Learning Systems: Principles and Practices of Engineering Artificially Intelligent Systems",
+      "alternateName": ["MLSysBook", "Machine Learning Systems", "AI Engineering Textbook"],
+      "url": "https://mlsysbook.ai/",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Vijay Janapa Reddi",
+        "jobTitle": "Gordon McKay Professor of Electrical Engineering and Computer Science",
+        "worksFor": {
+          "@type": "EducationalOrganization",
+          "name": "Harvard University",
+          "sameAs": "https://www.harvard.edu"
+        },
+        "sameAs": [
+          "https://profvjreddi.github.io/homepage/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MIT Press",
+        "url": "https://mitpress.mit.edu"
+      },
+      "hasPart": [
+        {
+          "@type": "Book",
+          "name": "Volume I: Introduction to Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol1/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Foundations, Lifecycle, Data Engineering, Training, Inference, Benchmarking, and Responsible AI"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume II: Scaling Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol2/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Distributed Training, Accelerator Architecture, Parallelism, Memory Systems, and Serving"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume III: Agentic Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol3/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Autonomous Agents, Deliberation, Working Sets, Virtual Memory, RAG, RLVR, and Multi-Agent Systems"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume IV: Physical AI Systems",
+          "url": "https://mlsysbook.ai/vol4/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Physical AI, Embodied AI, Closed-Loop Dynamics, Actuation, Control Barrier Functions, and Robotics"
+        }
+      ]
+    },
+    {
+      "@type": "Course",
+      "@id": "https://mlsysbook.ai/#course",
+      "name": "CS249r: Machine Learning Systems",
+      "description": "Harvard University course on principles and practices of engineering artificially intelligent systems.",
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "Harvard University",
+        "sameAs": "https://www.harvard.edu"
+      }
+    }
+  ]
+}
+</script>
+
+<!--
+  navbar-theme-toggle-relocate — moves the Quarto theme toggle into the
+  navbar's right-side .navbar-nav group at page load, so it collapses into
+  the hamburger menu alongside Subscribe/Star/Support/GitHub at narrow widths
+  instead of being stranded in the middle by Quarto's mx-auto brand layout.
+
+  Why JS: Quarto auto-injects the toggle into .quarto-navbar-tools (outside
+  .navbar-collapse). CSS can't move DOM nodes between containers, and CSS
+  positioning hacks (absolute/right: 50px) fight Bootstrap's responsive
+  layout below 992px. Moving the node once at startup is the standard
+  approach used across Quarto-based sites with the same problem.
+-->
+<script>
+(function () {
+  'use strict';
+  function relocateThemeToggle() {
+    var tools = document.querySelector('.quarto-navbar-tools');
+    if (!tools) return;
+    var toggle = tools.querySelector('.quarto-color-scheme-toggle');
+    if (!toggle) return;
+    var navRight = document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav.ms-auto'
+    ) || document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav:last-of-type'
+    );
+    if (!navRight) return;
+    var li = document.createElement('li');
+    li.className = 'nav-item navbar-theme-toggle-item';
+    toggle.classList.add('nav-link');
+    li.appendChild(toggle);
+    navRight.appendChild(li);
+    tools.style.display = 'none';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', relocateThemeToggle);
+  } else {
+    relocateThemeToggle();
+  }
+})();
+</script>
+
+<!--
+  navbar-brand-href-fix — force the navbar brand link to the ecosystem root
+  (https://mlsysbook.ai/) on every subsite.
+
+  Quarto sets each subsite's `site-url` to `https://mlsysbook.ai/<subsite>/`
+  and then relativizes any navbar.href value that lives inside the
+  site-url's domain. The shared `href: https://mlsysbook.ai/` in
+  navbar-common.yml therefore gets emitted as `./index.html`, which on
+  vol1/vol2/tinytorch/etc. resolves to *that subsite's* root rather than
+  the ecosystem landing page. Override the brand link href in JS after
+  Quarto's render: this is a one-line user-experience fix that does not
+  fight Quarto's URL machinery.
+-->
+<script>
+(function () {
+  'use strict';
+  function fixBrandHref() {
+    var brand = document.querySelectorAll(
+      '.navbar .navbar-brand, .navbar .navbar-brand-logo'
+    );
+    for (var i = 0; i < brand.length; i++) {
+      brand[i].setAttribute('href', 'https://mlsysbook.ai/');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixBrandHref);
+  } else {
+    fixBrandHref();
+  }
+})();
+</script>
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="apple-touch-icon" href="../../shared/assets/images/icons/favicon.png">
+<meta name="theme-color" content="#A51C30">
+<!-- Release identity (rendered into the footer pill below).
+     The publish workflow drops release-manifest.json at
+     /vol1_zh/release-manifest.json before deploy. -->
+<meta name="release-manifest" content="/vol1_zh/release-manifest.json">
+<!-- SocratiQ bundle: -->
+<!-- <script type="module" src="/tools/scripts/socratiQ/bundle.js" defer></script> -->
+<script src="../../shared/assets/scripts/sidebar-auto-collapse.js" defer=""></script>
+<script src="../../shared/assets/scripts/version-link.js" defer=""></script>
+<script src="../../shared/assets/scripts/subscribe-modal.js" defer=""></script>
+<style>
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<style id="zh-web-layout">#quarto-announcement{display:none!important}#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">机器学习系统 · 第一卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol1_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">开始阅读</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol1_zh/backmatter/appendix_data.html">数据基础</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+  <div id="quarto-announcement" data-announcement-id="d3cc121d05ef1a79684f139997959c79" class="alert alert-primary hidden"><i class="bi bi-megaphone quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>📘 <strong>Volume I: Foundations.</strong> Single-machine ML systems — data, algorithms, and machines.<br> 🚀 <strong>Ready for scale?</strong> <a href="/books/mlsys/vol2/">Volume II: Scaling</a> — distributed training, fleet operations, responsible deployment.<br> 🛠️ <strong>Alongside the book:</strong> <a href="https://mlsysbook.ai/tinytorch/">TinyTorch</a> (build) · <a href="https://mlsysbook.ai/kits/">Hardware Kits</a> (deploy) · <a href="https://mlsysbook.ai/mlsysim/">MLSys·im</a> (model) · <a href="https://mlsysbook.ai/labs/">Labs</a> (explore) · <a href="https://mlsysbook.ai/staffml/">StaffML</a> (practice)<br> 📬 <strong>Newsletter:</strong> ML Systems insights &amp; updates — <a href="https://mlsysbook.ai/newsletter/">Subscribe →</a></p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献词</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/foreword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">序言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者的话</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">符号说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/foundations_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基础原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/02_ml_systems/02_ml_systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/03_ml_workflow/03_ml_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习工作流</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/04_data_engineering/04_data_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/build_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">开发原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/05_nn_computation/05_nn_computation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经计算</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/06_nn_architectures/06_nn_architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络架构</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/07_frameworks/07_frameworks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习框架</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/08_training/08_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/optimize_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">优化原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/09_data_selection/09_data_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据选择</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/10_model_compression/10_model_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型压缩</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/11_hw_acceleration/11_hw_acceleration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硬件加速</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/12_benchmarking/12_benchmarking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基准测试</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/deploy_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/13_model_serving/13_model_serving.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型服务</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/14_ml_ops/14_ml_ops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习运维</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/15_responsible_engr/15_responsible_engr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">负责任工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/16_conclusion/16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结论</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_dam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据—算法—机器分类体系</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">数据基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_algorithm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">算法基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_machine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">系统假设</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-appdx-data-foundations" id="toc-sec-appdx-data-foundations" class="nav-link active" data-scroll-target="#sec-appdx-data-foundations">数据基础</a>
+  <ul>
+  <li><a href="#如何使用本附录" id="toc-如何使用本附录" class="nav-link" data-scroll-target="#如何使用本附录">如何使用本附录</a></li>
+  <li><a href="#sec-appdx-data-foundations-data-engineering-foundations-0c20" id="toc-sec-appdx-data-foundations-data-engineering-foundations-0c20" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-data-engineering-foundations-0c20">数据工程基础</a>
+  <ul class="collapse">
+  <li><a href="#sec-appdx-data-foundations-napkin-math-physics-data-gravity-9ae0" id="toc-sec-appdx-data-foundations-napkin-math-physics-data-gravity-9ae0" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-napkin-math-physics-data-gravity-9ae0">粗略估算：数据引力的物理约束</a></li>
+  <li><a href="#sec-appdx-data-foundations-cost-serialization-b921" id="toc-sec-appdx-data-foundations-cost-serialization-b921" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-cost-serialization-b921">序列化的成本</a></li>
+  <li><a href="#sec-appdx-data-foundations-row-vs-columnar-formats-bca2" id="toc-sec-appdx-data-foundations-row-vs-columnar-formats-bca2" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-row-vs-columnar-formats-bca2">行式与列式格式</a></li>
+  <li><a href="#sec-appdx-data-foundations-algebra-data-9792" id="toc-sec-appdx-data-foundations-algebra-data-9792" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-algebra-data-9792">数据的代数</a></li>
+  </ul></li>
+  <li><a href="#sec-appdx-data-foundations-probability-statistics-3934" id="toc-sec-appdx-data-foundations-probability-statistics-3934" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-probability-statistics-3934">概率与统计</a>
+  <ul class="collapse">
+  <li><a href="#sec-appdx-data-foundations-distributions-long-tail-901f" id="toc-sec-appdx-data-foundations-distributions-long-tail-901f" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-distributions-long-tail-901f">分布与长尾</a></li>
+  <li><a href="#sec-appdx-data-foundations-measuring-drift-divergence-a6dd" id="toc-sec-appdx-data-foundations-measuring-drift-divergence-a6dd" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-measuring-drift-divergence-a6dd">度量漂移（散度）</a></li>
+  <li><a href="#sec-appdx-data-foundations-information-theory-systems-c033" id="toc-sec-appdx-data-foundations-information-theory-systems-c033" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-information-theory-systems-c033">面向系统的信息论</a></li>
+  <li><a href="#sec-appdx-data-foundations-logits-numerical-stability-13e2" id="toc-sec-appdx-data-foundations-logits-numerical-stability-13e2" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-logits-numerical-stability-13e2">Logit 与数值稳定性</a></li>
+  </ul></li>
+  <li><a href="#sec-appdx-data-foundations-summary-3c72" id="toc-sec-appdx-data-foundations-summary-3c72" class="nav-link" data-scroll-target="#sec-appdx-data-foundations-summary-3c72">总结</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">数据基础</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-appdx-data-foundations" class="level1 page-columns page-full" data-dropcap="chapter-opening">
+<h1 data-dropcap="chapter-opening">数据基础</h1>
+<p>数据问题很少以数据问题的面貌出现；它们往往表现为训练运行无法提速、加速器闲置，或监控面板各项指标正常而准确率却在下降。为使各章的论述聚焦于系统设计，本附录汇集了用于粗略估算的计算方法和统计工具，将这些症状追溯到可测量的数据瓶颈：传输时间、存储布局成本、漂移诊断以及数值稳定性工具。这里的工具以基础概率论和机器学习系统铁律中的数据项为基础。</p>
+<section id="如何使用本附录" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="如何使用本附录">如何使用本附录</h2>
+<p>本附录旨在作为<em>参考资料</em>。当排查“训练缓慢”“加速器利用率低”或“生产环境准确率漂移”需要以最快路径从症状走向测量时，可查阅本附录。</p>
+<p>此处的约定遵循全书统一的符号体系（例如，<span class="math inline">\(B\)</span> 专用于表示批量大小，<span class="math inline">\(\text{BW}\)</span> 表示带宽）。</p>
+<ul>
+<li><strong>数据传不动时</strong>：从 <a href="#tbl-data-gravity" class="quarto-xref">table&nbsp;1</a> 和 <a href="#sec-appdx-data-foundations-napkin-math-physics-data-gravity-9ae0" class="quarto-xref">section&nbsp;1.1.1</a> 中的传输时间方程入手。</li>
+<li><strong>加速器供数不足时</strong>：参阅 <a href="#tbl-serialization-cost" class="quarto-xref">table&nbsp;2</a> 和 <a href="#sec-appdx-data-foundations-row-vs-columnar-formats-bca2" class="quarto-xref">section&nbsp;1.1.3</a> 中关于布局的讨论。</li>
+<li><strong>流水线成本激增时</strong>：使用 <a href="#sec-appdx-data-foundations-algebra-data-9792" class="quarto-xref">section&nbsp;1.1.4</a> 中的基本操作，尤其关注连接引发的数据混洗。</li>
+<li><strong>“平均值看起来正常”但用户仍在抱怨时</strong>：参阅 <a href="#sec-appdx-data-foundations-distributions-long-tail-901f" class="quarto-xref">section&nbsp;1.2.1</a> 和会话级尾部概率。</li>
+<li><strong>准确率悄然漂移时</strong>：使用 <a href="#sec-appdx-data-foundations-measuring-drift-divergence-a6dd" class="quarto-xref">section&nbsp;1.2.2</a> 比较完整分布。</li>
+</ul>
+<p>尽管生产流水线会遇到种类繁多的格式、编码和存储层，本附录聚焦于支配它们的物理与统计常量。</p>
+<p>有了这些参考值，本附录先介绍数据工程的物理约束，再转向维持机器学习系统健康运行的统计监控。从决定 I/O 吞吐量的存储格式，到检测静默故障的漂移指标，这些基础知识都与 <strong><a href="../04_data_engineering/04_data_engineering.html#sec-data-engineering-data-pipeline-architecture-b527">数据流水线架构</a></strong> 中的数据流水线和 <strong><a href="../14_ml_ops/14_ml_ops.html#sec-ml-operations-model-infrastructure-monitoring-3988">模型与基础设施监控</a></strong> 中的运行监控直接相关。</p>
+</section>
+<section id="sec-appdx-data-foundations-data-engineering-foundations-0c20" class="level2">
+<h2 class="anchored" data-anchor-id="sec-appdx-data-foundations-data-engineering-foundations-0c20">数据工程基础</h2>
+<p>理解硬件约束只是成功的一半；我们还必须组织数据，使其适应这些约束。数据工程将存储层次结构的原理应用于存储格式和流水线设计，确保加速器始终获得充足的数据供给。这一过程首先要认识到，数据具有物理属性——它占据空间，移动需要时间，解析需要能量。</p>
+<section id="sec-appdx-data-foundations-napkin-math-physics-data-gravity-9ae0" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-napkin-math-physics-data-gravity-9ae0">粗略估算：数据引力的物理约束</h3>
+<p>数据引力<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>是一个以传输时间计算为依据的比喻。计算能力逐年提升，但光速固定不变，网络带宽也是有限资源。当数据集增长到足够大的规模时，其实际惯性也随之增大——移动数据所需的时间和能量，可能超过将计算移至数据现有位置所需的时间和能量。</p>
+<p>将数据量和带宽转换为兼容单位后，理想的线速传输时间为 <span class="math inline">\(T = D_{\text{vol}}/\text{BW}\)</span>（下文的计算显式换算了十进制字节数与每秒比特数）。对于这里的大规模数据量，延迟可以忽略不计；完整方程见 <strong><a href="appendix_machine.html#sec-appdx-machine-foundations-bandwidth-vs-latency-5320">带宽与延迟</a></strong>。<a href="#tbl-data-gravity" class="quarto-xref">Table&nbsp;1</a> 给出了下界；协议开销和端点限制会使实际时间增加。</p>
+<div id="tbl-data-gravity" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[23,20,20,20,17]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-data-gravity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: <strong>惯性的代价</strong>：这些传输时间解释了为什么我们经常“将计算移至数据所在处”，而不是“将数据移至计算所在处”。网络各列给出持续线速下的时间下界。卡车一列采用了传送 1 PB 数据的示例耗时模型：装载 8 小时、在途运输 32 小时、卸载 8 小时，不包括调度和资源配置开销。
+</figcaption>
+<div aria-describedby="tbl-data-gravity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>数据量</strong></th>
+<th style="text-align: center;"><strong>1 Gbps（标准广域网）</strong></th>
+<th style="text-align: center;"><strong>10 Gbps（高端广域网）</strong></th>
+<th style="text-align: center;"><strong>100 Gbps（直连）</strong></th>
+<th style="text-align: center;"><strong>卡车（示例）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1 TB</strong></td>
+<td style="text-align: center;">2.2 hours</td>
+<td style="text-align: center;">13.3 minutes</td>
+<td style="text-align: center;">80 seconds</td>
+<td style="text-align: center;">不适用</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>100 TB</strong></td>
+<td style="text-align: center;">9 days</td>
+<td style="text-align: center;">22.2 hours</td>
+<td style="text-align: center;">2.2 hours</td>
+<td style="text-align: center;">不适用</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>1 PB</strong></td>
+<td style="text-align: center;">3 months</td>
+<td style="text-align: center;">9 days</td>
+<td style="text-align: center;">22.2 hours</td>
+<td style="text-align: center;">2 days</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-appdx-data-foundations-cost-serialization-b921" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-cost-serialization-b921">序列化的成本</h3>
+<p>即使数据已经抵达机器，序列化开销仍是最后一道障碍。<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> 如 <a href="#tbl-serialization-cost" class="quarto-xref">table&nbsp;2</a> 所示，许多工程师精心优化加速器内核，却忽略了解码数据的 CPU 开销。解析 JavaScript 对象表示法（JSON）或 CSV 等文本格式极其消耗 CPU 资源，CPU 忙于将字符串转换为浮点数时，加速器往往只能闲置等待。</p>
+<div id="tbl-serialization-cost" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[21,27,27,25]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-serialization-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: <strong>序列化开销</strong>：这些示例数值说明了二进制列式格式为何可能优于按行组织的文本格式，但它们并非可跨环境套用的基准测试结果。Arrow 是一种内存/IPC 格式；Parquet 是一种压缩存储格式。
+</figcaption>
+<div aria-describedby="tbl-serialization-cost-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>格式</strong></th>
+<th style="text-align: center;"><strong>解码速度（MB/s）</strong></th>
+<th style="text-align: center;"><strong>相对 CPU 解码成本</strong></th>
+<th style="text-align: left;"><strong>适用场景</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>CSV/JSON</strong></td>
+<td style="text-align: center;">~100 MB/s</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: left;">检查/数据交换</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Protobuf</strong></td>
+<td style="text-align: center;">~300 MB/s</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: left;">RPC/消息</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Parquet</strong></td>
+<td style="text-align: center;">~1,000 MB/s</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: left;">列式存储</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-appdx-data-foundations-row-vs-columnar-formats-bca2" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-row-vs-columnar-formats-bca2">行式与列式格式</h3>
+<p>文件格式的选择决定了数据读取方式的“物理特性”。CSV 和 JSON 等行式格式逐条记录存储数据，因此即使只读取 <code>age</code> 字段，也仍需解析每一行。这适合追加式日志，却不适合仅分析选定特征的场景。Parquet 在磁盘上存储压缩列块，而 Arrow 提供列式内存和 IPC 格式。Parquet 读取器可以利用<em>投影下推</em>获取选定列块，两种格式都支持<em>向量化处理</em>。比较 <a href="#fig-row-vs-col" class="quarto-xref">figure&nbsp;1</a> 中的两种布局，即可理解列式访问为何能避免扫描不必要的字节。</p>
+<div id="fig-row-vs-col" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="htb" alt="对比行式与列式存储的示意图。行式存储按记录组织标识、年龄和位置的值，并读取每一列。列式存储按列组织值，仅读取年龄。" data-fig-env="figure">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-row-vs-col-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode tikz code-with-copy"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[font=<span class="fu">\small\sffamily</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tikzset</span>{</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    DataBlock/.style={draw=GrayLine, line width=0.8pt, node distance=-0.8pt,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    minimum height=8mm, minimum width=24mm, align=center, font=<span class="fu">\small\sffamily</span>},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    Label/.style={text=TextBlack, font=<span class="fu">\small\bfseries\sffamily</span>}</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\tikzset</span>{mycylinder/.style={cylinder, shape border rotate=90, aspect=1.3, draw, fill=white,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>minimum width=25mm,minimum height=11mm,line width=<span class="fu">\Linewidth</span>,node distance=-0.15},</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pics/data/.style = {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        code = {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">\pgfkeys</span>{/channel/.cd, #1}</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">scope</span>}[local bounding box=STREAMING,scale=<span class="fu">\scalefac</span>, every node/.append style={transform shape}]</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[mycylinder,fill=<span class="fu">\filllcolor</span>!50] (A) {};</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[mycylinder, above=of A,fill=<span class="fu">\filllcolor</span>!30] (B) {};</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[mycylinder, above=of B,fill=<span class="fu">\filllcolor</span>!10] (C) {};</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a> <span class="kw">\end</span>{<span class="ex">scope</span>}</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>     }</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">\tikzset</span>{pics/lupa/.style = {</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        code = {</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">\pgfkeys</span>{/channel/.cd, #1}</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">scope</span>}[local bounding box=BRAIN,scale=<span class="fu">\scalefac</span>, every node/.append style={transform shape}]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(PO)at(-0.1,0.2);</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[circle,draw=white,line width=1pt,fill=<span class="fu">\filllcirclecolor</span>,minimum size=5mm,inner sep=0pt](LV)at(PO){};</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[draw=none,rotate=40,rounded corners=2pt,rectangle,minimum width=1.2mm,inner sep=1pt,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>fill=<span class="fu">\filllcirclecolor</span>,minimum height=6mm,anchor=north]at(PO){};</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[circle,draw=none,fill=white,minimum size=3.0mm,inner sep=0pt](LM)at(PO){};</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[font=<span class="fu">\tiny\bfseries</span>]at(LM){...};</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">scope</span>}</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>     }</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">\pgfkeys</span>{</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  /channel/.cd,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>   Depth/.store in=<span class="fu">\Depth</span>,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  Height/.store in=<span class="fu">\Height</span>,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  Width/.store in=<span class="fu">\Width</span>,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  filllcirclecolor/.store in=<span class="fu">\filllcirclecolor</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  filllcolor/.store in=<span class="fu">\filllcolor</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  drawcolor/.store in=<span class="fu">\drawcolor</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  drawcircle/.store in=<span class="fu">\drawcircle</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  scalefac/.store in=<span class="fu">\scalefac</span>,</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  Linewidth/.store in=<span class="fu">\Linewidth</span>,</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  picname/.store in=<span class="fu">\picname</span>,</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  filllcolor=BrownLine,</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  filllcirclecolor=violet!20,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>  drawcolor=black,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  drawcircle=violet,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  scalefac=1,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  Linewidth=0.5pt,</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  Depth=1.3,</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  Height=0.8,</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  Width=1.1,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>  picname=C</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">% Row Store</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=RedFill!60] (r1a) at (0, 2.8) {标识: 1};</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=cyan!20, right=of r1a] (r1b) {年龄: 25};</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=green!80!black!20, right=of r1b] (r1c) {位置: 美国};</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co">%</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=RedFill!60, right=7mm of r1c] (r2a) {标识: 2};</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=cyan!20, right=of r2a] (r2b) {年龄: 30};</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=green!80!black!20, right=of r2b] (r2c) {位置: 英国};</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="co">%%fitting arrow</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[draw=none,fill=none, inner ysep=3mm, inner xsep=6mm,fit=(r1a)(r2c),xshift=-3mm](A){};</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(AL)at(<span class="ss">$($</span>(A.north west)!0.5!(A.south west)<span class="ss">$)+(0.6,0)$</span>);</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(AD)at(<span class="ss">$($</span>(A.north east)!0.5!(A.south east)<span class="ss">$)+(0.6,0)$</span>);</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="fu">\scoped</span>[on background layer]</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu">\draw</span>[draw=none,fill=black!10](A.north west)--(A.north east)--(AD)--(A.south east)--(A.south west)--(AL)--cycle;</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[Label,anchor=south,font=<span class="fu">\small\sffamily\bfseries</span>] at (A.north) {行式（CSV）};</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[anchor=north east]at(A.south east) {扫描读取<span class="fu">\textbf</span>{所有字段}};</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="co">% Column Store</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=RedFill!60,below=1.25 of A] (c1a) {标识: 1};</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=cyan!20, below=of c1a] (c2a) {年龄: 25};</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=green!80!black!20, below=of c2a] (c3a) {位置: 美国};</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=RedFill!60, right=of c1a] (c1b) {标识: 2};</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=cyan!20, below=of c1b] (c2b) {年龄: 30};</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[DataBlock, fill=green!80!black!20, below=of c2b] (c3b) {位置: 英国};</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co">%%fitting arrow</span></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[draw=none,fill=none, inner ysep=0mm, inner xsep=10mm,fit=(c2a)(c2b),xshift=-3mm](B){};</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(BL)at(<span class="ss">$($</span>(B.north west)!0.5!(B.south west)<span class="ss">$)+(0.4,0)$</span>);</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(BD)at(<span class="ss">$($</span>(B.north east)!0.5!(B.south east)<span class="ss">$)+(0.4,0)$</span>);</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="fu">\scoped</span>[on background layer]</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">\draw</span>[draw=none,fill=black!10](B.north west)--(B.north east)--(BD)--(B.south east)--(B.south west)--(BL)--cycle;</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[Label,anchor=south,above=2pt of c1a.north east,font=<span class="fu">\small\sffamily\bfseries</span>] {列式（Parquet）};</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[anchor=north west]at(B.south east) {扫描<span class="fu">\textbf</span>{<span class="fu">\color</span>{cyan}仅读取年龄}};</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="co">%icons</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="fu">\pic</span>[shift={(-1.3,-0.5)}] at  (AL){data={scalefac=0.4,picname=1,filllcolor=VioletLine, Linewidth=0.6pt}};</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="fu">\pic</span>[shift={(-0.8,-0.05)}] at  (BL){lupa={scalefac=1,picname=1,filllcirclecolor=VioletLine!60, Linewidth=0.5pt}};</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-row-vs-col-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <strong>存储布局</strong>：行式格式按记录组织值，因此图示扫描会读取每个字段。列式格式按特征组织值，因此图示扫描仅读取年龄。
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-row-vs-col" class="quarto-xref">figure&nbsp;1</a> 中两种布局的差异，在于有多少无关字节进入训练路径。</p>
+<div id="psp-appendix-data-accelerator-starvation-problem" class="callout callout-perspective" title="加速器供数不足问题">
+<p></p><details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.1: 加速器供数不足问题</strong></summary><div>文件格式的选择可能决定系统受限于 I/O 还是计算。如 <a href="#fig-row-vs-col" class="quarto-xref">figure&nbsp;1</a> 所示，存储布局会进一步加重序列化开销，因为行式格式强制执行全行扫描，而列式格式支持投影下推，仅读取模型所需的字节。其结果是，机器学习系统铁律中的“数据移动”项可能悄然成为瓶颈，导致昂贵的加速器闲置。<p></p>
+</div></details>
+</div>
+</section>
+<section id="sec-appdx-data-foundations-algebra-data-9792" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-algebra-data-9792">数据的代数</h3>
+<p>特征工程将原始记录转换为模型能够从中学习的列，而这种转换通常首先是数据流问题，然后才是建模问题。流水线先缩小样本范围，再选择特征，最后从其他表中补充上下文。这三个步骤对应三种结构化查询语言（SQL）基本操作，其计算成本决定了特征处理任务能否在本地完成、是否会扫描不必要的字节，或是否会演变为网络数据混洗。</p>
+<ol type="1">
+<li><strong>选择（<span class="math inline">\(\sigma\)</span>）</strong>：筛选行（例如，<code>WHERE age &gt; 30</code>）。
+<ul>
+<li><strong>成本</strong>：若通过 B 树索引查找返回 <span class="math inline">\(K\)</span> 行，则为 <span class="math inline">\(\mathcal{O}(\log N + K)\)</span>；全表扫描则为 <span class="math inline">\(\mathcal{O}(N)\)</span>。</li>
+</ul></li>
+<li><strong>投影（<span class="math inline">\(\pi\)</span>）</strong>：选择列（例如，<code>SELECT age</code>）。
+<ul>
+<li><strong>成本</strong>：在列式格式中，包括选定数据块的读取、解码和元数据处理。本行式格式示例为读取一个 4 字节的整数，需要读取 1 KB，其中 99.6 percent 的读取量被浪费。</li>
+</ul></li>
+<li><strong>连接（<span class="math inline">\(\bowtie\)</span>）</strong>：合并表。这是成本最高的操作。
+<ul>
+<li><strong>混洗连接</strong>：两个表均按键分区，并通过网络交换数据。
+<ul>
+<li><strong>成本</strong>：对两个大小均为 1 TB 的表重新混洗，需要移动约 ~2 TB 的数据；分区和局部性可以减少这一数据量。</li>
+</ul></li>
+<li><strong>广播连接</strong>：将一个小表发送给所有工作节点。
+<ul>
+<li><strong>成本</strong>：<span class="math inline">\(S(W-1)\)</span> 字节；这个大小为 <span class="math inline">\(S\)</span> 字节的表必须能容纳在 <span class="math inline">\(W\)</span> 个工作节点中的每一个节点上。</li>
+</ul></li>
+</ul></li>
+</ol>
+<p>理解数据格式、序列化成本和代数基本操作，可以帮助我们高效地<em>移动</em>数据。然而，即使流水线的工程设计尽善尽美，如果其中承载的数据特性随时间变化，它也可能悄然失效。检测这种变化并量化其影响程度，需要另一套工具：概率与统计。</p>
+</section>
+</section>
+<section id="sec-appdx-data-foundations-probability-statistics-3934" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-appdx-data-foundations-probability-statistics-3934">概率与统计</h2>
+<p>当数据开始流经流水线后，我们需要数学工具来确保其质量和一致性。概率与统计为监控系统健康状况、检测数据漂移引发的静默故障以及管理不确定性提供了描述语言。</p>
+<section id="sec-appdx-data-foundations-distributions-long-tail-901f" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-distributions-long-tail-901f">分布与长尾</h3>
+<p>在系统中，均值往往具有误导性。延迟分布通常呈长尾形态，面向用户的服务通常受高百分位处的行为支配，而非平均响应时间 <span class="citation" data-cites="dean2013">(<a href="#ref-dean2013" role="doc-biblioref">Dean and Barroso 2013</a>)</span>。“P99”（第 99 百分位）延迟为 500 ms，意味着至多有 1% 的请求耗时超过 500 ms；当每个会话包含大量请求时，遇到至少一次慢请求的用户比例可能高得多。在大规模场景下（1M 名用户），即使受影响用户的比例仅为 1%，也会影响 10,000 users。</p>
+<div class="no-row-height column-margin column-container"></div><div id="nbk-appendix-data-median-experience" class="callout callout-notebook" title="中位数体验">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.1: 中位数体验</strong></summary><div>对于 <span class="math inline">\(N_{\text{session}} = 100\)</span> 个独立请求，若每个请求变慢的概率均为 0.01，则至少发生一次 P99 尾部事件的概率为 <span class="math inline">\(\Pr(\text{Slow}) = 1 - (0.99)^{100} \approx 1 - 0.366 = 63.4\%\)</span>。<p></p>
+<p><strong>系统洞见</strong>：在此模型下，包含 100 个请求的会话发生超出 P99 的事件的概率超过一半。具有相关性的减速可能改变这一概率 <span class="citation" data-cites="dean2013">(<a href="#ref-dean2013" role="doc-biblioref">Dean and Barroso 2013</a>)</span>。</p>
+</div></details>
+</div>
+<div class="no-row-height column-margin column-container"><div id="ref-dean2013" class="csl-entry" role="listitem">
+Dean, Jeffrey, and Luiz André Barroso. 2013. <span>“The Tail at Scale.”</span> <em>Communications of the ACM</em> 56 (2): 74–80. https://doi.org/10.1145/2408776.2408794.
+</div></div></section>
+<section id="sec-appdx-data-foundations-measuring-drift-divergence-a6dd" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-measuring-drift-divergence-a6dd">度量漂移（散度）</h3>
+<p>由于分布具有长尾，而最危险的故障往往隐藏其中，“均值偏移”等简单指标并不足够。我们需要能够比较分布<em>整体形状</em>的工具。检测服务阶段的分布（<span class="math inline">\(P_t\)</span>）与训练分布（<span class="math inline">\(P_0\)</span>）之间的漂移，需要度量分布之间的“距离”。</p>
+<p>对于离散结果 <span class="math inline">\(x\)</span>，<a href="#eq-appdx-data-kl-divergence" class="quarto-xref">equation&nbsp;1</a> 将 KL 散度<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> 表示为用 <span class="math inline">\(P_0\)</span> 近似 <span class="math inline">\(P_t\)</span> 所产生的期望额外编码成本 <span class="citation" data-cites="kullback1951 cover2006">(<a href="#ref-kullback1951" role="doc-biblioref">Kullback and Leibler 1951</a>; <a href="#ref-cover2006" role="doc-biblioref">Cover and Thomas 2006</a>)</span>。所示形式仅在所有满足 <span class="math inline">\(P_t(x) &gt; 0\)</span> 的位置均有 <span class="math inline">\(P_0(x) &gt; 0\)</span> 时才为有限值；因此，生产实现需要显式进行平滑或零值处理。 <span id="eq-appdx-data-kl-divergence"><span class="math display">\[ \mathcal{D}_{\text{KL}}(P_t \lVert P_0) = \sum_x P_t(x) \log \frac{P_t(x)}{P_0(x)}  \tag{1}\]</span></span></p>
+<div class="no-row-height column-margin column-container"><div id="ref-kullback1951" class="csl-entry" role="listitem">
+Kullback, Solomon, and Richard A. Leibler. 1951. <span>“On Information and Sufficiency.”</span> <em>The Annals of Mathematical Statistics</em> 22 (1): 79–86. https://doi.org/10.1214/aoms/1177729694.
+</div><div id="ref-cover2006" class="csl-entry" role="listitem">
+Cover, Thomas M., and Joy A. Thomas. 2006. <em>Elements of Information Theory</em>. 2nd ed. Wiley. https://doi.org/10.1002/047174882X.
+</div></div><div id="nbk-appendix-data-kl-divergence-drift-detection" class="callout callout-notebook" title="计算示例：使用 KL 散度检测漂移">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.2: 计算示例：使用 KL 散度检测漂移</strong></summary><div><strong>场景</strong>：某情感分类器的训练数据中，正面评论占 60 percent，负面评论占 30 percent，中性评论占 10 percent。部署后，服务阶段的分布变为：正面评论占 45 percent，负面评论占 40 percent，中性评论占 15 percent。<p></p>
+<p><strong>数学计算</strong>：</p>
+<p>训练分布 <span class="math inline">\(P_0\)</span>：[0.60, 0.30, 0.10]。服务阶段的分布 <span class="math inline">\(P_t\)</span>：[0.45, 0.40, 0.15]。</p>
+<p><span class="math display">\[\begin{gather*}
+\mathcal{D}_{\text{KL}}(P_t \lVert P_0) = 0.45 \log\frac{0.45}{0.60} + 0.40 \log\frac{0.40}{0.30} + 0.15 \log\frac{0.15}{0.10}\end{gather*}\]</span> <span class="math display">\[\begin{gather*}
+= 0.45 \times (-0.2877) + 0.40 \times (0.2877) + 0.15 \times (0.4055) \\[-1pt]
+= -0.1295 + 0.1151 + 0.0608 = 0.0464\text{ nats}\end{gather*}\]</span> <span class="math display">\[\begin{gather*}
+\mathcal{D}_{\text{KL}}(P_0 \lVert P_t) = 0.60 \log\frac{0.60}{0.45} + 0.30 \log\frac{0.30}{0.40} + 0.10 \log\frac{0.10}{0.15}\end{gather*}\]</span> <span class="math display">\[\begin{gather*}
+= 0.60 \times 0.2877 + 0.30 \times (-0.2877) + 0.10 \times (-0.4055) \\[-1pt]
+= 0.1726 + (-0.0863) + (-0.0405) = 0.0458\text{ nats}\end{gather*}\]</span></p>
+<p>注意其非对称性：<span class="math inline">\(\mathcal{D}_{\text{KL}}(P_0 \lVert P_t) \neq \mathcal{D}_{\text{KL}}(P_t \lVert P_0)\)</span>。总体稳定性指数（PSI） 将其对称化；以下计算使用自然对数：</p>
+<p><span class="math display">\[\begin{gather*}
+\text{PSI} = \sum (P_{0,i} - P_{t,i}) \log\frac{P_{0,i}}{P_{t,i}} = (0.15)(0.2877) + (-0.10)(-0.2877) + (-0.05)(-0.4055) \\[-1pt]
+= 0.04315 + 0.02877 + 0.02027 = 0.0922
+\end{gather*}\]</span></p>
+<p><strong>系统洞见</strong>：由于 PSI = 0.0922 &lt; 0.2，该漂移尚未超过此处用于示例的人工复核阈值。恰当的应对方式是继续在监控仪表板上跟踪该特征，并寻找能够相互印证的漂移信号，而不是仅凭这一统计量就进行重新训练。</p>
+</div></details>
+</div>
+<p>该阈值仅用于示例：其含义取决于样本量、分箱、平滑和零值处理，而重新训练需要模型质量方面的证据。</p>
+<p>KL 散度和 PSI 都建立在更深层的框架——信息论——之上。信息论提供了相应的单位和界限，使这些指标具有理论依据，而非临时拼凑。</p>
+</section>
+<section id="sec-appdx-data-foundations-information-theory-systems-c033" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-information-theory-systems-c033">面向系统的信息论</h3>
+<p>一次训练运行可能使用更多样本、运行更长时间，却仍然不再取得改进，原因在于新增数据携带的有用信号过少。此时，瓶颈不仅在于计算或带宽，还在于数据流水线向学习器传递的信息量。<strong><a href="appendix_dam.html#sec-appdx-dam-taxonomy-information-roofline-destination-6426">信息 Roofline（目的地）</a></strong> 将这一数据质量上限视为诊断约束，而信息论为分析这一约束提供了度量单位。</p>
+<p><strong>熵（<span class="math inline">\(H\)</span>）</strong><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> 是分布中的平均不确定性，定义为 <span class="math inline">\(H(X) = -\sum p(x) \log p(x)\)</span>。对数的底决定单位：自然对数对应奈特，而 <span class="math inline">\(\log_2\)</span> 对应比特。只有在固定的有限支撑集上，均匀分布才具有最大熵。这与上文的 KL 散度直接相关：<span class="math inline">\(\mathcal{D}_{\text{KL}}\)</span> 度量使用错误分布所产生的额外编码成本。</p>
+<p><strong>信息密度</strong> 在本书中用作一种启发式概念，表示每单位存储所包含的有用学习信号，而非标准的信息论量。</p>
+<p><strong>信噪比（SNR）</strong> 是信号功率与噪声功率之比。在机器学习语境下，本书以低信噪比定性描述这样一类数据：其中与任务相关的结构相对于噪声较弱；增加计算量无法弥补与任务相关的信号的缺失。</p>
+</section>
+<section id="sec-appdx-data-foundations-logits-numerical-stability-13e2" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-data-foundations-logits-numerical-stability-13e2">Logit 与数值稳定性</h3>
+<p>神经网络分类器通常输出一个 <em>logit</em> 向量<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <span class="math inline">\(\mathbf{z}\)</span>（未归一化的分数）。对于类别索引 <span class="math inline">\(i\)</span>，softmax 在所有类别索引 <span class="math inline">\(j\)</span> 上对 <span class="math inline">\(z_i\)</span> 进行归一化，得到概率：</p>
+<p><span class="math display">\[ \text{Softmax}(z_i) = \frac{e^{z_i}}{\sum e^{z_j}} \]</span></p>
+<p>问题在于，如果 <span class="math inline">\(z_i\)</span> 很大（例如 100），指数值 <span class="math inline">\(e^{z_i}\)</span> 就会超出 FP32、BF16 和 FP16 等常见训练与推理格式的表示范围，发生溢出。FP64 可以表示这一特定值，但生产机器学习内核很少使用 FP64 计算 softmax。解决方法是在对数空间中进行计算：“Log-Sum-Exp”技巧 使我们无需直接计算巨大的指数值，就能计算 <span class="math inline">\(\log\left(\sum e^{z_j}\right)\)</span>，从而保持数值精度。<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>下面通过一个简短的计算示例，说明即使 logit 值较大但仍处于实际可能出现的范围内，这一技巧为何在实践中依然重要：</p>
+<div id="nbk-appendix-data-log-sum-exp-action" class="callout callout-notebook" title="Log-sum-exp 的实际应用">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.3: Log-sum-exp 的实际应用</strong></summary><div><strong>设定</strong>：一个三分类器输出的 logit 为 <span class="math inline">\(\mathbf{z} =\)</span> <span class="math inline">\(\lbrack 100, 101, 102 \rbrack\)</span>。<p></p>
+<p><strong>不使用该技巧（朴素 softmax）</strong>： <span class="math display">\[\text{
+$\exp(100) \approx 2.7 \times 10^{43}$, $\exp(101) \approx 7.3 \times 10^{43}$, $\exp(102) \approx 2.0 \times 10^{44}$}\]</span></p>
+<p>这些数值可以用 FP64 表示，但在 FP32 中会溢出（最大值 <span class="math inline">\(\approx 3.4 \times 10^{38}\)</span>）。对于 FP16（最大值 <span class="math inline">\(\approx 65{,}504\)</span>），即使 <span class="math inline">\(e^{12}\)</span> 也会溢出。原始 logit 的绝对值很少达到 100，但较大的中间值确实会出现（例如，未缩放的注意力分数或过度自信的输出）；由于 FP16 和 BF16 是标准训练精度，朴素 softmax 的溢出风险出现得足够频繁，因此默认采用数值稳定的形式。</p>
+<p><strong>使用该技巧</strong>：减去 <span class="math inline">\(a = \max(\mathbf{z}) =\)</span> 102：</p>
+<p>平移后的 logit：<span class="math inline">\(\mathbf{z} - a =\)</span> <span class="math inline">\(\lbrack -2, -1, 0 \rbrack\)</span></p>
+<p>指数值：<span class="math inline">\(\exp(-2) \approx 0.135\)</span>、<span class="math inline">\(\exp(-1) \approx 0.368\)</span>、<span class="math inline">\(\exp(0) = 1.0\)</span></p>
+<p>总和 = 1.503。LogSumExp = 102 <span class="math inline">\(+ \log(1.503) = 102.408\)</span>。</p>
+<p>Softmax：<span class="math inline">\(\lbrack 0.135/1.503,\; 0.368/1.503,\; 1.0/1.503 \rbrack = \lbrack 0.090,\; 0.245,\; 0.665 \rbrack\)</span></p>
+<p><strong>系统洞见</strong>：平移后的值经指数运算得到的结果，以及最终的 softmax 概率，均位于 <span class="math inline">\([0, 1]\)</span> 内，即使使用 FP16 也不存在溢出风险。</p>
+</div></details>
+</div>
+<p>这些计算示例共同串联起了从物理数据移动到分布偏移和数值稳定性的完整链条。</p>
+</section>
+</section>
+<section id="sec-appdx-data-foundations-summary-3c72" class="level2">
+<h2 class="anchored" data-anchor-id="sec-appdx-data-foundations-summary-3c72">总结</h2>
+<p>本附录中的工具——关注尾部行为的指标、漂移散度、信息论界限和数值稳定性技术——支持对数据相关故障进行定量诊断，而非依赖个别事例进行解释。</p>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default page-columns page-full"><section id="footnotes" class="footnotes footnotes-end-of-document page-columns page-full" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><strong>数据引力</strong>：Dave McCrory 于 2010 年提出这一术语，用来描述大型数据集如何吸引服务和应用向其聚集，正如物理学中大质量物体吸引较小物体一样 <span class="citation" data-cites="mccrory2010datagravity">(<a href="#ref-mccrory2010datagravity" role="doc-biblioref">McCrory 2010</a>)</span>。这一类比十分贴切：移动 PB 级数据集所需的“逃逸速度”，往往要以周计的时间来衡量。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>序列化</strong>：源自拉丁语 <em>serialis</em>（形成序列）。指将内存中的数据结构转换为字节流以进行存储或传输的过程，以及其逆过程（<em>反序列化</em>）。在机器学习流水线中，序列化格式的选择可能主导端到端训练时间；<strong><a href="../04_data_engineering/04_data_engineering.html#sec-data-engineering-data-ingestion-8efc">数据摄取</a></strong> 介绍了尽量降低这一开销的流水线设计策略。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><strong>KL 散度</strong>：以 Solomon Kullback 和 Richard Leibler 的名字命名，两人于 1951 年提出了这一概念。它也称为<em>相对熵</em>，用于量化使用针对另一分布优化的编码来编码某一分布的样本时，所需的期望额外信息量；在本书的漂移监控中，标准方向为 <span class="math inline">\(\mathcal{D}_{\text{KL}}(P_t \lVert P_0)\)</span>。使用自然对数时，如上例所示，单位为奈特；使用以 2 为底的对数时，单位为比特。在生产机器学习中，KL 散度是许多漂移检测指标的理论基础。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><strong>熵</strong>：Shannon 于 1948 年采用这一术语来量化信息含量 <span class="citation" data-cites="shannon1948">(<a href="#ref-shannon1948" role="doc-biblioref">Shannon 1948</a>)</span>。从系统角度看，香农熵是平均无损编码长度的下界。实际的前缀码可接近这一下界，而分组码可在渐近意义上逼近它。使用 <span class="math inline">\(\log_2\)</span> 时，单位为比特；使用自然对数时，单位为奈特。这些界限为压缩比和数据流水线的容量规划提供依据。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><strong>Logit</strong>：Joseph Berkson 于 1944 年仿照 <em>probit</em> 创造了这一术语。logit 函数是 logistic（sigmoid）函数的反函数：<span class="math inline">\(\text{logit}(p) = \log(p/(1-p))\)</span>。在深度学习中，“logits”更宽泛地指应用任何激活函数之前，最后一个线性层的原始、未归一化输出。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><strong>Log-sum-exp</strong>：在 PyTorch 中实现为 <code>torch.logsumexp</code>，在 SciPy 中实现为 <code>scipy.special.logsumexp</code>。它依赖恒等式 <span class="math inline">\(\log\left(\sum e^{x_i}\right) = a + \log\left(\sum e^{x_i - a}\right)\)</span>，其中 <span class="math inline">\(a = \max(x_i)\)</span>。平移后的值 <span class="math inline">\(x_i - a\)</span> 均为 <span class="math inline">\(\le 0\)</span>，确保指数值不会溢出。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><div id="ref-mccrory2010datagravity" class="csl-entry" role="listitem">
+McCrory, Dave. 2010. <em>Data Gravity – in the Clouds</em>.
+</div><div id="ref-shannon1948" class="csl-entry" role="listitem">
+Shannon, Claude E. 1948. <span>“A Mathematical Theory of Communication.”</span> <em>Bell System Technical Journal</em> 27 (3): 379–423. https://doi.org/10.1002/j.1538-7305.1948.tb01338.x.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https?:\/\/[^/]+\/books\/mlsys\/vol1\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol1_zh/backmatter/appendix_dam.html" class="pagination-link" aria-label="数据—算法—机器分类体系">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">数据—算法—机器分类体系</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol1_zh/backmatter/appendix_algorithm.html" class="pagination-link" aria-label="算法基础">
+        <span class="nav-page-text">算法基础</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>机器学习系统导论 · 简体中文本地预览</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<!--
+  MLSysBook release-pill — shared footer version chip for Quarto + static sites.
+
+  Renders a small "v0.1.0 · Apr 26, 2026" chip from a deployed
+  release-manifest.json. Best-effort chrome: silent on any fetch failure
+  (manifest missing, offline, CORS). Use at any site that emits a manifest
+  via scripts/version/release.py emit-manifest.
+
+  ── Standardized placement (all MLSysBook sites) ──
+
+  The chip lives in the page-footer, right slot, so it reads as an
+  intentional part of the footer bar (not dangling below the page). Two
+  pieces per site:
+
+  1. This file loads the style + populator script site-wide:
+
+       format:
+         html:
+           include-in-header:
+             - text: |
+                 <meta name="release-manifest" content="/<project-base>/release-manifest.json">
+           include-after-body:
+             - file: ../shared/release/release-pill.html
+
+  2. Each page-footer places the chip span where it should render:
+
+       website:
+         page-footer:
+           right:
+             - text: |
+                 <span class="release-pill" data-release-pill></span>
+             - icon: github
+               href: ...
+
+  The meta tag tells the script where to find the manifest. The script
+  populates every span carrying data-release-pill, so the chip can sit in
+  the footer (canonical), an about page, or anywhere else.
+
+  ── Manifest contract ──
+
+  The manifest is the JSON written by scripts/version/release.py
+  emit-manifest. Required keys: releaseId, releaseHash. Optional but
+  recommended: buildDate, project. Anything else is ignored.
+
+  ── Why runtime fetch instead of build-time templating ──
+
+  Build-time templating would be deterministic but requires per-project
+  Lua/template machinery. Runtime fetch is project-agnostic and works
+  identically across Quarto, Next.js, and plain HTML. The one fetch per
+  page-load is cheap and the chip degrades to nothing on failure.
+-->
+
+<style>
+  /* Fixed muted gray on every site — the chip must look identical regardless of
+     each Quarto theme's accent colors (do NOT inherit --bs-secondary / link color). */
+  .release-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--release-pill-color, #6c757d);
+  }
+  .release-pill a,
+  .release-pill a:visited,
+  .release-pill-version,
+  .release-pill-date {
+    color: var(--release-pill-color, #6c757d);
+    text-decoration: none;
+  }
+  .release-pill a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .release-pill-date {
+    opacity: 0.75;
+  }
+</style>
+
+<script>
+  (function () {
+    var pills = document.querySelectorAll('[data-release-pill]');
+    if (!pills.length) return;
+
+    // Manifest URL resolution order:
+    //   1. data-manifest attribute on the pill (per-page override)
+    //   2. <meta name="release-manifest" content="..."> in <head>
+    //   3. './release-manifest.json' relative to current page (fallback)
+    var meta = document.querySelector('meta[name="release-manifest"]');
+    var metaPath = meta && meta.getAttribute('content');
+
+    fetch(metaPath || './release-manifest.json', { cache: 'no-store' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (m) {
+        if (!m || !m.releaseId || !m.releaseHash) return;
+        var date = m.buildDate
+          ? new Date(m.buildDate).toLocaleDateString('en-US',
+              { year: 'numeric', month: 'short', day: 'numeric' })
+          : '';
+        var shortHash = String(m.releaseHash).slice(0, 7);
+        var title =
+          (m.project ? m.project + ' ' : '') +
+          'v' + m.releaseId +
+          (date ? ' · built ' + date : '') +
+          ' · hash ' + shortHash;
+
+        pills.forEach(function (el) {
+          var rawLink = el.getAttribute('data-link') || '#release';
+          // XSS hardening: allow only anchor, relative, or http(s) links; reject javascript:/data: URLs.
+          var linkHref = /^(?:#|\/|\.{1,2}\/|https?:\/\/)/i.test(rawLink) ? rawLink : '#release';
+          var a = document.createElement('a');
+          a.href = linkHref;
+          a.title = title;
+          a.setAttribute('aria-label',
+            'Release v' + m.releaseId + (date ? ', built ' + date : ''));
+          var v = document.createElement('span');
+          v.className = 'release-pill-version';
+          v.textContent = 'v' + m.releaseId;
+          a.appendChild(v);
+          if (date) {
+            var d = document.createElement('span');
+            d.className = 'release-pill-date';
+            d.textContent = ' · ' + date;
+            a.appendChild(d);
+          }
+          el.innerHTML = '';
+          el.appendChild(a);
+        });
+      })
+      .catch(function () { /* silent: best-effort chrome */ });
+  })();
+</script>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 中文书架</a>
+</body></html>

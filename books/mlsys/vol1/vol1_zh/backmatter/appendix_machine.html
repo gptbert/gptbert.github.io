@@ -1,0 +1,3590 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>机器学习系统导论</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol1_zh/backmatter/appendix_assumptions.html" rel="next">
+<link href="../../vol1_zh/backmatter/appendix_algorithm.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-9890ab0e7b279b2f92e6572d8f7c6ba2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-M21L0CBCVN"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-M21L0CBCVN', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+<!-- Shared head includes — MLSysBook ecosystem -->
+
+<!--
+  theme-persist (inline, sync) — applies stored color-scheme before first paint.
+  Inlined deliberately: runs before any other <script>, no extra round-trip,
+  and avoids per-subsite asset path differences. Canonical source:
+  shared/scripts/theme-persist.js (kept identical for documentation/testability).
+  If you change one, mirror the change to the other.
+-->
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'quarto-color-scheme';
+  // Quarto's toggle writes 'alternate'/'default' (alternate = dark, the
+  // layered sheet); sibling non-Quarto sites write 'dark'/'light'. Both
+  // hit the same key, so we accept either. Quarto's own startup still
+  // checks `=== 'alternate'`, so we mirror onto <html> rather than rewrite.
+  function normalize(v) {
+    if (v === 'dark' || v === 'alternate') return 'dark';
+    if (v === 'light' || v === 'default') return 'light';
+    return null;
+  }
+  function preferredScheme() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) return n;
+    } catch (e) {}
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  function apply(scheme) {
+    var html = document.documentElement;
+    if (!html) return;
+    html.setAttribute('data-bs-theme', scheme);
+    html.setAttribute('data-quarto-color-scheme', scheme);
+    html.style.colorScheme = scheme;
+    // Bridge to legacy `.quarto-dark` body class — about.css,
+    // community.css, and newsletter.css key their dark-mode CSS
+    // variables off `.quarto-dark { ... }`. Quarto's own toggle adds
+    // that class on click, but the OS-pref / first-paint path never
+    // does. Mirror the scheme onto body so those CSS variables fire
+    // on every dark path, not just toggle clicks. body may not exist
+    // yet on the first call (this script runs in <head>); a
+    // MutationObserver below catches it as soon as it parses.
+    var body = document.body;
+    if (body) body.classList.toggle('quarto-dark', scheme === 'dark');
+  }
+  apply(preferredScheme());
+  // Catch the FOUC window between <head> apply() and DOMContentLoaded:
+  // <body> may not exist yet at first apply(), but as soon as the
+  // parser appends it we want the legacy class bridge in place so any
+  // CSS keyed on `.quarto-dark` paints correctly on first render.
+  if (!document.body) {
+    var earlyObserver = new MutationObserver(function () {
+      if (document.body) {
+        apply(preferredScheme());
+        earlyObserver.disconnect();
+      }
+    });
+    earlyObserver.observe(document.documentElement, { childList: true });
+  }
+  // Quarto's toggle updates localStorage but not <html>, so wrap it to
+  // mirror the new value onto data-bs-theme; otherwise clicking the toggle
+  // leaves CSS keyed off [data-bs-theme="dark"] rendering against the wrong
+  // stylesheet until the next reload.
+  function syncFromStorage() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) apply(n);
+    } catch (e) {}
+  }
+  function wrapToggle() {
+    var orig = window.quartoToggleColorScheme;
+    if (typeof orig !== 'function' || orig.__mlsbWrapped) return;
+    var wrapped = function () { var r = orig.apply(this, arguments); syncFromStorage(); return r; };
+    wrapped.__mlsbWrapped = true;
+    window.quartoToggleColorScheme = wrapped;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { wrapToggle(); syncFromStorage(); });
+  } else {
+    wrapToggle(); syncFromStorage();
+  }
+  // Defend the legacy `.quarto-dark` body class against Quarto's own
+  // `toggleBodyColor(mode)`, which runs *after* this script and re-asserts
+  // the body class based on `mode` — and `mode` defaults to 'light' when
+  // there's no stored quarto-color-scheme value, even when the OS / first
+  // paint already resolved to dark via `data-bs-theme`. Without this
+  // observer, on every fresh visit Quarto would clobber our bridge and
+  // restore `.quarto-light`, leaving `.quarto-dark`-keyed CSS variables
+  // (about/community/newsletter pages) at their light-mode defaults
+  // against the dark `data-bs-theme="dark"` background.
+  function bridgeBody() {
+    var body = document.body;
+    if (!body) return;
+    var wantDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    if (wantDark && !body.classList.contains('quarto-dark')) {
+      body.classList.add('quarto-dark');
+      body.classList.remove('quarto-light');
+    } else if (!wantDark && body.classList.contains('quarto-dark')) {
+      body.classList.remove('quarto-dark');
+      body.classList.add('quarto-light');
+    }
+  }
+  function watchBody() {
+    if (!document.body) return;
+    bridgeBody();
+    var bodyObs = new MutationObserver(bridgeBody);
+    bodyObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var htmlObs = new MutationObserver(bridgeBody);
+    htmlObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watchBody);
+  } else {
+    watchBody();
+  }
+  window.addEventListener('storage', function (ev) {
+    if (ev.key !== STORAGE_KEY) return;
+    var n = normalize(ev.newValue);
+    if (n) apply(n);
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (ev) {
+        try { if (window.localStorage.getItem(STORAGE_KEY)) return; } catch (e) {}
+        apply(ev.matches ? 'dark' : 'light');
+      });
+    } catch (e) {}
+  }
+})();
+</script>
+
+<!--
+  Build-stamp styling. Tiny, neutral, dark-mode aware. The actual stamp text
+  is injected by shared/scripts/inject-build-stamp.sh into footer markup
+  containing the literal MLSB_BUILD_STAMP HTML-comment token (see that
+  script for the exact pattern — we cannot write it here because HTML
+  comments cannot nest and the inner closer would terminate this block).
+-->
+<style>
+.mlsb-build-stamp {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+[data-bs-theme="dark"] .mlsb-build-stamp { opacity: 0.5; }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="icon" href="https://mlsysbook.ai/vol1/assets/images/icons/favicon.png" type="image/png">
+<meta name="author" content="Vijay Janapa Reddi">
+
+<!-- Schema.org JSON-LD structured data for Google Knowledge Graph & Rich Snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mlsysbook.ai/#website",
+      "url": "https://mlsysbook.ai/",
+      "name": "Machine Learning Systems",
+      "description": "The AI Engineering Textbook Series: Foundations, Scaling, Agentic AI, and Physical AI.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Harvard Edge Computing Lab",
+        "url": "https://edge.seas.harvard.edu"
+      }
+    },
+    {
+      "@type": "BookSeries",
+      "@id": "https://mlsysbook.ai/#bookseries",
+      "name": "Machine Learning Systems: Principles and Practices of Engineering Artificially Intelligent Systems",
+      "alternateName": ["MLSysBook", "Machine Learning Systems", "AI Engineering Textbook"],
+      "url": "https://mlsysbook.ai/",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Vijay Janapa Reddi",
+        "jobTitle": "Gordon McKay Professor of Electrical Engineering and Computer Science",
+        "worksFor": {
+          "@type": "EducationalOrganization",
+          "name": "Harvard University",
+          "sameAs": "https://www.harvard.edu"
+        },
+        "sameAs": [
+          "https://profvjreddi.github.io/homepage/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MIT Press",
+        "url": "https://mitpress.mit.edu"
+      },
+      "hasPart": [
+        {
+          "@type": "Book",
+          "name": "Volume I: Introduction to Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol1/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Foundations, Lifecycle, Data Engineering, Training, Inference, Benchmarking, and Responsible AI"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume II: Scaling Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol2/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Distributed Training, Accelerator Architecture, Parallelism, Memory Systems, and Serving"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume III: Agentic Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol3/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Autonomous Agents, Deliberation, Working Sets, Virtual Memory, RAG, RLVR, and Multi-Agent Systems"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume IV: Physical AI Systems",
+          "url": "https://mlsysbook.ai/vol4/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Physical AI, Embodied AI, Closed-Loop Dynamics, Actuation, Control Barrier Functions, and Robotics"
+        }
+      ]
+    },
+    {
+      "@type": "Course",
+      "@id": "https://mlsysbook.ai/#course",
+      "name": "CS249r: Machine Learning Systems",
+      "description": "Harvard University course on principles and practices of engineering artificially intelligent systems.",
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "Harvard University",
+        "sameAs": "https://www.harvard.edu"
+      }
+    }
+  ]
+}
+</script>
+
+<!--
+  navbar-theme-toggle-relocate — moves the Quarto theme toggle into the
+  navbar's right-side .navbar-nav group at page load, so it collapses into
+  the hamburger menu alongside Subscribe/Star/Support/GitHub at narrow widths
+  instead of being stranded in the middle by Quarto's mx-auto brand layout.
+
+  Why JS: Quarto auto-injects the toggle into .quarto-navbar-tools (outside
+  .navbar-collapse). CSS can't move DOM nodes between containers, and CSS
+  positioning hacks (absolute/right: 50px) fight Bootstrap's responsive
+  layout below 992px. Moving the node once at startup is the standard
+  approach used across Quarto-based sites with the same problem.
+-->
+<script>
+(function () {
+  'use strict';
+  function relocateThemeToggle() {
+    var tools = document.querySelector('.quarto-navbar-tools');
+    if (!tools) return;
+    var toggle = tools.querySelector('.quarto-color-scheme-toggle');
+    if (!toggle) return;
+    var navRight = document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav.ms-auto'
+    ) || document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav:last-of-type'
+    );
+    if (!navRight) return;
+    var li = document.createElement('li');
+    li.className = 'nav-item navbar-theme-toggle-item';
+    toggle.classList.add('nav-link');
+    li.appendChild(toggle);
+    navRight.appendChild(li);
+    tools.style.display = 'none';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', relocateThemeToggle);
+  } else {
+    relocateThemeToggle();
+  }
+})();
+</script>
+
+<!--
+  navbar-brand-href-fix — force the navbar brand link to the ecosystem root
+  (https://mlsysbook.ai/) on every subsite.
+
+  Quarto sets each subsite's `site-url` to `https://mlsysbook.ai/<subsite>/`
+  and then relativizes any navbar.href value that lives inside the
+  site-url's domain. The shared `href: https://mlsysbook.ai/` in
+  navbar-common.yml therefore gets emitted as `./index.html`, which on
+  vol1/vol2/tinytorch/etc. resolves to *that subsite's* root rather than
+  the ecosystem landing page. Override the brand link href in JS after
+  Quarto's render: this is a one-line user-experience fix that does not
+  fight Quarto's URL machinery.
+-->
+<script>
+(function () {
+  'use strict';
+  function fixBrandHref() {
+    var brand = document.querySelectorAll(
+      '.navbar .navbar-brand, .navbar .navbar-brand-logo'
+    );
+    for (var i = 0; i < brand.length; i++) {
+      brand[i].setAttribute('href', 'https://mlsysbook.ai/');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixBrandHref);
+  } else {
+    fixBrandHref();
+  }
+})();
+</script>
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="apple-touch-icon" href="../../shared/assets/images/icons/favicon.png">
+<meta name="theme-color" content="#A51C30">
+<!-- Release identity (rendered into the footer pill below).
+     The publish workflow drops release-manifest.json at
+     /vol1_zh/release-manifest.json before deploy. -->
+<meta name="release-manifest" content="/vol1_zh/release-manifest.json">
+<!-- SocratiQ bundle: -->
+<!-- <script type="module" src="/tools/scripts/socratiQ/bundle.js" defer></script> -->
+<script src="../../shared/assets/scripts/sidebar-auto-collapse.js" defer=""></script>
+<script src="../../shared/assets/scripts/version-link.js" defer=""></script>
+<script src="../../shared/assets/scripts/subscribe-modal.js" defer=""></script>
+<style>
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<style id="zh-web-layout">#quarto-announcement{display:none!important}#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">机器学习系统 · 第一卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol1_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">开始阅读</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol1_zh/backmatter/appendix_machine.html">机器基础</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+  <div id="quarto-announcement" data-announcement-id="d3cc121d05ef1a79684f139997959c79" class="alert alert-primary hidden"><i class="bi bi-megaphone quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>📘 <strong>Volume I: Foundations.</strong> Single-machine ML systems — data, algorithms, and machines.<br> 🚀 <strong>Ready for scale?</strong> <a href="/books/mlsys/vol2/">Volume II: Scaling</a> — distributed training, fleet operations, responsible deployment.<br> 🛠️ <strong>Alongside the book:</strong> <a href="https://mlsysbook.ai/tinytorch/">TinyTorch</a> (build) · <a href="https://mlsysbook.ai/kits/">Hardware Kits</a> (deploy) · <a href="https://mlsysbook.ai/mlsysim/">MLSys·im</a> (model) · <a href="https://mlsysbook.ai/labs/">Labs</a> (explore) · <a href="https://mlsysbook.ai/staffml/">StaffML</a> (practice)<br> 📬 <strong>Newsletter:</strong> ML Systems insights &amp; updates — <a href="https://mlsysbook.ai/newsletter/">Subscribe →</a></p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献词</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/foreword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">序言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者的话</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">符号说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/foundations_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基础原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/02_ml_systems/02_ml_systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/03_ml_workflow/03_ml_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习工作流</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/04_data_engineering/04_data_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/build_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">开发原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/05_nn_computation/05_nn_computation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经计算</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/06_nn_architectures/06_nn_architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络架构</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/07_frameworks/07_frameworks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习框架</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/08_training/08_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/optimize_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">优化原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/09_data_selection/09_data_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据选择</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/10_model_compression/10_model_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型压缩</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/11_hw_acceleration/11_hw_acceleration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硬件加速</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/12_benchmarking/12_benchmarking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基准测试</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/deploy_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/13_model_serving/13_model_serving.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型服务</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/14_ml_ops/14_ml_ops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习运维</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/15_responsible_engr/15_responsible_engr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">负责任工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/16_conclusion/16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结论</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_dam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据—算法—机器分类体系</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_algorithm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">算法基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_machine.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">机器基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">系统假设</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-appdx-machine-foundations" id="toc-sec-appdx-machine-foundations" class="nav-link active" data-scroll-target="#sec-appdx-machine-foundations">机器基础</a>
+  <ul>
+  <li><a href="#如何使用本附录" id="toc-如何使用本附录" class="nav-link" data-scroll-target="#如何使用本附录">如何使用本附录</a></li>
+  <li><a href="#sec-appdx-machine-foundations-numbers-know-b531" id="toc-sec-appdx-machine-foundations-numbers-know-b531" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-numbers-know-b531">应知数值</a>
+  <ul class="collapse">
+  <li><a href="#参考关系" id="toc-参考关系" class="nav-link" data-scroll-target="#参考关系">参考关系</a>
+  <ul class="collapse">
+  <li><a href="#光速带来的固有开销" id="toc-光速带来的固有开销" class="nav-link" data-scroll-target="#光速带来的固有开销">光速带来的固有开销</a></li>
+  <li><a href="#能耗层次结构" id="toc-能耗层次结构" class="nav-link" data-scroll-target="#能耗层次结构">能耗层次结构</a></li>
+  <li><a href="#存储层次结构" id="toc-存储层次结构" class="nav-link" data-scroll-target="#存储层次结构">存储层次结构</a></li>
+  <li><a href="#扩展规律" id="toc-扩展规律" class="nav-link" data-scroll-target="#扩展规律">扩展规律</a></li>
+  </ul></li>
+  <li><a href="#延迟预算示例" id="toc-延迟预算示例" class="nav-link" data-scroll-target="#延迟预算示例">延迟预算示例</a></li>
+  <li><a href="#当前硬件参考值约-2024-年" id="toc-当前硬件参考值约-2024-年" class="nav-link" data-scroll-target="#当前硬件参考值约-2024-年">当前硬件参考值（约 2024 年）</a>
+  <ul class="collapse">
+  <li><a href="#内存延迟与带宽" id="toc-内存延迟与带宽" class="nav-link" data-scroll-target="#内存延迟与带宽">内存延迟与带宽</a></li>
+  <li><a href="#计算吞吐量" id="toc-计算吞吐量" class="nav-link" data-scroll-target="#计算吞吐量">计算吞吐量</a></li>
+  <li><a href="#roofline-转折点" id="toc-roofline-转折点" class="nav-link" data-scroll-target="#roofline-转折点">Roofline 转折点</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#sec-appdx-machine-foundations-physics-computing-c77f" id="toc-sec-appdx-machine-foundations-physics-computing-c77f" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-physics-computing-c77f">计算的物理基础</a>
+  <ul class="collapse">
+  <li><a href="#sec-appdx-machine-foundations-roofline-model-2529" id="toc-sec-appdx-machine-foundations-roofline-model-2529" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-roofline-model-2529">Roofline 模型</a>
+  <ul class="collapse">
+  <li><a href="#sec-appdx-machine-foundations-concrete-example-a100-analysis-5b30" id="toc-sec-appdx-machine-foundations-concrete-example-a100-analysis-5b30" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-concrete-example-a100-analysis-5b30">具体示例：A100 分析</a></li>
+  </ul></li>
+  <li><a href="#sec-appdx-machine-foundations-dimensional-analysis-76b3" id="toc-sec-appdx-machine-foundations-dimensional-analysis-76b3" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-dimensional-analysis-76b3">量纲分析</a></li>
+  <li><a href="#sec-appdx-machine-foundations-amdahls-law-gustafsons-law-b741" id="toc-sec-appdx-machine-foundations-amdahls-law-gustafsons-law-b741" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-amdahls-law-gustafsons-law-b741">Amdahl 定律与 Gustafson 定律</a>
+  <ul class="collapse">
+  <li><a href="#sec-appdx-machine-foundations-strong-scaling-amdahls-law-c6c2" id="toc-sec-appdx-machine-foundations-strong-scaling-amdahls-law-c6c2" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-strong-scaling-amdahls-law-c6c2">强扩展（Amdahl 定律）</a></li>
+  <li><a href="#sec-appdx-machine-foundations-weak-scaling-gustafsons-law-eb7e" id="toc-sec-appdx-machine-foundations-weak-scaling-gustafsons-law-eb7e" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-weak-scaling-gustafsons-law-eb7e">弱扩展（Gustafson 定律）</a></li>
+  </ul></li>
+  <li><a href="#sec-appdx-machine-foundations-littles-law-21a3" id="toc-sec-appdx-machine-foundations-littles-law-21a3" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-littles-law-21a3">利特尔定律</a></li>
+  </ul></li>
+  <li><a href="#sec-appdx-machine-foundations-computer-architecture-essentials-10c2" id="toc-sec-appdx-machine-foundations-computer-architecture-essentials-10c2" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-computer-architecture-essentials-10c2">计算机体系结构基础</a>
+  <ul class="collapse">
+  <li><a href="#sec-appdx-machine-foundations-latencies-every-programmer-know-e89f" id="toc-sec-appdx-machine-foundations-latencies-every-programmer-know-e89f" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-latencies-every-programmer-know-e89f">每位程序员都应了解的延迟</a></li>
+  <li><a href="#sec-appdx-machine-foundations-ai-hardware-cheat-sheet-modern-reference-4dc1" id="toc-sec-appdx-machine-foundations-ai-hardware-cheat-sheet-modern-reference-4dc1" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-ai-hardware-cheat-sheet-modern-reference-4dc1">AI 硬件速查表（现代参考）</a></li>
+  <li><a href="#sec-appdx-machine-foundations-memory-hierarchy-2278" id="toc-sec-appdx-machine-foundations-memory-hierarchy-2278" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-memory-hierarchy-2278">存储层次结构</a></li>
+  <li><a href="#sec-appdx-machine-foundations-bandwidth-vs-latency-5320" id="toc-sec-appdx-machine-foundations-bandwidth-vs-latency-5320" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-bandwidth-vs-latency-5320">带宽与延迟</a></li>
+  </ul></li>
+  <li><a href="#sec-appdx-machine-foundations-numerical-representations-c889" id="toc-sec-appdx-machine-foundations-numerical-representations-c889" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-numerical-representations-c889">数值表示</a>
+  <ul class="collapse">
+  <li><a href="#sec-appdx-machine-foundations-floatingpoint-format-comparison-1836" id="toc-sec-appdx-machine-foundations-floatingpoint-format-comparison-1836" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-floatingpoint-format-comparison-1836">浮点格式比较</a></li>
+  <li><a href="#sec-appdx-machine-foundations-integer-quantization-5442" id="toc-sec-appdx-machine-foundations-integer-quantization-5442" class="nav-link" data-scroll-target="#sec-appdx-machine-foundations-integer-quantization-5442">整数量化</a></li>
+  </ul></li>
+  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结">总结</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">机器基础</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-appdx-machine-foundations" class="level1 page-columns page-full" data-dropcap="chapter-opening">
+<h1 data-dropcap="chapter-opening">机器基础</h1>
+<p>数据手册报告的是峰值吞吐量；实际工作负载几乎从未达到这一水平。要缩小这一差距，就需要知道哪种物理限制最先约束执行：延迟、内存带宽、算术强度，还是能耗。本附录汇集了具有持久适用性的硬件模型和数量级数值，为全书的单节点分析提供依据，并给出可用于核验或扩展各章估算的数学基准。这些模型假定读者具备计算机体系结构的本科基础，尤其是对存储层次结构的了解。</p>
+<section id="如何使用本附录" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="如何使用本附录">如何使用本附录</h2>
+<p>本附录旨在用作参考。在诊断性能问题时，可利用本附录将模糊的症状（“运行很慢”）转化为具体的约束（“批量大小为一时受内存限制”），进而选择真正能够改善性能的调节手段。</p>
+<p>此处的约定遵循全书统一的符号体系（例如，<span class="math inline">\(B\)</span> 专用于表示批量大小，<span class="math inline">\(\text{BW}\)</span> 专用于表示带宽）。</p>
+<ul>
+<li>检查可行性是否合理：首先查阅 <a href="#sec-appdx-machine-foundations-numbers-know-b531" class="quarto-xref">section&nbsp;1.1</a> 中的数量级数值。</li>
+<li>诊断主导性能上限：使用 <a href="#sec-appdx-machine-foundations-roofline-model-2529" class="quarto-xref">section&nbsp;1.2.1</a> 中的 Roofline 模型，判断工作负载是受计算限制还是受内存限制。</li>
+<li>分析扩展极限：使用 <a href="#sec-appdx-machine-foundations-amdahls-law-gustafsons-law-b741" class="quarto-xref">section&nbsp;1.2.3</a> 中的阿姆达尔定律和古斯塔夫森定律，理解为何增加加速器可能无法缩短训练时间。</li>
+<li>选择合适的精度：使用 <a href="#sec-appdx-machine-foundations-floatingpoint-format-comparison-1836" class="quarto-xref">section&nbsp;1.4.1</a>，从系统权衡的角度分析 FP32、BF16/FP16 与 INT8。</li>
+<li>查阅相关章节的论述：完整论述见 <strong><a href="../11_hw_acceleration/11_hw_acceleration.html#sec-hardware-acceleration">硬件加速</a></strong>、<strong><a href="../08_training/08_training.html#sec-model-training">模型训练</a></strong> 和 <strong><a href="../13_model_serving/13_model_serving.html#sec-model-serving">模型服务</a></strong>。</li>
+</ul>
+<p>尽管现代硬件涵盖多种加速器架构、互连拓扑和封装方案，但此处详述的物理定律和瓶颈模型均适用于它们。</p>
+</section>
+<section id="sec-appdx-machine-foundations-numbers-know-b531" class="level2">
+<h2 class="anchored" data-anchor-id="sec-appdx-machine-foundations-numbers-know-b531">应知数值</h2>
+<p>正如 Jeff Dean 的“每位程序员都应知道的延迟数值”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 影响了一代系统工程师，这些参考数值也为机器学习系统设计提供了必不可少的数量级直觉。尽管绝对数值和比值会随技术和工作负载而变化，但层次关系更为持久。应牢记这些关系，并用具体数值检验估算是否合理。</p>
+<div id="psp-appendix-machine-three-numbers" class="callout callout-perspective" title="最重要的三个数值">
+<details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.1: 最重要的三个数值</strong></summary><div>
+<ul>
+<li>能耗比：在所引用的 45 nm 参考数据中，一次 32 位 DRAM 读取的能耗约为一次 FP16 乘法能耗的 581×。这说明了算术强度的重要性。</li>
+<li>训练状态内存占用：模型权重（FP16，2 bytes）+ 梯度（FP16，2 bytes）+ 主权重（FP32，4 bytes）+ 自适应矩估计（Adam）的优化器状态（8 bytes）。每个参数总计占用 16 bytes，因此，一个参数量为 7B 的模型，仅启动训练就需要 112 GB。</li>
+<li>光纤传播极限：光在光纤中的传播速度约为 200 km/ms。表中约 40 ms 的跨美国往返延迟包含可削减的开销，但传播时间无法通过优化消除。</li>
+</ul>
+</div></details>
+</div>
+<section id="参考关系" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="参考关系">参考关系</h3>
+<p>这些关系既包含物理或算术界限，也包含特定技术的测量结果；只有这些界限是不变的。</p>
+<section id="光速带来的固有开销" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="光速带来的固有开销">光速带来的固有开销</h4>
+<p><a href="#tbl-speed-of-light-ref" class="quarto-xref">Table&nbsp;1</a> 给出了近似的往返延迟基准。其中的传播分量无法削减。</p>
+<div id="tbl-speed-of-light-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[34,33,33]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-speed-of-light-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: <strong>光速参考值</strong>：光在光纤中的传播速度约为 200 km/ms。这些近似的往返延迟包含可削减的开销；只有传播时间无法削减。
+</figcaption>
+<div aria-describedby="tbl-speed-of-light-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>距离</strong></th>
+<th style="text-align: center;"><strong>往返延迟</strong></th>
+<th style="text-align: left;"><strong>影响</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>同一数据中心</strong></td>
+<td style="text-align: center;">~1 ms</td>
+<td style="text-align: left;">分布式训练可行</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>横跨美国境内</strong></td>
+<td style="text-align: center;">~40 ms</td>
+<td style="text-align: left;">缩减剩余的请求时间预算</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>跨大西洋</strong></td>
+<td style="text-align: center;">~60 ms</td>
+<td style="text-align: left;">进一步缩减请求时间预算</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>跨太平洋</strong></td>
+<td style="text-align: center;">~100 ms</td>
+<td style="text-align: left;">数据局部性至关重要</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="能耗层次结构" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="能耗层次结构">能耗层次结构</h4>
+<p><a href="#tbl-energy-ratios-ref" class="quarto-xref">Table&nbsp;2</a> 量化了数据搬移与计算的能耗成本对比——这是算术强度主导机器学习性能优化的根本原因。<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div id="tbl-energy-ratios-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[35,10,55]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-energy-ratios-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: <strong>能耗参考比值</strong>：前三个比值采用 Horowitz 的 45 nm 测量结果；L1/寄存器比值是片上层次结构的示例性参考值。
+</figcaption>
+<div aria-describedby="tbl-energy-ratios-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 10%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>关系</strong></th>
+<th style="text-align: center;"><strong>参考比值</strong></th>
+<th style="text-align: left;"><strong>来源与解释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>DRAM 访问与 FP16 乘法</strong></td>
+<td style="text-align: center;">~581×</td>
+<td style="text-align: left;">Horowitz 的 45 nm 测量；导线电容随距离增大而增大</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>FP32 与 INT8 能耗</strong></td>
+<td style="text-align: center;">~18×</td>
+<td style="text-align: left;">Horowitz 的 45 nm 测量；位宽决定开关能耗</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>FP32 与 FP16 能耗</strong></td>
+<td style="text-align: center;">~3.4×</td>
+<td style="text-align: left;">Horowitz 的 45 nm 测量；较窄的运算位宽可降低开关能耗和数据通路能耗</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>L1 SRAM 与寄存器</strong></td>
+<td style="text-align: center;">~5×</td>
+<td style="text-align: left;">片上层次结构的示例性参考值；取决于与运算单元的距离</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="存储层次结构" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="存储层次结构">存储层次结构</h4>
+<p><a href="#tbl-memory-ratios-ref" class="quarto-xref">Table&nbsp;3</a> 展示了存储层次结构为何存在不均衡：封装内邻近位置之间的访问开销可能仅相差几倍，而片外、存储设备和网络层级则会带来数量级的跃升。</p>
+<div id="tbl-memory-ratios-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[47,23,30]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-memory-ratios-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: <strong>延迟层次结构</strong>：存储层次结构中选取的若干延迟关系。最大的差距来自跨越物理边界：片外内存、外设链路、存储设备和网络互连结构。
+</figcaption>
+<div aria-describedby="tbl-memory-ratios-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 23%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>关系</strong></th>
+<th style="text-align: center;"><strong>比值</strong></th>
+<th style="text-align: left;"><strong>这种差异持续存在的原因</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>加速器高带宽内存与寄存器</strong></td>
+<td style="text-align: center;">延迟约为寄存器的 1000×</td>
+<td style="text-align: left;">片上与片外的区别</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>SSD 与寄存器</strong></td>
+<td style="text-align: center;">延迟约为寄存器的 300,000×</td>
+<td style="text-align: left;">电气访问与机械/闪存访问的区别</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>网络与本地内存</strong></td>
+<td style="text-align: center;">延迟约为本地内存的 16×</td>
+<td style="text-align: left;">光速 + 交换开销</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>加速器内存带宽与 CPU<span class="math inline">\(\leftrightarrow\)</span>加速器链路带宽</strong></td>
+<td style="text-align: center;">带宽约为链路带宽的 52×</td>
+<td style="text-align: left;">架构投入的优先级</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="扩展规律" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="扩展规律">扩展规律</h4>
+<p><a href="#tbl-scaling-rules-ref" class="quarto-xref">Table&nbsp;4</a> 汇集了决定训练和推理所需内存与计算量的算术关系。<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div id="tbl-scaling-rules-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[34,33,33]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-scaling-rules-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: <strong>扩展规则</strong>：这些是算术关系，并不针对特定硬件。训练内存包括 FP16 权重（2 字节）、FP16 梯度（2 字节）、FP32 主权重（4 字节）和 Adam 优化器状态（动量 + 方差共 8 字节）。
+</figcaption>
+<div aria-describedby="tbl-scaling-rules-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>规则</strong></th>
+<th style="text-align: center;"><strong>公式</strong></th>
+<th style="text-align: center;"><strong>示例</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>推理内存（FP16）</strong></td>
+<td style="text-align: center;">2 字节<span class="math inline">\(\times\)</span>参数量</td>
+<td style="text-align: center;">7B 参数 → 14 GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>推理内存（INT8）</strong></td>
+<td style="text-align: center;">1 字节<span class="math inline">\(\times\)</span>参数量</td>
+<td style="text-align: center;">7B 参数 → 7 GB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>训练内存（Adam）</strong></td>
+<td style="text-align: center;">16 字节<span class="math inline">\(\times\)</span>参数量</td>
+<td style="text-align: center;">7B 参数 → 112 GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>推理 FLOPs（Transformer）</strong></td>
+<td style="text-align: center;">每个词元约需 2<span class="math inline">\(\times\)</span>参数量</td>
+<td style="text-align: center;">7B 模型 → 约 14 GFLOPs/词元</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>训练 FLOPs</strong></td>
+<td style="text-align: center;">约 6<span class="math inline">\(\times\)</span>参数量<span class="math inline">\(\times\)</span>词元数</td>
+<td style="text-align: center;">用 1T 词元训练 7B 模型 → <span class="math inline">\(4 \times 10^{22}\)</span> FLOPs</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="延迟预算示例" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="延迟预算示例">延迟预算示例</h3>
+<p>延迟预算取决于应用特定的安全要求、用户预期和服务级别目标。<a href="#tbl-latency-targets-ref" class="quarto-xref">Table&nbsp;5</a> 列出的是示例性目标，而非普遍适用的限制。</p>
+<div id="tbl-latency-targets-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[34,33,33]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-latency-targets-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: <strong>延迟目标示例</strong>：生产环境的要求取决于应用及其服务级别目标。
+</figcaption>
+<div aria-describedby="tbl-latency-targets-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>应用</strong></th>
+<th style="text-align: center;"><strong>预算</strong></th>
+<th style="text-align: left;"><strong>约束</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>自动制动</strong></td>
+<td style="text-align: center;">&lt;10 ms</td>
+<td style="text-align: left;">以 100 km/h 行驶时，10 ms = 28 cm 的行驶距离</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>语音助手</strong></td>
+<td style="text-align: center;">&lt;100 ms</td>
+<td style="text-align: left;">人类对“即时”的感知</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>网页搜索</strong></td>
+<td style="text-align: center;">&lt;200 ms</td>
+<td style="text-align: left;">用户耐心阈值</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>视频流播放</strong></td>
+<td style="text-align: center;">&lt;1 s</td>
+<td style="text-align: left;">缓冲容忍度</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>批量训练</strong></td>
+<td style="text-align: center;">数小时至数天</td>
+<td style="text-align: left;">吞吐量比延迟更重要</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="当前硬件参考值约-2024-年" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="当前硬件参考值约-2024-年">当前硬件参考值（约 2024 年）</h3>
+<p>这些数值反映了当前一代硬件的情况。可将其用于粗略估算，并根据当前硬件重新核验。</p>
+<section id="内存延迟与带宽" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="内存延迟与带宽">内存延迟与带宽</h4>
+<p><a href="#tbl-memory-current-ref" class="quarto-xref">Table&nbsp;6</a> 提供了存储层次结构中具有代表性的延迟和带宽参考值。</p>
+<div id="tbl-memory-current-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[34,33,33]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-memory-current-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: <strong>存储层次结构（约 2024 年）</strong>：寄存器、缓存、内存、互连、网络和存储设备中具有代表性的延迟与带宽参考值。这些数值共同说明了为何局部性和数据搬移会影响性能。
+</figcaption>
+<div aria-describedby="tbl-memory-current-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>层级</strong></th>
+<th style="text-align: center;"><strong>延迟</strong></th>
+<th style="text-align: center;"><strong>带宽</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>寄存器</strong></td>
+<td style="text-align: center;">~0.3 ns</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>L1 缓存</strong></td>
+<td style="text-align: center;">~1 ns</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>L2 缓存</strong></td>
+<td style="text-align: center;">~4 ns</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>GPU HBM3</strong></td>
+<td style="text-align: center;">~300 ns</td>
+<td style="text-align: center;">3.4 TB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>PCIe Gen5（CPU<span class="math inline">\(\leftrightarrow\)</span>GPU）</strong></td>
+<td style="text-align: center;">~1000 ns</td>
+<td style="text-align: center;">64 GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CPU DRAM</strong></td>
+<td style="text-align: center;">~100 ns</td>
+<td style="text-align: center;">50 GB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>InfiniBand（网络）</strong></td>
+<td style="text-align: center;">~5000 ns</td>
+<td style="text-align: center;">50 GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVMe SSD</strong></td>
+<td style="text-align: center;">~100000 ns</td>
+<td style="text-align: center;">7 GB/s</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="计算吞吐量" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="计算吞吐量">计算吞吐量</h4>
+<p><a href="#tbl-compute-current-ref" class="quarto-xref">Table&nbsp;7</a> 比较了数据中心 GPU 和移动端 NPU 具有代表性的峰值吞吐量与功率。</p>
+<div id="tbl-compute-current-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[33,20,32,15]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-compute-current-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7: <strong>计算参考值（约 2024 年）</strong>：数据中心 GPU 和移动端 NPU 具有代表性的峰值吞吐量与功率。由于各行采用不同的精度模式和运算计数约定，只有在工作负载和精度相匹配的情境下才可进行比较。
+</figcaption>
+<div aria-describedby="tbl-compute-current-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 20%">
+<col style="width: 32%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>平台</strong></th>
+<th style="text-align: center;"><strong>FP16/BF16</strong></th>
+<th style="text-align: center;"><strong>INT8/FP8 类</strong></th>
+<th style="text-align: center;"><strong>功率</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>数据中心 GPU（H100）</strong></td>
+<td style="text-align: center;">989 TFLOP/s</td>
+<td style="text-align: center;">1979 TFLOP/s（FP8 峰值）</td>
+<td style="text-align: center;">700 W</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>数据中心 GPU（A100）</strong></td>
+<td style="text-align: center;">312 TFLOP/s</td>
+<td style="text-align: center;">624 TOPS</td>
+<td style="text-align: center;">400 W</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>移动端 NPU</strong></td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">35 TOPS</td>
+<td style="text-align: center;">3–5 W</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="roofline-转折点" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="roofline-转折点">Roofline 转折点</h4>
+<p><a href="#tbl-ridge-current-ref" class="quarto-xref">Table&nbsp;8</a> 定义了用于判断工作负载受内存限制还是受计算限制的算术强度阈值。</p>
+<div id="tbl-ridge-current-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[33,33,34]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ridge-current-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8: <strong>算术强度阈值（约 2024 年）</strong>：批大小为 1、以流式方式读取权重的推理通常受内存限制；较大的批次可能跨越脊点。
+</figcaption>
+<div aria-describedby="tbl-ridge-current-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>加速器</strong></th>
+<th style="text-align: center;"><strong>脊点</strong></th>
+<th style="text-align: left;"><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>A100 (FP16)</strong></td>
+<td style="text-align: center;">153 FLOP/byte</td>
+<td style="text-align: left;">低于此值 → 受内存限制</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>H100 (FP16)</strong></td>
+<td style="text-align: center;">295 FLOP/byte</td>
+<td style="text-align: left;">达到计算受限状态的门槛更高</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="psp-appendix-machine-gpus-and-accelerators-terminology" class="callout callout-perspective" title="术语说明：GPU 与加速器">
+<p></p><details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.2: 术语说明：GPU 与加速器</strong></summary><div>本书使用“加速器”作为硬件加速设备的统称。Roofline 分析、内存层次结构、数值精度和性能建模等原理适用于 GPU、张量处理单元（TPU）、NPU、专用集成电路以及其他专用 AI 加速器。CUDA 和 NVLink 等厂商特有的功能会被明确标明。<p></p>
+</div></details>
+</div>
+<p>了解这些数值只是第一步。真正有力的是简洁的模型，它们能够揭示：对于当前瓶颈，<em>哪个</em>数值至关重要。Roofline 模型将原始硬件规格转化为可用于指导实践的性能上限，从而开启这一诊断过程。</p>
+</section>
+</section>
+</section>
+<section id="sec-appdx-machine-foundations-physics-computing-c77f" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-appdx-machine-foundations-physics-computing-c77f">计算的物理基础</h2>
+<p>TFLOP/s、TB/s、功率预算等原始硬件规格是性能推理的必要条件，但并不充分。如果没有简洁的分析模型，工程师就无法区分计算受限与内存受限的工作负载，也无法预测将 GPU 数量增加一倍是否能使训练时间减半。本节的模型将这些区别转化为可量化的检验。</p>
+<section id="sec-appdx-machine-foundations-roofline-model-2529" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-roofline-model-2529">Roofline 模型</h3>
+<p>Roofline 模型 <span class="citation" data-cites="williams2009">(<a href="#ref-williams2009" role="doc-biblioref">Williams et al. 2009</a>)</span> 给出了工作负载在指定硬件上所能达到的运行速度上限。这个上限取决于工作负载先耗尽计算能力还是内存带宽。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-williams2009" class="csl-entry" role="listitem">
+Williams, Samuel, Andrew Waterman, and David Patterson. 2009. <span>“Roofline: An Insightful Visual Performance Model for Multicore Architectures.”</span> <em>Communications of the ACM</em> 52 (4): 65–76. https://doi.org/10.1145/1498765.1498785.
+</div></div><p>每种操作都有一个<strong>算术强度</strong>：执行的计算量与从内存传输的字节数之比。矩阵乘法具有较高的算术强度，因为每个载入的元素都会被重复使用多次。整流线性单元（ReLU）等逐元素操作的算术强度较低，因为每次操作都要载入一个数，执行一次计算，然后将其写回。如 <a href="#fig-roofline" class="quarto-xref">figure&nbsp;1</a> 所示，每种工作负载都受内存带宽或计算吞吐量的限制，而其算术强度决定了它先触及哪个上限。</p>
+<div id="fig-roofline" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="一幅横轴为算术强度、纵轴为性能的图。两条线构成屋顶形状：一条从原点上升的斜线标注为内存受限，一条水平线标注为计算受限。两者在脊点相交。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-roofline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode tikz code-with-copy"><code class="sourceCode latex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[font=<span class="fu">\small\sffamily</span>, scale=1.1]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tikzset</span>{</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    Axis/.style={line width=1.0pt, draw=GrayLine, -&gt;, &gt;=Latex},</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    Guide/.style={dashed, draw=GrayLine!60, line width=0.6pt},</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    Label/.style={text=TextBlack, align=center, font=<span class="fu">\footnotesize\sffamily</span>},</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    Dot/.style={circle, fill=#1, draw=white, line width=0.5pt, minimum size=5pt, inner sep=0pt}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[step=0.5, gray!15, very thin] (0,0) grid (6,4);</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[Axis] (0,0) -- (6,0) node[right,align=left,text=TextBlack,font=<span class="fu">\fontsize</span>{8pt}{10}<span class="fu">\sffamily</span>] {算术强度<span class="fu">\\</span> (FLOP/byte)};</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[Axis] (0,0) -- (0,4.2) node[above, text=black,font=<span class="fu">\fontsize</span>{8pt}{9}<span class="fu">\sffamily</span>] {性能 (FLOP/s)};</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[BlueLine, line width=2pt] (0,0) -- (3,3);</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[OrangeLine, line width=2pt] (3,3) -- (5.8,3);</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[Label, text=BlueLine, rotate=45, anchor=south, yshift=2pt] at (1.5, 1.5) {<span class="fu">\textbf</span>{内存受限}};</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[Label, text=OrangeLine, anchor=south, yshift=2pt] at (4.4, 3) {<span class="fu">\textbf</span>{计算受限}};</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[Guide] (3,0) -- (3,3);</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[Dot=TextBlack] at (3,3) {};</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[below, font=<span class="fu">\scriptsize\sffamily</span>, text=TextBlack] at (3,0) {脊点};</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-roofline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <strong>Roofline 模型</strong>：倾斜的内存带宽上限与水平的峰值计算上限在脊点相交。根据算术强度标绘工作负载，可以确定其受哪个 Roofline 上限约束。
+</figcaption>
+</figure>
+</div>
+<p><strong>脊点</strong>决定了硬件的计算能力与内存带宽之间的平衡。如果工作负载的算术强度低于该点，则其受内存限制（倾斜区域）；如果高于该点，则其受计算限制（水平区域）。 <span class="math display">\[\begin{gather*}
+\text{Arithmetic Intensity} = \frac{\text{FLOPs}}{\text{bytes accessed}}
+\qquad\qquad
+\text{Ridge Point} = \frac{\text{Peak FLOP/s}}{\text{Memory Bandwidth}}
+\end{gather*}\]</span></p>
+<div id="psp-appendix-machine-batch-size-arithmetic-intensity" class="callout callout-perspective" title="批大小控制算术强度">
+<p></p><details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.3: 批大小控制算术强度</strong></summary><div>对于矩阵乘法，算术强度随批次维度增大而增大。对于 <span class="math inline">\(\mathbf{Y} = \mathbf{X}\mathbf{W}\)</span>，其中 <span class="math inline">\(\mathbf{X}\)</span> 的形状为 <span class="math inline">\((B\times d_{\text{in}})\)</span>，<span class="math inline">\(\mathbf{W}\)</span> 的形状为 <span class="math inline">\((d_{\text{in}}\times d_{\text{out}})\)</span>：<p></p>
+<ul>
+<li>浮点运算量：<span class="math inline">\(2 \times B \times d_{\text{in}} \times d_{\text{out}}\)</span>（乘加运算）</li>
+<li>字节数：传输 <span class="math inline">\(X\)</span>、<span class="math inline">\(W\)</span> 和 <span class="math inline">\(Y\)</span> 需要约 <span class="math inline">\(s_{\text{elem}}(B d_{\text{in}} + d_{\text{in}}d_{\text{out}} + B d_{\text{out}})\)</span> 字节。</li>
+</ul>
+<p>将 <span class="math inline">\(B\)</span> 增加一倍会使浮点运算量增加一倍，而当权重占据主要传输量时，权重传输量几乎保持不变，因此算术强度会提高。这就是批处理通常有助于推理服务的原因，不过能否达到计算上限，还取决于激活值传输量、缓存行为、形状、精度和脊点。</p>
+</div></details>
+</div>
+<section id="sec-appdx-machine-foundations-concrete-example-a100-analysis-5b30" class="level4">
+<h4 class="anchored" data-anchor-id="sec-appdx-machine-foundations-concrete-example-a100-analysis-5b30">具体示例：A100 分析</h4>
+<p>考虑一块 NVIDIA A100 GPU，其 FP16 Tensor Core 性能为 312 TFLOP/s，HBM2e 带宽为 2.04 TB/s。脊点为 312 TFLOP/s/2.04 TB/s = 153 FLOP/byte（Tera 前缀相消，得到 FLOP/byte）。</p>
+<p>两种常见操作分别位于该脊点的两侧。对两个大小为 4096 乘 4096 的方阵执行通用矩阵乘法（GEMM）时，算术强度约为 1365 FLOP/byte，因此 1365 FLOP/byte &gt; 153 FLOP/byte，该操作受计算限制。对 FP16 张量执行逐元素 ReLU 时，每进行 1 次比较，需要读取 2 字节并写入 2 字节（合计 4 字节），因此算术强度仅为 <span class="math inline">\(1/4 =\)</span> 0.25 FLOP/byte。由于 0.25 FLOP/byte <span class="math inline">\(\ll\)</span> 153 FLOP/byte，该操作严重受内存限制，实际性能仅约为峰值 TFLOP/s 的 0.16 percent。这种对比解释了现代框架为何要融合操作。将 ReLU 直接与前面的 MatMul 内核融合，可以避免将中间结果写入内存，从而有效节省内存带宽。</p>
+</section>
+</section>
+<section id="sec-appdx-machine-foundations-dimensional-analysis-76b3" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-dimensional-analysis-76b3">量纲分析</h3>
+<p>Roofline 模型有助于诊断瓶颈位于<em>何处</em>。然而，在应用任何性能方程之前，都必须验证其是否具有物理意义。量纲分析提供了这种合理性检验：任何有效方程都必须满足<strong>量纲齐次性</strong>，即每一项都必须具有相同的单位。如果不满足这一条件，方程就存在错误。</p>
+<p>对于串行执行的各个阶段，考虑 <strong><a href="../01_introduction/01_introduction.html#sec-introduction-iron-law-ml-systems-c32a">机器学习系统铁律</a></strong> 中介绍的机器学习系统铁律（原理 <a href="../parts/build_principles.html#pri-iron-law">原则（英文原版）</a>）： <span class="math display">\[ T = \frac{D_{\text{vol}}}{\text{BW}} + \frac{O}{R_{\text{peak}} \cdot \eta_{\text{hw}}} + L_{\text{lat}} \]</span></p>
+<p>通过确认每一项的单位都归结为时间（秒），可以验证其正确性： <span class="math display">\[ T [s] = \underbrace{ \frac{D_{\text{vol}} [\text{bytes}]}{\text{BW} [\text{bytes/s}]} }_{\text{seconds}} + \underbrace{ \frac{O [\text{FLOPs}]}{R_{\text{peak}} [\text{FLOP/s}] \cdot \eta_{\text{hw}} [1]} }_{\text{seconds}} + \underbrace{ L_{\text{lat}} [s] }_{\text{seconds}} \]</span></p>
+<ul>
+<li>数据项：<span class="math inline">\(\frac{\text{bytes}}{\text{bytes/s}} = \text{bytes} \times \frac{\text{s}}{\text{bytes}} = \mathbf{s}\)</span></li>
+<li>计算项：<span class="math inline">\(\frac{\text{FLOPs}}{\text{FLOP/s}} = \text{FLOPs} \times \frac{\text{s}}{\text{FLOP}} = \mathbf{s}\)</span></li>
+<li>延迟项：单位已经是秒。</li>
+</ul>
+<p>该方程在物理上是一致的。可将这一方法应用于任何系统方程：如果量纲不匹配，公式就是错误的。“浮点运算量”和“带宽”的单位不同，因此不能直接相互权衡。任何此类权衡都必须通过时间进行换算，而这正是机器学习系统铁律所量化的关系。</p>
+<p>一旦方程在量纲上成立，接下来的问题就是其中各时间项如何随设备数量变化。<a href="#sec-appdx-machine-foundations-amdahls-law-gustafsons-law-b741" class="quarto-xref">Section&nbsp;1.2.3</a> 用两个互补的界限回答了这一问题。</p>
+</section>
+<section id="sec-appdx-machine-foundations-amdahls-law-gustafsons-law-b741" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-amdahls-law-gustafsons-law-b741">Amdahl 定律与 Gustafson 定律</h3>
+<p>并行化是扩展机器学习规模的主要手段，但其极限取决于工作负载<em>如何</em>扩展。这两条定律刻画了并行计算中的基本矛盾。<strong>Amdahl 定律</strong>体现了悲观的视角，约束一个<em>固定</em>任务最多能够加速多少（优化延迟）。<strong>Gustafson 定律</strong>体现了乐观的视角，约束在相同时间内能够完成<em>多少更多</em>的工作（优化吞吐量）。</p>
+<section id="sec-appdx-machine-foundations-strong-scaling-amdahls-law-c6c2" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="sec-appdx-machine-foundations-strong-scaling-amdahls-law-c6c2">强扩展（Amdahl 定律）</h4>
+<p><strong>强扩展</strong>衡量增加处理器后，固定规模问题的运行速度能提高多少。</p>
+<p>Amdahl 定律 <span class="citation" data-cites="amdahl1967">(<a href="#ref-amdahl1967" role="doc-biblioref">Amdahl 1967</a>)</span> 指出，加速比受任务串行部分的限制。<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> 如果任务中有比例为 <span class="math inline">\(s\)</span> 的部分是串行的（无法并行化），而比例为 <span class="math inline">\(p = 1-s\)</span> 的部分可以并行化，那么使用 <span class="math inline">\(n\)</span> 个处理器时的最大加速比为： <span class="math display">\[ \text{Speedup}(n) = \frac{1}{s + \frac{1-s}{n}} \]</span></p>
+<div class="no-row-height column-margin column-container"><div id="ref-amdahl1967" class="csl-entry" role="listitem">
+Amdahl, Gene M. 1967. <span>“Validity of the Single Processor Approach to Achieving Large Scale Computing Capabilities.”</span> <em>Proceedings of the April 18-20, 1967, Spring Joint Computer Conference on - <span>AFIPS</span> ’67 (Spring)</em>, AFIPS ’67 (spring), 483–85. https://doi.org/10.1145/1465482.1465560.
+</div></div><p>当 <span class="math inline">\(n \to \infty\)</span> 时，<span class="math inline">\(\frac{1-s}{n} \to 0\)</span>，加速比收敛于 <span class="math inline">\(1/s\)</span>。</p>
+<p>为了解 Amdahl 定律如何发挥作用，假设一个训练步骤中，5 percent 是串行开销（例如 Python 全局解释器锁（GIL）、内核启动延迟），而 95 percent 是可并行化的矩阵运算：</p>
+<ul>
+<li>当 <span class="math inline">\(n=1\)</span> 时，加速比为 1。</li>
+<li>当 <span class="math inline">\(n=\)</span> 8 时，加速比为 1/(0.05 + 0.95/8) ≈ 5.9×。</li>
+<li>当 <span class="math inline">\(n \to \infty\)</span> 时，加速比上限为 1/0.05 = 20×。</li>
+</ul>
+<p>无论增加多少加速器，这个固定工作负载的加速比都无法超过 20×。</p>
+</section>
+<section id="sec-appdx-machine-foundations-weak-scaling-gustafsons-law-eb7e" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="sec-appdx-machine-foundations-weak-scaling-gustafsons-law-eb7e">弱扩展（Gustafson 定律）</h4>
+<p><strong>弱扩展</strong>衡量增加处理器并保持运行时间不变时，问题规模能够增大多少。<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>这正是大语言模型的实际情况。使用 1,000 个加速器，并不是为了在几毫秒内用小数据集训练一个模型，而是为了在合理时间内，使用大 1,000<span class="math inline">\(\times\)</span> 的数据集进行训练。</p>
+<p>对于 <span class="math inline">\(n\)</span> 个处理器，令 <span class="math inline">\(s\)</span> 为扩展后的工作负载在这些处理器上测得的执行时间中，串行部分所占的比例。Gustafson 定律 <span class="citation" data-cites="gustafson1988">(<a href="#ref-gustafson1988" role="doc-biblioref">Gustafson 1988</a>)</span> 对这种“规模扩展加速比”建模： <span class="math display">\[ \text{Scaled Speedup}(n) = n - s(n - 1) \]</span></p>
+<div class="no-row-height column-margin column-container"><div id="ref-gustafson1988" class="csl-entry" role="listitem">
+Gustafson, John L. 1988. <span>“Reevaluating Amdahl’s Law.”</span> <em>Communications of the ACM</em> 31 (5): 532–33. https://doi.org/10.1145/42411.42415.
+</div></div><p>由于并行部分随 <span class="math inline">\(n\)</span> 线性增长，而 <span class="math inline">\(s\)</span> 保持不变，因此随着问题规模增大，弱扩展仍可保持较高效率。</p>
+<p>采用相同的 5 percent 串行开销（<span class="math inline">\(s\)</span> = 0.05），Gustafson 定律给出了截然不同的结果：</p>
+<ul>
+<li>当 <span class="math inline">\(n=1\)</span> 时，加速比为 1。</li>
+<li>当 <span class="math inline">\(n=\)</span> 8 时，规模扩展加速比为 8 − 0.05 <span class="math inline">\(\times\)</span> (7) = 8 − 0.35 = 7.65×。</li>
+<li>当 <span class="math inline">\(n=\)</span> 1000 时，规模扩展加速比为 1000 − 0.05 <span class="math inline">\(\times\)</span> (999) ≈ 950×。</li>
+</ul>
+<p>在弱扩展中，效率保持较高水平，因为有效工作量（训练模型）随规模增长，远远超过固定开销。</p>
+<p>同样的尺度分析视角将模型规模、数据规模、硬件数量和利用率归结为一个训练时间估计值。</p>
+<div id="nbk-appendix-machine-training-time-equation" class="callout callout-notebook" title="训练时间方程">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.1: 训练时间方程</strong></summary><div><strong>问题</strong>：给定模型规模、词元数量、加速器数量、峰值计算速率和利用率，稠密 Transformer 的训练需要多长时间？<p></p>
+<p><strong>数学表达式</strong>： <span class="math display">\[ T \approx \frac{6 \cdot P \cdot D}{N_{\text{GPU}} \cdot R_{\text{peak}} \cdot \eta_{\text{hw}}} \]</span></p>
+<p><strong>变量</strong>：</p>
+<ul>
+<li>训练 FLOP 系数：系数 6 来自前向传播的 <span class="math inline">\(2P\text{ FLOP/token}\)</span> 和反向传播的 <span class="math inline">\(4P\text{ FLOP/token}\)</span>（其中激活梯度计算为 <span class="math inline">\(2P\)</span>，权重梯度计算为 <span class="math inline">\(2P\)</span>），因此，处理 <span class="math inline">\(D\)</span> 个训练词元共需 <span class="math inline">\(6PD\text{ FLOP}\)</span>。</li>
+<li><span class="math inline">\(P\)</span>：模型参数数量。</li>
+<li><span class="math inline">\(D\)</span>：训练词元数量。</li>
+<li><span class="math inline">\(N_{\text{GPU}}\)</span>：GPU 数量。</li>
+<li><span class="math inline">\(R_{\text{peak}}\)</span>：单个加速器的峰值 FLOP/s。</li>
+<li><span class="math inline">\(\eta_{\text{hw}}\)</span>：硬件利用率，在此训练估计中通常为 30%–50%。</li>
+</ul>
+<p><strong>示例</strong>：使用 1 个 A100（312 TFLOP/s），以 40 percent 的利用率，在 20B 个词元上训练一个具有 1B 个参数的模型。 <span class="math inline">\(\text{Total FLOPs} = 6 \times 1 \times 10^{9} \times 2 \times 10^{10} = 1.2 \times 10^{20} \text{ FLOPs}\)</span>。 <span class="math inline">\(\text{Throughput} = 1 \times (3.12 \times 10^{14}) \times 0.40 \approx 1.248 \times 10^{14} \text{ FLOP/s}\)</span>。 <span class="math inline">\(T = \frac{1.2 \times 10^{20}}{1.248 \times 10^{14}} \approx 961,538.5 \text{ seconds} \approx 16,025.6 \text{ minutes}\)</span>。</p>
+<p><strong>系统洞见</strong>：在这些假设下，训练需要 961,538.5 seconds（≈ 16025.6 minutes，或约 11.1 days）；该估计明确表明，模型规模、数据规模、加速器的有效吞吐量和利用率都是可调控的因素。</p>
+</div></details>
+</div>
+</section>
+</section>
+<section id="sec-appdx-machine-foundations-littles-law-21a3" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-littles-law-21a3">利特尔定律</h3>
+<p>在稳定推理系统的容量规划中，<strong>利特尔定律</strong> <span class="citation" data-cites="little1961">(<a href="#ref-little1961" role="doc-biblioref">Little 1961</a>)</span> 描述了长期平均并发量（<span class="math inline">\(Q_{\text{req}}\)</span>）、平均到达率（<span class="math inline">\(\lambda_{\text{arr}}\)</span>）和平均系统停留时间（<span class="math inline">\(T_{\text{lat}}\)</span>）之间的关系：<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> <span class="math display">\[ Q_{\text{req}} = \lambda_{\text{arr}} \times T_{\text{lat}} \]</span></p>
+<div class="no-row-height column-margin column-container"><div id="ref-little1961" class="csl-entry" role="listitem">
+Little, John D. C. 1961. <span>“A Proof for the Queuing Formula: <span><span class="math inline">\(L = \lambda W\)</span></span>.”</span> <em>Operations Research</em> 9 (3): 383–87. https://doi.org/10.1287/opre.9.3.383.
+</div></div><p>要理解其实际应用，可以考虑以 50 ms 的平均延迟持续维持 1,000 QPS 的吞吐量。该定律表明，系统必须支持 1000 <span class="math inline">\(\times\)</span> 0.05 s = 50 个并发请求。</p>
+<p>这可以用于确定工作线程池的规模，但内存需求还需要额外假设。如果系统中的每个请求都同时持有 1 GB 的设备状态，则平均请求数量意味着需要 50 GB 的设备内存；而排队中的请求也可能驻留在主机内存中，或共享批处理状态。如果 24 个设备槽位每个都被持续占用 50 ms，则其吞吐量估算值为 <span class="math inline">\(N_{\text{max}}/T_{\text{lat}} = 24/0.05 = 480 \text{ QPS}\)</span>；利特尔定律本身并不设定物理上限。</p>
+<p>这些基于物理约束的模型——Roofline、阿姆达尔、古斯塔夫森和利特尔模型——能够诊断瓶颈位于<em>何处</em>。然而，要将这些诊断转化为可执行的优化措施，还需要理解造成这些约束的具体硬件结构：缓存、内存总线和互连。</p>
+</section>
+</section>
+<section id="sec-appdx-machine-foundations-computer-architecture-essentials-10c2" class="level2">
+<h2 class="anchored" data-anchor-id="sec-appdx-machine-foundations-computer-architecture-essentials-10c2">计算机体系结构基础</h2>
+<p>某款 GPU 宣称可达到 1,000 TFLOP/s，但一个内核实际仅达到 30 TFLOP/s。这种差距可能源于数据移动、并行性不足、同步、启动开销或软件效率低下。物理规律设定了理论性能边界，而计算机体系结构则定义了决定实际工作负载能够多接近这些边界的硬件机制。以下讨论涵盖影响系统设计的延迟、带宽和能耗权衡。</p>
+<section id="sec-appdx-machine-foundations-latencies-every-programmer-know-e89f" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-latencies-every-programmer-know-e89f">每位程序员都应了解的延迟</h3>
+<p>建立系统直觉的第一步是理解距离的代价。<a href="#tbl-latency-hierarchy" class="quarto-xref">Table&nbsp;9</a> 量化了处理器等待来自存储层次结构不同层级的数据所需的时间。如果访问寄存器如同拿起手边的铅笔，那么从高带宽内存（HBM）取数就如同步行穿过办公室，而从磁盘取数则如同飞往月球。</p>
+<div id="tbl-latency-hierarchy" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[25,25,25,25]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-latency-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9: <strong>延迟层次结构</strong>：现代 AI 硬件的典型访问时间；近似周期数采用 3 GHz 参考时钟计算。从 SRAM 缓存到 HBM 的延迟跃升，使缓存局部性成为影响性能的重要因素。
+</figcaption>
+<div aria-describedby="tbl-latency-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>组件</strong></th>
+<th style="text-align: center;"><strong>延迟（ns）</strong></th>
+<th style="text-align: center;"><strong>周期数（近似）</strong></th>
+<th style="text-align: center;"><strong>相对“距离”</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>寄存器</strong></td>
+<td style="text-align: center;">~0.3 ns</td>
+<td style="text-align: center;">1 个周期</td>
+<td style="text-align: center;">10 seconds</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>L1 缓存</strong></td>
+<td style="text-align: center;">~1 ns</td>
+<td style="text-align: center;">3–4 个周期</td>
+<td style="text-align: center;">33.3 seconds</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>L2 缓存</strong></td>
+<td style="text-align: center;">~4 ns</td>
+<td style="text-align: center;">12 个周期</td>
+<td style="text-align: center;">2.2 minutes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>HBM3（GPU 内存）</strong></td>
+<td style="text-align: center;">~300 ns</td>
+<td style="text-align: center;">1,000 个周期</td>
+<td style="text-align: center;">2.8 hours</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVLink（GPU-GPU）</strong></td>
+<td style="text-align: center;">~500 ns</td>
+<td style="text-align: center;">1,500 个周期</td>
+<td style="text-align: center;">4.6 hours</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>PCIe（CPU-GPU）</strong></td>
+<td style="text-align: center;">~1000 ns</td>
+<td style="text-align: center;">3,000 个周期</td>
+<td style="text-align: center;">9.3 hours</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>InfiniBand（网络）</strong></td>
+<td style="text-align: center;">~5000 ns</td>
+<td style="text-align: center;">15,000 个周期</td>
+<td style="text-align: center;">1.9 days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>SSD（NVMe）</strong></td>
+<td style="text-align: center;">~100000 ns</td>
+<td style="text-align: center;">300,000 个周期</td>
+<td style="text-align: center;">38.6 days</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-appdx-machine-foundations-ai-hardware-cheat-sheet-modern-reference-4dc1" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-ai-hardware-cheat-sheet-modern-reference-4dc1">AI 硬件速查表（现代参考）</h3>
+<p>延迟衡量等待<em>第一个</em>字节所需的时间；带宽衡量随后能传输多少字节。<a href="#tbl-hardware-cheatsheet" class="quarto-xref">Table&nbsp;10</a> 提供了进行粗略 Roofline 计算所需的常数。这些数值代表了当前机器学习时代的“标准算力单位”。</p>
+<div id="tbl-hardware-cheatsheet" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,23,20,35]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hardware-cheatsheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10: <strong>参考规格</strong>：用于定量分析的关键常数。务必查阅具体的数据手册；HBM 容量采用厂商单位，互连带宽为双向汇总值，因此拓扑结构和传输方向都很重要。
+</figcaption>
+<div aria-describedby="tbl-hardware-cheatsheet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 23%">
+<col style="width: 20%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>规格</strong></th>
+<th style="text-align: center;"><strong>NVIDIA H100（SXM）</strong></th>
+<th style="text-align: center;"><strong>Google TPU v5p</strong></th>
+<th style="text-align: left;"><strong>对系统的影响</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>BF16 峰值</strong></td>
+<td style="text-align: center;">989 TFLOP/s</td>
+<td style="text-align: center;">459 TFLOP/s</td>
+<td style="text-align: left;">“速度上限”（<span class="math inline">\(R_{\text{peak}}\)</span>）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>内存带宽</strong></td>
+<td style="text-align: center;">3.35 TB/s</td>
+<td style="text-align: center;">2.76 TB/s</td>
+<td style="text-align: left;">“管道宽度”（<span class="math inline">\(\text{BW}\)</span>）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>HBM 容量</strong></td>
+<td style="text-align: center;">80 GB</td>
+<td style="text-align: center;">95 GB</td>
+<td style="text-align: left;">最大模型规模（<span class="math inline">\(P\)</span>）/批大小（<span class="math inline">\(B\)</span>）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>片上 SRAM</strong></td>
+<td style="text-align: center;">50 MB L2</td>
+<td style="text-align: center;">128 MB VMEM/芯片</td>
+<td style="text-align: left;">对算子融合至关重要</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>互连</strong></td>
+<td style="text-align: center;">900 GB/s (NVLink)</td>
+<td style="text-align: center;">1200 GB/s（芯片间互连，ICI）</td>
+<td style="text-align: left;">决定模型并行的扩展能力</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="sec-appdx-machine-foundations-memory-hierarchy-2278" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-memory-hierarchy-2278">存储层次结构</h3>
+<p>计算机系统采用层次结构，是因为没有任何单一技术能够同时提供高容量和低延迟。<a href="#fig-memory-hierarchy" class="quarto-xref">Figure&nbsp;2</a> 展示了这种权衡：当数据移动位于关键路径上时，将数据保留在金字塔较高层级（寄存器/缓存）可以降低访问延迟。</p>
+<div id="fig-memory-hierarchy" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="一个四层金字塔，从上到下依次为：寄存器、L1/L2/L3 缓存、HBM/DRAM，以及存储设备（SSD/磁盘）。向上的箭头标注“速度更快，延迟更低”，向下的箭头标注“容量更大，成本更低”。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-memory-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode tikz code-with-copy"><code class="sourceCode latex"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\scalebox</span>{0.8}{<span class="co">%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[line cap=round, line join=round, font=<span class="fu">\sffamily\small</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">%—parameters ---</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\def\H</span>{6.2}   <span class="co">% triangle height</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">\def\W</span>{4.6}   <span class="co">% half triangle width</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">%—levele (down to up) ---</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\def\yone</span>{1.5}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">\def\ytwo</span>{3}</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">\def\ythree</span>{4.5}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">%—macro: calculate the half-width at the height y and write it in the macro \tmp</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">\newcommand</span>{<span class="ex">\halfwidthat</span>}[2]{<span class="co">%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\pgfmathsetmacro</span>#2{<span class="fu">\W*</span>(1-#1/<span class="fu">\H</span>)}<span class="co">%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">% ---calculate the required widths ---</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">\halfwidthat</span>{0}{<span class="fu">\wzero</span>}</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">\halfwidthat</span>{<span class="fu">\yone</span>}{<span class="fu">\wone</span>}</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">\halfwidthat</span>{<span class="fu">\ytwo</span>}{<span class="fu">\wtwo</span>}</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">\halfwidthat</span>{<span class="fu">\ythree</span>}{<span class="fu">\wthree</span>}</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">%—centri po visini (x=0 zbog simetrije) ---</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">\pgfmathsetmacro</span>{<span class="fu">\ycA</span>}{0.5*(0+<span class="fu">\yone</span>)}</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">\pgfmathsetmacro</span>{<span class="fu">\ycB</span>}{0.5*(<span class="fu">\yone+\ytwo</span>)}</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">\pgfmathsetmacro</span>{<span class="fu">\ycC</span>}{0.5*(<span class="fu">\ytwo+\ythree</span>)}</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">\pgfmathsetmacro</span>{<span class="fu">\ycD</span>}{0.46*(<span class="fu">\ythree+\H</span>)}</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">%up to down</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a> <span class="fu">\filldraw</span>[fill=RedFill, draw=RedLine, line width=1pt]</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>(-<span class="fu">\wthree</span>,<span class="fu">\ythree</span>) -- (<span class="fu">\wthree</span>,<span class="fu">\ythree</span>) -- (0,<span class="fu">\H</span>) -- cycle;</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">\filldraw</span>[fill=YellowFill, draw=YellowLine, line width=1pt]</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>(-<span class="fu">\wtwo</span>,<span class="fu">\ytwo</span>) -- (<span class="fu">\wtwo</span>,<span class="fu">\ytwo</span>) -- (<span class="fu">\wthree</span>,<span class="fu">\ythree</span>) -- (-<span class="fu">\wthree</span>,<span class="fu">\ythree</span>) -- cycle;</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">\filldraw</span>[fill=BlueFill, draw=BlueLine, line width=1pt]</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>(-<span class="fu">\wone</span>,<span class="fu">\yone</span>) -- (<span class="fu">\wone</span>,<span class="fu">\yone</span>) -- (<span class="fu">\wtwo</span>,<span class="fu">\ytwo</span>) -- (-<span class="fu">\wtwo</span>,<span class="fu">\ytwo</span>) -- cycle;</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a> <span class="fu">\filldraw</span>[fill=GreenFill, draw=GreenD, line width=1pt]</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>(-<span class="fu">\wzero</span>,0) -- (<span class="fu">\wzero</span>,0) -- (<span class="fu">\wone</span>,<span class="fu">\yone</span>) -- (-<span class="fu">\wone</span>,<span class="fu">\yone</span>) -- cycle;</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="co">% ---text ---</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[font=<span class="fu">\sffamily\bfseries\small</span>,text=GreenD] at (0,<span class="fu">\ycA</span>) {存储（SSD/磁盘）};</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[font=<span class="fu">\sffamily\bfseries\small</span>,text=BlueLine] at (0,<span class="fu">\ycB</span>) {HBM/DRAM};</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[font=<span class="fu">\sffamily\bfseries\small</span>,text=YellowLine] at (0,<span class="fu">\ycC</span>) {L1/L2/L3 缓存};</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">\node</span>[font=<span class="fu">\sffamily\bfseries\small</span>,text=RedLine] at (0,<span class="fu">\ycD</span>) {寄存器};</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">%</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(D)at(<span class="ss">$(</span><span class="sc">\W</span><span class="ss">,0)+(0.65,0)$</span>);</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(L)at(<span class="ss">$(-</span><span class="sc">\W</span><span class="ss">,0)+(-0.65,0)$</span>);</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="fu">\coordinate</span>(V)at(<span class="ss">$(0,</span><span class="sc">\H</span><span class="ss">)+(0,0)$</span>);</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="fu">\path</span>[green](D)|-coordinate(D1)(V);</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a><span class="fu">\path</span>[green](L)|-coordinate(L1)(V);</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co">%</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="fu">\draw</span>[-&gt;,&gt;=Latex,line width=1pt,draw=black!40](D)--</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>node[align=center,right]{速度更快<span class="fu">\\</span> 延迟更低}(D1);</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">\draw</span>[-&gt;,&gt;=Latex,line width=1pt,draw=black!40](L1)--</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>node[align=center,left]{容量更大<span class="fu">\\</span> 成本更低}(L);</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co">%—outline ---</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co">%\draw[thick] (-\W,0) -- (0,\H) -- (\W,0) -- cycle;</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-memory-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: <strong>存储层次结构</strong>：性能取决于数据的邻近程度。访问 HBM 的延迟约为访问寄存器的 1,000<span class="math inline">\(\times\)</span>；访问 SSD 的延迟约为访问寄存器的 300,000<span class="math inline">\(\times\)</span>。
+</figcaption>
+</figure>
+</div>
+<p>存储层次结构是机器学习系统的根本物理约束。<a href="#tbl-physical-hierarchy-ref" class="quarto-xref">Table&nbsp;11</a> 汇总了整个层次结构的物理特性——延迟、带宽和能耗。</p>
+<div id="tbl-physical-hierarchy-ref" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,20,20,20,20]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-physical-hierarchy-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11: <strong>存储层次结构的物理特性（约 2024 年）</strong>：存储层次结构中具有代表性的延迟和带宽基准值。各层的延迟大约跨越五个数量级。NVLink 的数值为双向聚合带宽；能耗仅列出所引用的 45 nm DRAM 数据，因为其他层级的能耗取决于具体实现。因此，将数据保留在层次结构中较高的位置可以显著提升性能。
+</figcaption>
+<div aria-describedby="tbl-physical-hierarchy-ref-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>层级</strong></th>
+<th style="text-align: center;"><strong>技术</strong></th>
+<th style="text-align: center;"><strong>延迟</strong></th>
+<th style="text-align: center;"><strong>带宽</strong></th>
+<th style="text-align: center;"><strong>能耗参考值（每 32 位）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>寄存器</strong></td>
+<td style="text-align: center;">触发器</td>
+<td style="text-align: center;">~0.3 ns</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>L1 缓存</strong></td>
+<td style="text-align: center;">SRAM</td>
+<td style="text-align: center;">~1 ns</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>L2 缓存</strong></td>
+<td style="text-align: center;">SRAM</td>
+<td style="text-align: center;">~4 ns</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>内存（本地）</strong></td>
+<td style="text-align: center;">HBM3</td>
+<td style="text-align: center;">~300 ns</td>
+<td style="text-align: center;">3350 GB/s</td>
+<td style="text-align: center;">640 pJ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>互连</strong></td>
+<td style="text-align: center;">NVLink 4.0</td>
+<td style="text-align: center;">~500 ns</td>
+<td style="text-align: center;">900 GB/s</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>主机链路</strong></td>
+<td style="text-align: center;">PCIe Gen5</td>
+<td style="text-align: center;">~1000 ns</td>
+<td style="text-align: center;">64 GB/s</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>系统内存</strong></td>
+<td style="text-align: center;">DDR5</td>
+<td style="text-align: center;">~100 ns</td>
+<td style="text-align: center;">50 GB/s</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>网络（互连网络）</strong></td>
+<td style="text-align: center;">InfiniBand NDR</td>
+<td style="text-align: center;">~5000 ns</td>
+<td style="text-align: center;">50 GB/s</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>存储（本地）</strong></td>
+<td style="text-align: center;">NVMe SSD</td>
+<td style="text-align: center;">~100000 ns</td>
+<td style="text-align: center;">7 GB/s</td>
+<td style="text-align: center;">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>各层的能耗揭示了数据移动为何主导现代系统设计。</p>
+<div id="psp-appendix-machine-high-cost-data-movement" class="callout callout-perspective" title="数据移动的高昂代价">
+<p></p><details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.4: 数据移动的高昂代价</strong></summary><div>在所引用的 45 nm 参考数据中，从 DRAM 读取一个 32 位值所消耗的能量，约为一次 FP16 乘法的 581×（约为 640 pJ，而后者约为 1.1 pJ）。这一比值因平台而异，不能单独决定工作负载的能耗，后者还取决于访问次数和数据复用情况。尽管如此，它仍然解释了算术强度为何重要。<p></p>
+</div></details>
+</div>
+</section>
+<section id="sec-appdx-machine-foundations-bandwidth-vs-latency-5320" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-bandwidth-vs-latency-5320">带宽与延迟</h3>
+<p>带宽（吞吐量）和延迟（时延）是不同的约束。对于通过有效带宽为 <span class="math inline">\(\text{BW}\)</span> 的链路发送的数据量 <span class="math inline">\(D_{\text{vol}}\)</span>，若固定路径延迟为 <span class="math inline">\(L_{\text{lat}}\)</span>，并假设延迟开销与串行化开销不重叠，则总传输时间为： <span class="math display">\[ T = L_{\text{lat}} + \frac{D_{\text{vol}}}{\text{BW}} \]</span></p>
+<p>交叉点是两项相等时的传输数据量： <span class="math display">\[ D_{\text{vol,cross}} = L_{\text{lat}} \times \text{BW} \]</span></p>
+<p>当传输数据量低于 <span class="math inline">\(D_{\text{vol,cross}}\)</span> 时（例如小型请求或控制消息），延迟占主导。当传输数据量高于该值时（例如加载权重），带宽占主导。</p>
+<p>考虑通过一条带宽为 10 Gb/s、请求/响应基础延迟为 10 ms 的链路发送数据。交叉点对应的数据量为 12.5 MB，因此，哪一项占主导取决于传输数据量位于该阈值的哪一侧。</p>
+<ul>
+<li>受延迟限制的数据包（1 KB）：
+<ul>
+<li>传输时间：1 KB <span class="math inline">\(\times\)</span> 8/10 Gb/s ≈ 0.8 μs。</li>
+<li>总时间 ≈ 10 ms + 0.8 μs ≈ 10 ms。</li>
+<li><em>结果</em>：固定路径延迟和协议延迟占主导；传播延迟是其中的一个组成部分。</li>
+</ul></li>
+<li>受带宽限制的检查点（1 GB）：
+<ul>
+<li>传输时间：<span class="math inline">\(1\text{ GB} \times 8/10\text{ Gbps} \approx 800\text{ ms}\)</span>。</li>
+<li>总时间 <span class="math inline">\(\approx 10\text{ ms} + 800\text{ ms} = 810\text{ ms}\)</span>。</li>
+<li><em>结果</em>：基础延迟可以忽略；带宽是瓶颈。</li>
+</ul></li>
+</ul>
+<p>架构决定数据移动的速度，而数值精度直接控制必须移动的<em>数据量</em>。将精度从 FP32 降低到 FP16，会使每个参数的字节数减半；在硬件、内核和模型准确率允许的情况下，有效带宽可接近翻倍。要理解这些权衡，需要进一步考察硬件如何表示数值。</p>
+</section>
+</section>
+<section id="sec-appdx-machine-foundations-numerical-representations-c889" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-appdx-machine-foundations-numerical-representations-c889">数值表示</h2>
+<p>统计学刻画数据分布；数值表示决定系统如何存储这些数值。在机器学习系统中，精度选择（FP32、BF16 或 INT8）直接体现了统计保真度与硬件吞吐量之间的权衡。</p>
+<section id="sec-appdx-machine-foundations-floatingpoint-format-comparison-1836" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-floatingpoint-format-comparison-1836">浮点格式比较</h3>
+<p>FP32 和 FP16 等 IEEE 754 格式，以及 BF16 和 FP8 等面向 AI 的格式，在动态范围（可表示数值的跨度）和精度（该范围内数值的粒度）之间采用了不同的权衡。<a href="#tbl-numerical-formats" class="quarto-xref">Table&nbsp;12</a> 汇总了主要格式及其使用场景，<a href="#fig-float-formats" class="quarto-xref">figure&nbsp;3</a> 则直观展示了各格式的位分配。</p>
+<div id="tbl-numerical-formats" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[8,8,11,9,20,44]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-numerical-formats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;12: <strong>数值格式比较</strong>：每种格式都在精度、动态范围、内存占用和计算吞吐量之间进行权衡。BF16 与 FP32 具有相同的规格化数指数范围，但存储空间仅为其一半。
+</figcaption>
+<div aria-describedby="tbl-numerical-formats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 9%">
+<col style="width: 20%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>格式</strong></th>
+<th style="text-align: center;"><strong>位数</strong></th>
+<th style="text-align: center;"><strong>指数</strong></th>
+<th style="text-align: center;"><strong>尾数</strong></th>
+<th style="text-align: center;"><strong>动态范围</strong></th>
+<th style="text-align: left;"><strong>典型使用场景</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>FP32</strong></td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">23</td>
+<td style="text-align: center;"><span class="math inline">\(\sim 10^{-38}\)</span> 至 <span class="math inline">\(10^{38}\)</span></td>
+<td style="text-align: left;">训练（全精度）、基准推理</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>FP16</strong></td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">规格化数：<span class="math inline">\(6.10 \times 10^{-5}\)</span>–<span class="math inline">\(6.55 \times 10^{4}\)</span></td>
+<td style="text-align: left;">训练（通常使用损失缩放）、推理</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>BF16</strong></td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">与 FP32 相同的规格化数指数范围</td>
+<td style="text-align: left;">训练，通常无须损失缩放</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>FP8</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">4 或 5</td>
+<td style="text-align: center;">3 或 2</td>
+<td style="text-align: center;">因具体格式而异</td>
+<td style="text-align: left;">在支持的硬件上进行训练/推理</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>INT8</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">不适用</td>
+<td style="text-align: center;">-128 至 127</td>
+<td style="text-align: left;">量化后的推理</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="fig-float-formats" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-env="figure" data-fig-pos="htb" alt="堆叠水平条展示各部分的位数。FP32：1 位符号、8 位指数、23 位尾数。BF16：1 位符号、8 位指数、7 位尾数。FP16：1 位符号、5 位指数、10 位尾数。INT8：8 位整数。">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-float-formats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode tikz code-with-copy"><code class="sourceCode latex"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">tikzpicture</span>}[font=<span class="fu">\small\sffamily</span>, scale=0.9, every node/.append style={scale=0.9}]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\tikzset</span>{</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    BitBox/.style={draw=white, line width=0.8pt, minimum height=0.6cm, align=center, font=<span class="fu">\scriptsize\bfseries\sffamily</span>, text=white},</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    Label/.style={text=TextBlack, font=<span class="fu">\small\bfseries\sffamily</span>, anchor=east}</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">% Colors</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\definecolor</span>{SignColor}{HTML}{D9534F}      <span class="co">% Red</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\definecolor</span>{ExpColor}{HTML}{5BC0DE}       <span class="co">% Blue</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\definecolor</span>{MantColor}{HTML}{F0AD4E}      <span class="co">% Orange</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\definecolor</span>{IntColor}{HTML}{5CB85C}       <span class="co">% Green</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">% FP32</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[Label] at (-0.2, 3) {FP32（32 位）};</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=SignColor, minimum width=0.3cm] (fp32_s) at (0.15, 3) {S};</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=ExpColor, minimum width=2.4cm, right=0pt of fp32_s] (fp32_e) {指数（8）};</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=MantColor, minimum width=6.9cm, right=0pt of fp32_e] (fp32_m) {尾数（23）};</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">% BF16</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[Label] at (-0.2, 2) {BF16（16 位）};</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=SignColor, minimum width=0.3cm] (bf16_s) at (0.15, 2) {S};</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=ExpColor, minimum width=2.4cm, right=0pt of bf16_s] (bf16_e) {指数（8）};</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=MantColor, minimum width=2.1cm, right=0pt of bf16_e] (bf16_m) {尾数（7）};</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[right=0.2cm of bf16_m, font=<span class="fu">\scriptsize\sffamily</span>, text=gray] {与 FP32 范围相同};</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">% FP16</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[Label] at (-0.2, 1) {FP16（16 位）};</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=SignColor, minimum width=0.3cm] (fp16_s) at (0.15, 1) {S};</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=ExpColor, minimum width=1.5cm, right=0pt of fp16_s] (fp16_e) {指数（5）};</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=MantColor, minimum width=3.0cm, right=0pt of fp16_e] (fp16_m) {尾数（10）};</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">% INT8</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[Label] at (-0.2, 0) {INT8（8 位）};</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[BitBox, fill=IntColor, minimum width=2.4cm] (int8) at (1.2, 0) {整数（8）};</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">% Grid/Scale markers (approximate)</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[gray!30, dashed] (0, -0.5) -- (0, 3.5);</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\draw</span>[gray!30, dashed] (9.6, -0.5) -- (9.6, 3.5);</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[below, font=<span class="fu">\scriptsize\sffamily</span>, text=gray] at (0, -0.5) {第 31/15/7 位};</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">\node</span>[below, font=<span class="fu">\scriptsize\sffamily</span>, text=gray] at (9.6, -0.5) {第 0 位};</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">tikzpicture</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-float-formats-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: <strong>数值格式的位布局</strong>：位分配的可视化比较。BF16 保留了 FP32 的 8 位指数，因此也保留了其规格化数指数范围。FP16 以范围换取精度，通常使用损失缩放来减少下溢。
+</figcaption>
+</figure>
+</div>
+<p>除了位宽，指数和尾数之间的位分配也决定了每种格式能够表示的数值范围。</p>
+<p>在这些格式中，BF16<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> 值得特别关注 <span class="citation" data-cites="google_bfloat16 kalamkar2019">(<a href="#ref-google_bfloat16" role="doc-biblioref">Wang and Kanwar 2019</a>; <a href="#ref-kalamkar2019" role="doc-biblioref">Kalamkar et al. 2019</a>)</span>。它与 FP16 同属 16 位存储格式，但在训练中的行为不同，因此仅凭标称位宽无法预测实际运行负担。下面从系统视角说明位分配与内存流量、数值稳定性和部署效率之间的联系。</p>
+<div class="no-row-height column-margin column-container"><div id="ref-google_bfloat16" class="csl-entry" role="listitem">
+Wang, Shibo, and Pankaj Kanwar. 2019. <em><span>BFloat16</span>: The Secret to High Performance on Cloud <span>TPUs</span></em>.
+</div></div><div id="psp-appendix-machine-dynamic-range-wall" class="callout callout-perspective" title="动态范围之墙">
+<details class="callout-perspective fbx-simplebox fbx-default" open=""><summary><strong>Systems Perspective 1.5: 动态范围之墙</strong></summary><div>
+<p>数值格式的选择是机器学习系统铁律（原理 <a href="../parts/build_principles.html#pri-iron-law">原则（英文原版）</a>）的直接应用。将精度从 FP32 降低到 BF16 或 FP16，可使数据量项减半，从而有可能使受内存限制的工作负载吞吐量翻倍。然而，16 位格式的<em>类型</em>决定了工程复杂度：</p>
+<ul>
+<li>动态范围（指数）：BF16 保留了 FP32 的八位指数，因此具有相同的规格化数指数范围 <span class="citation" data-cites="kalamkar2019">(<a href="#ref-kalamkar2019" role="doc-biblioref">Kalamkar et al. 2019</a>)</span>。</li>
+<li>精度（尾数）：FP16 的尾数为 10 位，比 BF16 的 7 位更长，因此对于其范围内的数值可提供更高的精度。然而，其五位指数提高了下溢风险。因此，FP16 训练通常采用<strong>损失缩放</strong>，即在运行过程中将梯度乘以一个较大的常数，使更多数值保持可表示 <span class="citation" data-cites="micikevicius2017mixed">(<a href="#ref-micikevicius2017mixed" role="doc-biblioref">Micikevicius et al. 2017</a>)</span>。</li>
+<li>能效：INT8 运算的能效可显著高于对应的浮点运算，因为它们移动的数据更少，并使用更简单的整数算术路径。对于内存、延迟或功耗预算严格受限的神经网络部署，将推理转换为 INT8 是一种主要手段 <span class="citation" data-cites="jacob2018 krishnamoorthi2018quantizing">(<a href="#ref-jacob2018" role="doc-biblioref">Jacob et al. 2018</a>; <a href="#ref-krishnamoorthi2018quantizing" role="doc-biblioref">Krishnamoorthi 2018</a>)</span>。</li>
+</ul>
+</div></details>
+</div>
+<div class="no-row-height column-margin column-container"><div id="ref-krishnamoorthi2018quantizing" class="csl-entry" role="listitem">
+Krishnamoorthi, Raghuraman. 2018. <span>“Quantizing Deep Convolutional Networks for Efficient Inference: A Whitepaper.”</span> <em>arXiv Preprint arXiv:1806.08342</em> abs/1806.08342.
+</div></div><div class="no-row-height column-margin column-container"><div id="ref-jacob2018" class="csl-entry" role="listitem">
+Jacob, Benoit, Skirmantas Kligys, Bo Chen, Menglong Zhu, Matthew Tang, Andrew Howard, Hartwig Adam, and Dmitry Kalenichenko. 2018. <span>“Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference.”</span> <em>2018 <span>IEEE</span>/<span>CVF</span> Conference on Computer Vision and Pattern Recognition</em>, 2704–13. https://doi.org/10.1109/cvpr.2018.00286.
+</div></div><div class="no-row-height column-margin column-container"><div id="ref-micikevicius2017mixed" class="csl-entry" role="listitem">
+Micikevicius, Paulius, Sharan Narang, Jonah Alben, Gregory Diamos, Erich Elsen, David Garcia, Boris Ginsburg, et al. 2017. <span>“Mixed Precision Training.”</span> <em>arXiv Preprint arXiv:1710.03740</em>.
+</div></div><div class="no-row-height column-margin column-container"><div id="ref-kalamkar2019" class="csl-entry" role="listitem">
+Kalamkar, Dhiraj, Dheevatsa Mudigere, Naveen Mellempudi, Dipankar Das, Kunal Banerjee, Sasikanth Avancha, Dharma Teja Vooturi, et al. 2019. <em>A Study of <span>BFLOAT16</span> for Deep Learning Training</em>.
+</div></div></section>
+<section id="sec-appdx-machine-foundations-integer-quantization-5442" class="level3">
+<h3 class="anchored" data-anchor-id="sec-appdx-machine-foundations-integer-quantization-5442">整数量化</h3>
+<p>量化将连续的浮点值映射为离散整数，通常为 INT8。关键挑战在于选择如何将浮点数范围映射为整数。主要有两种方法。</p>
+<p>对于对称量化，令 <span class="math inline">\(s_{\text{quant}} = \max |x|\)</span>，其中最大值在校准范围内取值，并假设 <span class="math inline">\(x\)</span> 被裁剪到 <span class="math inline">\([-s_{\text{quant}}, s_{\text{quant}}]\)</span>。有符号 INT8 编码为： <span class="math display">\[ x_{\text{int}} = \text{round}\left(\frac{x}{s_{\text{quant}}} \times 127\right) \]</span> 这一映射适用于以零为中心的权重分布。</p>
+<p>非对称量化通过在缩放前平移范围，处理不以零为中心的分布（常见于 ReLU 之后，因为 ReLU 仅产生非负值）。令 <span class="math inline">\(x_{\min}\)</span> 和 <span class="math inline">\(x_{\max}\)</span> 为校准范围的边界，将归一化跨度设为 <span class="math inline">\(s_{\text{quant}} = x_{\max} - x_{\min}\)</span>，并将 <span class="math inline">\(x\)</span> 裁剪到 <span class="math inline">\([x_{\min}, x_{\max}]\)</span>。一种常见的无符号 8 位映射为： <span class="math display">\[ x_{\text{uint8}} = \text{round}\left(\frac{x - x_{\min}}{s_{\text{quant}}} \times 255\right) \]</span></p>
+<p>对称量化与非对称量化之间的选择取决于张量的分布，并会对准确率产生可测量的影响。</p>
+</section>
+</section>
+<section id="总结" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="总结">总结</h2>
+<p>机器侧诊断始于单位、上限和工作集。参考数值用于确定数量级；Roofline 模型和机器学习系统铁律用于判断约束来自运算量、字节数还是延迟；阿姆达尔定律、古斯塔夫森定律和利特尔定律用于检验有关加速比、扩展性和并发性的论断；量纲分析则用于发现不可能成立的结果。存储层次结构和互连展示了这些限制如何表现为延迟与带宽约束，而数值表示则说明了动态范围、精度和量化如何改变存储需求、能耗、吞吐量和准确率。</p>
+<p>应将峰值规格视为上限，而非性能预测。将测量值与相关上限进行比较，然后将剩余差距追溯到利用率、数据移动、运行时开销、架构或软件。当粗略估算明确列出假设和单位，并清楚指向下一步应进行的测量时，它就具有实用价值。</p>
+
+
+
+</section>
+</section>
+
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default page-columns page-full"><section id="footnotes" class="footnotes footnotes-end-of-document page-columns page-full" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><strong>Jeff Dean</strong>：Google 高级研究员，也是 Google 分布式系统基础设施的架构师之一，其参与设计的系统包括 MapReduce、BigTable 和 TensorFlow。他最初于 2010 年前后与 Peter Norvig 一同提出的延迟数值，已成为系统工程师的经典参考。随着硬件演进，这些数值多年来不断更新，但延迟的<em>层次关系</em>始终非常稳定；Colin Scott 的交互式可视化展示了不同硬件世代的延迟层次关系 <span class="citation" data-cites="scott2012latency">(<a href="#ref-scott2012latency" role="doc-biblioref">Scott 2012</a>)</span>。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>能耗层次结构的数据来源</strong>：DRAM 和算术运算的数值来自 <span class="citation" data-cites="horowitz2014">Horowitz (<a href="#ref-horowitz2014" role="doc-biblioref">2014</a>)</span>（45 nm）。L1 SRAM/寄存器比值是层次结构的示例性参考值，并非 Horowitz 的测量结果。重点列出的比值比较的是一次 32 位 DRAM 访问与一次 16 位浮点乘法。绝对数值和比值都会随工艺、电路、存储技术及操作数位宽而变化；导线距离有助于解释为何数据搬移的成本始终很高。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><strong>训练内存（Adam）</strong>：每个参数 16 字节的规则假定使用 Adam 进行混合精度训练。ZeRO 优化通过在加速器之间对优化器状态进行分片，可以减少每个加速器的内存占用，但所有加速器的内存总占用仍约为 16<span class="math inline">\(\times\)</span>参数量。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><strong>Gene Amdahl（1922–2015）</strong>：IBM 的传奇计算机架构师，曾担任 System/360 的首席架构师。后来，他创立了 Amdahl 公司，在大型机市场与 IBM 竞争。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><strong>John Gustafson</strong>：计算机科学家，以并行计算方面的研究和提出 Unum（通用数）格式而闻名。他的定律直接回应了将 Amdahl 定律应用于超大规模计算时，人们所认为的那些“极限”。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><strong>约翰·利特尔</strong>：麻省理工学院的校级教授（Institute Professor），也是运筹学领域的先驱。他于 1961 年证明的这一定律是排队论的基础，广泛应用于从制造业到计算机网络分析等领域。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><strong>BF16（brain floating point 16，脑浮点 16）</strong>：BF16 最初随 Google TPUv2 推出，随后被 Intel、Arm 和 NVIDIA 采用，成为各类加速器生态中常见的训练格式。随着它的普及，硬件、内核和分布式训练库对该格式的支持成为可移植性问题，而不再只是特定厂商的功能。<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+<div class="no-row-height column-margin column-container"><div id="ref-scott2012latency" class="csl-entry" role="listitem">
+Scott, Colin. 2012. <span>“Numbers Every Programmer Should Know by Year.”</span>
+</div><div id="ref-horowitz2014" class="csl-entry" role="listitem">
+Horowitz, Mark. 2014. <span>“1.1 Computing’s Energy Problem (and What We Can Do about It).”</span> <em>2014 <span>IEEE</span> International Solid-State Circuits Conference Digest of Technical Papers (<span>ISSCC</span>)</em>, 10–14. https://doi.org/10.1109/isscc.2014.6757323.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https?:\/\/[^/]+\/books\/mlsys\/vol1\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol1_zh/backmatter/appendix_algorithm.html" class="pagination-link" aria-label="算法基础">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">算法基础</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol1_zh/backmatter/appendix_assumptions.html" class="pagination-link" aria-label="系统假设">
+        <span class="nav-page-text">系统假设</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>机器学习系统导论 · 简体中文本地预览</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<!--
+  MLSysBook release-pill — shared footer version chip for Quarto + static sites.
+
+  Renders a small "v0.1.0 · Apr 26, 2026" chip from a deployed
+  release-manifest.json. Best-effort chrome: silent on any fetch failure
+  (manifest missing, offline, CORS). Use at any site that emits a manifest
+  via scripts/version/release.py emit-manifest.
+
+  ── Standardized placement (all MLSysBook sites) ──
+
+  The chip lives in the page-footer, right slot, so it reads as an
+  intentional part of the footer bar (not dangling below the page). Two
+  pieces per site:
+
+  1. This file loads the style + populator script site-wide:
+
+       format:
+         html:
+           include-in-header:
+             - text: |
+                 <meta name="release-manifest" content="/<project-base>/release-manifest.json">
+           include-after-body:
+             - file: ../shared/release/release-pill.html
+
+  2. Each page-footer places the chip span where it should render:
+
+       website:
+         page-footer:
+           right:
+             - text: |
+                 <span class="release-pill" data-release-pill></span>
+             - icon: github
+               href: ...
+
+  The meta tag tells the script where to find the manifest. The script
+  populates every span carrying data-release-pill, so the chip can sit in
+  the footer (canonical), an about page, or anywhere else.
+
+  ── Manifest contract ──
+
+  The manifest is the JSON written by scripts/version/release.py
+  emit-manifest. Required keys: releaseId, releaseHash. Optional but
+  recommended: buildDate, project. Anything else is ignored.
+
+  ── Why runtime fetch instead of build-time templating ──
+
+  Build-time templating would be deterministic but requires per-project
+  Lua/template machinery. Runtime fetch is project-agnostic and works
+  identically across Quarto, Next.js, and plain HTML. The one fetch per
+  page-load is cheap and the chip degrades to nothing on failure.
+-->
+
+<style>
+  /* Fixed muted gray on every site — the chip must look identical regardless of
+     each Quarto theme's accent colors (do NOT inherit --bs-secondary / link color). */
+  .release-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--release-pill-color, #6c757d);
+  }
+  .release-pill a,
+  .release-pill a:visited,
+  .release-pill-version,
+  .release-pill-date {
+    color: var(--release-pill-color, #6c757d);
+    text-decoration: none;
+  }
+  .release-pill a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .release-pill-date {
+    opacity: 0.75;
+  }
+</style>
+
+<script>
+  (function () {
+    var pills = document.querySelectorAll('[data-release-pill]');
+    if (!pills.length) return;
+
+    // Manifest URL resolution order:
+    //   1. data-manifest attribute on the pill (per-page override)
+    //   2. <meta name="release-manifest" content="..."> in <head>
+    //   3. './release-manifest.json' relative to current page (fallback)
+    var meta = document.querySelector('meta[name="release-manifest"]');
+    var metaPath = meta && meta.getAttribute('content');
+
+    fetch(metaPath || './release-manifest.json', { cache: 'no-store' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (m) {
+        if (!m || !m.releaseId || !m.releaseHash) return;
+        var date = m.buildDate
+          ? new Date(m.buildDate).toLocaleDateString('en-US',
+              { year: 'numeric', month: 'short', day: 'numeric' })
+          : '';
+        var shortHash = String(m.releaseHash).slice(0, 7);
+        var title =
+          (m.project ? m.project + ' ' : '') +
+          'v' + m.releaseId +
+          (date ? ' · built ' + date : '') +
+          ' · hash ' + shortHash;
+
+        pills.forEach(function (el) {
+          var rawLink = el.getAttribute('data-link') || '#release';
+          // XSS hardening: allow only anchor, relative, or http(s) links; reject javascript:/data: URLs.
+          var linkHref = /^(?:#|\/|\.{1,2}\/|https?:\/\/)/i.test(rawLink) ? rawLink : '#release';
+          var a = document.createElement('a');
+          a.href = linkHref;
+          a.title = title;
+          a.setAttribute('aria-label',
+            'Release v' + m.releaseId + (date ? ', built ' + date : ''));
+          var v = document.createElement('span');
+          v.className = 'release-pill-version';
+          v.textContent = 'v' + m.releaseId;
+          a.appendChild(v);
+          if (date) {
+            var d = document.createElement('span');
+            d.className = 'release-pill-date';
+            d.textContent = ' · ' + date;
+            a.appendChild(d);
+          }
+          el.innerHTML = '';
+          el.appendChild(a);
+        });
+      })
+      .catch(function () { /* silent: best-effort chrome */ });
+  })();
+</script>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 中文书架</a>
+</body></html>

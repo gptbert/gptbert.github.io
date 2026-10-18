@@ -1,0 +1,4162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>机器学习系统导论</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../vol1_zh/backmatter/glossary/glossary.html" rel="next">
+<link href="../../vol1_zh/backmatter/appendix_machine.html" rel="prev">
+<link href="../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-9890ab0e7b279b2f92e6572d8f7c6ba2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-M21L0CBCVN"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-M21L0CBCVN', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+<!-- Shared head includes — MLSysBook ecosystem -->
+
+<!--
+  theme-persist (inline, sync) — applies stored color-scheme before first paint.
+  Inlined deliberately: runs before any other <script>, no extra round-trip,
+  and avoids per-subsite asset path differences. Canonical source:
+  shared/scripts/theme-persist.js (kept identical for documentation/testability).
+  If you change one, mirror the change to the other.
+-->
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'quarto-color-scheme';
+  // Quarto's toggle writes 'alternate'/'default' (alternate = dark, the
+  // layered sheet); sibling non-Quarto sites write 'dark'/'light'. Both
+  // hit the same key, so we accept either. Quarto's own startup still
+  // checks `=== 'alternate'`, so we mirror onto <html> rather than rewrite.
+  function normalize(v) {
+    if (v === 'dark' || v === 'alternate') return 'dark';
+    if (v === 'light' || v === 'default') return 'light';
+    return null;
+  }
+  function preferredScheme() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) return n;
+    } catch (e) {}
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  function apply(scheme) {
+    var html = document.documentElement;
+    if (!html) return;
+    html.setAttribute('data-bs-theme', scheme);
+    html.setAttribute('data-quarto-color-scheme', scheme);
+    html.style.colorScheme = scheme;
+    // Bridge to legacy `.quarto-dark` body class — about.css,
+    // community.css, and newsletter.css key their dark-mode CSS
+    // variables off `.quarto-dark { ... }`. Quarto's own toggle adds
+    // that class on click, but the OS-pref / first-paint path never
+    // does. Mirror the scheme onto body so those CSS variables fire
+    // on every dark path, not just toggle clicks. body may not exist
+    // yet on the first call (this script runs in <head>); a
+    // MutationObserver below catches it as soon as it parses.
+    var body = document.body;
+    if (body) body.classList.toggle('quarto-dark', scheme === 'dark');
+  }
+  apply(preferredScheme());
+  // Catch the FOUC window between <head> apply() and DOMContentLoaded:
+  // <body> may not exist yet at first apply(), but as soon as the
+  // parser appends it we want the legacy class bridge in place so any
+  // CSS keyed on `.quarto-dark` paints correctly on first render.
+  if (!document.body) {
+    var earlyObserver = new MutationObserver(function () {
+      if (document.body) {
+        apply(preferredScheme());
+        earlyObserver.disconnect();
+      }
+    });
+    earlyObserver.observe(document.documentElement, { childList: true });
+  }
+  // Quarto's toggle updates localStorage but not <html>, so wrap it to
+  // mirror the new value onto data-bs-theme; otherwise clicking the toggle
+  // leaves CSS keyed off [data-bs-theme="dark"] rendering against the wrong
+  // stylesheet until the next reload.
+  function syncFromStorage() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) apply(n);
+    } catch (e) {}
+  }
+  function wrapToggle() {
+    var orig = window.quartoToggleColorScheme;
+    if (typeof orig !== 'function' || orig.__mlsbWrapped) return;
+    var wrapped = function () { var r = orig.apply(this, arguments); syncFromStorage(); return r; };
+    wrapped.__mlsbWrapped = true;
+    window.quartoToggleColorScheme = wrapped;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { wrapToggle(); syncFromStorage(); });
+  } else {
+    wrapToggle(); syncFromStorage();
+  }
+  // Defend the legacy `.quarto-dark` body class against Quarto's own
+  // `toggleBodyColor(mode)`, which runs *after* this script and re-asserts
+  // the body class based on `mode` — and `mode` defaults to 'light' when
+  // there's no stored quarto-color-scheme value, even when the OS / first
+  // paint already resolved to dark via `data-bs-theme`. Without this
+  // observer, on every fresh visit Quarto would clobber our bridge and
+  // restore `.quarto-light`, leaving `.quarto-dark`-keyed CSS variables
+  // (about/community/newsletter pages) at their light-mode defaults
+  // against the dark `data-bs-theme="dark"` background.
+  function bridgeBody() {
+    var body = document.body;
+    if (!body) return;
+    var wantDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    if (wantDark && !body.classList.contains('quarto-dark')) {
+      body.classList.add('quarto-dark');
+      body.classList.remove('quarto-light');
+    } else if (!wantDark && body.classList.contains('quarto-dark')) {
+      body.classList.remove('quarto-dark');
+      body.classList.add('quarto-light');
+    }
+  }
+  function watchBody() {
+    if (!document.body) return;
+    bridgeBody();
+    var bodyObs = new MutationObserver(bridgeBody);
+    bodyObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var htmlObs = new MutationObserver(bridgeBody);
+    htmlObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watchBody);
+  } else {
+    watchBody();
+  }
+  window.addEventListener('storage', function (ev) {
+    if (ev.key !== STORAGE_KEY) return;
+    var n = normalize(ev.newValue);
+    if (n) apply(n);
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (ev) {
+        try { if (window.localStorage.getItem(STORAGE_KEY)) return; } catch (e) {}
+        apply(ev.matches ? 'dark' : 'light');
+      });
+    } catch (e) {}
+  }
+})();
+</script>
+
+<!--
+  Build-stamp styling. Tiny, neutral, dark-mode aware. The actual stamp text
+  is injected by shared/scripts/inject-build-stamp.sh into footer markup
+  containing the literal MLSB_BUILD_STAMP HTML-comment token (see that
+  script for the exact pattern — we cannot write it here because HTML
+  comments cannot nest and the inner closer would terminate this block).
+-->
+<style>
+.mlsb-build-stamp {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+[data-bs-theme="dark"] .mlsb-build-stamp { opacity: 0.5; }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="icon" href="https://mlsysbook.ai/vol1/assets/images/icons/favicon.png" type="image/png">
+<meta name="author" content="Vijay Janapa Reddi">
+
+<!-- Schema.org JSON-LD structured data for Google Knowledge Graph & Rich Snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mlsysbook.ai/#website",
+      "url": "https://mlsysbook.ai/",
+      "name": "Machine Learning Systems",
+      "description": "The AI Engineering Textbook Series: Foundations, Scaling, Agentic AI, and Physical AI.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Harvard Edge Computing Lab",
+        "url": "https://edge.seas.harvard.edu"
+      }
+    },
+    {
+      "@type": "BookSeries",
+      "@id": "https://mlsysbook.ai/#bookseries",
+      "name": "Machine Learning Systems: Principles and Practices of Engineering Artificially Intelligent Systems",
+      "alternateName": ["MLSysBook", "Machine Learning Systems", "AI Engineering Textbook"],
+      "url": "https://mlsysbook.ai/",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Vijay Janapa Reddi",
+        "jobTitle": "Gordon McKay Professor of Electrical Engineering and Computer Science",
+        "worksFor": {
+          "@type": "EducationalOrganization",
+          "name": "Harvard University",
+          "sameAs": "https://www.harvard.edu"
+        },
+        "sameAs": [
+          "https://profvjreddi.github.io/homepage/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MIT Press",
+        "url": "https://mitpress.mit.edu"
+      },
+      "hasPart": [
+        {
+          "@type": "Book",
+          "name": "Volume I: Introduction to Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol1/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Foundations, Lifecycle, Data Engineering, Training, Inference, Benchmarking, and Responsible AI"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume II: Scaling Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol2/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Distributed Training, Accelerator Architecture, Parallelism, Memory Systems, and Serving"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume III: Agentic Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol3/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Autonomous Agents, Deliberation, Working Sets, Virtual Memory, RAG, RLVR, and Multi-Agent Systems"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume IV: Physical AI Systems",
+          "url": "https://mlsysbook.ai/vol4/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Physical AI, Embodied AI, Closed-Loop Dynamics, Actuation, Control Barrier Functions, and Robotics"
+        }
+      ]
+    },
+    {
+      "@type": "Course",
+      "@id": "https://mlsysbook.ai/#course",
+      "name": "CS249r: Machine Learning Systems",
+      "description": "Harvard University course on principles and practices of engineering artificially intelligent systems.",
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "Harvard University",
+        "sameAs": "https://www.harvard.edu"
+      }
+    }
+  ]
+}
+</script>
+
+<!--
+  navbar-theme-toggle-relocate — moves the Quarto theme toggle into the
+  navbar's right-side .navbar-nav group at page load, so it collapses into
+  the hamburger menu alongside Subscribe/Star/Support/GitHub at narrow widths
+  instead of being stranded in the middle by Quarto's mx-auto brand layout.
+
+  Why JS: Quarto auto-injects the toggle into .quarto-navbar-tools (outside
+  .navbar-collapse). CSS can't move DOM nodes between containers, and CSS
+  positioning hacks (absolute/right: 50px) fight Bootstrap's responsive
+  layout below 992px. Moving the node once at startup is the standard
+  approach used across Quarto-based sites with the same problem.
+-->
+<script>
+(function () {
+  'use strict';
+  function relocateThemeToggle() {
+    var tools = document.querySelector('.quarto-navbar-tools');
+    if (!tools) return;
+    var toggle = tools.querySelector('.quarto-color-scheme-toggle');
+    if (!toggle) return;
+    var navRight = document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav.ms-auto'
+    ) || document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav:last-of-type'
+    );
+    if (!navRight) return;
+    var li = document.createElement('li');
+    li.className = 'nav-item navbar-theme-toggle-item';
+    toggle.classList.add('nav-link');
+    li.appendChild(toggle);
+    navRight.appendChild(li);
+    tools.style.display = 'none';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', relocateThemeToggle);
+  } else {
+    relocateThemeToggle();
+  }
+})();
+</script>
+
+<!--
+  navbar-brand-href-fix — force the navbar brand link to the ecosystem root
+  (https://mlsysbook.ai/) on every subsite.
+
+  Quarto sets each subsite's `site-url` to `https://mlsysbook.ai/<subsite>/`
+  and then relativizes any navbar.href value that lives inside the
+  site-url's domain. The shared `href: https://mlsysbook.ai/` in
+  navbar-common.yml therefore gets emitted as `./index.html`, which on
+  vol1/vol2/tinytorch/etc. resolves to *that subsite's* root rather than
+  the ecosystem landing page. Override the brand link href in JS after
+  Quarto's render: this is a one-line user-experience fix that does not
+  fight Quarto's URL machinery.
+-->
+<script>
+(function () {
+  'use strict';
+  function fixBrandHref() {
+    var brand = document.querySelectorAll(
+      '.navbar .navbar-brand, .navbar .navbar-brand-logo'
+    );
+    for (var i = 0; i < brand.length; i++) {
+      brand[i].setAttribute('href', 'https://mlsysbook.ai/');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixBrandHref);
+  } else {
+    fixBrandHref();
+  }
+})();
+</script>
+<link rel="manifest" href="../../site.webmanifest">
+<link rel="apple-touch-icon" href="../../shared/assets/images/icons/favicon.png">
+<meta name="theme-color" content="#A51C30">
+<!-- Release identity (rendered into the footer pill below).
+     The publish workflow drops release-manifest.json at
+     /vol1_zh/release-manifest.json before deploy. -->
+<meta name="release-manifest" content="/vol1_zh/release-manifest.json">
+<!-- SocratiQ bundle: -->
+<!-- <script type="module" src="/tools/scripts/socratiQ/bundle.js" defer></script> -->
+<script src="../../shared/assets/scripts/sidebar-auto-collapse.js" defer=""></script>
+<script src="../../shared/assets/scripts/version-link.js" defer=""></script>
+<script src="../../shared/assets/scripts/subscribe-modal.js" defer=""></script>
+<style>
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-checkpoint > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-quiz-question > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<style id="zh-web-layout">#quarto-announcement{display:none!important}#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">机器学习系统 · 第一卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../vol1_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">开始阅读</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../vol1_zh/backmatter/appendix_assumptions.html">系统假设</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+  <div id="quarto-announcement" data-announcement-id="d3cc121d05ef1a79684f139997959c79" class="alert alert-primary hidden"><i class="bi bi-megaphone quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>📘 <strong>Volume I: Foundations.</strong> Single-machine ML systems — data, algorithms, and machines.<br> 🚀 <strong>Ready for scale?</strong> <a href="/books/mlsys/vol2/">Volume II: Scaling</a> — distributed training, fleet operations, responsible deployment.<br> 🛠️ <strong>Alongside the book:</strong> <a href="https://mlsysbook.ai/tinytorch/">TinyTorch</a> (build) · <a href="https://mlsysbook.ai/kits/">Hardware Kits</a> (deploy) · <a href="https://mlsysbook.ai/mlsysim/">MLSys·im</a> (model) · <a href="https://mlsysbook.ai/labs/">Labs</a> (explore) · <a href="https://mlsysbook.ai/staffml/">StaffML</a> (practice)<br> 📬 <strong>Newsletter:</strong> ML Systems insights &amp; updates — <a href="https://mlsysbook.ai/newsletter/">Subscribe →</a></p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献词</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/foreword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">序言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者的话</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">符号说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/foundations_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基础原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/02_ml_systems/02_ml_systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/03_ml_workflow/03_ml_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习工作流</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/04_data_engineering/04_data_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/build_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">开发原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/05_nn_computation/05_nn_computation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经计算</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/06_nn_architectures/06_nn_architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络架构</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/07_frameworks/07_frameworks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习框架</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/08_training/08_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/optimize_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">优化原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/09_data_selection/09_data_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据选择</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/10_model_compression/10_model_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型压缩</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/11_hw_acceleration/11_hw_acceleration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硬件加速</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/12_benchmarking/12_benchmarking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基准测试</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/parts/deploy_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/13_model_serving/13_model_serving.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型服务</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/14_ml_ops/14_ml_ops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习运维</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/15_responsible_engr/15_responsible_engr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">负责任工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/16_conclusion/16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结论</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_dam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据—算法—机器分类体系</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_algorithm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">算法基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_machine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/appendix_assumptions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">系统假设</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../vol1_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#sec-appdx-system-assumptions" id="toc-sec-appdx-system-assumptions" class="nav-link active" data-scroll-target="#sec-appdx-system-assumptions">系统假设</a>
+  <ul>
+  <li><a href="#如何使用本附录" id="toc-如何使用本附录" class="nav-link" data-scroll-target="#如何使用本附录">如何使用本附录</a></li>
+  <li><a href="#加速器规格" id="toc-加速器规格" class="nav-link" data-scroll-target="#加速器规格">加速器规格</a>
+  <ul class="collapse">
+  <li><a href="#加速器规格总矩阵" id="toc-加速器规格总矩阵" class="nav-link" data-scroll-target="#加速器规格总矩阵">加速器规格总矩阵</a></li>
+  <li><a href="#nvidia-v100" id="toc-nvidia-v100" class="nav-link" data-scroll-target="#nvidia-v100">NVIDIA V100</a></li>
+  <li><a href="#nvidia-t4" id="toc-nvidia-t4" class="nav-link" data-scroll-target="#nvidia-t4">NVIDIA T4</a></li>
+  <li><a href="#nvidia-a100" id="toc-nvidia-a100" class="nav-link" data-scroll-target="#nvidia-a100">NVIDIA A100</a></li>
+  <li><a href="#nvidia-h100" id="toc-nvidia-h100" class="nav-link" data-scroll-target="#nvidia-h100">NVIDIA H100</a></li>
+  <li><a href="#nvidia-b200" id="toc-nvidia-b200" class="nav-link" data-scroll-target="#nvidia-b200">NVIDIA B200</a></li>
+  <li><a href="#amd-instinct-mi300x" id="toc-amd-instinct-mi300x" class="nav-link" data-scroll-target="#amd-instinct-mi300x">AMD Instinct MI300X</a></li>
+  <li><a href="#google-tpu-v4-和-v6e" id="toc-google-tpu-v4-和-v6e" class="nav-link" data-scroll-target="#google-tpu-v4-和-v6e">Google TPU v4 和 v6e</a></li>
+  <li><a href="#cpu-和移动端边缘处理器" id="toc-cpu-和移动端边缘处理器" class="nav-link" data-scroll-target="#cpu-和移动端边缘处理器">CPU 和移动端／边缘处理器</a></li>
+  </ul></li>
+  <li><a href="#模型规格" id="toc-模型规格" class="nav-link" data-scroll-target="#模型规格">模型规格</a></li>
+  <li><a href="#训练内存约定" id="toc-训练内存约定" class="nav-link" data-scroll-target="#训练内存约定">训练内存约定</a></li>
+  <li><a href="#能耗常数" id="toc-能耗常数" class="nav-link" data-scroll-target="#能耗常数">能耗常数</a>
+  <ul class="collapse">
+  <li><a href="#精度与算术运算能耗层级" id="toc-精度与算术运算能耗层级" class="nav-link" data-scroll-target="#精度与算术运算能耗层级">精度与算术运算能耗层级</a></li>
+  </ul></li>
+  <li><a href="#互连与网络带宽" id="toc-互连与网络带宽" class="nav-link" data-scroll-target="#互连与网络带宽">互连与网络带宽</a>
+  <ul class="collapse">
+  <li><a href="#互连与网络互连结构物理规格表" id="toc-互连与网络互连结构物理规格表" class="nav-link" data-scroll-target="#互连与网络互连结构物理规格表">互连与网络互连结构物理规格表</a></li>
+  </ul></li>
+  <li><a href="#经济常数" id="toc-经济常数" class="nav-link" data-scroll-target="#经济常数">经济常数</a></li>
+  <li><a href="#规模参考" id="toc-规模参考" class="nav-link" data-scroll-target="#规模参考">规模参考</a></li>
+  <li><a href="#单位约定" id="toc-单位约定" class="nav-link" data-scroll-target="#单位约定">单位约定</a></li>
+  <li><a href="#sec-appdx-assumption-provenance" id="toc-sec-appdx-assumption-provenance" class="nav-link" data-scroll-target="#sec-appdx-assumption-provenance">假设来源</a></li>
+  <li><a href="#总结" id="toc-总结" class="nav-link" data-scroll-target="#总结">总结</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">系统假设</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sec-appdx-system-assumptions" class="level1 page-columns page-full" data-dropcap="chapter-opening">
+<h1 data-dropcap="chapter-opening">系统假设</h1>
+<p>粗略估算的可信度取决于其所依据的输入，而这些输入很容易被忽略：加速器的峰值速率、模型的参数量、电价，以及每次运算的能耗。本附录将这些基准值和单位约定汇集为一份参考表，以便对本书中的任何定量估算进行核查、使用较新的数值进行更新，或跨章节进行校验。本附录还明确了这些估算所依赖的单位约定。这样，各章便可依据数值展开论证，而无须反复说明每个数值的来源。</p>
+<section id="如何使用本附录" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="如何使用本附录">如何使用本附录</h2>
+<p>当某一章指出 H100 具有某个脊点，或训练一个 7B 模型需要一定的内存容量时，其所依据的带宽、容量和模型规模均列于此处。局部估算可使用相关的“数值”和“单位”条目。各表按主题分组：加速器、参考模型、单次访问能耗、互连带宽、经济因素、生产规模基准，以及单位约定。这些假设来自厂商数据手册中的峰值、已发表的研究或行业报告、用于说明的市场或电网统计数据，以及本书的约定；<a href="#sec-appdx-assumption-provenance" class="quarto-xref">section&nbsp;1.1</a> 集中列出了这些来源。</p>
+<p>下面的计算展示了哪些假设对各项估算起主导作用，因此，当硬件规格或价格发生变化时，可以直接将变化代入计算，而无须改变方法。</p>
+<p>本附录中的常量支持快速且可复现的计算。下面三个示例分别将其用于性能、容量和成本估算。</p>
+<div id="nbk-appendix-assumptions-napkin-math-constants" class="callout callout-notebook" title="判定 Roofline 模型中的受限区间">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.1: 判定 Roofline 模型中的受限区间</strong></summary><div><strong>问题</strong>： 对于给定的 H100 和工作负载算术强度，哪些操作受计算限制，哪些操作受内存限制？<p></p>
+<p><strong>变量</strong>： 对于处于 FP16/BF16 峰值性能下的 H100，采用 989 TFLOP/s 的峰值算力和 3.35 TB/s 的内存带宽。</p>
+<p><strong>计算</strong>： 将峰值 FLOP/s 除以内存带宽，得到 Roofline 模型的脊点：989 TFLOP/s/3.35 TB/s <span class="math inline">\(\approx\)</span> 295.2 FLOP/byte。对于 <span class="math inline">\(n=\)</span> 4,096 的大规模通用矩阵乘法（GEMM），其算术强度为 <span class="math inline">\(n/3 \approx\)</span> 1,365.3 FLOP/byte。</p>
+<p><strong>结果</strong>： 算术强度高于 295.2 FLOP/byte 的操作受计算限制；低于该值的操作受内存限制。此处的 GEMM 示例受计算限制，而算术强度为 <span class="math inline">\(\approx 1\)</span> FLOP/byte 的单词元自回归解码则严重受内存限制。</p>
+<p><strong>系统启示</strong>： 同一加速器可以同时具有充裕的算力和受限的内存资源。算术强度决定了工作负载实际消耗哪种资源。</p>
+</div></details>
+</div>
+<p>吞吐量只是约束之一。训练还需要足够的容量来容纳权重、梯度和优化器状态。</p>
+<div id="nbk-appendix-assumptions-training-memory" class="callout callout-notebook" title="估算训练状态的内存需求">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.2: 估算训练状态的内存需求</strong></summary><div><strong>问题</strong>： 使用混合精度自适应矩估计（Adam）训练一个 7B 模型，需要多少模型状态内存？<p></p>
+<p><strong>变量</strong>： 混合精度 Adam 存储 BF16 权重、梯度、FP32 主权重、动量和方差。模型状态的内存预算为每个参数 16 字节。</p>
+<p><strong>计算</strong>： 对于 7B 个参数，模型状态占用为 7 <span class="math inline">\(\times 10^9 \times\)</span> 16 字节 = 112 GB。</p>
+<p><strong>结果</strong>： 一块 H100 配备 80 GB 的高带宽内存（HBM），因此，即使尚未计入激活值，仅模型状态就已超出单个加速器的容量。</p>
+<p><strong>系统启示</strong>： 优化器状态决定了训练内存需求的下限，而不能只看权重。仅从参数所占字节数出发进行容量规划，会低估实际需求。</p>
+</div></details>
+</div>
+<p>模型能够装入内存，只能说明其具备可行性，尚不能确定运行成本。功率和运行时长提供了初步估算电费所需的其余量。</p>
+<div id="nbk-appendix-assumptions-electricity-cost" class="callout callout-notebook" title="估算加速器电费">
+<p></p><details class="callout-notebook fbx-simplebox fbx-default" open=""><summary><strong>Napkin Math 1.3: 估算加速器电费</strong></summary><div><strong>问题</strong>： 在本书为说明而设定的 GPT-3 规模场景中，仅加速器的电费是多少？<p></p>
+<p><strong>变量</strong>： 采用 1,024 块 A100，每个加速器的功率为 400 W，实际运行时长为 ~25 days，电价为 $0.12/kWh。</p>
+<p><strong>计算</strong>： 此次运行大约需要 <span class="math inline">\(3.14 \times 10^{23}\)</span> FLOPs。按 A100 等效场景估算的电费为 ~25 days 的实际运行时长 <span class="math inline">\(\times\)</span> 1,024 块 A100 <span class="math inline">\(\times\)</span> 24 h/day <span class="math inline">\(\times\)</span> 0.4 kW <span class="math inline">\(\times\)</span> $0.12/kWh = ~$29,491.2。</p>
+<p><strong>结果</strong>： 仅加速器的电费约为 ~$29,491.2。这一仅依据加速器热设计功耗（TDP）的估算不包括主机 CPU、网络、存储、冷却和设施开销。最初的 GPT-3 训练使用的是 V100 时代的基础设施；这里采用的是本书为说明而设定的 A100 等效场景，并非已报告的配置，其运行时长也并非仅由峰值 FLOP/s 推导而来。</p>
+<p><strong>系统启示</strong>： 能耗可由功率和时间计算，但完整的成本核算还必须包括资本利用率、网络、存储、人员，以及失败或重复运行所产生的成本。</p>
+</div></details>
+</div>
+</section>
+<section id="加速器规格" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="加速器规格">加速器规格</h2>
+<p>以下是本书 Roofline 模型、训练内存、能耗和成本示例所使用的<strong>加速器假设</strong>：各章所引用的每代加速器的峰值吞吐量、内存带宽、内存容量和 TDP。这些数值是厂商数据手册中的峰值——即粗略估算所用的上限，并非持续运行时的利用水平——来源包括 NVIDIA 产品文档和 IEEE Micro 架构文章 <span class="citation" data-cites="nvidia2017gpu nvidia2020v100datasheet NVIDIA2020 nvidia2021a10080gb choquette2021 choquette2023 nvidia2018t4 nvidia2024blackwell">(<a href="#ref-nvidia2017gpu" role="doc-biblioref">NVIDIA Corporation 2017</a>, <a href="#ref-nvidia2020v100datasheet" role="doc-biblioref">2020b</a>, <a href="#ref-NVIDIA2020" role="doc-biblioref">2020a</a>, <a href="#ref-nvidia2021a10080gb" role="doc-biblioref">2021</a>, <a href="#ref-nvidia2018t4" role="doc-biblioref">2018</a>, <a href="#ref-nvidia2024blackwell" role="doc-biblioref">2024</a>; <a href="#ref-choquette2021" role="doc-biblioref">Choquette et al. 2021</a>; <a href="#ref-choquette2023" role="doc-biblioref">Choquette 2023</a>)</span>、AMD MI300X 文档 <span class="citation" data-cites="amd2023mi300x">(<a href="#ref-amd2023mi300x" role="doc-biblioref">AMD 2023</a>)</span>、Google 张量处理单元（TPU）相关出版物 <span class="citation" data-cites="jouppi2023">(<a href="#ref-jouppi2023" role="doc-biblioref">Jouppi et al. 2023</a>)</span>，以及 Google Cloud 当前的 TPU v6e 规格页面 <span class="citation" data-cites="googleCloudTpuV6eDocs">(<a href="#ref-googleCloudTpuV6eDocs" role="doc-biblioref">Google Cloud 2026</a>)</span>。容量行保留了官方以十进制 GB 标示的标称值。各表从 <a href="#tbl-assumptions-v100" class="quarto-xref">table&nbsp;2</a>（Volta）和 <a href="#tbl-assumptions-t4" class="quarto-xref">table&nbsp;3</a>（Turing）开始，依次涵盖当前及面向未来的各代产品。</p>
+<div class="no-row-height column-margin column-container"></div><section id="加速器规格总矩阵" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="加速器规格总矩阵">加速器规格总矩阵</h3>
+<p><a href="#tbl-appdx-assumptions-accelerator-matrix" class="quarto-xref">table&nbsp;1</a> 中的加速器总矩阵汇总了主要 GPU、TPU、晶圆级加速器和领域专用 AI 加速器的规格。</p>
+<div id="tbl-appdx-assumptions-accelerator-matrix" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[17,10,8,28,17,10,10]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-appdx-assumptions-accelerator-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: <strong>加速器规格总矩阵</strong>：综合参考矩阵，对比生产环境 AI 硬件的架构、工艺节点、TDP、多精度计算吞吐量（FP64 至 INT8）、内存容量与带宽、片上 SRAM 容量，以及 FP16 Roofline 脊点（<span class="math inline">\(I_{\text{ridge}} = \text{Peak FP16 TFLOP/s}/\text{Memory Bandwidth (TB/s)}\)</span>）。
+</figcaption>
+<div aria-describedby="tbl-appdx-assumptions-accelerator-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 10%">
+<col style="width: 8%">
+<col style="width: 28%">
+<col style="width: 17%">
+<col style="width: 10%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>架构/芯片</strong></th>
+<th style="text-align: center;"><strong>工艺节点（nm）</strong></th>
+<th style="text-align: center;"><strong>TDP（W）</strong></th>
+<th style="text-align: left;"><strong>计算峰值 TFLOPs/TOPS</strong></th>
+<th style="text-align: left;"><strong>内存容量与带宽</strong></th>
+<th style="text-align: center;"><strong>片上 SRAM</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(I_{\text{ridge}}\)</span>（FLOP/B）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVIDIA V100 (SXM2 32 GB)</strong></td>
+<td style="text-align: center;">12nm (TSMC)</td>
+<td style="text-align: center;">300</td>
+<td style="text-align: left;">FP64: 7.8, FP32: 15.7, FP16: 125 (TC), INT8: 125 (TC)</td>
+<td style="text-align: left;">32 GB HBM2 @ 0.90 TB/s</td>
+<td style="text-align: center;">16 MB</td>
+<td style="text-align: center;">138.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVIDIA A100 (80 GB SXM4)</strong></td>
+<td style="text-align: center;">7nm N7 (TSMC)</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: left;">FP64: 9.7/19.5, FP32: 19.5, TF32: 156, FP16/BF16: 312, INT8: 624</td>
+<td style="text-align: left;">80 GB HBM2e @ 2.04 TB/s</td>
+<td style="text-align: center;">40 MB</td>
+<td style="text-align: center;">153.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVIDIA H100 (80 GB SXM5)</strong></td>
+<td style="text-align: center;">4nm 4N (TSMC)</td>
+<td style="text-align: center;">700</td>
+<td style="text-align: left;">FP64: 34/67, FP32: 67, TF32: 494, FP16/BF16: 989, FP8: 1,978, INT8: 1,978</td>
+<td style="text-align: left;">80 GB HBM3 @ 3.35 TB/s</td>
+<td style="text-align: center;">50 MB</td>
+<td style="text-align: center;">295.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVIDIA H200 (141 GB SXM5)</strong></td>
+<td style="text-align: center;">4nm 4N (TSMC)</td>
+<td style="text-align: center;">700</td>
+<td style="text-align: left;">FP64: 34/67, FP32: 67, TF32: 494, FP16/BF16: 989, FP8: 1,978, INT8: 1,978</td>
+<td style="text-align: left;">141 GB HBM3e @ 4.80 TB/s</td>
+<td style="text-align: center;">50 MB</td>
+<td style="text-align: center;">206.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVIDIA B200 (192 GB SXM)</strong></td>
+<td style="text-align: center;">4nm 4NP (TSMC)</td>
+<td style="text-align: center;">1000</td>
+<td style="text-align: left;">FP64: 45/90, FP32: 90, TF32: 1,250, FP16/BF16: 2,250, FP8: 4,500, INT8: 4,500</td>
+<td style="text-align: left;">192 GB HBM3e @ 8.00 TB/s</td>
+<td style="text-align: center;">128 MB</td>
+<td style="text-align: center;">281.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVIDIA L40S (48 GB PCIe)</strong></td>
+<td style="text-align: center;">4nm 4N (TSMC)</td>
+<td style="text-align: center;">350</td>
+<td style="text-align: left;">FP64: 1.4, FP32: 91.6, TF32: 183, FP16/BF16: 366, FP8: 733, INT8: 733</td>
+<td style="text-align: left;">48 GB GDDR6 @ 0.86 TB/s</td>
+<td style="text-align: center;">96 MB</td>
+<td style="text-align: center;">423.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Google TPU v1</strong></td>
+<td style="text-align: center;">28nm (TSMC)</td>
+<td style="text-align: center;">75</td>
+<td style="text-align: left;">INT8: 92 TOPS（浮点格式不适用）</td>
+<td style="text-align: left;">8 GB DDR3 @ 0.034 TB/s</td>
+<td style="text-align: center;">28 MB</td>
+<td style="text-align: center;">不适用（2,705.9 INT8）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Google TPU v2</strong></td>
+<td style="text-align: center;">16nm (TSMC)</td>
+<td style="text-align: center;">280（板卡）</td>
+<td style="text-align: left;">BF16/FP16: 45 TFLOPs</td>
+<td style="text-align: left;">16 GB HBM @ 0.60 TB/s</td>
+<td style="text-align: center;">32 MB</td>
+<td style="text-align: center;">75.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Google TPU v3</strong></td>
+<td style="text-align: center;">16nm (TSMC)</td>
+<td style="text-align: center;">450（板卡）</td>
+<td style="text-align: left;">BF16/FP16: 123 TFLOPs</td>
+<td style="text-align: left;">32 GB HBM2 @ 0.90 TB/s</td>
+<td style="text-align: center;">32 MB</td>
+<td style="text-align: center;">136.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Google TPU v4</strong></td>
+<td style="text-align: center;">7nm N7 (TSMC)</td>
+<td style="text-align: center;">170</td>
+<td style="text-align: left;">BF16/FP16: 275, FP32: 275, INT8: 275</td>
+<td style="text-align: left;">32 GB HBM2 @ 1.20 TB/s</td>
+<td style="text-align: center;">48 MB</td>
+<td style="text-align: center;">229.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Google TPU v5e</strong></td>
+<td style="text-align: center;">7nm N7 (TSMC)</td>
+<td style="text-align: center;">140</td>
+<td style="text-align: left;">BF16/FP16: 197, FP8: 394, INT8: 394</td>
+<td style="text-align: left;">16 GB HBM2e @ 0.82 TB/s</td>
+<td style="text-align: center;">32 MB</td>
+<td style="text-align: center;">240.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Google TPU v5p</strong></td>
+<td style="text-align: center;">4nm 4N (TSMC)</td>
+<td style="text-align: center;">450</td>
+<td style="text-align: left;">BF16/FP16: 459, FP8: 918, INT8: 918</td>
+<td style="text-align: left;">95 GB HBM3 @ 2.76 TB/s</td>
+<td style="text-align: center;">96 MB</td>
+<td style="text-align: center;">166.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Google TPU v6e (Trillium)</strong></td>
+<td style="text-align: center;">4nm 4N (TSMC)</td>
+<td style="text-align: center;">400</td>
+<td style="text-align: left;">BF16/FP16: 926, FP8: 1,852, INT8: 1,852</td>
+<td style="text-align: left;">32 GB HBM3 @ 1.64 TB/s</td>
+<td style="text-align: center;">64 MB</td>
+<td style="text-align: center;">564.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Cerebras WSE-3</strong></td>
+<td style="text-align: center;">5nm N5 (TSMC)</td>
+<td style="text-align: center;">23,000</td>
+<td style="text-align: left;">FP16/BF16: 125,000, FP8: 250,000, INT8: 250,000</td>
+<td style="text-align: left;">44,000 GB SRAM @ 21,000 TB/s</td>
+<td style="text-align: center;">44,000 MB</td>
+<td style="text-align: center;">5.95</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>AMD Instinct MI300X</strong></td>
+<td style="text-align: center;">5nm+6nm 3D</td>
+<td style="text-align: center;">750</td>
+<td style="text-align: left;">FP64: 163.4, FP32: 163.4, TF32: 653.7, FP16/BF16: 1,307.4, FP8: 2,614.9</td>
+<td style="text-align: left;">192 GB HBM3 @ 5.30 TB/s</td>
+<td style="text-align: center;">256 MB</td>
+<td style="text-align: center;">246.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Intel Habana Gaudi 2</strong></td>
+<td style="text-align: center;">7nm N7 (TSMC)</td>
+<td style="text-align: center;">600</td>
+<td style="text-align: left;">FP32: 38.5, TF32: 154, FP16/BF16: 307, FP8: 614, INT8: 614</td>
+<td style="text-align: left;">96 GB HBM2e @ 2.45 TB/s</td>
+<td style="text-align: center;">48 MB</td>
+<td style="text-align: center;">125.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Intel Habana Gaudi 3</strong></td>
+<td style="text-align: center;">5nm N5 (TSMC)</td>
+<td style="text-align: center;">900</td>
+<td style="text-align: left;">FP32: 115, TF32: 460, FP16/BF16: 1,835, FP8: 3,670, INT8: 3,670</td>
+<td style="text-align: left;">128 GB HBM3e @ 3.70 TB/s</td>
+<td style="text-align: center;">96 MB</td>
+<td style="text-align: center;">495.9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="nvidia-v100" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="nvidia-v100">NVIDIA V100</h3>
+<div id="tbl-assumptions-v100" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[34,33,33]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-v100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2: <strong>NVIDIA V100（Volta）</strong>：峰值规格来自 NVIDIA 的架构白皮书和产品数据表 <span class="citation" data-cites="nvidia2017gpu nvidia2020v100datasheet">(<a href="#ref-nvidia2017gpu" role="doc-biblioref">NVIDIA Corporation 2017</a>, <a href="#ref-nvidia2020v100datasheet" role="doc-biblioref">2020b</a>)</span>。V100 引入了用于混合精度训练的 Tensor Core，并作为基准代际比较的参照。
+</figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-nvidia2020v100datasheet" class="csl-entry" role="listitem">
+NVIDIA Corporation. 2020b. <em><span>NVIDIA</span> <span>V100</span> Tensor Core <span>GPU</span> Datasheet</em>. NVIDIA product documentation.
+</div></div><div aria-describedby="tbl-assumptions-v100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP16 张量吞吐量（V100）</strong></td>
+<td style="text-align: center;">125</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>峰值 FP32 吞吐量（V100）</strong></td>
+<td style="text-align: center;">15.7</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>HBM 带宽（V100）</strong></td>
+<td style="text-align: center;">900</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>HBM 容量（V100）</strong></td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">GB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>TDP（V100）</strong></td>
+<td style="text-align: center;">300</td>
+<td style="text-align: center;">W</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="nvidia-t4" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="nvidia-t4">NVIDIA T4</h3>
+<div id="tbl-assumptions-t4" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[34,33,33]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-t4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3: <strong>NVIDIA T4（Turing）</strong>：峰值规格来自 NVIDIA Tesla T4 产品文档 <span class="citation" data-cites="nvidia2018t4">(<a href="#ref-nvidia2018t4" role="doc-biblioref">NVIDIA Corporation 2018</a>)</span>。70 W 的 TDP 使这款低功耗推理加速器成为衡量单次推理成本的有效参照。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-t4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP16 张量吞吐量（T4）</strong></td>
+<td style="text-align: center;">65</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>峰值 INT8 吞吐量（T4）</strong></td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">TOPS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>内存带宽（T4）</strong></td>
+<td style="text-align: center;">320</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>TDP（T4）</strong></td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">W</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="nvidia-a100" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="nvidia-a100">NVIDIA A100</h3>
+<p>Ampere 代际的规格（<a href="#tbl-assumptions-a100" class="quarto-xref">table&nbsp;4</a>）是本书大多数训练示例的参照。</p>
+<div id="tbl-assumptions-a100" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-a100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;4: <strong>NVIDIA A100（Ampere）</strong>：峰值规格来自 NVIDIA 的架构白皮书、80 GB 数据表和架构文章 <span class="citation" data-cites="NVIDIA2020 nvidia2021a10080gb choquette2021">(<a href="#ref-NVIDIA2020" role="doc-biblioref">NVIDIA Corporation 2020a</a>, <a href="#ref-nvidia2021a10080gb" role="doc-biblioref">2021</a>; <a href="#ref-choquette2021" role="doc-biblioref">Choquette et al. 2021</a>)</span>。A100 是训练示例中最常引用的加速器；80 GB HBM2e 和 TF32 Tensor Core 提供了内存容量与计算强度的参照。
+</figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-nvidia2021a10080gb" class="csl-entry" role="listitem">
+NVIDIA Corporation. 2021. <em><span>NVIDIA</span> <span>A100</span> Tensor Core <span>GPU</span> Datasheet</em>. NVIDIA product documentation.
+</div></div><div aria-describedby="tbl-assumptions-a100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP16 张量吞吐量（A100）</strong></td>
+<td style="text-align: center;">312</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>峰值 FP32 吞吐量（A100）</strong></td>
+<td style="text-align: center;">19.5</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 INT8 吞吐量（A100）</strong></td>
+<td style="text-align: center;">624</td>
+<td style="text-align: center;">TOPS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>峰值 TF32 吞吐量（A100）</strong></td>
+<td style="text-align: center;">156</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>HBM 带宽（A100）</strong></td>
+<td style="text-align: center;">2039</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>HBM 容量（A100）</strong></td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">GB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>TDP（A100）</strong></td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">W</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="nvidia-h100" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="nvidia-h100">NVIDIA H100</h3>
+<p>对于 Hopper 时代的估算，参考值包括 FP8 Tensor Core 和 Transformer Engine（<a href="#tbl-assumptions-h_h100" class="quarto-xref">table&nbsp;5</a>）。</p>
+<div id="tbl-assumptions-h_h100" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-h_h100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;5: <strong>NVIDIA H100（Hopper）</strong>：峰值规格来自 Hopper 架构概述 <span class="citation" data-cites="choquette2023">(<a href="#ref-choquette2023" role="doc-biblioref">Choquette 2023</a>)</span>。FP8 Tensor Core 和 Transformer Engine 是 Hopper 代际训练与模型服务估算的关键依据。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-h_h100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP16 张量吞吐量（H100）</strong></td>
+<td style="text-align: center;">989</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>峰值 FP32 CUDA 吞吐量（H100）</strong></td>
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP8 张量吞吐量（H100）</strong></td>
+<td style="text-align: center;">1979</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>峰值 INT8 吞吐量（H100）</strong></td>
+<td style="text-align: center;">1979</td>
+<td style="text-align: center;">TOPS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 TF32 吞吐量（H100）</strong></td>
+<td style="text-align: center;">494</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>HBM 带宽（H100）</strong></td>
+<td style="text-align: center;">3.35</td>
+<td style="text-align: center;">TB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>HBM 容量（H100）</strong></td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>TDP（H100）</strong></td>
+<td style="text-align: center;">700</td>
+<td style="text-align: center;">W</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="nvidia-b200" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="nvidia-b200">NVIDIA B200</h3>
+<p>前瞻性容量规划示例采用 Blackwell 代际的规格（<a href="#tbl-assumptions-b200" class="quarto-xref">table&nbsp;6</a>）。</p>
+<div id="tbl-assumptions-b200" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-b200-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;6: <strong>NVIDIA B200（Blackwell）</strong>：峰值规格来自 NVIDIA Blackwell 产品文档 <span class="citation" data-cites="nvidia2024blackwell">(<a href="#ref-nvidia2024blackwell" role="doc-biblioref">NVIDIA Corporation 2024</a>)</span>。前瞻性容量规划示例使用其 HBM3e 带宽和 FP8 吞吐量。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-b200-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP16 张量吞吐量（B200）</strong></td>
+<td style="text-align: center;">2250</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>峰值 FP8 张量吞吐量（B200）</strong></td>
+<td style="text-align: center;">4500</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP4 吞吐量（B200）</strong></td>
+<td style="text-align: center;">9000</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>HBM 带宽（B200）</strong></td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">TB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>HBM 容量（B200）</strong></td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>TDP（B200）</strong></td>
+<td style="text-align: center;">1000</td>
+<td style="text-align: center;">W</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="amd-instinct-mi300x" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="amd-instinct-mi300x">AMD Instinct MI300X</h3>
+<p>为与其他部分使用的 H100 级硬件进行比较，MI300X 的容量、带宽、吞吐量和功耗规格提供了跨厂商基准（<a href="#tbl-assumptions-mi300x" class="quarto-xref">table&nbsp;7</a>）。</p>
+<div id="tbl-assumptions-mi300x" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-mi300x-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;7: <strong>AMD Instinct MI300X</strong>：峰值规格来自 AMD Instinct MI300X 产品文档 <span class="citation" data-cites="amd2023mi300x">(<a href="#ref-amd2023mi300x" role="doc-biblioref">AMD 2023</a>)</span>。较大的 HBM 容量（192 GB）和较高的带宽使其成为内存受限工作负载中常用的跨厂商基准。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-mi300x-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP16 张量吞吐量（MI300X）</strong></td>
+<td style="text-align: center;">1307</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>HBM 带宽（MI300X）</strong></td>
+<td style="text-align: center;">5.3</td>
+<td style="text-align: center;">TB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>HBM 容量（MI300X）</strong></td>
+<td style="text-align: center;">192</td>
+<td style="text-align: center;">GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>TDP（MI300X）</strong></td>
+<td style="text-align: center;">750</td>
+<td style="text-align: center;">W</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="google-tpu-v4-和-v6e" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="google-tpu-v4-和-v6e">Google TPU v4 和 v6e</h3>
+<p>在比较不同加速器系列的训练经济性时，TPU 的指标提供了一种基于专用集成电路（ASIC）的替代方案（<a href="#tbl-assumptions-tpuv4" class="quarto-xref">table&nbsp;8</a>）。</p>
+<div id="tbl-assumptions-tpuv4" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-tpuv4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;8: <strong>Google TPU v4 和 v6e（Trillium）</strong>：TPU v4 的数值来自 Google 的 TPU 出版物 <span class="citation" data-cites="jouppi2023">(<a href="#ref-jouppi2023" role="doc-biblioref">Jouppi et al. 2023</a>)</span>，TPU v6e 的数值来自 Google Cloud 当前的 Trillium 规格页面 <span class="citation" data-cites="googleCloudTpuV6eDocs">(<a href="#ref-googleCloudTpuV6eDocs" role="doc-biblioref">Google Cloud 2026</a>)</span>。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-tpuv4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 BF16 吞吐量（TPU v4）</strong></td>
+<td style="text-align: center;">275</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>内存带宽（TPU v4）</strong></td>
+<td style="text-align: center;">1200</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 BF16 吞吐量（TPU v6e）</strong></td>
+<td style="text-align: center;">918</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>内存带宽（TPU v6e）</strong></td>
+<td style="text-align: center;">1638</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="cpu-和移动端边缘处理器" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="cpu-和移动端边缘处理器">CPU 和移动端／边缘处理器</h3>
+<p>边缘和移动端机器学习示例采用不同的性能基准（<a href="#tbl-assumptions-cpu-mobile" class="quarto-xref">table&nbsp;9</a>），与数据中心吞吐量形成鲜明对比，以说明部署目标为何会影响每一项设计决策。</p>
+<div id="tbl-assumptions-cpu-mobile" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-cpu-mobile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;9: <strong>CPU、移动端 NPU 和边缘设备规格</strong>：用于边缘和移动端示例的说明性参考值（并非某一单一 SKU 的厂商峰值）。与数据中心加速器的对比表明，部署目标为何会影响每一项设计决策。
+</figcaption>
+<div aria-describedby="tbl-assumptions-cpu-mobile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>峰值 FP32 吞吐量（参考 CPU）</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">TFLOP/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>DRAM 带宽（参考服务器）</strong></td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>参考 NPU 吞吐量（iPhone 15 Pro）</strong></td>
+<td style="text-align: center;">35</td>
+<td style="text-align: center;">TOPS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>内存带宽（iPhone 15 Pro）</strong></td>
+<td style="text-align: center;">51.2</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>TDP（移动设备，参考值）</strong></td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">W</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>功耗（边缘目标检测器，参考值）</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">W</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>电池容量（手机，参考值）</strong></td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">Wh</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="模型规格" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="模型规格">模型规格</h2>
+<p>以下是训练成本、内存占用和推理工作负载示例所依据的<strong>参考模型假设</strong>：参数量、单次推理的 FLOP 预算，以及已发表的训练规模参照值。已发表的模型规模依据原始论文、模型报告和官方模型文档 <span class="citation" data-cites="devlin2019 radford2019language brown2020language dubey2024llama he2016 sandler2018 ultralytics2023yolov8Docs">(<a href="#ref-devlin2019" role="doc-biblioref">Devlin et al. 2019</a>; <a href="#ref-radford2019language" role="doc-biblioref">Radford et al. 2019</a>; <a href="#ref-brown2020language" role="doc-biblioref">Brown et al. 2020</a>; <a href="#ref-dubey2024llama" role="doc-biblioref"><span class="nocase">Dubey et al.</span> 2024</a>; <a href="#ref-he2016" role="doc-biblioref">He et al. 2016</a>; <a href="#ref-sandler2018" role="doc-biblioref">Sandler et al. 2018</a>; <a href="#ref-ultralytics2023yolov8Docs" role="doc-biblioref">Ultralytics 2023</a>)</span>。推理 FLOP 预算由本书推导得出：BERT-Base 使用序列长度 128，ResNet-50 和 MobileNetV2 使用 224 <span class="math inline">\(\times\)</span> 224 图像，YOLOv8-Nano 使用 640 <span class="math inline">\(\times\)</span> 640 图像；视觉模型将每次乘加计为两次 FLOP。GPT-3 的训练 FLOP 数依据 <span class="citation" data-cites="brown2020language">(<a href="#ref-brown2020language" role="doc-biblioref">Brown et al. 2020</a>)</span>；25 天与 1,024 块 A100 的组合由本书编者设定。GPT-4 的参数量和训练 GPU 天数采用公开的第三方混合专家（MoE）估算值 <span class="citation" data-cites="semianalysisGPT4">(<a href="#ref-semianalysisGPT4" role="doc-biblioref">Patel and Wong 2023</a>)</span>，因为 GPT-4 技术报告未披露架构规模。章节在估算 GPT-3 规模的训练时间时，使用 <a href="#tbl-assumptions-models" class="quarto-xref">table&nbsp;10</a>。</p>
+<div class="no-row-height column-margin column-container"></div><div id="tbl-assumptions-models" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10: <strong>参考模型规格</strong>：计算示例所用的参数量和 FLOP 预算。BERT、GPT-2、GPT-3、Llama、ResNet-50、MobileNetV2 和 YOLOv8 各行采用原始论文、模型报告或官方模型文档 <span class="citation" data-cites="devlin2019 radford2019language brown2020language dubey2024llama he2016 sandler2018 ultralytics2023yolov8Docs">(<a href="#ref-devlin2019" role="doc-biblioref">Devlin et al. 2019</a>; <a href="#ref-radford2019language" role="doc-biblioref">Radford et al. 2019</a>; <a href="#ref-brown2020language" role="doc-biblioref">Brown et al. 2020</a>; <a href="#ref-dubey2024llama" role="doc-biblioref"><span class="nocase">Dubey et al.</span> 2024</a>; <a href="#ref-he2016" role="doc-biblioref">He et al. 2016</a>; <a href="#ref-sandler2018" role="doc-biblioref">Sandler et al. 2018</a>; <a href="#ref-ultralytics2023yolov8Docs" role="doc-biblioref">Ultralytics 2023</a>)</span>。GPT-4 各行引用 <span class="citation" data-cites="openai2023gpt4">(<a href="#ref-openai2023gpt4" role="doc-biblioref">OpenAI et al. 2023</a>)</span> 作为官方模型系列的来源，并引用 <span class="citation" data-cites="semianalysisGPT4">(<a href="#ref-semianalysisGPT4" role="doc-biblioref">Patel and Wong 2023</a>)</span> 作为本版所用公开 MoE 参数量和 GPU 天数估算值的来源。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-models-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>推理 FLOP 数（BERT-Base）</strong></td>
+<td style="text-align: center;">2.2e+10</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>参数量（BERT-Base）</strong></td>
+<td style="text-align: center;">1.1e+08</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>参数量（Llama 3 8B）</strong></td>
+<td style="text-align: center;">8.03e+09</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>隐藏维度（GPT-2）</strong></td>
+<td style="text-align: center;">1600</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>层数（GPT-2）</strong></td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>参数量（GPT-2）</strong></td>
+<td style="text-align: center;">1.5e+09</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>参数量（GPT-3）</strong></td>
+<td style="text-align: center;">1.75e+11</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>情景持续时间（GPT-3 规模）</strong></td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">d</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>参考训练 FLOP 数（GPT-3）</strong></td>
+<td style="text-align: center;">3.14e+23</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>参数量（GPT-4，公开 MoE 估算值）</strong></td>
+<td style="text-align: center;">1.76e+12</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>参考训练 GPU 天数（GPT-4）</strong></td>
+<td style="text-align: center;">2.5e+06</td>
+<td style="text-align: center;">GPU-days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>推理 FLOP 数（ResNet-50）</strong></td>
+<td style="text-align: center;">8.2e+09</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>参数量（ResNet-50）</strong></td>
+<td style="text-align: center;">2.56e+07</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>推理 FLOP 数（MobileNetV2）</strong></td>
+<td style="text-align: center;">6e+08</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>参数量（MobileNetV2）</strong></td>
+<td style="text-align: center;">3.50487e+06</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>推理 FLOP 数（YOLOv8-Nano）</strong></td>
+<td style="text-align: center;">8.7e+09</td>
+<td style="text-align: center;">flop</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="训练内存约定" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="训练内存约定">训练内存约定</h2>
+<p>训练内存的粗略估算采用粗略估算提示框及若干训练章节中使用的混合精度 Adam 存储模型：BF16 权重、BF16 梯度、FP32 主权重，以及 Adam 的一阶矩和二阶矩缓冲区（每个参数合计 16 字节）。这是本书的约定，而非实测的硬件常数。BF16 数据通路遵循既有的 BFLOAT16 混合精度实践 <span class="citation" data-cites="kalamkar2019">(<a href="#ref-kalamkar2019" role="doc-biblioref">Kalamkar et al. 2019</a>)</span>；FP32 主权重模式沿用早期 FP16 研究 <span class="citation" data-cites="micikevicius2017mixed nvidia_tensors_fp16_2017">(<a href="#ref-micikevicius2017mixed" role="doc-biblioref">Micikevicius et al. 2017</a>; <a href="#ref-nvidia_tensors_fp16_2017" role="doc-biblioref">NVIDIA 2017</a>)</span>，Adam 的一阶矩和二阶矩缓冲区则依据 <span class="citation" data-cites="kingma2014adam">(<a href="#ref-kingma2014adam" role="doc-biblioref">Kingma and Ba 2015</a>)</span>。<a href="#tbl-assumptions-training-memory" class="quarto-xref">Table&nbsp;11</a> 列出了各组成部分的字节宽度；将每个参数的字节数（混合精度 Adam）乘以参数量，即可得到不含激活值的训练状态内存占用。</p>
+<div class="no-row-height column-margin column-container"></div><div id="tbl-assumptions-training-memory" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-training-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;11: <strong>训练内存约定</strong>：混合精度 Adam 中每个参数的存储开销（不计激活值时为 2 + 2 + 12 = 16 字节）。这是本书用于粗略估算的约定；有关混合精度训练的背景，参见 <span class="citation" data-cites="nvidia_tensors_fp16_2017">(<a href="#ref-nvidia_tensors_fp16_2017" role="doc-biblioref">NVIDIA 2017</a>)</span>。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-training-memory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>权重/梯度位宽（BF16）</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">bytes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>主权重位宽（FP32）</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">bytes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>每个参数的主权重 + Adam 状态（FP32）</strong></td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">bytes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>每个参数的字节数（混合精度 Adam）</strong></td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">bytes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>硬件和模型假设确定了<em>什么</em>在何处运行；<strong>能耗假设</strong> 则从运算和内存访问层面确定设计在散热和经济上是否可行。</p>
+</section>
+<section id="能耗常数" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="能耗常数">能耗常数</h2>
+<p>Horowitz 对 45 nm 工艺下算术运算和 32 位 DRAM 访问的估计 <span class="citation" data-cites="horowitz2014">(<a href="#ref-horowitz2014" role="doc-biblioref">Horowitz 2014</a>)</span>，以及本书为寄存器和 SRAM 访问、MobileNetV2 推理及 5G 传输提供的示例参考值，共同构成了本书效率比较的依据，但这些值并非与工艺无关。<a href="#tbl-assumptions-energy" class="quarto-xref">Table&nbsp;12</a> 列出了从寄存器到 DRAM 的访问能耗层级。这一层级量化说明了数据复用为何在内核设计中起主导作用。</p>
+<div class="no-row-height column-margin column-container"></div><div id="tbl-assumptions-energy" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-energy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;12: <strong>每次运算与访问的能耗</strong>：算术运算和 32 位 DRAM 访问的估计采用 Horowitz 的 45 nm 模型 <span class="citation" data-cites="horowitz2014">(<a href="#ref-horowitz2014" role="doc-biblioref">Horowitz 2014</a>)</span>，每字节 DRAM 能耗一行由该估计推导而来。寄存器、SRAM、MobileNetV2 和 5G 各行是本书使用的示例参考值。一次能耗为 0.1 pJ 的寄存器访问与一次能耗为 640 pJ 的 DRAM 访问之间约 6,400× 的倍数差距，解释了数据复用为何在机器学习内核优化中起主导作用。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-energy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>寄存器访问能耗</strong></td>
+<td style="text-align: center;">0.1</td>
+<td style="text-align: center;">pJ</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>L1 SRAM 访问能耗</strong></td>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">pJ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>L2 SRAM 访问能耗</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">pJ</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>DRAM 访问能耗（32 位）</strong></td>
+<td style="text-align: center;">640</td>
+<td style="text-align: center;">pJ</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>DRAM 访问能耗（每字节）</strong></td>
+<td style="text-align: center;">160</td>
+<td style="text-align: center;">pJ/byte</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>FP16 乘法能耗（45 nm）</strong></td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: center;">pJ/multiply</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>FP32 乘法能耗（45 nm）</strong></td>
+<td style="text-align: center;">3.7</td>
+<td style="text-align: center;">pJ/multiply</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>INT8 乘法能耗（45 nm）</strong></td>
+<td style="text-align: center;">0.2</td>
+<td style="text-align: center;">pJ/multiply</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>MobileNetV2 推理能耗（参考值）</strong></td>
+<td style="text-align: center;">0.1</td>
+<td style="text-align: center;">mJ</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>每 MB 的 5G 传输能耗</strong></td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">mJ/MB</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<section id="精度与算术运算能耗层级" class="level3 unnumbered page-columns page-full">
+<h3 class="unnumbered anchored" data-anchor-id="精度与算术运算能耗层级">精度与算术运算能耗层级</h3>
+<p><a href="#tbl-appdx-assumptions-energy-hierarchy" class="quarto-xref">table&nbsp;13</a> 中的算术运算能耗层级比较了现代 7nm、5nm 和 3nm 硅工艺节点上，不同浮点、张量和整数精度下加法与乘法每次运算所需的能量（<span class="math inline">\(E_{\text{op}}\)</span>，单位为 pJ/op）。</p>
+<div id="tbl-appdx-assumptions-energy-hierarchy" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[20,22,22,22,14]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-appdx-assumptions-energy-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;13: <strong>精度与算术运算能耗层级</strong>：不同数据格式（FP64、FP32、TF32、FP16、BF16、FP8 E4M3/E5M2、INT32、INT8、INT4）和半导体工艺节点（7nm、5nm、3nm）下，加法与乘法每次运算的能耗（<span class="math inline">\(E_{\text{op}}\)</span>，单位为 pJ/op）。能耗的缩放关系体现了乘法器对位宽的二次依赖 <span class="math inline">\(O(b^2)\)</span>，以及加法器对位宽的线性依赖 <span class="math inline">\(O(b)\)</span> <span class="citation" data-cites="horowitz2014 dally2021">(<a href="#ref-horowitz2014" role="doc-biblioref">Horowitz 2014</a>; <a href="#ref-dally2021" role="doc-biblioref">Dally et al. 2021</a>)</span>。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-appdx-assumptions-energy-hierarchy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>精度/数据格式</strong></th>
+<th style="text-align: center;"><strong>7nm 节点（<span class="math inline">\(E_{\text{op}}\)</span> pJ）</strong></th>
+<th style="text-align: center;"><strong>5nm 节点（<span class="math inline">\(E_{\text{op}}\)</span> pJ）</strong></th>
+<th style="text-align: center;"><strong>3nm 节点（<span class="math inline">\(E_{\text{op}}\)</span> pJ）</strong></th>
+<th style="text-align: center;"><strong>相对 FP32 的能耗比（3nm）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>FP64（64 位浮点数）</strong></td>
+<td style="text-align: center;">加法: 0.90/乘法: 2.50</td>
+<td style="text-align: center;">加法: 0.58/乘法: 1.62</td>
+<td style="text-align: center;">加法: 0.38/乘法: 1.05</td>
+<td style="text-align: center;">2.23<span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>FP32（32 位浮点数）</strong></td>
+<td style="text-align: center;">加法: 0.40/乘法: 1.10</td>
+<td style="text-align: center;">加法: 0.26/乘法: 0.72</td>
+<td style="text-align: center;">加法: 0.17/乘法: 0.47</td>
+<td style="text-align: center;">1.00<span class="math inline">\(\times\)</span>（基准）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>TF32（19 位 TensorFloat）</strong></td>
+<td style="text-align: center;">加法: 0.28/乘法: 0.65</td>
+<td style="text-align: center;">加法: 0.18/乘法: 0.42</td>
+<td style="text-align: center;">加法: 0.12/乘法: 0.27</td>
+<td style="text-align: center;">0.57<span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>FP16（16 位 IEEE 浮点数）</strong></td>
+<td style="text-align: center;">加法: 0.20/乘法: 0.45</td>
+<td style="text-align: center;">加法: 0.13/乘法: 0.29</td>
+<td style="text-align: center;">加法: 0.08/乘法: 0.19</td>
+<td style="text-align: center;">0.40<span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>BF16（16 位 Bfloat16）</strong></td>
+<td style="text-align: center;">加法: 0.18/乘法: 0.40</td>
+<td style="text-align: center;">加法: 0.12/乘法: 0.26</td>
+<td style="text-align: center;">加法: 0.08/乘法: 0.17</td>
+<td style="text-align: center;">0.36<span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>FP8（E4M3/E5M2）</strong></td>
+<td style="text-align: center;">加法: 0.09/乘法: 0.20</td>
+<td style="text-align: center;">加法: 0.06/乘法: 0.13</td>
+<td style="text-align: center;">加法: 0.04/乘法: 0.08</td>
+<td style="text-align: center;">0.17<span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>INT32（32 位整数）</strong></td>
+<td style="text-align: center;">加法: 0.10/乘法: 0.80</td>
+<td style="text-align: center;">加法: 0.06/乘法: 0.52</td>
+<td style="text-align: center;">加法: 0.04/乘法: 0.34</td>
+<td style="text-align: center;">0.72<span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>INT8（8 位整数）</strong></td>
+<td style="text-align: center;">加法: 0.03/乘法: 0.20</td>
+<td style="text-align: center;">加法: 0.02/乘法: 0.13</td>
+<td style="text-align: center;">加法: 0.013/乘法: 0.085</td>
+<td style="text-align: center;">0.18<span class="math inline">\(\times\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>INT4（4 位整数）</strong></td>
+<td style="text-align: center;">加法: 0.010/乘法: 0.060</td>
+<td style="text-align: center;">加法: 0.006/乘法: 0.039</td>
+<td style="text-align: center;">加法: 0.004/乘法: 0.025</td>
+<td style="text-align: center;">0.053<span class="math inline">\(\times\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>这些能耗成本体现在芯片层面，但实际机器学习系统还需要通过互连搬移数据，包括加速器之间、机架之间以及通过广域网传输数据。下一节列出各章估算通信开销时使用的带宽假设。</p>
+</section>
+</section>
+<section id="互连与网络带宽" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="互连与网络带宽">互连与网络带宽</h2>
+<p>这些<strong>带宽假设</strong> 适用于各章分析梯度同步、流水线气泡、检查点 I/O 或跨数据中心延迟的场景。NVLink 和 PCIe 的速率依据加速器产品文档 <span class="citation" data-cites="nvidia2017gpu NVIDIA2020 choquette2023">(<a href="#ref-nvidia2017gpu" role="doc-biblioref">NVIDIA Corporation 2017</a>, <a href="#ref-NVIDIA2020" role="doc-biblioref">2020a</a>; <a href="#ref-choquette2023" role="doc-biblioref">Choquette 2023</a>)</span>；InfiniBand 架构规范为该协议族提供依据 <span class="citation" data-cites="infiniband2000spec">(<a href="#ref-infiniband2000spec" role="doc-biblioref">InfiniBand Trade Association 2000</a>)</span>，而当前的高速产品系列和以太网路线图则为现代链路速率示例提供依据 <span class="citation" data-cites="nvidia2026quantumX800 ethernetAlliance2025roadmap">(<a href="#ref-nvidia2026quantumX800" role="doc-biblioref">NVIDIA 2026</a>; <a href="#ref-ethernetAlliance2025roadmap" role="doc-biblioref">Ethernet Alliance 2025</a>)</span>；光纤中光速所确定的下限来自物理恒等关系。<a href="#tbl-assumptions-interconnect" class="quarto-xref">Table&nbsp;14</a> 列出了 NVLink、InfiniBand、PCIe、非易失性内存快速接口（NVMe）和以太网的速率，以及光在光纤中的传播速度。</p>
+<div class="no-row-height column-margin column-container"></div><div id="tbl-assumptions-interconnect" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-interconnect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;14: <strong>互连与网络带宽</strong>：各链路系列的带宽依据厂商规格、InfiniBand 架构规范以及当前的产品/路线图文档 <span class="citation" data-cites="infiniband2000spec nvidia2026quantumX800 ethernetAlliance2025roadmap">(<a href="#ref-infiniband2000spec" role="doc-biblioref">InfiniBand Trade Association 2000</a>; <a href="#ref-nvidia2026quantumX800" role="doc-biblioref">NVIDIA 2026</a>; <a href="#ref-ethernetAlliance2025roadmap" role="doc-biblioref">Ethernet Alliance 2025</a>)</span>。NVLink 速率为双向聚合速率；其他链路速率为每个方向的标称速率。光纤中的光速决定了跨数据中心延迟的下限。
+</figcaption>
+<div class="no-row-height column-margin column-container"></div><div aria-describedby="tbl-assumptions-interconnect-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVLink 带宽（V100）</strong></td>
+<td style="text-align: center;">300</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVLink 带宽（A100）</strong></td>
+<td style="text-align: center;">600</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVLink 带宽（H100）</strong></td>
+<td style="text-align: center;">900</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>InfiniBand HDR 链路速率</strong></td>
+<td style="text-align: center;">200</td>
+<td style="text-align: center;">Gb/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>InfiniBand NDR 链路速率</strong></td>
+<td style="text-align: center;">400</td>
+<td style="text-align: center;">Gb/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>InfiniBand XDR 链路速率</strong></td>
+<td style="text-align: center;">800</td>
+<td style="text-align: center;">Gb/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>PCIe Gen4 x16 速率</strong></td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>PCIe Gen5 x16 速率</strong></td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVMe 顺序读取带宽</strong></td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">GB/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>10 GbE 链路速率</strong></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">Gb/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>100 GbE 链路速率</strong></td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">Gb/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>光纤中的光速</strong></td>
+<td style="text-align: center;">200000</td>
+<td style="text-align: center;">km/s</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<section id="互连与网络互连结构物理规格表" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="互连与网络互连结构物理规格表">互连与网络互连结构物理规格表</h3>
+<p><a href="#tbl-appdx-assumptions-interconnect-matrix" class="quarto-xref">table&nbsp;15</a> 中的物理规格表详细列出了主机总线、加速器互连、网络互连结构和缓存一致性接口的带宽、延迟、成帧方式、直接内存访问（DMA）支持以及每比特能耗。</p>
+<div id="tbl-appdx-assumptions-interconnect-matrix" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[18,20,14,18,20,10]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-appdx-assumptions-interconnect-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;15: <strong>互连与网络互连结构物理规格表</strong>：涵盖主机总线、GPU 互连、交换机、网络互连结构和一致性接口（PCIe Gen3–Gen7、NVLink 1–5、NVSwitch 1–4、InfiniBand EDR–XDR、RoCE v2、CXL 1.1–3.1）的综合物理规格表。各列列举了单向与聚合带宽、PHY/链路延迟、线路编码/成帧方式、DMA 和 GPUDirect 能力，以及物理层能耗成本（<span class="math inline">\(E_{\text{link}}\)</span>，单位为 pJ/bit）。
+</figcaption>
+<div aria-describedby="tbl-appdx-assumptions-interconnect-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>总线/互连标准</strong></th>
+<th style="text-align: left;"><strong>单向与聚合带宽</strong></th>
+<th style="text-align: center;"><strong>延迟</strong></th>
+<th style="text-align: left;"><strong>编码/成帧</strong></th>
+<th style="text-align: left;"><strong>DMA/GPUDirect 支持</strong></th>
+<th style="text-align: center;"><strong>能耗成本（<span class="math inline">\(E_{\text{link}}\)</span>）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>PCIe Gen3 (x16)</strong></td>
+<td style="text-align: left;">15.75 GB/s 单向/31.5 GB/s 聚合</td>
+<td style="text-align: center;">400–500 ns</td>
+<td style="text-align: left;">128b/130b NRZ</td>
+<td style="text-align: left;">PCIe P2P, GPUDirect RDMA</td>
+<td style="text-align: center;">14.0 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>PCIe Gen4 (x16)</strong></td>
+<td style="text-align: left;">31.50 GB/s 单向/63.0 GB/s 聚合</td>
+<td style="text-align: center;">250–400 ns</td>
+<td style="text-align: left;">128b/130b NRZ</td>
+<td style="text-align: left;">PCIe P2P, GPUDirect RDMA</td>
+<td style="text-align: center;">10.0 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>PCIe Gen5 (x16)</strong></td>
+<td style="text-align: left;">63.00 GB/s 单向/126.0 GB/s 聚合</td>
+<td style="text-align: center;">150–250 ns</td>
+<td style="text-align: left;">128b/130b NRZ</td>
+<td style="text-align: left;">PCIe P2P, GPUDirect RDMA, CXL 1.1/2.0</td>
+<td style="text-align: center;">8.0 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>PCIe Gen6 (x16)</strong></td>
+<td style="text-align: left;">126.00 GB/s 单向/252.0 GB/s 聚合</td>
+<td style="text-align: center;">100–150 ns</td>
+<td style="text-align: left;">PAM4（256B 微片）</td>
+<td style="text-align: left;">PCIe P2P, GPUDirect RDMA, CXL 3.0/3.1</td>
+<td style="text-align: center;">6.0 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>PCIe Gen7 (x16)</strong></td>
+<td style="text-align: left;">252.00 GB/s 单向/504.0 GB/s 聚合</td>
+<td style="text-align: center;">&lt;100 ns</td>
+<td style="text-align: left;">PAM4（512B 微片）</td>
+<td style="text-align: left;">PCIe P2P, GPUDirect RDMA, CXL 3.1+</td>
+<td style="text-align: center;">4.5 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVLink 1 (P100)</strong></td>
+<td style="text-align: left;">20 GB/s 单向/40 GB/s 聚合（每链路）</td>
+<td style="text-align: center;">200–300 ns</td>
+<td style="text-align: left;">NRZ (20 Gb/s)</td>
+<td style="text-align: left;">GPUDirect P2P/RDMA</td>
+<td style="text-align: center;">10.0 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVLink 2 (V100)</strong></td>
+<td style="text-align: left;">25 GB/s 单向/50 GB/s 聚合（每链路）</td>
+<td style="text-align: center;">150–200 ns</td>
+<td style="text-align: left;">NRZ (25.78 Gb/s)</td>
+<td style="text-align: left;">GPUDirect P2P/RDMA</td>
+<td style="text-align: center;">8.0 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVLink 3 (A100)</strong></td>
+<td style="text-align: left;">25 GB/s 单向/50 GB/s 聚合（每链路）</td>
+<td style="text-align: center;">100–150 ns</td>
+<td style="text-align: left;">NRZ (50 Gb/s)</td>
+<td style="text-align: left;">GPUDirect P2P/RDMA</td>
+<td style="text-align: center;">6.5 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVLink 4 (H100)</strong></td>
+<td style="text-align: left;">25 GB/s 单向/50 GB/s 聚合（每链路）</td>
+<td style="text-align: center;">80–100 ns</td>
+<td style="text-align: left;">PAM4 (100 Gb/s)</td>
+<td style="text-align: left;">GPUDirect P2P, SHARP 聚合</td>
+<td style="text-align: center;">4.5 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVLink 5 (B200)</strong></td>
+<td style="text-align: left;">50 GB/s 单向/100 GB/s 聚合（每链路）</td>
+<td style="text-align: center;">60–80 ns</td>
+<td style="text-align: left;">PAM4 (200 Gb/s)</td>
+<td style="text-align: left;">GPUDirect P2P, NVLink 网络卸载</td>
+<td style="text-align: center;">3.5 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVSwitch 1 (Volta)</strong></td>
+<td style="text-align: left;">每芯片聚合带宽 900 GB/s</td>
+<td style="text-align: center;">~100 ns</td>
+<td style="text-align: left;">NRZ</td>
+<td style="text-align: left;">硬件 P2P 交叉开关路由</td>
+<td style="text-align: center;">8.5 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVSwitch 2 (Ampere)</strong></td>
+<td style="text-align: left;">每芯片聚合带宽 2.4 TB/s</td>
+<td style="text-align: center;">~90 ns</td>
+<td style="text-align: left;">NRZ</td>
+<td style="text-align: left;">硬件 P2P 交叉开关, SHARP v2</td>
+<td style="text-align: center;">6.5 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>NVSwitch 3 (Hopper)</strong></td>
+<td style="text-align: left;">每芯片聚合带宽 3.2 TB/s</td>
+<td style="text-align: center;">~70 ns</td>
+<td style="text-align: left;">PAM4</td>
+<td style="text-align: left;">SHARP v3 网内计算</td>
+<td style="text-align: center;">4.5 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>NVSwitch 4 (Blackwell)</strong></td>
+<td style="text-align: left;">每芯片聚合带宽 14.4 TB/s</td>
+<td style="text-align: center;">~50 ns</td>
+<td style="text-align: left;">PAM4</td>
+<td style="text-align: left;">SHARP v4, FP8 归约引擎</td>
+<td style="text-align: center;">3.2 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>InfiniBand EDR</strong></td>
+<td style="text-align: left;">100 Gbps（12.5 GB/s 单向）</td>
+<td style="text-align: center;">~0.50 <span class="math inline">\(\mu\text{s}\)</span> (500 ns)</td>
+<td style="text-align: left;">64b/66b NRZ</td>
+<td style="text-align: left;">GPUDirect RDMA（Verbs）</td>
+<td style="text-align: center;">15.0 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>InfiniBand HDR</strong></td>
+<td style="text-align: left;">200 Gbps（25.0 GB/s 单向）</td>
+<td style="text-align: center;">~0.60 <span class="math inline">\(\mu\text{s}\)</span> (600 ns)</td>
+<td style="text-align: left;">64b/66b PAM4/NRZ</td>
+<td style="text-align: left;">GPUDirect RDMA, SHARP v2</td>
+<td style="text-align: center;">10.0 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>InfiniBand NDR</strong></td>
+<td style="text-align: left;">400 Gbps（50.0 GB/s 单向）</td>
+<td style="text-align: center;">~0.50 <span class="math inline">\(\mu\text{s}\)</span> (500 ns)</td>
+<td style="text-align: left;">256b/257b PAM4</td>
+<td style="text-align: left;">GPUDirect RDMA, SHARP v3</td>
+<td style="text-align: center;">7.0 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>InfiniBand XDR</strong></td>
+<td style="text-align: left;">800 Gbps（100.0 GB/s 单向）</td>
+<td style="text-align: center;">~0.40 <span class="math inline">\(\mu\text{s}\)</span> (400 ns)</td>
+<td style="text-align: left;">PAM4（200G/通道 微片）</td>
+<td style="text-align: left;">GPUDirect RDMA, SHARP v4</td>
+<td style="text-align: center;">5.0 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>RoCE v2 以太网</strong></td>
+<td style="text-align: left;">100–800 Gbps（12.5–100 GB/s 单向）</td>
+<td style="text-align: center;">1.0–2.5 <span class="math inline">\(\mu\text{s}\)</span></td>
+<td style="text-align: left;">NRZ/PAM4 (802.3)</td>
+<td style="text-align: left;">GPUDirect RDMA (RoCEv2 UDP/IP)</td>
+<td style="text-align: center;">8.0–12.0 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CXL 1.1</strong></td>
+<td style="text-align: left;">63 GB/s 单向/126 GB/s 聚合 (x16)</td>
+<td style="text-align: center;">~200 ns</td>
+<td style="text-align: left;">128b/130b NRZ</td>
+<td style="text-align: left;">cxl.io, cxl.cache, cxl.mem</td>
+<td style="text-align: center;">8.0 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>CXL 2.0</strong></td>
+<td style="text-align: left;">63 GB/s 单向/126 GB/s 聚合 (x16)</td>
+<td style="text-align: center;">~180 ns</td>
+<td style="text-align: left;">128b/130b NRZ</td>
+<td style="text-align: left;">SLD/MLD 内存池化</td>
+<td style="text-align: center;">7.5 pJ/bit</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>CXL 3.0</strong></td>
+<td style="text-align: left;">126 GB/s 单向/252 GB/s 聚合 (x16)</td>
+<td style="text-align: center;">~120 ns</td>
+<td style="text-align: left;">256B 微片 PAM4</td>
+<td style="text-align: left;">P2P 内存池化与互连结构交换机</td>
+<td style="text-align: center;">5.5 pJ/bit</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>CXL 3.1</strong></td>
+<td style="text-align: left;">126 GB/s 单向/252 GB/s 聚合 (x16)</td>
+<td style="text-align: center;">~110 ns</td>
+<td style="text-align: left;">256B 微片 PAM4</td>
+<td style="text-align: left;">全局集成内存, TEE</td>
+<td style="text-align: center;">5.0 pJ/bit</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="经济常数" class="level2 unnumbered page-columns page-full">
+<h2 class="unnumbered anchored" data-anchor-id="经济常数">经济常数</h2>
+<p>这些<strong>价格假设</strong> 为 <a href="#tbl-assumptions-economic" class="quarto-xref">table&nbsp;16</a> 中总拥有成本（TCO）和能源成本的粗略估算提供基础。它们是用于比率分析的示例性费率，处于超大规模云服务商的量级（其思路与 <span class="citation" data-cites="patterson2021carbon">(<a href="#ref-patterson2021carbon" role="doc-biblioref">Patterson et al. 2021</a>)</span> 中的碳核算示例类似），并非针对特定地区或合同的报价。当绝对价格起主导作用时，应以本地数值替换这些参考值。</p>
+<div class="no-row-height column-margin column-container"></div><div id="tbl-assumptions-economic" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,20,30]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-economic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;16: <strong>经济假设</strong>：用于 TCO 粗略估算的示例性云端电价和出站流量费率（2024–2025 年的数量级）。本地部署的成本结构有所不同；相对量级可为设计权衡提供指导。
+</figcaption>
+<div aria-describedby="tbl-assumptions-economic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 20%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>云端电价</strong></td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">dollar/kWh</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>云端每 GB 出站流量价格</strong></td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">dollar/GB</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>经济常数确定了单位计算和数据传输的价格，但如果不了解所涉及的规模，这些常数就意义有限。生产环境中的机器学习系统每天处理数百万至数十亿次请求——这些数字如此庞大，以至于缺少具体参照就很难形成直观认识。</p>
+</section>
+<section id="规模参考" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="规模参考">规模参考</h2>
+<p><a href="#tbl-assumptions-scale" class="quarto-xref">table&nbsp;17</a> 中的这些<strong>规模假设</strong> 为容量规划示例中的“多大才算大？”提供参照，给出电子邮件和搜索量、自动驾驶车辆传感器流以及标准 1080p 和 4K 视频格式的示例性数量级基准。它们是量级参考值，并非针对特定年份经审计的统计数据。</p>
+<div id="tbl-assumptions-scale" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[60,20,20]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-scale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;17: <strong>生产规模与数据速率参考</strong>：示例性工作负载和传感器速率参考值，以及标准 1080p 和 UHD 4K 视频参数。
+</figcaption>
+<div aria-describedby="tbl-assumptions-scale-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 60%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>假设</strong></th>
+<th style="text-align: center;"><strong>数值</strong></th>
+<th style="text-align: center;"><strong>单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Gmail 每日邮件量</strong></td>
+<td style="text-align: center;">1.21e+11</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Google 每日搜索量</strong></td>
+<td style="text-align: center;">8.5e+09</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Waymo 传感器数据速率（低值）</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">TB/h</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Waymo 传感器数据速率（高值）</strong></td>
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">TB/h</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>1080p 帧宽度</strong></td>
+<td style="text-align: center;">1920</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>1080p 帧高度</strong></td>
+<td style="text-align: center;">1080</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>4K 帧宽度</strong></td>
+<td style="text-align: center;">3840</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4K 帧高度</strong></td>
+<td style="text-align: center;">2160</td>
+<td style="text-align: center;">-</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>每个 RGB 像素的字节数</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">bytes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>视频帧率（标准）</strong></td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">Hz</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>上述假设采用统一的单位约定：十进制数据前缀、彼此区分的 FLOPs 和 FLOP/s 量，以及下一节定义的别名。</p>
+</section>
+<section id="单位约定" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="单位约定">单位约定</h2>
+<p><a href="#tbl-assumptions-units" class="quarto-xref">Table&nbsp;18</a> 明确了本书所有定量示例采用的单位约定。每一行给出 <code>1 alias</code> <span class="math inline">\(=\)</span> <span class="math inline">\(k\)</span> <code>base</code> 中的乘数 <span class="math inline">\(k\)</span>。数据前缀采用十进制 SI（<span class="math inline">\(\mathrm{KB} = 10^3\)</span> 字节，而非 1024 字节）。二进制 IEC 存储前缀出现在少数专门讨论存储的内容中，但此处未予列出，因为本书多数集群规模估算采用十进制 KB/GB/TB。吞吐量（FLOP/s、GB/s）将这些别名与时间结合；将量纲不相容的量相加（将字节数与 FLOP/s 相加）是粗略估算中的类别错误，而非单位换算。</p>
+<p>硬件容量是唯一有意保留的例外。厂商使用十进制符号标注内存，但实际交付的是二进制数量。标称为 80 GB 的加速器提供 <span class="math inline">\(80 \times 2^{30}\)</span> 字节，而标称配备 512 KB SRAM 的微控制器提供 <span class="math inline">\(512 \times 2^{10}\)</span> 字节。本书同时保留厂商给出的数值和单位标注，因此，写作 80 GB 的容量是标称值，而非将其换算为十进制后的结果。所有其他数据量，包括模型占用空间、激活值大小和传输量，均采用上述十进制前缀。当计算示例从设备容量中减去计算所得的占用空间时，两项均以十进制表示，使页面上给出的运算能够由读者复现。</p>
+<div id="tbl-assumptions-units" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[33,34,33]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumptions-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;18: <strong>单位约定</strong>：十进制 SI 别名及换算因子（本书用于粗略估算的约定）。FLOP/s 和 GB/s 等吞吐量形式采用相同约定，将工作量或数据量除以时间。
+</figcaption>
+<div aria-describedby="tbl-assumptions-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 34%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>别名</strong></th>
+<th style="text-align: center;"><strong>乘数</strong></th>
+<th style="text-align: center;"><strong>基本单位</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>byte</code></strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">byte</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>KB</code></strong></td>
+<td style="text-align: center;">1000</td>
+<td style="text-align: center;">byte</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>MB</code></strong></td>
+<td style="text-align: center;">1e+06</td>
+<td style="text-align: center;">byte</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>GB</code></strong></td>
+<td style="text-align: center;">1e+09</td>
+<td style="text-align: center;">byte</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>TB</code></strong></td>
+<td style="text-align: center;">1e+12</td>
+<td style="text-align: center;">byte</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>PB</code></strong></td>
+<td style="text-align: center;">1e+15</td>
+<td style="text-align: center;">byte</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>flop</code></strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>GFLOPs</code></strong></td>
+<td style="text-align: center;">1e+09</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>TFLOPs</code></strong></td>
+<td style="text-align: center;">1e+12</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>ZFLOPs</code></strong></td>
+<td style="text-align: center;">1e+21</td>
+<td style="text-align: center;">flop</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>param</code></strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>Mparam</code></strong></td>
+<td style="text-align: center;">1e+06</td>
+<td style="text-align: center;">param</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>Gbps</code></strong></td>
+<td style="text-align: center;">1e+09</td>
+<td style="text-align: center;">bit/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>NS</code></strong></td>
+<td style="text-align: center;"><span class="math inline">\(10^{-9}\)</span></td>
+<td style="text-align: center;">second</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>US</code></strong></td>
+<td style="text-align: center;"><span class="math inline">\(10^{-6}\)</span></td>
+<td style="text-align: center;">second</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>MS</code></strong></td>
+<td style="text-align: center;"><span class="math inline">\(10^{-3}\)</span></td>
+<td style="text-align: center;">second</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>second</code></strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">second</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>hour</code></strong></td>
+<td style="text-align: center;">3600</td>
+<td style="text-align: center;">second</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>day</code></strong></td>
+<td style="text-align: center;">86400</td>
+<td style="text-align: center;">second</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>joule</code></strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">joule</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong><code>watt</code></strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">watt</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>meter</code></strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">meter</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>每项假设还附有来源记录，使读者能够将数值追溯至其原始来源。</p>
+</section>
+<section id="sec-appdx-assumption-provenance" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-appdx-assumption-provenance">假设来源</h2>
+<p><a href="#tbl-assumption-provenance-catalog" class="quarto-xref">Table&nbsp;19</a> 按证据类别对本附录的定量输入进行分组，并列明各组所依据的主要参考文献。厂商规格和标准定义公开发布的上限，经过同行评审的测量提供经验参考，而明确标注的编者设定情景则在不存在长期有效的通用常数时提供示例数值。这一区分使读者能够判断输入的证据分量、更新具有时效性的数值，并采用适当的本地替代值复现估算。</p>
+<div id="tbl-assumption-provenance-catalog" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-tbl-colwidths="[26,28,46]">
+<figure class="quarto-float quarto-float-tbl figure page-columns page-full">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-assumption-provenance-catalog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;19: <strong>假设来源目录</strong>：附录章节与来源类别及参考文献之间的快速对照。
+</figcaption>
+<div aria-describedby="tbl-assumption-provenance-catalog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca" class="page-columns page-full">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 28%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>附录章节</strong></th>
+<th style="text-align: left;"><strong>来源类型</strong></th>
+<th style="text-align: left;"><strong>主要参考文献</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>加速器规格</strong></td>
+<td style="text-align: left;">厂商数据手册中的峰值；编者设定的 CPU/移动端参考值；主规格矩阵（<a href="#tbl-appdx-assumptions-accelerator-matrix" class="quarto-xref">table&nbsp;1</a>）</td>
+<td style="text-align: left;"><span class="citation" data-cites="nvidia2017gpu nvidia2018t4 NVIDIA2020 choquette2021 choquette2023 nvidia2024blackwell amd2023mi300x jouppi2023 googleCloudTpuV6eDocs">(<a href="#ref-nvidia2017gpu" role="doc-biblioref">NVIDIA Corporation 2017</a>, <a href="#ref-nvidia2018t4" role="doc-biblioref">2018</a>, <a href="#ref-NVIDIA2020" role="doc-biblioref">2020a</a>, <a href="#ref-nvidia2024blackwell" role="doc-biblioref">2024</a>; <a href="#ref-choquette2021" role="doc-biblioref">Choquette et al. 2021</a>; <a href="#ref-choquette2023" role="doc-biblioref">Choquette 2023</a>; <a href="#ref-amd2023mi300x" role="doc-biblioref">AMD 2023</a>; <a href="#ref-jouppi2023" role="doc-biblioref">Jouppi et al. 2023</a>; <a href="#ref-googleCloudTpuV6eDocs" role="doc-biblioref">Google Cloud 2026</a>)</span>；CPU/移动端各行为编者设定</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>模型规格</strong></td>
+<td style="text-align: left;">已发表论文、模型报告和官方文档；编者设定的 GPT-3 情景；GPT-4 规模取自公开分析</td>
+<td style="text-align: left;"><span class="citation" data-cites="devlin2019 radford2019language brown2020language dubey2024llama he2016 sandler2018 ultralytics2023yolov8Docs openai2023gpt4 semianalysisGPT4">(<a href="#ref-devlin2019" role="doc-biblioref">Devlin et al. 2019</a>; <a href="#ref-radford2019language" role="doc-biblioref">Radford et al. 2019</a>; <a href="#ref-brown2020language" role="doc-biblioref">Brown et al. 2020</a>; <a href="#ref-dubey2024llama" role="doc-biblioref"><span class="nocase">Dubey et al.</span> 2024</a>; <a href="#ref-he2016" role="doc-biblioref">He et al. 2016</a>; <a href="#ref-sandler2018" role="doc-biblioref">Sandler et al. 2018</a>; <a href="#ref-ultralytics2023yolov8Docs" role="doc-biblioref">Ultralytics 2023</a>; <a href="#ref-openai2023gpt4" role="doc-biblioref">OpenAI et al. 2023</a>; <a href="#ref-semianalysisGPT4" role="doc-biblioref">Patel and Wong 2023</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>训练内存约定</strong></td>
+<td style="text-align: left;">本书约定（混合精度 Adam 布局）</td>
+<td style="text-align: left;"><span class="citation" data-cites="kingma2014adam kalamkar2019 micikevicius2017mixed nvidia_tensors_fp16_2017">(<a href="#ref-kingma2014adam" role="doc-biblioref">Kingma and Ba 2015</a>; <a href="#ref-kalamkar2019" role="doc-biblioref">Kalamkar et al. 2019</a>; <a href="#ref-micikevicius2017mixed" role="doc-biblioref">Micikevicius et al. 2017</a>; <a href="#ref-nvidia_tensors_fp16_2017" role="doc-biblioref">NVIDIA 2017</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>能耗常数</strong></td>
+<td style="text-align: left;">已发表的 45 nm 算术运算/DRAM 估算；VLSI 综合工艺节点缩放；精度能耗层级（<a href="#tbl-appdx-assumptions-energy-hierarchy" class="quarto-xref">table&nbsp;13</a>）</td>
+<td style="text-align: left;">算术运算/DRAM 采用 <span class="citation" data-cites="horowitz2014 dally2021">(<a href="#ref-horowitz2014" role="doc-biblioref">Horowitz 2014</a>; <a href="#ref-dally2021" role="doc-biblioref">Dally et al. 2021</a>)</span>；寄存器/SRAM、MobileNetV2 和 5G 各行为编者设定</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>互连带宽</strong></td>
+<td style="text-align: left;">厂商规格；InfiniBand 标准；PCIe/NVLink/CXL 标准；物理规格表（<a href="#tbl-appdx-assumptions-interconnect-matrix" class="quarto-xref">table&nbsp;15</a>）</td>
+<td style="text-align: left;"><span class="citation" data-cites="nvidia2017gpu NVIDIA2020 choquette2023 infiniband2000spec nvidia2026quantumX800 ethernetAlliance2025roadmap">(<a href="#ref-nvidia2017gpu" role="doc-biblioref">NVIDIA Corporation 2017</a>, <a href="#ref-NVIDIA2020" role="doc-biblioref">2020a</a>; <a href="#ref-choquette2023" role="doc-biblioref">Choquette 2023</a>; <a href="#ref-infiniband2000spec" role="doc-biblioref">InfiniBand Trade Association 2000</a>; <a href="#ref-nvidia2026quantumX800" role="doc-biblioref">NVIDIA 2026</a>; <a href="#ref-ethernetAlliance2025roadmap" role="doc-biblioref">Ethernet Alliance 2025</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>经济假设</strong></td>
+<td style="text-align: left;">示例性云服务/公用事业费率</td>
+<td style="text-align: left;"><span class="citation" data-cites="patterson2021carbon">(<a href="#ref-patterson2021carbon" role="doc-biblioref">Patterson et al. 2021</a>)</span>（方法论背景）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>规模参考</strong></td>
+<td style="text-align: left;">示例性工作负载速率；标准视频约定</td>
+<td style="text-align: left;">工作负载速率由编者设定；视频采用标准格式定义</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>单位约定</strong></td>
+<td style="text-align: left;">十进制 SI；本书记号</td>
+<td style="text-align: left;">编者设定</td>
+</tr>
+</tbody>
+</table>
+<div class="no-row-height column-margin column-container"><div id="ref-nvidia2017gpu" class="csl-entry" role="listitem">
+NVIDIA Corporation. 2017. <em><span>NVIDIA</span> Tesla <span>V100</span> <span>GPU</span> Architecture</em>. NVIDIA Whitepaper.
+</div><div id="ref-nvidia2018t4" class="csl-entry" role="listitem">
+NVIDIA Corporation. 2018. <em><span>NVIDIA</span> Tesla <span>T4</span> Tensor Core <span>GPU</span></em>. NVIDIA product documentation.
+</div><div id="ref-NVIDIA2020" class="csl-entry" role="listitem">
+NVIDIA Corporation. 2020a. <em><span>NVIDIA</span> <span>A100</span> Tensor Core <span>GPU</span> Architecture</em>. NVIDIA Whitepaper, V1.0.
+</div><div id="ref-nvidia2024blackwell" class="csl-entry" role="listitem">
+NVIDIA Corporation. 2024. <em><span>NVIDIA</span> Blackwell Architecture</em>. NVIDIA product documentation.
+</div><div id="ref-choquette2021" class="csl-entry" role="listitem">
+Choquette, Jack, Wishwesh Gandhi, Olivier Giroux, Nick Stam, and Ronny Krashinsky. 2021. <span>“<span>NVIDIA</span> <span>A100</span> Tensor Core <span>GPU</span>: Performance and Innovation.”</span> <em>IEEE Micro</em> 41 (2): 29–35. https://doi.org/10.1109/mm.2021.3061394.
+</div><div id="ref-choquette2023" class="csl-entry" role="listitem">
+Choquette, Jack. 2023. <span>“<span>NVIDIA</span> Hopper <span>H100</span> <span>GPU</span>: Scaling Performance.”</span> <em>IEEE Micro</em> 43 (3): 9–17. https://doi.org/10.1109/mm.2023.3256796.
+</div><div id="ref-amd2023mi300x" class="csl-entry" role="listitem">
+AMD. 2023. <em><span>AMD Instinct MI300X</span> Accelerators</em>. AMD product documentation.
+</div><div id="ref-jouppi2023" class="csl-entry" role="listitem">
+Jouppi, Norm, George Kurian, Sheng Li, Peter Ma, Rahul Nagarajan, Lifeng Nai, Nishant Patil, et al. 2023. <span>“<span>TPU</span> <span class="nocase">v4</span>: An Optically Reconfigurable Supercomputer for Machine Learning with Hardware Support for Embeddings.”</span> <em>Proceedings of the 50th Annual International Symposium on Computer Architecture</em>, 1–14. https://doi.org/10.1145/3579371.3589350.
+</div><div id="ref-googleCloudTpuV6eDocs" class="csl-entry" role="listitem">
+Google Cloud. 2026. <em><span class="nocase">TPU v6e</span></em>.
+</div><div id="ref-devlin2019" class="csl-entry" role="listitem">
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“<span>BERT</span>: <span>Pre</span>-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies</em>, 4171–86. https://doi.org/10.18653/v1/n19-1423.
+</div><div id="ref-radford2019language" class="csl-entry" role="listitem">
+Radford, Alec, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and Ilya Sutskever. 2019. <em>Language Models Are Unsupervised Multitask Learners</em>. OpenAI.
+</div><div id="ref-brown2020language" class="csl-entry" role="listitem">
+Brown, Tom B., Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, et al. 2020. <span>“Language Models Are Few-Shot Learners.”</span> <em>Advances in Neural Information Processing Systems</em> 33: 1877–901. https://doi.org/10.48550/arxiv.2005.14165.
+</div><div id="ref-dubey2024llama" class="csl-entry" role="listitem">
+<span class="nocase">Dubey, Abhimanyu, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, et al.</span> 2024. <em>The <span>Llama</span> 3 Herd of Models</em>. arXiv preprint arXiv:2407.21783.
+</div><div id="ref-he2016" class="csl-entry" role="listitem">
+He, Kaiming, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. 2016. <span>“Deep Residual Learning for Image Recognition.”</span> <em>2016 <span>IEEE</span> Conference on Computer Vision and Pattern Recognition (CVPR)</em>, 770–78. https://doi.org/10.1109/cvpr.2016.90.
+</div><div id="ref-sandler2018" class="csl-entry" role="listitem">
+Sandler, Mark, Andrew Howard, Menglong Zhu, Andrey Zhmoginov, and Liang-Chieh Chen. 2018. <span>“<span>MobileNetV2</span>: Inverted Residuals and Linear Bottlenecks.”</span> <em>2018 <span>IEEE</span>/<span>CVF</span> Conference on Computer Vision and Pattern Recognition</em>, 4510–20. https://doi.org/10.1109/cvpr.2018.00474.
+</div><div id="ref-ultralytics2023yolov8Docs" class="csl-entry" role="listitem">
+Ultralytics. 2023. <em><span>YOLOv8</span></em>.
+</div><div id="ref-openai2023gpt4" class="csl-entry" role="listitem">
+OpenAI, Josh Achiam, Steven Adler, Sandhini Agarwal, Lama Ahmad, Ilge Akkaya, Florencia Leoni Aleman, et al. 2023. <span>“<span>GPT</span>-4 Technical Report.”</span> <em>arXiv Preprint arXiv:2303.08774</em>, ahead of print. https://doi.org/10.48550/arXiv.2303.08774.
+</div><div id="ref-semianalysisGPT4" class="csl-entry" role="listitem">
+Patel, Dylan, and Gerald Wong. 2023. <em><span>GPT</span>-4 Architecture, Infrastructure, Training Dataset, Costs, Vision, <span>MoE</span></em>. SemiAnalysis Blog.
+</div><div id="ref-kingma2014adam" class="csl-entry" role="listitem">
+Kingma, Diederik P., and Jimmy Ba. 2015. <span>“Adam: A Method for Stochastic Optimization.”</span> <em>3rd International Conference on Learning Representations (ICLR)</em>.
+</div><div id="ref-kalamkar2019" class="csl-entry" role="listitem">
+Kalamkar, Dhiraj, Dheevatsa Mudigere, Naveen Mellempudi, Dipankar Das, Kunal Banerjee, Sasikanth Avancha, Dharma Teja Vooturi, et al. 2019. <em>A Study of <span>BFLOAT16</span> for Deep Learning Training</em>.
+</div><div id="ref-micikevicius2017mixed" class="csl-entry" role="listitem">
+Micikevicius, Paulius, Sharan Narang, Jonah Alben, Gregory Diamos, Erich Elsen, David Garcia, Boris Ginsburg, et al. 2017. <span>“Mixed Precision Training.”</span> <em>arXiv Preprint arXiv:1710.03740</em>.
+</div><div id="ref-nvidia_tensors_fp16_2017" class="csl-entry" role="listitem">
+NVIDIA. 2017. <em>Training with Mixed Precision</em>.
+</div><div id="ref-horowitz2014" class="csl-entry" role="listitem">
+Horowitz, Mark. 2014. <span>“1.1 Computing’s Energy Problem (and What We Can Do about It).”</span> <em>2014 <span>IEEE</span> International Solid-State Circuits Conference Digest of Technical Papers (<span>ISSCC</span>)</em>, 10–14. https://doi.org/10.1109/isscc.2014.6757323.
+</div><div id="ref-dally2021" class="csl-entry" role="listitem">
+Dally, William J., Stephen W. Keckler, and David B. Kirk. 2021. <span>“Evolution of the Graphics Processing Unit (<span>GPU</span>).”</span> <em>IEEE Micro</em> 41 (6): 42–51. https://doi.org/10.1109/mm.2021.3113475.
+</div><div id="ref-infiniband2000spec" class="csl-entry" role="listitem">
+InfiniBand Trade Association. 2000. <em><span>InfiniBand</span> Architecture Specification Volume 1</em>. InfiniBand Trade Association.
+</div><div id="ref-nvidia2026quantumX800" class="csl-entry" role="listitem">
+NVIDIA. 2026. <em><span>NVIDIA</span> Quantum-<span>X800</span> <span>InfiniBand</span> Platform</em>. NVIDIA product documentation.
+</div><div id="ref-ethernetAlliance2025roadmap" class="csl-entry" role="listitem">
+Ethernet Alliance. 2025. <em>2025 <span>Ethernet</span> Roadmap</em>. Ethernet Alliance roadmap.
+</div><div id="ref-patterson2021carbon" class="csl-entry" role="listitem">
+Patterson, David, Joseph Gonzalez, Quoc Le, Chen Liang, Lluis-Miquel Munguia, Daniel Rothchild, David So, Maud Texier, and Jeff Dean. 2021. <span>“Carbon Emissions and Large Neural Network Training.”</span> <em>arXiv Preprint arXiv:2104.10350</em>.
+</div></div></div>
+</figure>
+</div>
+</section>
+<section id="总结" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="总结">总结</h2>
+<p>本附录是全书所用定量输入的参考目录，汇集了加速器和模型规格、训练内存约定、能耗常数、互连带宽、经济与规模参考、单位约定及来源。这些数值来自厂商峰值、已发表的测量、标准和编者设定的情景，因此具有不同的证据分量，其时效性衰减速度也各不相同。</p>
+<p>应将这些表格用作初始输入，而非通用常数。对于每项估算，应记录所用表格行、单位约定及来源；用本地数值替换具有时效性的峰值、价格和速率；区分物理上限、实测运行点与情景假设；并说明哪些假设主导了结果。这样既能使粗略估算可复现，也能明确哪个输入决定了结论。</p>
+
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https?:\/\/[^/]+\/books\/mlsys\/vol1\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../vol1_zh/backmatter/appendix_machine.html" class="pagination-link" aria-label="机器基础">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">机器基础</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../vol1_zh/backmatter/glossary/glossary.html" class="pagination-link" aria-label="术语表">
+        <span class="nav-page-text">术语表</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>机器学习系统导论 · 简体中文本地预览</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<!--
+  MLSysBook release-pill — shared footer version chip for Quarto + static sites.
+
+  Renders a small "v0.1.0 · Apr 26, 2026" chip from a deployed
+  release-manifest.json. Best-effort chrome: silent on any fetch failure
+  (manifest missing, offline, CORS). Use at any site that emits a manifest
+  via scripts/version/release.py emit-manifest.
+
+  ── Standardized placement (all MLSysBook sites) ──
+
+  The chip lives in the page-footer, right slot, so it reads as an
+  intentional part of the footer bar (not dangling below the page). Two
+  pieces per site:
+
+  1. This file loads the style + populator script site-wide:
+
+       format:
+         html:
+           include-in-header:
+             - text: |
+                 <meta name="release-manifest" content="/<project-base>/release-manifest.json">
+           include-after-body:
+             - file: ../shared/release/release-pill.html
+
+  2. Each page-footer places the chip span where it should render:
+
+       website:
+         page-footer:
+           right:
+             - text: |
+                 <span class="release-pill" data-release-pill></span>
+             - icon: github
+               href: ...
+
+  The meta tag tells the script where to find the manifest. The script
+  populates every span carrying data-release-pill, so the chip can sit in
+  the footer (canonical), an about page, or anywhere else.
+
+  ── Manifest contract ──
+
+  The manifest is the JSON written by scripts/version/release.py
+  emit-manifest. Required keys: releaseId, releaseHash. Optional but
+  recommended: buildDate, project. Anything else is ignored.
+
+  ── Why runtime fetch instead of build-time templating ──
+
+  Build-time templating would be deterministic but requires per-project
+  Lua/template machinery. Runtime fetch is project-agnostic and works
+  identically across Quarto, Next.js, and plain HTML. The one fetch per
+  page-load is cheap and the chip degrades to nothing on failure.
+-->
+
+<style>
+  /* Fixed muted gray on every site — the chip must look identical regardless of
+     each Quarto theme's accent colors (do NOT inherit --bs-secondary / link color). */
+  .release-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--release-pill-color, #6c757d);
+  }
+  .release-pill a,
+  .release-pill a:visited,
+  .release-pill-version,
+  .release-pill-date {
+    color: var(--release-pill-color, #6c757d);
+    text-decoration: none;
+  }
+  .release-pill a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .release-pill-date {
+    opacity: 0.75;
+  }
+</style>
+
+<script>
+  (function () {
+    var pills = document.querySelectorAll('[data-release-pill]');
+    if (!pills.length) return;
+
+    // Manifest URL resolution order:
+    //   1. data-manifest attribute on the pill (per-page override)
+    //   2. <meta name="release-manifest" content="..."> in <head>
+    //   3. './release-manifest.json' relative to current page (fallback)
+    var meta = document.querySelector('meta[name="release-manifest"]');
+    var metaPath = meta && meta.getAttribute('content');
+
+    fetch(metaPath || './release-manifest.json', { cache: 'no-store' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (m) {
+        if (!m || !m.releaseId || !m.releaseHash) return;
+        var date = m.buildDate
+          ? new Date(m.buildDate).toLocaleDateString('en-US',
+              { year: 'numeric', month: 'short', day: 'numeric' })
+          : '';
+        var shortHash = String(m.releaseHash).slice(0, 7);
+        var title =
+          (m.project ? m.project + ' ' : '') +
+          'v' + m.releaseId +
+          (date ? ' · built ' + date : '') +
+          ' · hash ' + shortHash;
+
+        pills.forEach(function (el) {
+          var rawLink = el.getAttribute('data-link') || '#release';
+          // XSS hardening: allow only anchor, relative, or http(s) links; reject javascript:/data: URLs.
+          var linkHref = /^(?:#|\/|\.{1,2}\/|https?:\/\/)/i.test(rawLink) ? rawLink : '#release';
+          var a = document.createElement('a');
+          a.href = linkHref;
+          a.title = title;
+          a.setAttribute('aria-label',
+            'Release v' + m.releaseId + (date ? ', built ' + date : ''));
+          var v = document.createElement('span');
+          v.className = 'release-pill-version';
+          v.textContent = 'v' + m.releaseId;
+          a.appendChild(v);
+          if (date) {
+            var d = document.createElement('span');
+            d.className = 'release-pill-date';
+            d.textContent = ' · ' + date;
+            a.appendChild(d);
+          }
+          el.innerHTML = '';
+          el.appendChild(a);
+        });
+      })
+      .catch(function () { /* silent: best-effort chrome */ });
+  })();
+</script>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 中文书架</a>
+</body></html>

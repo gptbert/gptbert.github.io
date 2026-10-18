@@ -1,0 +1,4634 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>机器学习系统导论</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../vol1_zh/backmatter/appendix_assumptions.html" rel="prev">
+<link href="../../../shared/assets/images/icons/favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-b44eb2e58ec3d63754abaf6618baa40e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-9890ab0e7b279b2f92e6572d8f7c6ba2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-d56cd454dfcf6d82c1d159b45d7177bb.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/quarto-contrib/foldbox/foldbox.css" rel="stylesheet">
+<script src="../../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.js"></script>
+<link href="../../../site_libs/quarto-contrib/pseudocode-2.4.1/pseudocode.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "/"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-M21L0CBCVN"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-M21L0CBCVN', { 'anonymize_ip': true});
+</script>
+<script type="application/json" class="js-hypothesis-config">
+{
+  "theme": "clean",
+  "openSidebar": false
+}
+</script>
+<script async="" src="https://hypothes.is/embed.js"></script>
+<script>
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    document.body.classList.add('hypothesis-enabled');
+  });
+</script>
+<!-- Shared head includes — MLSysBook ecosystem -->
+
+<!--
+  theme-persist (inline, sync) — applies stored color-scheme before first paint.
+  Inlined deliberately: runs before any other <script>, no extra round-trip,
+  and avoids per-subsite asset path differences. Canonical source:
+  shared/scripts/theme-persist.js (kept identical for documentation/testability).
+  If you change one, mirror the change to the other.
+-->
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'quarto-color-scheme';
+  // Quarto's toggle writes 'alternate'/'default' (alternate = dark, the
+  // layered sheet); sibling non-Quarto sites write 'dark'/'light'. Both
+  // hit the same key, so we accept either. Quarto's own startup still
+  // checks `=== 'alternate'`, so we mirror onto <html> rather than rewrite.
+  function normalize(v) {
+    if (v === 'dark' || v === 'alternate') return 'dark';
+    if (v === 'light' || v === 'default') return 'light';
+    return null;
+  }
+  function preferredScheme() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) return n;
+    } catch (e) {}
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+  function apply(scheme) {
+    var html = document.documentElement;
+    if (!html) return;
+    html.setAttribute('data-bs-theme', scheme);
+    html.setAttribute('data-quarto-color-scheme', scheme);
+    html.style.colorScheme = scheme;
+    // Bridge to legacy `.quarto-dark` body class — about.css,
+    // community.css, and newsletter.css key their dark-mode CSS
+    // variables off `.quarto-dark { ... }`. Quarto's own toggle adds
+    // that class on click, but the OS-pref / first-paint path never
+    // does. Mirror the scheme onto body so those CSS variables fire
+    // on every dark path, not just toggle clicks. body may not exist
+    // yet on the first call (this script runs in <head>); a
+    // MutationObserver below catches it as soon as it parses.
+    var body = document.body;
+    if (body) body.classList.toggle('quarto-dark', scheme === 'dark');
+  }
+  apply(preferredScheme());
+  // Catch the FOUC window between <head> apply() and DOMContentLoaded:
+  // <body> may not exist yet at first apply(), but as soon as the
+  // parser appends it we want the legacy class bridge in place so any
+  // CSS keyed on `.quarto-dark` paints correctly on first render.
+  if (!document.body) {
+    var earlyObserver = new MutationObserver(function () {
+      if (document.body) {
+        apply(preferredScheme());
+        earlyObserver.disconnect();
+      }
+    });
+    earlyObserver.observe(document.documentElement, { childList: true });
+  }
+  // Quarto's toggle updates localStorage but not <html>, so wrap it to
+  // mirror the new value onto data-bs-theme; otherwise clicking the toggle
+  // leaves CSS keyed off [data-bs-theme="dark"] rendering against the wrong
+  // stylesheet until the next reload.
+  function syncFromStorage() {
+    try {
+      var n = normalize(window.localStorage.getItem(STORAGE_KEY));
+      if (n) apply(n);
+    } catch (e) {}
+  }
+  function wrapToggle() {
+    var orig = window.quartoToggleColorScheme;
+    if (typeof orig !== 'function' || orig.__mlsbWrapped) return;
+    var wrapped = function () { var r = orig.apply(this, arguments); syncFromStorage(); return r; };
+    wrapped.__mlsbWrapped = true;
+    window.quartoToggleColorScheme = wrapped;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { wrapToggle(); syncFromStorage(); });
+  } else {
+    wrapToggle(); syncFromStorage();
+  }
+  // Defend the legacy `.quarto-dark` body class against Quarto's own
+  // `toggleBodyColor(mode)`, which runs *after* this script and re-asserts
+  // the body class based on `mode` — and `mode` defaults to 'light' when
+  // there's no stored quarto-color-scheme value, even when the OS / first
+  // paint already resolved to dark via `data-bs-theme`. Without this
+  // observer, on every fresh visit Quarto would clobber our bridge and
+  // restore `.quarto-light`, leaving `.quarto-dark`-keyed CSS variables
+  // (about/community/newsletter pages) at their light-mode defaults
+  // against the dark `data-bs-theme="dark"` background.
+  function bridgeBody() {
+    var body = document.body;
+    if (!body) return;
+    var wantDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+    if (wantDark && !body.classList.contains('quarto-dark')) {
+      body.classList.add('quarto-dark');
+      body.classList.remove('quarto-light');
+    } else if (!wantDark && body.classList.contains('quarto-dark')) {
+      body.classList.remove('quarto-dark');
+      body.classList.add('quarto-light');
+    }
+  }
+  function watchBody() {
+    if (!document.body) return;
+    bridgeBody();
+    var bodyObs = new MutationObserver(bridgeBody);
+    bodyObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    var htmlObs = new MutationObserver(bridgeBody);
+    htmlObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', watchBody);
+  } else {
+    watchBody();
+  }
+  window.addEventListener('storage', function (ev) {
+    if (ev.key !== STORAGE_KEY) return;
+    var n = normalize(ev.newValue);
+    if (n) apply(n);
+  });
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (ev) {
+        try { if (window.localStorage.getItem(STORAGE_KEY)) return; } catch (e) {}
+        apply(ev.matches ? 'dark' : 'light');
+      });
+    } catch (e) {}
+  }
+})();
+</script>
+
+<!--
+  Build-stamp styling. Tiny, neutral, dark-mode aware. The actual stamp text
+  is injected by shared/scripts/inject-build-stamp.sh into footer markup
+  containing the literal MLSB_BUILD_STAMP HTML-comment token (see that
+  script for the exact pattern — we cannot write it here because HTML
+  comments cannot nest and the inner closer would terminate this block).
+-->
+<style>
+.mlsb-build-stamp {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+[data-bs-theme="dark"] .mlsb-build-stamp { opacity: 0.5; }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="icon" href="https://mlsysbook.ai/vol1/assets/images/icons/favicon.png" type="image/png">
+<meta name="author" content="Vijay Janapa Reddi">
+
+<!-- Schema.org JSON-LD structured data for Google Knowledge Graph & Rich Snippets -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://mlsysbook.ai/#website",
+      "url": "https://mlsysbook.ai/",
+      "name": "Machine Learning Systems",
+      "description": "The AI Engineering Textbook Series: Foundations, Scaling, Agentic AI, and Physical AI.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Harvard Edge Computing Lab",
+        "url": "https://edge.seas.harvard.edu"
+      }
+    },
+    {
+      "@type": "BookSeries",
+      "@id": "https://mlsysbook.ai/#bookseries",
+      "name": "Machine Learning Systems: Principles and Practices of Engineering Artificially Intelligent Systems",
+      "alternateName": ["MLSysBook", "Machine Learning Systems", "AI Engineering Textbook"],
+      "url": "https://mlsysbook.ai/",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Vijay Janapa Reddi",
+        "jobTitle": "Gordon McKay Professor of Electrical Engineering and Computer Science",
+        "worksFor": {
+          "@type": "EducationalOrganization",
+          "name": "Harvard University",
+          "sameAs": "https://www.harvard.edu"
+        },
+        "sameAs": [
+          "https://profvjreddi.github.io/homepage/"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MIT Press",
+        "url": "https://mitpress.mit.edu"
+      },
+      "hasPart": [
+        {
+          "@type": "Book",
+          "name": "Volume I: Introduction to Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol1/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Foundations, Lifecycle, Data Engineering, Training, Inference, Benchmarking, and Responsible AI"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume II: Scaling Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol2/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Distributed Training, Accelerator Architecture, Parallelism, Memory Systems, and Serving"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume III: Agentic Machine Learning Systems",
+          "url": "https://mlsysbook.ai/vol3/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Autonomous Agents, Deliberation, Working Sets, Virtual Memory, RAG, RLVR, and Multi-Agent Systems"
+        },
+        {
+          "@type": "Book",
+          "name": "Volume IV: Physical AI Systems",
+          "url": "https://mlsysbook.ai/vol4/",
+          "bookFormat": "https://schema.org/EBook",
+          "about": "Physical AI, Embodied AI, Closed-Loop Dynamics, Actuation, Control Barrier Functions, and Robotics"
+        }
+      ]
+    },
+    {
+      "@type": "Course",
+      "@id": "https://mlsysbook.ai/#course",
+      "name": "CS249r: Machine Learning Systems",
+      "description": "Harvard University course on principles and practices of engineering artificially intelligent systems.",
+      "provider": {
+        "@type": "EducationalOrganization",
+        "name": "Harvard University",
+        "sameAs": "https://www.harvard.edu"
+      }
+    }
+  ]
+}
+</script>
+
+<!--
+  navbar-theme-toggle-relocate — moves the Quarto theme toggle into the
+  navbar's right-side .navbar-nav group at page load, so it collapses into
+  the hamburger menu alongside Subscribe/Star/Support/GitHub at narrow widths
+  instead of being stranded in the middle by Quarto's mx-auto brand layout.
+
+  Why JS: Quarto auto-injects the toggle into .quarto-navbar-tools (outside
+  .navbar-collapse). CSS can't move DOM nodes between containers, and CSS
+  positioning hacks (absolute/right: 50px) fight Bootstrap's responsive
+  layout below 992px. Moving the node once at startup is the standard
+  approach used across Quarto-based sites with the same problem.
+-->
+<script>
+(function () {
+  'use strict';
+  function relocateThemeToggle() {
+    var tools = document.querySelector('.quarto-navbar-tools');
+    if (!tools) return;
+    var toggle = tools.querySelector('.quarto-color-scheme-toggle');
+    if (!toggle) return;
+    var navRight = document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav.ms-auto'
+    ) || document.querySelector(
+      '.navbar .navbar-collapse .navbar-nav:last-of-type'
+    );
+    if (!navRight) return;
+    var li = document.createElement('li');
+    li.className = 'nav-item navbar-theme-toggle-item';
+    toggle.classList.add('nav-link');
+    li.appendChild(toggle);
+    navRight.appendChild(li);
+    tools.style.display = 'none';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', relocateThemeToggle);
+  } else {
+    relocateThemeToggle();
+  }
+})();
+</script>
+
+<!--
+  navbar-brand-href-fix — force the navbar brand link to the ecosystem root
+  (https://mlsysbook.ai/) on every subsite.
+
+  Quarto sets each subsite's `site-url` to `https://mlsysbook.ai/<subsite>/`
+  and then relativizes any navbar.href value that lives inside the
+  site-url's domain. The shared `href: https://mlsysbook.ai/` in
+  navbar-common.yml therefore gets emitted as `./index.html`, which on
+  vol1/vol2/tinytorch/etc. resolves to *that subsite's* root rather than
+  the ecosystem landing page. Override the brand link href in JS after
+  Quarto's render: this is a one-line user-experience fix that does not
+  fight Quarto's URL machinery.
+-->
+<script>
+(function () {
+  'use strict';
+  function fixBrandHref() {
+    var brand = document.querySelectorAll(
+      '.navbar .navbar-brand, .navbar .navbar-brand-logo'
+    );
+    for (var i = 0; i < brand.length; i++) {
+      brand[i].setAttribute('href', 'https://mlsysbook.ai/');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fixBrandHref);
+  } else {
+    fixBrandHref();
+  }
+})();
+</script>
+<link rel="manifest" href="../../../site.webmanifest">
+<link rel="apple-touch-icon" href="../../../shared/assets/images/icons/favicon.png">
+<meta name="theme-color" content="#A51C30">
+<!-- Release identity (rendered into the footer pill below).
+     The publish workflow drops release-manifest.json at
+     /vol1_zh/release-manifest.json before deploy. -->
+<meta name="release-manifest" content="/vol1_zh/release-manifest.json">
+<!-- SocratiQ bundle: -->
+<!-- <script type="module" src="/tools/scripts/socratiQ/bundle.js" defer></script> -->
+<script src="../../../shared/assets/scripts/sidebar-auto-collapse.js" defer=""></script>
+<script src="../../../shared/assets/scripts/version-link.js" defer=""></script>
+<script src="../../../shared/assets/scripts/subscribe-modal.js" defer=""></script>
+<style>
+.callout-quiz-question {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-chapter-connection {
+  --color1: #F1F5F9;
+  --color2: #64748B;
+  --border-color: #64748B;
+  --background-color: rgba(100, 116, 139, 0.04);
+  --title-background-color: rgba(100, 116, 139, 0.04);
+  --dark-background-color: rgba(100, 116, 139, 0.12);
+  --dark-title-background-color: rgba(100, 116, 139, 0.12);
+}
+.callout-theorem {
+  --color1: #F5F0FA;
+  --color2: #6B46C1;
+  --border-color: #6B46C1;
+  --background-color: rgba(107, 70, 193, 0.04);
+  --title-background-color: rgba(107, 70, 193, 0.04);
+  --dark-background-color: rgba(107, 70, 193, 0.12);
+  --dark-title-background-color: rgba(107, 70, 193, 0.12);
+}
+.callout-colab {
+  --color1: #FFF5E6;
+  --color2: #FF6B35;
+  --border-color: #FF6B35;
+  --background-color: rgba(255, 107, 53, 0.04);
+  --title-background-color: rgba(255, 107, 53, 0.04);
+  --dark-background-color: rgba(255, 107, 53, 0.12);
+  --dark-title-background-color: rgba(255, 107, 53, 0.12);
+}
+.callout-perspective {
+  --color1: #F7F8FA;
+  --color2: #4A5568;
+  --border-color: #4A5568;
+  --background-color: rgba(74, 85, 104, 0.04);
+  --title-background-color: rgba(74, 85, 104, 0.04);
+  --dark-background-color: rgba(74, 85, 104, 0.12);
+  --dark-title-background-color: rgba(74, 85, 104, 0.12);
+}
+.callout-learning-objectives {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-resource-slides {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-takeaways {
+  --color1: #FCF4F8;
+  --color2: #9D3C72;
+  --border-color: #9D3C72;
+  --background-color: rgba(157, 60, 114, 0.04);
+  --title-background-color: rgba(157, 60, 114, 0.04);
+  --dark-background-color: rgba(157, 60, 114, 0.12);
+  --dark-title-background-color: rgba(157, 60, 114, 0.12);
+}
+.callout-code {
+  --color1: #F2F4F8;
+  --color2: #3C4858;
+  --border-color: #3C4858;
+  --background-color: rgba(60, 72, 88, 0.04);
+  --title-background-color: rgba(60, 72, 88, 0.04);
+  --dark-background-color: rgba(60, 72, 88, 0.12);
+  --dark-title-background-color: rgba(60, 72, 88, 0.12);
+}
+.callout-resource-exercises {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-quiz-answer {
+  --color1: #E8F2EA;
+  --color2: #4A7C59;
+  --border-color: #4A7C59;
+  --background-color: rgba(74, 124, 89, 0.04);
+  --title-background-color: rgba(74, 124, 89, 0.04);
+  --dark-background-color: rgba(74, 124, 89, 0.12);
+  --dark-title-background-color: rgba(74, 124, 89, 0.12);
+}
+.callout-war-story {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-resource-videos {
+  --color1: #E0F2F1;
+  --color2: #20B2AA;
+  --border-color: #20B2AA;
+  --background-color: rgba(32, 178, 170, 0.04);
+  --title-background-color: rgba(32, 178, 170, 0.04);
+  --dark-background-color: rgba(32, 178, 170, 0.12);
+  --dark-title-background-color: rgba(32, 178, 170, 0.12);
+}
+.callout-research-questions {
+  --color1: #F0F0F8;
+  --color2: #5B4B8A;
+  --border-color: #5B4B8A;
+  --background-color: rgba(91, 75, 138, 0.04);
+  --title-background-color: rgba(91, 75, 138, 0.04);
+  --dark-background-color: rgba(91, 75, 138, 0.12);
+  --dark-title-background-color: rgba(91, 75, 138, 0.12);
+}
+.callout-notebook {
+  --color1: #F4F7FA;
+  --color2: #3F6077;
+  --border-color: #3F6077;
+  --background-color: rgba(63, 96, 119, 0.04);
+  --title-background-color: rgba(63, 96, 119, 0.04);
+  --dark-background-color: rgba(63, 96, 119, 0.12);
+  --dark-title-background-color: rgba(63, 96, 119, 0.12);
+}
+.callout-case-study {
+  --color1: #FEF2F2;
+  --color2: #C53030;
+  --border-color: #C53030;
+  --background-color: rgba(197, 48, 48, 0.04);
+  --title-background-color: rgba(197, 48, 48, 0.04);
+  --dark-background-color: rgba(197, 48, 48, 0.12);
+  --dark-title-background-color: rgba(197, 48, 48, 0.12);
+}
+.callout-principle {
+  --color1: #F3F2FA;
+  --color2: #3D3B8E;
+  --border-color: #3D3B8E;
+  --background-color: rgba(61, 59, 142, 0.04);
+  --title-background-color: rgba(61, 59, 142, 0.04);
+  --dark-background-color: rgba(61, 59, 142, 0.12);
+  --dark-title-background-color: rgba(61, 59, 142, 0.12);
+}
+.callout-example {
+  --color1: #F0F8F6;
+  --color2: #148F77;
+  --border-color: #148F77;
+  --background-color: rgba(20, 143, 119, 0.04);
+  --title-background-color: rgba(20, 143, 119, 0.04);
+  --dark-background-color: rgba(20, 143, 119, 0.12);
+  --dark-title-background-color: rgba(20, 143, 119, 0.12);
+}
+.callout-checkpoint {
+  --color1: #F7FEE7;
+  --color2: #4D7C0F;
+  --border-color: #4D7C0F;
+  --background-color: rgba(77, 124, 15, 0.04);
+  --title-background-color: rgba(77, 124, 15, 0.04);
+  --dark-background-color: rgba(77, 124, 15, 0.12);
+  --dark-title-background-color: rgba(77, 124, 15, 0.12);
+}
+.callout-definition {
+  --color1: #F2F7FA;
+  --color2: #4F7396;
+  --border-color: #4F7396;
+  --background-color: rgba(79, 115, 150, 0.04);
+  --title-background-color: rgba(79, 115, 150, 0.04);
+  --dark-background-color: rgba(79, 115, 150, 0.12);
+  --dark-title-background-color: rgba(79, 115, 150, 0.12);
+}
+.callout-lighthouse {
+  --color1: #FDF8E6;
+  --color2: #B8860B;
+  --border-color: #B8860B;
+  --background-color: rgba(184, 134, 11, 0.04);
+  --title-background-color: rgba(184, 134, 11, 0.04);
+  --dark-background-color: rgba(184, 134, 11, 0.12);
+  --dark-title-background-color: rgba(184, 134, 11, 0.12);
+}
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-quiz-question summary,
+  details.callout-quiz-question summary strong,
+  details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+  details.callout-chapter-connection summary,
+  details.callout-chapter-connection summary strong,
+  details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+  details.callout-theorem summary,
+  details.callout-theorem summary strong,
+  details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+  details.callout-colab summary,
+  details.callout-colab summary strong,
+  details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+  details.callout-perspective summary,
+  details.callout-perspective summary strong,
+  details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-learning-objectives summary,
+  details.callout-learning-objectives summary strong,
+  details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-slides summary,
+  details.callout-resource-slides summary strong,
+  details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+  details.callout-takeaways summary,
+  details.callout-takeaways summary strong,
+  details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+  details.callout-code summary,
+  details.callout-code summary strong,
+  details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-exercises summary,
+  details.callout-resource-exercises summary strong,
+  details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+  details.callout-quiz-answer summary,
+  details.callout-quiz-answer summary strong,
+  details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-war-story summary,
+  details.callout-war-story summary strong,
+  details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+  details.callout-resource-videos summary,
+  details.callout-resource-videos summary strong,
+  details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+  details.callout-research-questions summary,
+  details.callout-research-questions summary strong,
+  details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+  details.callout-notebook summary,
+  details.callout-notebook summary strong,
+  details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+  details.callout-case-study summary,
+  details.callout-case-study summary strong,
+  details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+  details.callout-principle summary,
+  details.callout-principle summary strong,
+  details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+  details.callout-example summary,
+  details.callout-example summary strong,
+  details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+  details.callout-checkpoint summary,
+  details.callout-checkpoint summary strong,
+  details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+  details.callout-definition summary,
+  details.callout-definition summary strong,
+  details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+  details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+  details.callout-lighthouse summary,
+  details.callout-lighthouse summary strong,
+  details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+  details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+}
+body.quarto-dark details.callout-quiz-question {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-quiz-question summary,
+body.quarto-dark details.callout-quiz-question summary strong,
+body.quarto-dark details.callout-quiz-question > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-question code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-chapter-connection {
+    --text-color: #e6e6e6;
+    --background-color: rgba(100, 116, 139, 0.12);
+    --title-background-color: rgba(100, 116, 139, 0.12);
+    border-color: #64748B;
+  }
+body.quarto-dark details.callout-chapter-connection summary,
+body.quarto-dark details.callout-chapter-connection summary strong,
+body.quarto-dark details.callout-chapter-connection > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-chapter-connection code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-theorem {
+    --text-color: #e6e6e6;
+    --background-color: rgba(107, 70, 193, 0.12);
+    --title-background-color: rgba(107, 70, 193, 0.12);
+    border-color: #6B46C1;
+  }
+body.quarto-dark details.callout-theorem summary,
+body.quarto-dark details.callout-theorem summary strong,
+body.quarto-dark details.callout-theorem > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-theorem code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-colab {
+    --text-color: #e6e6e6;
+    --background-color: rgba(255, 107, 53, 0.12);
+    --title-background-color: rgba(255, 107, 53, 0.12);
+    border-color: #FF6B35;
+  }
+body.quarto-dark details.callout-colab summary,
+body.quarto-dark details.callout-colab summary strong,
+body.quarto-dark details.callout-colab > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-colab code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-perspective {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 85, 104, 0.12);
+    --title-background-color: rgba(74, 85, 104, 0.12);
+    border-color: #4A5568;
+  }
+body.quarto-dark details.callout-perspective summary,
+body.quarto-dark details.callout-perspective summary strong,
+body.quarto-dark details.callout-perspective > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-perspective code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-learning-objectives {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-learning-objectives summary,
+body.quarto-dark details.callout-learning-objectives summary strong,
+body.quarto-dark details.callout-learning-objectives > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-learning-objectives code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-slides {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-slides summary,
+body.quarto-dark details.callout-resource-slides summary strong,
+body.quarto-dark details.callout-resource-slides > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-slides code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-takeaways {
+    --text-color: #e6e6e6;
+    --background-color: rgba(157, 60, 114, 0.12);
+    --title-background-color: rgba(157, 60, 114, 0.12);
+    border-color: #9D3C72;
+  }
+body.quarto-dark details.callout-takeaways summary,
+body.quarto-dark details.callout-takeaways summary strong,
+body.quarto-dark details.callout-takeaways > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-takeaways code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-code {
+    --text-color: #e6e6e6;
+    --background-color: rgba(60, 72, 88, 0.12);
+    --title-background-color: rgba(60, 72, 88, 0.12);
+    border-color: #3C4858;
+  }
+body.quarto-dark details.callout-code summary,
+body.quarto-dark details.callout-code summary strong,
+body.quarto-dark details.callout-code > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-code code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-exercises {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-exercises summary,
+body.quarto-dark details.callout-resource-exercises summary strong,
+body.quarto-dark details.callout-resource-exercises > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-exercises code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-quiz-answer {
+    --text-color: #e6e6e6;
+    --background-color: rgba(74, 124, 89, 0.12);
+    --title-background-color: rgba(74, 124, 89, 0.12);
+    border-color: #4A7C59;
+  }
+body.quarto-dark details.callout-quiz-answer summary,
+body.quarto-dark details.callout-quiz-answer summary strong,
+body.quarto-dark details.callout-quiz-answer > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-quiz-answer code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-war-story {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-war-story summary,
+body.quarto-dark details.callout-war-story summary strong,
+body.quarto-dark details.callout-war-story > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-war-story code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-resource-videos {
+    --text-color: #e6e6e6;
+    --background-color: rgba(32, 178, 170, 0.12);
+    --title-background-color: rgba(32, 178, 170, 0.12);
+    border-color: #20B2AA;
+  }
+body.quarto-dark details.callout-resource-videos summary,
+body.quarto-dark details.callout-resource-videos summary strong,
+body.quarto-dark details.callout-resource-videos > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-resource-videos code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-research-questions {
+    --text-color: #e6e6e6;
+    --background-color: rgba(91, 75, 138, 0.12);
+    --title-background-color: rgba(91, 75, 138, 0.12);
+    border-color: #5B4B8A;
+  }
+body.quarto-dark details.callout-research-questions summary,
+body.quarto-dark details.callout-research-questions summary strong,
+body.quarto-dark details.callout-research-questions > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-research-questions code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-notebook {
+    --text-color: #e6e6e6;
+    --background-color: rgba(63, 96, 119, 0.12);
+    --title-background-color: rgba(63, 96, 119, 0.12);
+    border-color: #3F6077;
+  }
+body.quarto-dark details.callout-notebook summary,
+body.quarto-dark details.callout-notebook summary strong,
+body.quarto-dark details.callout-notebook > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-notebook code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-case-study {
+    --text-color: #e6e6e6;
+    --background-color: rgba(197, 48, 48, 0.12);
+    --title-background-color: rgba(197, 48, 48, 0.12);
+    border-color: #C53030;
+  }
+body.quarto-dark details.callout-case-study summary,
+body.quarto-dark details.callout-case-study summary strong,
+body.quarto-dark details.callout-case-study > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-case-study code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-principle {
+    --text-color: #e6e6e6;
+    --background-color: rgba(61, 59, 142, 0.12);
+    --title-background-color: rgba(61, 59, 142, 0.12);
+    border-color: #3D3B8E;
+  }
+body.quarto-dark details.callout-principle summary,
+body.quarto-dark details.callout-principle summary strong,
+body.quarto-dark details.callout-principle > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-principle code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-example {
+    --text-color: #e6e6e6;
+    --background-color: rgba(20, 143, 119, 0.12);
+    --title-background-color: rgba(20, 143, 119, 0.12);
+    border-color: #148F77;
+  }
+body.quarto-dark details.callout-example summary,
+body.quarto-dark details.callout-example summary strong,
+body.quarto-dark details.callout-example > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-example code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-checkpoint {
+    --text-color: #e6e6e6;
+    --background-color: rgba(77, 124, 15, 0.12);
+    --title-background-color: rgba(77, 124, 15, 0.12);
+    border-color: #4D7C0F;
+  }
+body.quarto-dark details.callout-checkpoint summary,
+body.quarto-dark details.callout-checkpoint summary strong,
+body.quarto-dark details.callout-checkpoint > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-checkpoint code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-definition {
+    --text-color: #e6e6e6;
+    --background-color: rgba(79, 115, 150, 0.12);
+    --title-background-color: rgba(79, 115, 150, 0.12);
+    border-color: #4F7396;
+  }
+body.quarto-dark details.callout-definition summary,
+body.quarto-dark details.callout-definition summary strong,
+body.quarto-dark details.callout-definition > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-definition code {
+    color: #e6e6e6 !important;
+  }
+body.quarto-dark details.callout-lighthouse {
+    --text-color: #e6e6e6;
+    --background-color: rgba(184, 134, 11, 0.12);
+    --title-background-color: rgba(184, 134, 11, 0.12);
+    border-color: #B8860B;
+  }
+body.quarto-dark details.callout-lighthouse summary,
+body.quarto-dark details.callout-lighthouse summary strong,
+body.quarto-dark details.callout-lighthouse > summary {
+    color: #f0f0f0 !important;
+  }
+body.quarto-dark details.callout-lighthouse code {
+    color: #e6e6e6 !important;
+  }
+</style>
+<style>
+details.callout-quiz-question > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_quiz_question.png");
+}
+details.callout-chapter-connection > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_chapter_connection.png");
+}
+details.callout-theorem > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_theorem.png");
+}
+details.callout-colab > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_colab.png");
+}
+details.callout-perspective > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_perspective.png");
+}
+details.callout-learning-objectives > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_learning_objectives.png");
+}
+details.callout-resource-slides > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_resource_slides.png");
+}
+details.callout-takeaways > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_takeaways.png");
+}
+details.callout-code > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_code.png");
+}
+details.callout-resource-exercises > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_resource_exercises.png");
+}
+details.callout-quiz-answer > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_quiz_answer.png");
+}
+details.callout-war-story > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-resource-videos > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_resource_videos.png");
+}
+details.callout-research-questions > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_research_questions.png");
+}
+details.callout-notebook > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_notebook.png");
+}
+details.callout-case-study > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_case_study.png");
+}
+details.callout-principle > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_principle.png");
+}
+details.callout-example > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_example.png");
+}
+details.callout-checkpoint > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_checkpoint.png");
+}
+details.callout-definition > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_definition.png");
+}
+details.callout-lighthouse > summary::before {
+  background-image: url("../../../shared/assets/images/icons/callouts/icon_callout_lighthouse.png");
+}
+</style>
+    <style type="text/css">
+    .ps-root .ps-algorithm {
+      border-top: 2px solid;
+      border-bottom: 2px solid;
+    }
+    .pseudocode-container {
+      text-align: left;
+    }
+    </style>
+  
+      <style type="text/css">
+      .ps-algorithm > .ps-line {
+        text-align: left;
+      }
+      </style>
+    
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="../../../shared/vendor/mathjax/es5/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<style id="zh-web-layout">#quarto-announcement{display:none!important}#quarto-document-content table>caption{display:table-caption!important;width:auto!important;caption-side:top} .cell-output-display{overflow-x:auto} mjx-container[display="true"]{overflow-x:auto;max-width:100%} img{max-width:100%;height:auto}[id]{scroll-margin-top:90px}</style>
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">机器学习系统 · 第一卷</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../../index.html" aria-current="page"> 
+<span class="menu-text">首页</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../vol1_zh/01_introduction/01_introduction.html"> 
+<span class="menu-text">开始阅读</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../vol1_zh/backmatter/glossary/glossary.html">术语表</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+  <div id="quarto-announcement" data-announcement-id="d3cc121d05ef1a79684f139997959c79" class="alert alert-primary hidden"><i class="bi bi-megaphone quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>📘 <strong>Volume I: Foundations.</strong> Single-machine ML systems — data, algorithms, and machines.<br> 🚀 <strong>Ready for scale?</strong> <a href="/books/mlsys/vol2/">Volume II: Scaling</a> — distributed training, fleet operations, responsible deployment.<br> 🛠️ <strong>Alongside the book:</strong> <a href="https://mlsysbook.ai/tinytorch/">TinyTorch</a> (build) · <a href="https://mlsysbook.ai/kits/">Hardware Kits</a> (deploy) · <a href="https://mlsysbook.ai/mlsysim/">MLSys·im</a> (model) · <a href="https://mlsysbook.ai/labs/">Labs</a> (explore) · <a href="https://mlsysbook.ai/staffml/">StaffML</a> (practice)<br> 📬 <strong>Newsletter:</strong> ML Systems insights &amp; updates — <a href="https://mlsysbook.ai/newsletter/">Subscribe →</a></p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">首页</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/frontmatter/dedication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">献词</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/frontmatter/foreword.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">序言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/frontmatter/author_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">作者的话</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/frontmatter/about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/frontmatter/acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">致谢</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/frontmatter/ai_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">关于 AI 辅助的说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/frontmatter/notation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">符号说明</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/01_introduction/01_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/parts/foundations_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基础原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/02_ml_systems/02_ml_systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习系统</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/03_ml_workflow/03_ml_workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习工作流</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/04_data_engineering/04_data_engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/parts/build_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">开发原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/05_nn_computation/05_nn_computation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">神经计算</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/06_nn_architectures/06_nn_architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">网络架构</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/07_frameworks/07_frameworks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习框架</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/08_training/08_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型训练</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/parts/optimize_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">优化原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/09_data_selection/09_data_selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据选择</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/10_model_compression/10_model_compression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型压缩</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/11_hw_acceleration/11_hw_acceleration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">硬件加速</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/12_benchmarking/12_benchmarking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">基准测试</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/parts/deploy_principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">部署原则</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/13_model_serving/13_model_serving.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">模型服务</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/14_ml_ops/14_ml_ops.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器学习运维</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/15_responsible_engr/15_responsible_engr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">负责任工程</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/16_conclusion/16_conclusion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">结论</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/backmatter/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">参考文献</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/backmatter/appendix_dam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据—算法—机器分类体系</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/backmatter/appendix_data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/backmatter/appendix_algorithm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">算法基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/backmatter/appendix_machine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">机器基础</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/backmatter/appendix_assumptions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">系统假设</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../vol1_zh/backmatter/glossary/glossary.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">术语表</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">本页目录</h2>
+   
+  <ul>
+  <li><a href="#术语表" id="toc-术语表" class="nav-link active" data-scroll-target="#术语表">术语表</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">术语表</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="术语表" class="level1 unnumbered">
+<h1 class="unnumbered">术语表</h1>
+<p>本术语表定义了本书使用的关键术语，并将其汇集为便于查阅的简明参考。术语按英文字母顺序排列，便于读者结合各章内容查阅。</p>
+<section id="sec-glossary-3-7d92" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-3-7d92">3</h2>
+<dl>
+<dt><strong>3DMark</strong></dt>
+<dd>
+一套用于评估实时 3D 渲染能力的图形性能基准测试套件，测量三角形吞吐量、纹理填充率，以及光线追踪和 DLSS 等现代功能的性能。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary--8feb" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary--8feb">A</h2>
+<dl>
+<dt><strong>A/B 测试</strong></dt>
+<dd>
+一种受控实验方法，通过将用户随机分组并测量不同版本之间的性能差异，比较系统或模型的两个版本。
+</dd>
+<dt><strong>消融研究</strong></dt>
+<dd>
+每次移除、禁用或隔离一个组件，以测量其对模型或系统行为贡献的实验。
+</dd>
+<dt><strong>基于激活值的剪枝</strong></dt>
+<dd>
+一种剪枝方法，通过评估神经元或滤波器在数据集上的平均激活值，识别并移除那些持续产生低激活值、对网络决策过程贡献很少信息的神经元。
+</dd>
+<dt><strong>激活检查点</strong></dt>
+<dd>
+一种内存优化技术，通过选择性地丢弃并重新计算激活值，而非存储所有中间结果，减少反向传播期间的内存使用量。
+</dd>
+<dt><strong>激活函数</strong></dt>
+<dd>
+应用于神经网络神经元输入加权和的数学函数，用于引入非线性，使网络能够学习超越简单线性组合的复杂模式。
+</dd>
+<dt><strong>激活内存</strong></dt>
+<dd>
+用于存储训练期间梯度计算所需的中间层输出的内存，其用量随批量大小、序列长度和模型深度而变化。
+</dd>
+<dt><strong>主动学习</strong></dt>
+<dd>
+一种根据模型不确定性，智能选择信息量最大的样本供人工标注的方法，从而减少有效训练所需的标注数据量。
+</dd>
+<dt><strong>Adam 优化</strong></dt>
+<dd>
+一种自适应学习率优化算法，通过为每个参数维护梯度及梯度平方的指数衰减平均值，结合动量法与 RMSprop。
+</dd>
+<dt><strong>AdamW</strong></dt>
+<dd>
+Adam 的一种变体，将权重衰减与自适应梯度更新解耦，在保留优化器自适应矩估计的同时改善正则化效果。
+</dd>
+<dt><strong>人工智能三要素</strong></dt>
+<dd>
+一种将机器学习系统建模为三个相互依赖组件的框架：引导行为的数据、学习模式的算法，以及支持训练和推理的计算基础设施。任何一个组件的局限都会制约其他组件的能力。
+</dd>
+<dt><strong>告警</strong></dt>
+<dd>
+自动化通知系统，在生产环境中的机器学习系统指标超出预设阈值或检测到异常时通知团队。
+</dd>
+<dt><strong>AlexNet</strong></dt>
+<dd>
+一种具有里程碑意义的卷积神经网络架构，在 2012 年 ImageNet 挑战赛中夺冠，将错误率从 26% 降至 16%，并引发了深度学习的复兴。
+</dd>
+<dt><strong>AllReduce</strong></dt>
+<dd>
+分布式计算中的一种集合通信操作，每个进程提供数据，所有进程均接收合并后的结果，常用于分布式训练中的梯度聚合。
+</dd>
+<dt><strong>全互连通信</strong></dt>
+<dd>
+一种通信模式，每个设备或进程都与其他所有设备或进程交换数据，常见于分片嵌入和专家并行工作负载。
+</dd>
+<dt><strong>AlphaFold</strong></dt>
+<dd>
+DeepMind 开发的具有里程碑意义的人工智能系统，可根据氨基酸序列预测许多蛋白质的三维结构。它在并未解决所有折叠问题的情况下实现了准确性的突破，展示了大规模机器学习系统如何加速科学发现。其预测结果仍需结合置信度解读，且在许多用途下需要实验验证。
+</dd>
+<dt><strong>阿姆达尔定律</strong></dt>
+<dd>
+一种加速比上界，表明整体性能提升受工作负载或流水线中仍需串行执行或尚未优化的部分限制。
+</dd>
+<dt><strong>AOT 编译</strong></dt>
+<dd>
+即提前编译，在部署或执行之前，将模型、图或程序转换为优化后的可执行代码，以牺牲灵活性为代价降低运行时开销。
+</dd>
+<dt><strong>Apache Kafka</strong></dt>
+<dd>
+一种分布式流处理平台，使用发布—订阅消息系统处理实时数据流，常用于构建具备高吞吐量和容错能力的机器学习数据流水线。
+</dd>
+<dt><strong>Apache Spark</strong></dt>
+<dd>
+一种开源分布式计算框架，支持在计算机集群上进行大规模数据处理，凭借内存计算能力革新了 ETL 操作。
+</dd>
+<dt><strong>专用集成电路（ASIC）</strong></dt>
+<dd>
+为特定计算任务设计的定制芯片，通过舍弃通用灵活性，提供优于通用处理器的性能和能效。示例包括 Google 的 TPU、Cerebras 晶圆级引擎和比特币挖矿 ASIC。
+</dd>
+<dt><strong>架构效率</strong></dt>
+<dd>
+模型优化的一个维度，关注如何通过利用稀疏性、分解大型组件，以及根据输入复杂度动态调整计算，在训练和推理期间高效执行计算。
+</dd>
+<dt><strong>算术强度</strong></dt>
+<dd>
+浮点运算次数与所访问内存字节数之比（FLOP/byte），用于 Roofline 分析，以确定工作负载受内存限制还是受计算限制，并指导优化优先级。
+</dd>
+<dt><strong>通用人工智能</strong></dt>
+<dd>
+旨在广泛的认知任务上达到人类水平表现的人工智能系统；该术语没有普遍认可的能力阈值，也不意味着采用某种特定架构。
+</dd>
+<dt><strong>人工智能</strong></dt>
+<dd>
+计算机科学的一个领域，专注于创建能够执行通常需要人类智能的任务的系统，例如感知、推理、学习和决策。
+</dd>
+<dt><strong>人工神经网络</strong></dt>
+<dd>
+一种受生物神经网络启发的计算模型，由按层组织且相互连接的节点（神经元）组成，能够通过可调节的权重和偏置从数据中学习模式。
+</dd>
+<dt><strong>人工神经元</strong></dt>
+<dd>
+神经网络中模拟生物神经元的基本计算单元，接收多个输入，应用权重和偏置，并通过激活函数产生输出信号。
+</dd>
+<dt><strong>注意力机制</strong></dt>
+<dd>
+一种神经网络组件，根据元素的内容计算它们之间的加权连接，使网络能够动态关注输入中的相关部分，而非依赖固定的架构连接。
+</dd>
+<dt><strong>AUC</strong></dt>
+<dd>
+ROC 曲线下面积，一种不依赖特定阈值的分类指标，比较不同决策阈值下的真正率和假正率。
+</dd>
+<dt><strong>审计追踪</strong></dt>
+<dd>
+一种仅可追加的记录，记载谁在何时访问或更改了数据、模型或系统产物，用于支持责任追溯、调试和合规。
+</dd>
+<dt><strong>自动求导记录带</strong></dt>
+<dd>
+在前向执行期间构建的临时记录，包含操作及保存的值，使反向模式自动微分能够在反向传播阶段计算梯度。
+</dd>
+<dt><strong>自动微分</strong></dt>
+<dd>
+一种计算技术，通过在基本操作层面系统地应用链式法则，自动计算以计算机程序实现的函数的精确导数，是通过基于梯度的优化训练神经网络的关键。
+</dd>
+<dt><strong>自动混合精度</strong></dt>
+<dd>
+一种训练技术，自动管理不同数值精度（FP16、FP32）的使用，在保持模型准确性的同时优化内存使用量和计算速度。
+</dd>
+<dt><strong>AutoML</strong></dt>
+<dd>
+即自动化机器学习，通过自动完成架构搜索、超参数优化和特征选择等模型设计决策，减少人工工作量。
+</dd>
+<dt><strong>自动扩缩容</strong></dt>
+<dd>
+根据工作负载需求动态调整计算资源，在使用高峰期自动扩容，在低谷期自动缩容，以优化成本和性能。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-b-9eb7" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-b-9eb7">B</h2>
+<dl>
+<dt><strong>反向传播</strong></dt>
+<dd>
+一种通过将误差信号沿网络各层反向传播，计算损失函数相对于网络权重的梯度的算法，使训练期间能够系统地更新权重。
+</dd>
+<dt><strong>反向传播阶段</strong></dt>
+<dd>
+训练中将梯度从损失沿网络反向传播，以计算参数梯度的阶段，与前向传播阶段相对应。
+</dd>
+<dt><strong>带宽</strong></dt>
+<dd>
+通信信道或内存接口的最大数据传输速率，通常以字节每秒计量，对优化人工智能加速器中的数据移动至关重要。
+</dd>
+<dt><strong>批量推理</strong></dt>
+<dd>
+对大型数据集集中执行推理的过程，通常作为定时作业运行，与针对单个请求的实时推理相对应。批量推理通过在多个输入之间分摊开销，实现更高的吞吐量。
+</dd>
+<dt><strong>批量摄取</strong></dt>
+<dd>
+一种按预定时间间隔成组或分批收集并处理数据的数据处理模式，适用于实时处理并非关键要求的场景。
+</dd>
+<dt><strong>批量归一化</strong></dt>
+<dd>
+一种将各层输入归一化为零均值、单位方差的技术，可稳定训练，且通常支持更高的学习率和更快的收敛；随后应用可学习的缩放和平移，以保留表示能力。
+</dd>
+<dt><strong>批处理</strong></dt>
+<dd>
+同时处理多个数据样本，以分摊计算和内存访问成本的技术，可提高神经网络训练和推理的整体吞吐量。
+</dd>
+<dt><strong>批量大小</strong></dt>
+<dd>
+神经网络训练的一次迭代中同时处理的训练样本数量，同时影响计算效率和梯度估计质量。
+</dd>
+<dt><strong>批量吞吐量优化</strong></dt>
+<dd>
+在同时处理多个输入时，利用并行性和批处理效率，最大化单位时间内处理样本数量的技术。
+</dd>
+<dt><strong>批量运算</strong></dt>
+<dd>
+同时处理多个输入的矩阵计算，通过将矩阵—向量运算转换为效率更高的矩阵—矩阵运算，提高硬件利用率。
+</dd>
+<dt><strong>基准测试工程</strong></dt>
+<dd>
+系统地设计和开发性能评估框架，涉及测试框架构建、指标选择和结果解读方法。
+</dd>
+<dt><strong>基准测试框架</strong></dt>
+<dd>
+一种系统化的基础设施组件，在受控条件下控制测试执行、管理输入供给并收集性能测量结果，以确保评估可复现。
+</dd>
+<dt><strong>基准测试</strong></dt>
+<dd>
+对机器学习系统的计算性能、算法有效性和数据质量进行系统性评估，以优化各类工作负载下的性能，并确保可复现性。
+</dd>
+<dt><strong>BERT</strong></dt>
+<dd>
+即基于 Transformer 的双向编码器表示，是 Google 于 2018 年提出的一种基于 Transformer 的语言模型，通过掩码语言建模预训练革新了自然语言处理。
+</dd>
+<dt><strong>BF16</strong></dt>
+<dd>
+Google Brain 开发的一种 16 位浮点格式，保持与 FP32 相同的动态范围，但精度较低，因此特别适合深度学习训练。
+</dd>
+<dt><strong>偏置</strong></dt>
+<dd>
+加到每个神经元加权和上的可学习参数，用于平移激活函数，使神经元即使在所有输入均为零时也能激活，并为网络拟合复杂模式提供额外的灵活性。
+</dd>
+<dt><strong>二值化</strong></dt>
+<dd>
+一种极端量化技术，将神经网络权重、激活值或两者都缩减为二值（通常为 -1 和 +1），实现最大程度的压缩，但通常需要专门的训练流程和硬件支持。
+</dd>
+<dt><strong>生物神经元</strong></dt>
+<dd>
+神经系统中通过电信号和化学信号接收、处理及传递信息的细胞，是人工神经网络的灵感来源。
+</dd>
+<dt><strong>苦涩的教训</strong></dt>
+<dd>
+Richard Sutton 于 2019 年提出的观察：利用计算的通用方法持续优于编码人类专业知识的方法，这表明支持计算规模扩展的系统工程是人工智能进步的核心。
+</dd>
+<dt><strong>黑箱</strong></dt>
+<dd>
+输入和输出可观测，但内部运行机制无法访问或不透明的系统。当系统作出影响重大的决策却不解释其推理过程时，这种不透明性尤其成问题。
+</dd>
+<dt><strong>BLAS</strong></dt>
+<dd>
+即基础线性代数子程序，是一套低层例程规范，用于执行向量加法、标量乘法、点积和矩阵运算等常见线性代数操作，构成现代机器学习框架的计算基础。
+</dd>
+<dt><strong>块稀疏矩阵</strong></dt>
+<dd>
+非零值以稠密块而非孤立元素形式出现的稀疏矩阵，保留了硬件内核能够高效利用的结构。
+</dd>
+<dt><strong>蓝绿部署</strong></dt>
+<dd>
+一种使用两个生产环境的部署策略，使流量能够切换到经过验证的新版本，同时保留旧版本以供回滚。
+</dd>
+<dt><strong>边界框</strong></dt>
+<dd>
+一种矩形标注，通过在每个目标对象周围绘制方框来标识图像中的对象位置，常用于计算机视觉训练数据集。
+</dd>
+<dt><strong>脆弱性</strong></dt>
+<dd>
+基于规则的人工智能系统在遇到超出其预编程场景的输入时彻底失效的倾向，无论这些输入与其设计处理的输入多么相似。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-c-d4e2" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-c-d4e2">C</h2>
+<dl>
+<dt><strong>缓存</strong></dt>
+<dd>
+一种将频繁访问的数据存储在高速存储系统中的技术，用于降低检索延迟，并提高机器学习流水线的系统性能。
+</dd>
+<dt><strong>缓存分配器</strong></dt>
+<dd>
+一种框架内存管理器，通过复用设备内存块，而非为每个张量都调用硬件分配器，降低分配延迟和内存碎片化程度。
+</dd>
+<dt><strong>校准</strong></dt>
+<dd>
+训练后量化中分析代表性数据集的过程，用于确定包括缩放因子和零点在内的最优量化参数，以尽量减少从高精度转换为低精度时的准确性损失。
+</dd>
+<dt><strong>金丝雀部署</strong></dt>
+<dd>
+一种部署策略，在全面发布前，将少量比例的生产流量分配给新模型版本，以验证其行为，从而在尽量减少用户影响的情况下及早发现问题。
+</dd>
+<dt><strong>CAP 定理</strong></dt>
+<dd>
+一项分布式系统原理，指出在发生网络分区时，数据存储无法对每个请求同时保证线性一致性和可用性。
+</dd>
+<dt><strong>碳足迹</strong></dt>
+<dd>
+训练和运行机器学习系统直接及间接产生的温室气体排放总量，通常以 CO<span class="math inline">\(_2\)</span> 当量计量。
+</dd>
+<dt><strong>碳强度</strong></dt>
+<dd>
+单位能源消耗产生的排放量，通常以 kg CO<sub>2</sub>e/kWh 计量，用于将机器学习的能源使用量换算为碳排放影响。
+</dd>
+<dt><strong>Cerebras 晶圆级引擎</strong></dt>
+<dd>
+在 CS-2 代产品中，一种包含 2.6 万亿个晶体管和 850,000 个核心的单晶圆处理器，旨在消除大规模机器学习训练中的设备间通信瓶颈。
+</dd>
+<dt><strong>链式法则</strong></dt>
+<dd>
+用于计算复合函数导数的微积分法则，是反向传播的基础。
+</dd>
+<dt><strong>逐通道量化</strong></dt>
+<dd>
+一种量化粒度方案，层中的每个通道使用各自的一组量化参数，在保持硬件效率的同时，提供比逐层量化更精确的表示。
+</dd>
+<dt><strong>CI/CD 流水线</strong></dt>
+<dd>
+持续集成和持续交付的自动化工作流，通过整合测试、验证和部署流程，简化模型开发。
+</dd>
+<dt><strong>熔断器模式</strong></dt>
+<dd>
+一种韧性设计模式，在服务反复失败后，停止或重定向对该不健康服务的调用，以防止级联故障，并支持回退行为。
+</dd>
+<dt><strong>分类标签</strong></dt>
+<dd>
+为数据样本分配特定标签或类别的简单类别标注，是监督学习标注最基本的形式。
+</dd>
+<dt><strong>CloudSuite</strong></dt>
+<dd>
+EPFL 开发的基准测试套件，面向网页搜索、数据分析和流媒体等现代数据中心工作负载，从网络、存储和计算等维度测量端到端性能。
+</dd>
+<dt><strong>冷启动性能</strong></dt>
+<dd>
+系统从空闲状态转换为主动执行状态所需的时间，在按需加载模型的无服务器环境中尤为重要。
+</dd>
+<dt><strong>协同过滤</strong></dt>
+<dd>
+推荐系统中使用的一种技术，通过识别大量用户交互中的模式来预测用户偏好，利用群体的集体行为，而非仅依赖物品属性。
+</dd>
+<dt><strong>通信开销</strong></dt>
+<dd>
+分布式系统中因节点间同步状态所需的延迟和带宽成本而产生的性能损失。
+</dd>
+<dt><strong>复合人工智能系统</strong></dt>
+<dd>
+将多个专用模型和组件组合起来协同工作的人工智能架构，而非依赖单个整体式模型，从而实现模块化、专业化并改善可解释性。
+</dd>
+<dt><strong>压缩稀疏行（CSR）</strong></dt>
+<dd>
+一种节省内存的稀疏矩阵存储格式，使用三个数组（值、列索引、行指针）仅存储非零元素，将内存需求从 <span class="math inline">\(\mathcal{O}(N^2)\)</span>（对于 <span class="math inline">\(N{\times}N\)</span> 矩阵）降至 <span class="math inline">\(\mathcal{O}(K + N)\)</span>，其中 <span class="math inline">\(K\)</span> 为非零元素的数量。
+</dd>
+<dt><strong>计算图</strong></dt>
+<dd>
+表示神经网络计算中操作序列的有向图，支持自动微分。
+</dd>
+<dt><strong>计算机工程</strong></dt>
+<dd>
+一门于 20 世纪 60 年代末兴起的工程学科，旨在应对硬件与软件系统集成日益增长的复杂性，结合电气工程和计算机科学的专业知识，设计并构建复杂计算系统。
+</dd>
+<dt><strong>概念漂移</strong></dt>
+<dd>
+<span class="math inline">\(P(Y\mid X)\)</span>，即输入与目标之间的统计关系，随时间发生变化的现象，不同于 <span class="math inline">\(P(X)\)</span> 的数据漂移；这种变化可能导致固定模型的性能下降，但并非必然。检测概念漂移通常需要结果标签，因为仅有输入漂移并不能证明条件关系发生了变化。
+</dd>
+<dt><strong>条件计算</strong></dt>
+<dd>
+一种动态优化技术，根据输入特征有选择地激活神经网络的不同部分，通过跳过特定输入不需要的计算来减少计算负载。
+</dd>
+<dt><strong>共识标注</strong></dt>
+<dd>
+一种质量控制方法，为同一数据点收集多个标注，以识别存在争议的样本，并通过标注者之间的一致性提高标签可靠性。
+</dd>
+<dt><strong>容器化</strong></dt>
+<dd>
+使用 Docker 等工具，将应用程序及其依赖项打包到可移植、相互隔离的容器中，以确保在不同环境中一致执行。
+</dd>
+<dt><strong>连续批处理</strong></dt>
+<dd>
+一种大语言模型服务技术，在序列开始和结束时，于词元生成步骤之间向推理批次中添加请求或从中移除请求。
+</dd>
+<dt><strong>持续集成</strong></dt>
+<dd>
+一种软件开发实践，每天多次自动集成、测试并验证代码变更，以在开发周期早期发现问题。
+</dd>
+<dt><strong>卷积</strong></dt>
+<dd>
+一种将滤波器（核）在输入数据上滑动，以提取边缘、纹理或模式等特征的数学运算。卷积是卷积神经网络的基础，对处理图像和空间数据尤其有效。
+</dd>
+<dt><strong>卷积神经网络</strong></dt>
+<dd>
+一种专为处理图像等网格状数据设计的神经网络架构，使用卷积层应用滤波器以检测局部特征。
+</dd>
+<dt><strong>核心集</strong></dt>
+<dd>
+从数据集中选择的小型子集，在降低训练或评估成本的同时，保留完整数据集的重要统计特性或训练特性。
+</dd>
+<dt><strong>修正级联</strong></dt>
+<dd>
+一种机器学习技术债务模式，由于数据和模型依赖关系会在系统中传播，修复一个组件会在其他位置引发新的故障或重新设计需求。
+</dd>
+<dt><strong>协变量偏移</strong></dt>
+<dd>
+一种分布偏移，输入特征的分布发生变化，而特征与标签之间的关系保持稳定。
+</dd>
+<dt><strong>CP 分解</strong></dt>
+<dd>
+即 CANDECOMP/PARAFAC 分解，将张量表示为多个秩一分量之和，用于通过减少参数数量来压缩神经网络层，同时保留其计算功能。
+</dd>
+<dt><strong>贡献分配问题</strong></dt>
+<dd>
+确定多层网络中的哪些权重导致了预测误差的难题。
+</dd>
+<dt><strong>CRISP-DM</strong></dt>
+<dd>
+即跨行业数据挖掘标准流程，是 1996 年提出的一种结构化方法论，为数据项目定义了六个阶段：业务理解、数据理解、数据准备、建模、评估和部署。
+</dd>
+<dt><strong>临界批量大小</strong></dt>
+<dd>
+超过此值后，更大的批量所带来的优化收益递减，并可能降低泛化能力的批量大小，从而限制了简单线性学习率缩放的适用范围。
+</dd>
+<dt><strong>交叉熵损失</strong></dt>
+<dd>
+分类任务中常用的一种损失函数，衡量预测概率分布与真实类别标签之间的差异，为有效学习提供较强的梯度。
+</dd>
+<dt><strong>众包</strong></dt>
+<dd>
+一种协作式数据收集方法，通过互联网组织分散的个体执行标注任务，借助 Amazon Mechanical Turk 等平台实现可扩展的数据集构建。
+</dd>
+<dt><strong>cuBLAS</strong></dt>
+<dd>
+NVIDIA 的 CUDA 基础线性代数子程序库，提供标准线性代数操作的 GPU 加速实现，支持在 NVIDIA 图形处理器上进行高性能矩阵计算。
+</dd>
+<dt><strong>CUDA（统一计算设备架构）</strong></dt>
+<dd>
+NVIDIA 的并行计算平台和编程模型，支持在图形处理器（GPU）上进行通用计算，使机器学习框架能够利用大规模并行性加速张量运算。
+</dd>
+<dt><strong>CUDA 流</strong></dt>
+<dd>
+GPU 工作的有序队列，用于调度内核、内存传输和同步事件，使独立操作能够重叠执行。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary--0bc6" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary--0bc6">D</h2>
+<dl>
+<dt><strong>数据—算法—机器分类体系</strong></dt>
+<dd>
+一种诊断框架，通过三个相互作用的轴分析机器学习系统瓶颈：数据（信息流，受带宽限制）、算法（数学逻辑，受总运算量限制）和机器（物理执行，受峰值吞吐量限制）。
+</dd>
+<dt><strong>达特茅斯会议</strong></dt>
+<dd>
+1956 年在达特茅斯学院举办、为期 8 周的传奇研讨会，标志着人工智能的正式诞生。会议由 John McCarthy、Marvin Minsky、Nathaniel Rochester 和 Claude Shannon 组织，源于他们于 1955 年提出的提案，该提案引入了“人工智能”一词。
+</dd>
+<dt><strong>数据即源代码</strong></dt>
+<dd>
+Software 2.0 的一项原则，认为训练数据定义了机器学习系统的行为，因此数据集变更如同会改变行为的代码变更。
+</dd>
+<dt><strong>数据增强</strong></dt>
+<dd>
+通过旋转、缩放或注入噪声等变换，创建现有数据的修改版本，以人工扩充训练数据集的过程。
+</dd>
+<dt><strong>数据级联</strong></dt>
+<dd>
+数据质量问题随时间不断累积，进而造成模型失效、代价高昂的重建或项目终止等下游负面后果的系统性失效。
+</dd>
+<dt><strong>数据中心</strong></dt>
+<dd>
+容纳计算机系统及电信、存储系统等相关组件的设施，通常包含数千台用于云计算业务的服务器。
+</dd>
+<dt><strong>以数据为中心的方法</strong></dt>
+<dd>
+一种机器学习范式，优先改善数据质量、多样性和数据整理，而非仅着眼于改进模型架构，以提升性能。
+</dd>
+<dt><strong>以数据为中心的计算</strong></dt>
+<dd>
+针对高效数据摄取和模型参数迭代优化而设计的系统，其中程序员的工作是整理数据。
+</dd>
+<dt><strong>数据契约</strong></dt>
+<dd>
+数据生产者与消费者之间的明确约定，规定数据模式、质量要求和服务级别，以防止下游系统发生故障。
+</dd>
+<dt><strong>数据整理</strong></dt>
+<dd>
+通过移除无关信息、纠正错误，并确保数据满足机器学习应用的特定标准，来选择、组织和维护高质量数据集的过程。
+</dd>
+<dt><strong>数据债务</strong></dt>
+<dd>
+在数据质量、文档、模式、血缘或时效性方面积累的欠账，这些欠账会随时间推移不断叠加，并导致模型行为退化。
+</dd>
+<dt><strong>数据漂移</strong></dt>
+<dd>
+即使代码保持不变，输入分布 <span class="math inline">\(P(X)\)</span> 仍随时间发生变化的现象；这可能影响模型性能，但不一定导致性能下降。无需标签即可监测数据漂移，但衡量其对质量的影响需要标签。
+</dd>
+<dt><strong>数据回响</strong></dt>
+<dd>
+一种训练输入流水线技术，当数据准备速度慢于加速器消耗数据的速度时，重复使用数据批次，通常每次应用新的数据增强。
+</dd>
+<dt><strong>数据治理</strong></dt>
+<dd>
+由政策、流程和技术构成的框架，用于确保整个机器学习流水线中的数据安全、隐私、合规性和合乎伦理的使用。
+</dd>
+<dt><strong>数据引力</strong></dt>
+<dd>
+由庞大数据量、传输时间、带宽限制和数据出站成本形成的架构牵引力，通常会促使计算向数据所在位置靠拢。
+</dd>
+<dt><strong>数据摄取</strong></dt>
+<dd>
+从各种来源收集原始数据并将其导入系统的过程，以便存储、处理这些数据，并为机器学习应用做好准备。
+</dd>
+<dt><strong>数据湖</strong></dt>
+<dd>
+以原生格式保存结构化、半结构化和非结构化数据的存储库，采用读时模式支持灵活的数据分析。
+</dd>
+<dt><strong>数据湖仓</strong></dt>
+<dd>
+一种存储架构，将数据湖的灵活性与数据仓库式的查询语义、模式管理和事务保证相结合。
+</dd>
+<dt><strong>数据血缘</strong></dt>
+<dd>
+对数据在各种转换和处理过程中的流转进行记录和跟踪，为合规与调试提供数据来源及修改情况的可见性。
+</dd>
+<dt><strong>数据局部性</strong></dt>
+<dd>
+当传输延迟、带宽限制或传输成本在远程处理中占主导地位时，应将数据与计算部署在同一位置的原则。
+</dd>
+<dt><strong>数据并行</strong></dt>
+<dd>
+一种分布式训练策略，将数据集划分到多个设备上，同时每个设备保留完整的模型副本，从而实现梯度的并行计算。
+</dd>
+<dt><strong>数据流水线</strong></dt>
+<dd>
+将数据从源端经过各处理阶段移至最终存储或消费端，并自动完成数据移动和转换的基础设施与工作流。
+</dd>
+<dt><strong>数据质量</strong></dt>
+<dd>
+数据满足准确性、完整性、一致性和及时性要求的程度，直接影响机器学习模型的性能。
+</dd>
+<dt><strong>数据质量乘数效应</strong></dt>
+<dd>
+指数据质量的改善能够放大模型和系统变更带来的收益，因为所有下游阶段都依赖数据。
+</dd>
+<dt><strong>数据验证</strong></dt>
+<dd>
+系统地核验所收集的数据是否符合质量标准、格式是否正确，以及是否包含适合机器学习模型训练与评估的准确信息。
+</dd>
+<dt><strong>数据版本管理</strong></dt>
+<dd>
+类似于代码版本管理，随时间跟踪和管理数据集不同版本的实践，以确保可复现性，并在需要时回滚到先前的数据状态。
+</dd>
+<dt><strong>数据仓库</strong></dt>
+<dd>
+针对分析查询（OLAP）优化的集中式存储库，以标准化模式存储来自多个来源、经过整合的结构化数据。
+</dd>
+<dt><strong>数据流架构</strong></dt>
+<dd>
+一种专用计算架构，其中指令执行由数据是否可用决定，而非由程序计数器决定，从而支持神经网络运算的高度并行处理。
+</dd>
+<dt><strong>数据流挑战</strong></dt>
+<dd>
+在硬件加速器中管理数据移动和依赖关系时面临的技术难题，包括内存带宽限制和同步要求。
+</dd>
+<dt><strong>数据集说明书</strong></dt>
+<dd>
+记录训练数据来源、采集方法、人口统计构成，以及影响模型行为的已知局限性的文档。
+</dd>
+<dt><strong>死信队列</strong></dt>
+<dd>
+用于存储处理失败数据的独立机制，支持后续分析并在可能时重新处理问题数据，同时避免阻塞主流水线。
+</dd>
+<dt><strong>去重</strong></dt>
+<dd>
+从数据集中移除完全重复、近似重复或语义冗余的样本，以减少存储开销、训练计算量和数据泄漏风险。
+</dd>
+<dt><strong>深度学习</strong></dt>
+<dd>
+机器学习的一个子领域，使用多层人工神经网络自动从数据中学习层次化表示，无需显式的特征工程。
+</dd>
+<dt><strong>人口统计均等</strong></dt>
+<dd>
+一种公平性准则，要求获得正类预测的概率不依赖于由受保护属性定义的群体归属。
+</dd>
+<dt><strong>登纳德缩放定律</strong></dt>
+<dd>
+一项观察规律：随着晶体管尺寸缩小，其功率密度保持不变，从而能够在相同功耗范围内实现更高性能。该规律在 2005 年前后失效，结束了无需额外功耗代价即可提升频率的时代。
+</dd>
+<dt><strong>全连接层</strong></dt>
+<dd>
+一种神经网络层，其中每个神经元都接收前一层所有神经元的输入，从而全面整合各特征的信息。
+</dd>
+<dt><strong>部署约束</strong></dt>
+<dd>
+硬件资源、网络连接、监管要求和集成要求等运行限制，会影响机器学习模型在生产环境中的实现方式。
+</dd>
+<dt><strong>部署范式</strong></dt>
+<dd>
+一种托管和执行机器学习模型的特定方式，具有特定的资源约束和运行特性，例如云端机器学习、边缘机器学习、移动端机器学习或 TinyML。
+</dd>
+<dt><strong>深度可分离卷积</strong></dt>
+<dd>
+一种卷积分解方法，先对每个通道独立进行空间滤波，再通过逐点卷积混合通道，以减少计算量。
+</dd>
+<dt><strong>DevOps</strong></dt>
+<dd>
+一种将开发团队与运维团队相结合的软件开发实践，通过自动化与协作缩短开发周期并交付高质量软件。
+</dd>
+<dt><strong>Dhrystone</strong></dt>
+<dd>
+1984 年提出的一种基于整数的基准测试，以 DMIPS（Dhrystone MIPS）衡量整数和字符串操作性能，旨在利用典型编程结构补充浮点基准测试。
+</dd>
+<dt><strong>糖尿病视网膜病变</strong></dt>
+<dd>
+一种损伤视网膜血管的糖尿病并发症，是可预防失明的主要原因之一，也是医疗 AI 筛查系统的重要应用领域。
+</dd>
+<dt><strong>差分隐私</strong></dt>
+<dd>
+一种数学框架，通过限制添加或移除任意一个人的数据时输出分布能够发生的变化幅度，量化并限制发布数据集统计信息时造成的隐私损失。
+</dd>
+<dt><strong>直接内存访问（DMA）</strong></dt>
+<dd>
+一种允许设备在自身与内存之间移动数据的机制，无需 CPU 为每次传输执行复制管理，从而支持传输与计算重叠，并降低主机开销。
+</dd>
+<dt><strong>分组评估</strong></dt>
+<dd>
+按人口统计群体或其他因素细分模型性能指标的实践，以揭示汇总指标所掩盖的差异。
+</dd>
+<dt><strong>调度开销</strong></dt>
+<dd>
+通过主机框架启动和编排大量小型操作，而非执行融合或编译后的计算图区域所产生的运行时开销。
+</dd>
+<dt><strong>分布式计算</strong></dt>
+<dd>
+一种在多台机器或多个处理器上同时处理数据的方法，通过 Apache Spark 等框架实现对大型数据集的可扩展处理。
+</dd>
+<dt><strong>分布式智能</strong></dt>
+<dd>
+将计算能力部署在多个设备和位置上，而非依赖单一的集中式系统，从而支持本地处理与决策。
+</dd>
+<dt><strong>分布式训练</strong></dt>
+<dd>
+一种跨多台机器或多个设备训练机器学习模型的方法，用于处理更大的数据集，以及超出单设备计算能力或内存容量的模型。
+</dd>
+<dt><strong>分布偏移</strong></dt>
+<dd>
+训练与部署之间，或部署期间随时间推移，数据统计特性发生的变化。其类型包括协变量偏移（输入分布变化）、标签偏移（输出分布变化）和概念漂移（输入与输出之间的关系变化）。
+</dd>
+<dt><strong>DLRM</strong></dt>
+<dd>
+深度学习推荐模型，由 Meta 开发的一种架构，将类别嵌入与底部多层感知机（MLP）和顶部 MLP 相结合，以应对推荐系统工作负载的超大规模与稀疏性。
+</dd>
+<dt><strong>领域专用架构</strong></dt>
+<dd>
+为优化特定计算工作负载而定制的硬件设计，相较于通用处理器，以灵活性换取更高的性能和能效。
+</dd>
+<dt><strong>随机失活</strong></dt>
+<dd>
+一种正则化技术，在训练期间随机将一部分输入单元置零，以防止过拟合并改善泛化能力。
+</dd>
+<dt><strong>ReLU 神经元死亡问题</strong></dt>
+<dd>
+一种失效模式：当加权输入持续产生负的预激活值时，ReLU 神经元会永久失活，对所有输入均输出零，从而无法参与学习。
+</dd>
+<dt><strong>动态批处理</strong></dt>
+<dd>
+一种模型服务技术，通过短暂等待，将独立请求组成批次，在引入可控的组批延迟的同时提升吞吐量。
+</dd>
+<dt><strong>动态图</strong></dt>
+<dd>
+在程序执行期间构建和修改的计算图，支持灵活的模型架构并便于调试，但与静态图相比，可能限制优化机会。
+</dd>
+<dt><strong>动态剪枝</strong></dt>
+<dd>
+一种剪枝方法，根据输入数据或训练动态改变处于非激活状态的参数或单元，而非仅依赖固定的剪枝决策。
+</dd>
+<dt><strong>动态量化</strong></dt>
+<dd>
+以较低精度存储神经网络权重，并在运行时确定激活值量化参数的过程，可减少内存使用量，但需要受支持的低精度计算内核才能实现加速。
+</dd>
+<dt><strong>动态随机存取存储器（DRAM）</strong></dt>
+<dd>
+一种将数据存储在电容器中、需要周期性刷新的易失性存储器，通常用作计算机系统的主存。
+</dd>
+<dt><strong>动态电压与频率调节（DVFS）</strong></dt>
+<dd>
+一种电源管理技术，根据工作负载需求调整处理器电压和时钟频率，在维持性能的同时优化能耗。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-e-95b0" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-e-95b0">E</h2>
+<dl>
+<dt><strong>即时执行</strong></dt>
+<dd>
+一种在代码调用操作时立即求值的执行模式，可提供直观的调试与开发体验，但可能牺牲基于计算图执行所具备的部分优化机会。
+</dd>
+<dt><strong>提前退出架构</strong></dt>
+<dd>
+一种在不同深度设置多个预测头的神经网络设计，允许样本在能够获得高置信度预测时提前退出，从而降低每次推理的平均计算成本。
+</dd>
+<dt><strong>边缘计算</strong></dt>
+<dd>
+一种将计算和数据存储移近数据源的分布式计算范式，以减少延迟和带宽使用量。
+</dd>
+<dt><strong>边缘部署</strong></dt>
+<dd>
+一种让机器学习模型在网络边缘设备上本地运行，而非在集中式云服务器上运行的部署策略，可降低延迟，并支持在无需持续互联网连接的情况下运行。
+</dd>
+<dt><strong>效率前沿</strong></dt>
+<dd>
+准确率与计算成本（延迟、能耗或内存）之间的最优权衡曲线，在该曲线上，不存在准确率和效率同时更高的模型。
+</dd>
+<dt><strong>EfficientNet</strong></dt>
+<dd>
+通过神经架构搜索发现的一系列神经网络架构，利用复合缩放平衡网络深度、宽度和输入分辨率，从而实现更优的准确率与效率权衡。
+</dd>
+<dt><strong>EL2N（误差 L2 范数）</strong></dt>
+<dd>
+一种样本评分方法，通常使用代理模型，根据训练早期的预测误差对样本排序，以识别对数据选择有信息价值的边界样本。
+</dd>
+<dt><strong>ELIZA</strong></dt>
+<dd>
+最早的聊天机器人之一，由麻省理工学院的 Joseph Weizenbaum 于 1966 年创建，能够通过模式匹配和替换模拟人类对话。其引人注目之处在于，人们开始对这一简单程序产生情感依恋。
+</dd>
+<dt><strong>嵌入式系统</strong></dt>
+<dd>
+位于更大型机械或电气系统内部、具有专用功能的计算机系统，通常面向特定任务设计，并受到实时计算约束。
+</dd>
+<dt><strong>嵌入分片</strong></dt>
+<dd>
+将大型嵌入表拆分到多个设备或节点上，使其能够容纳于这些设备或节点的总内存中，同时会增加为每个批次汇集嵌入向量的通信开销。
+</dd>
+<dt><strong>嵌入表</strong></dt>
+<dd>
+将离散 ID 或词元映射为稠密向量的查找表，通常占据推荐模型和大词表模型中大部分的内存。
+</dd>
+<dt><strong>涌现行为</strong></dt>
+<dd>
+由各个组件相互作用产生的、出乎预期的系统整体模式或特性，通常只有在系统大规模运行或处于真实环境时才会显现。
+</dd>
+<dt><strong>编码器—解码器</strong></dt>
+<dd>
+一种架构模式，其中编码器将输入处理为中间表示，解码器再根据该表示生成输出，常用于序列到序列任务。
+</dd>
+<dt><strong>端到端基准测试</strong></dt>
+<dd>
+一种全面的评估方法，评估整个 AI 系统流水线，包括数据处理、模型执行、后处理和基础设施组件。
+</dd>
+<dt><strong>能效</strong></dt>
+<dd>
+单位能耗所完成的计算工作量，通常以每焦耳运算次数表示，对于电池供电设备和数据中心部署至关重要。
+</dd>
+<dt><strong>单次推理能耗</strong></dt>
+<dd>
+生成一次模型预测所消耗的总能量，包括模型执行和相关系统开销。
+</dd>
+<dt><strong>训练轮次</strong></dt>
+<dd>
+神经网络训练过程中完整遍历整个训练数据集一次，由多个批次迭代组成，迭代次数取决于数据集大小和批次大小。
+</dd>
+<dt><strong>机会均等</strong></dt>
+<dd>
+一种公平性准则，要求不同人口统计群体具有相同的真正率。
+</dd>
+<dt><strong>均等化胜算</strong></dt>
+<dd>
+一种公平性准则，要求不同人口统计群体的真正率和假正率均相同。
+</dd>
+<dt><strong>期望校准误差（ECE）</strong></dt>
+<dd>
+一种衡量各置信度分箱中预测置信度与观测准确率之间差距的指标，用于评估概率校准程度。
+</dd>
+<dt><strong>实验跟踪</strong></dt>
+<dd>
+系统地记录和管理机器学习实验，包括超参数、模型版本、训练数据和性能指标，以支持比较与复现。
+</dd>
+<dt><strong>专家系统</strong></dt>
+<dd>
+最早于 20 世纪 60 年代中期开发的 AI 系统，用于编码特定领域的人类专家知识，例如诊断血液感染的 MYCIN，体现了从通用 AI 向领域专用应用的转变。
+</dd>
+<dt><strong>提取、加载、转换（ELT）</strong></dt>
+<dd>
+一种先将原始数据加载到目标系统，再进行转换的数据处理范式，为不断变化的分析需求提供灵活性。
+</dd>
+<dt><strong>提取、转换、加载（ETL）</strong></dt>
+<dd>
+一种在将数据加载到数据仓库之前先进行转换的传统数据处理范式，可生成格式化、可直接查询的数据。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-f-f9e7" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-f-f9e7">F</h2>
+<dl>
+<dt><strong>公平性洗白</strong></dt>
+<dd>
+一种失效模式：移除显式的受保护属性使系统表面上符合要求，但相关的代理变量仍会产生歧视性结果。
+</dd>
+<dt><strong>假正率（FPR）</strong></dt>
+<dd>
+实际负例被错误分类为正例的比例，计算方式为假正例数除以假正例数与真负例数之和。
+</dd>
+<dt><strong>FarmBeats</strong></dt>
+<dd>
+微软研究院的一个项目，将机器学习和物联网技术应用于农业，利用边缘计算收集土壤状况和作物健康的实时数据，同时展示分布式 AI 系统在具有挑战性的真实环境中的应用。
+</dd>
+<dt><strong>特征工程</strong></dt>
+<dd>
+从原始数据中手动设计和提取相关特征，以改善机器学习模型性能的过程；在深度学习系统中，这一过程已在很大程度上实现自动化。
+</dd>
+<dt><strong>特征图</strong></dt>
+<dd>
+卷积层的输出，表示学习到的滤波器对输入中不同空间位置的响应，捕获各个位置检测到的特征。
+</dd>
+<dt><strong>特征存储</strong></dt>
+<dd>
+一种专用数据存储系统，为机器学习提供标准化、可复用的特征，支持多个模型和团队之间共享特征。
+</dd>
+<dt><strong>联邦学习</strong></dt>
+<dd>
+一种在持有本地数据样本的去中心化边缘设备或服务器上训练算法、无需交换原始数据的机器学习方法。
+</dd>
+<dt><strong>反馈回路</strong></dt>
+<dd>
+输出影响未来输入的循环过程。在机器学习中，这既包括有益的循环（模型输出为系统改进提供依据），也包括有害的循环（模型预测影响其自身未来的训练数据，可能随时间推移强化并放大初始偏差）。
+</dd>
+<dt><strong>前馈网络</strong></dt>
+<dd>
+一种信息从输入层向输出层单向流动、没有环路的神经网络架构，是许多深度学习模型的基础。
+</dd>
+<dt><strong>现场可编程门阵列（FPGA）</strong></dt>
+<dd>
+一种可重配置集成电路，可在制造完成后通过编程实现定制数字电路和专用计算，其灵活性介于通用处理器与 ASIC 之间。
+</dd>
+<dt><strong>微调</strong></dt>
+<dd>
+在特定任务的数据上继续训练，使预训练模型适应目标任务或领域。
+</dd>
+<dt><strong>五支柱框架</strong></dt>
+<dd>
+一种机器学习系统工程组织框架，由五个相互关联的领域组成：数据工程、训练系统、部署基础设施、运维与监控，以及伦理与治理。
+</dd>
+<dt><strong>FlashAttention</strong></dt>
+<dd>
+一种面向 IO 优化的注意力算法，通过分块计算避免在高带宽内存中显式存储完整的注意力矩阵，从而减少内存数据传输，并支持更长的序列。
+</dd>
+<dt><strong>浮点运算单元（FPU）</strong></dt>
+<dd>
+一种专用处理器组件，用于以高精度和高效率执行浮点数算术运算。
+</dd>
+<dt><strong>FLOP/s</strong></dt>
+<dd>
+每秒浮点运算次数，是计算吞吐量的度量，量化系统每秒能够执行的浮点运算次数。
+</dd>
+<dt><strong>遗忘事件</strong></dt>
+<dd>
+模型在训练过程中从正确分类某个样本转变为随后错误分类该样本的事件，可用于标识困难或具有信息价值的样本。
+</dd>
+<dt><strong>前向计算</strong></dt>
+<dd>
+将输入数据依次传递至神经网络各层，并在每个阶段应用权重、偏置和激活函数以生成输出、计算预测结果的过程。也称为<em>前向传播</em>。
+</dd>
+<dt><strong>基础模型</strong></dt>
+<dd>
+在广泛数据上训练的大规模机器学习模型，可适配多种下游任务，为专门应用提供基础。
+</dd>
+<dt><strong>四支柱框架</strong></dt>
+<dd>
+一种数据工程框架，将相关关注点组织为质量、可靠性、可扩展性和治理四个方面，以管理数据生命周期。
+</dd>
+<dt><strong>FP16</strong></dt>
+<dd>
+16 位浮点数值表示，可减少内存使用量，并在现代硬件加速器上加速计算，同时为许多机器学习应用维持可接受的精度。
+</dd>
+<dt><strong>FP32</strong></dt>
+<dd>
+32 位浮点数值表示，为数学计算提供标准精度，但比低精度格式需要更多内存和计算资源。
+</dd>
+<dt><strong>FP32 转 INT8</strong></dt>
+<dd>
+一种常见的量化转换，将 32 位浮点权重和激活值转换为 8 位整数，使内存占用降至约原来的四分之一（约 4<span class="math inline">\(\times\)</span> 的缩减倍数），同时为许多模型维持可接受的准确率。
+</dd>
+<dt><strong>FP8</strong></dt>
+<dd>
+一类用于较新加速器的 8 位浮点格式，支持高吞吐量训练与推理；由于精度和表示范围有限，需要谨慎进行缩放。
+</dd>
+<dt><strong>框架分解</strong></dt>
+<dd>
+将神经网络框架系统地分解为可映射到硬件的组件，从而将运算高效地分配到各处理单元上。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-g-56ef" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-g-56ef">G</h2>
+<dl>
+<dt><strong>GEMM</strong></dt>
+<dd>
+通用矩阵乘法运算，遵循 <span class="math inline">\(C = \alpha AB + \beta C\)</span> 的形式，是包括全连接层和卷积层在内的大多数神经网络运算所依赖的基础计算内核。
+</dd>
+<dt><strong>GEMV</strong></dt>
+<dd>
+通用矩阵—向量乘法运算，计算矩阵与向量的乘积，常用于神经网络计算，需要针对内存访问模式进行细致优化。
+</dd>
+<dt><strong>泛化</strong></dt>
+<dd>
+机器学习模型在不同于训练集的未见数据上表现良好的能力，通常可通过多样化、高质量的训练数据加以改善。
+</dd>
+<dt><strong>泛化差距</strong></dt>
+<dd>
+模型在训练数据上的性能与其在留出数据上的性能之差。较大的泛化差距可能表明模型对训练数据过拟合。
+</dd>
+<dt><strong>生成式 AI</strong></dt>
+<dd>
+一类能够根据从训练数据中学习到的模式，创建文本、图像、音频或视频等新内容的人工智能系统。
+</dd>
+<dt><strong>古德哈特定律</strong></dt>
+<dd>
+一项观察规律：当某个度量成为优化目标时，它可能不再代表其背后的真实目标。
+</dd>
+<dt><strong>GPT-2</strong></dt>
+<dd>
+OpenAI 于 2019 年发布的一种拥有 15 亿参数的自回归语言模型，是分析 Transformer 推理中内存带宽约束的主要代表性模型。
+</dd>
+<dt><strong>优雅降级</strong></dt>
+<dd>
+一种系统设计原则：当出现部分故障或数据不可用时，服务仍以较低的能力水平继续运行。
+</dd>
+<dt><strong>梯度累积</strong></dt>
+<dd>
+一种在更新模型参数之前累积多个较小批次梯度，以模拟更大批次大小的技术，支持在内存有限的条件下进行训练。
+</dd>
+<dt><strong>基于梯度的剪枝</strong></dt>
+<dd>
+一种利用梯度信息，对参数、神经元或滤波器进行排序，以确定候选移除对象的剪枝方法。
+</dd>
+<dt><strong>梯度裁剪</strong></dt>
+<dd>
+一种在反向传播过程中通过限制梯度大小来缓解梯度爆炸的优化技术，通常在梯度范数超过阈值时对梯度进行缩放。
+</dd>
+<dt><strong>梯度压缩</strong></dt>
+<dd>
+一种用于分布式训练的技术，通过压缩计算节点之间交换的梯度信息来减少通信开销。
+</dd>
+<dt><strong>梯度下降</strong></dt>
+<dd>
+一种利用梯度确定更新方向和幅度，沿使损失函数减小的方向迭代调整神经网络参数的优化算法。
+</dd>
+<dt><strong>梯度同步</strong></dt>
+<dd>
+分布式训练中跨设备汇总本地计算梯度的过程，以确保所有设备一致地更新参数。
+</dd>
+<dt><strong>GraNd（梯度范数）</strong></dt>
+<dd>
+一种基于训练早期样本梯度范数的数据选择评分，用于识别学习信号较强的样本。
+</dd>
+<dt><strong>计算图中断</strong></dt>
+<dd>
+编译器无法捕获程序的某个部分、必须回退到即时执行的位置，这会将优化后的计算图区域分割开来。
+</dd>
+<dt><strong>图形处理器（GPU）</strong></dt>
+<dd>
+最初为图形渲染而设计的专用处理器，提供大规模并行计算能力，对高效的神经网络计算、训练和推理至关重要。
+</dd>
+<dt><strong>绿色 AI</strong></dt>
+<dd>
+AI 研究与实践中的一种运动，将计算效率和能耗与准确率等传统性能指标并列为主要评价指标。
+</dd>
+<dt><strong>Green500</strong></dt>
+<dd>
+一种排名体系，以每瓦 FLOP/s 衡量的能源效率，而非原始计算性能，评价全球性能最强的超级计算机。
+</dd>
+<dt><strong>真值</strong></dt>
+<dd>
+在训练或评估中被视为正确的参考目标，通常来源于测量或标注，因此不一定与客观现实完全一致。
+</dd>
+<dt><strong>GRU</strong></dt>
+<dd>
+门控循环单元，是 LSTM 的一种简化变体，使用更少的门，同时保留捕获序列数据中长期依赖关系的能力。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-h-a04d" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-h-a04d">H</h2>
+<dl>
+<dt><strong>硬件抽象</strong></dt>
+<dd>
+机器学习框架中的一个层次，为不同计算硬件（CPU、GPU、TPU、加速器）提供统一接口，同时在底层处理设备特定的优化和内存管理。
+</dd>
+<dt><strong>硬件加速</strong></dt>
+<dd>
+使用专用计算硬件执行某些操作，使其比运行在通用处理器上的软件更快、更高效。
+</dd>
+<dt><strong>硬件加速器</strong></dt>
+<dd>
+为高效执行特定类型计算而设计的专用计算硬件，例如用于并行处理的 GPU 或用于机器学习工作负载的 TPU。
+</dd>
+<dt><strong>硬件感知设计</strong></dt>
+<dd>
+专门针对目标硬件平台优化神经网络架构的设计实践，考虑内存层次结构、计算单元和数据移动模式等因素，以最大限度地提高效率。
+</dd>
+<dt><strong>隐藏层</strong></dt>
+<dd>
+神经网络中位于输入层和输出层之间的中间层，通过学习得到的权重和激活函数变换数据，从而学习抽象表示。
+</dd>
+<dt><strong>隐藏状态</strong></dt>
+<dd>
+循环神经网络的内部记忆，携带先前时间步的信息，使网络能够在序列输入之间保留上下文。
+</dd>
+<dt><strong>分层处理</strong></dt>
+<dd>
+一种多层系统架构，数据和智能处理能力在计算栈的不同层级之间流动，涵盖传感器、边缘设备和云端系统。
+</dd>
+<dt><strong>高带宽内存（HBM）</strong></dt>
+<dd>
+一种先进的内存技术，通过三维堆叠和宽接口提供远高于传统 DRAM 的带宽，对数据密集型 AI 工作负载至关重要。
+</dd>
+<dt><strong>水平扩展</strong></dt>
+<dd>
+通过增加机器或实例，而非升级现有硬件来提升系统容量，从而提供更好的容错能力和负载分布。
+</dd>
+<dt><strong>混合机器学习</strong></dt>
+<dd>
+将云端、边缘、移动端和 TinyML 等多种机器学习范式集成为统一的分布式系统，结合各自互补的优势。
+</dd>
+<dt><strong>混合并行</strong></dt>
+<dd>
+一种结合数据并行和模型并行的分布式训练方法，利用两种策略的优势训练超大模型。
+</dd>
+<dt><strong>超参数</strong></dt>
+<dd>
+控制学习过程但不从数据中学习得到的配置项，例如学习率、批大小或网络架构选择。
+</dd>
+<dt><strong>超大规模数据中心</strong></dt>
+<dd>
+包含数千台服务器、占地面积庞大的大型数据中心设施，旨在高效支持海量计算工作负载。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary--4e91" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary--4e91">I</h2>
+<dl>
+<dt><strong>I/O 瓶颈</strong></dt>
+<dd>
+存储、解码、预处理或数据传输无法以足够快的速度提供数据，因而无法使计算资源持续忙碌的性能限制。
+</dd>
+<dt><strong>幂等变换</strong></dt>
+<dd>
+重复应用与应用一次产生相同效果的数据变换，支持安全重试和重新处理。
+</dd>
+<dt><strong>im2col</strong></dt>
+<dd>
+一种卷积转换技术，将图像块展开为矩阵的列，使卷积能够以 GEMM 的形式执行。
+</dd>
+<dt><strong>ImageNet</strong></dt>
+<dd>
+一个大型视觉数据库，包含超过 1,400 万张带标签图像，涵盖 20,000 多个类别，由李飞飞领导的团队开发并于 2009 年推出。其年度挑战赛在推动计算机视觉取得突破性进展方面发挥了重要作用。
+</dd>
+<dt><strong>命令式编程</strong></dt>
+<dd>
+一种编程范式，程序指定用于更新状态和控制执行流程的命令序列；这一范式与操作是立即执行还是暂存以供稍后执行并无直接关联。
+</dd>
+<dt><strong>归纳偏置</strong></dt>
+<dd>
+内置于模型或架构中的结构性假设，限制了模型能够高效学习的函数范围，例如 CNN 中的局部性。
+</dd>
+<dt><strong>推理</strong></dt>
+<dd>
+训练完成的神经网络使用固定参数对新数据进行预测的运行阶段，不更新权重。
+</dd>
+<dt><strong>InfiniBand</strong></dt>
+<dd>
+一种高吞吐量、低延迟的网络技术，常用于多节点加速器集群和分布式训练。
+</dd>
+<dt><strong>信息—计算比（ICR）</strong></dt>
+<dd>
+量化数据选择效率的指标，定义为模型性能增益与实现该增益所需计算成本（FLOPs）之比。最大化 ICR 是数据选择策略的首要目标。
+</dd>
+<dt><strong>基础设施即代码</strong></dt>
+<dd>
+通过机器可读的配置文件而非人工流程管理和配置计算基础设施的实践，可实现版本控制和自动化。
+</dd>
+<dt><strong>INT8</strong></dt>
+<dd>
+一种 8 位有符号整数表示，用于量化权重、激活值或两者。每个 INT8 值占用的存储空间是 FP32 值的四分之一，支持该格式的硬件能够加速适用的操作，准确率则取决于量化方案。
+</dd>
+<dt><strong>中间表示（IR）</strong></dt>
+<dd>
+编译器内部使用的一种表示，位于前端模型代码与后端硬件代码生成之间，供机器学习框架进行优化并实现可移植性。
+</dd>
+<dt><strong>物联网</strong></dt>
+<dd>
+由嵌入传感器、软件及其他技术的物理对象构成的网络，这些对象通过互联网与其他设备和系统连接并交换数据。
+</dd>
+<dt><strong>交叉性分析</strong></dt>
+<dd>
+一种考虑人口统计属性组合（例如同时考虑种族和性别）的评估方法，用于发现单因素分析无法揭示的、集中于特定群体的危害。
+</dd>
+<dt><strong>IOPS</strong></dt>
+<dd>
+每秒输入/输出操作数；衡量设备每秒可处理读写操作次数的存储性能指标，对训练数据加载等随机访问工作负载至关重要。
+</dd>
+<dt><strong>机器学习系统铁律</strong></dt>
+<dd>
+将机器学习系统性能分解为三项的定量框架：数据（受带宽限制）、计算（受 FLOP/s 限制）和延迟（受开销限制）。其公式为 <span class="math inline">\(T = D_{\text{vol}}/\text{BW} + O/(R_{\text{peak}} \cdot \eta_{\text{hw}}) + L_{\text{lat}}\)</span>。
+</dd>
+<dt><strong>迭代剪枝</strong></dt>
+<dd>
+一种渐进式剪枝策略，分多个阶段移除参数，并在各阶段之间进行微调，使模型能够适应容量的减小，通常比一次性剪枝获得更高的准确率。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-j-414d" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-j-414d">J</h2>
+<dl>
+<dt><strong>JAX</strong></dt>
+<dd>
+由 Google Research 开发的数值计算库，将 NumPy 的 API 与自动微分、即时编译和自动向量化等函数式编程变换相结合，用于高性能机器学习研究。
+</dd>
+<dt><strong>JIT 编译</strong></dt>
+<dd>
+即时编译，在运行时分析并优化代码，通过编译常用函数，使框架能够兼顾即时执行的灵活性与图优化的性能优势。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-k-e2c2" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-k-e2c2">K</h2>
+<dl>
+<dt><strong>k-匿名性</strong></dt>
+<dd>
+一种隐私保护技术，通过对准标识符进行泛化，确保数据集中的每条记录都与至少 k-1 条其他记录不可区分。
+</dd>
+<dt><strong>核</strong></dt>
+<dd>
+卷积层中用于通过卷积操作检测特定特征的可学习权重小矩阵，也称为滤波器。在 GPU 编程中，该术语也指启动后由线程网格并行执行的函数。
+</dd>
+<dt><strong>核融合</strong></dt>
+<dd>
+一种将多个计算操作合并为单个核的优化技术，用于减少内存传输并提升并行处理器上的性能。
+</dd>
+<dt><strong>关键词检测（KWS）</strong></dt>
+<dd>
+一种检测音频流中特定唤醒词或短语的技术，通常用于对功耗和延迟有限制的声控设备。
+</dd>
+<dt><strong>知识蒸馏</strong></dt>
+<dd>
+一种模型压缩技术，较小的“学生”网络通过基于较大“教师”网络的软输出概率进行训练，而不只是使用硬标签，来学习模仿教师网络的行为。
+</dd>
+<dt><strong>Kolmogorov-Smirnov 检验（K-S 检验）</strong></dt>
+<dd>
+一种测量两个累积分布之间最大距离的非参数检验，常用于比较特征分布以检测漂移。
+</dd>
+<dt><strong>Kullback-Leibler 散度（KL 散度）</strong></dt>
+<dd>
+一种非对称的信息论度量，用于衡量一个概率分布与另一个概率分布的差异，应用于监控和漂移分析。
+</dd>
+<dt><strong>KV 缓存</strong></dt>
+<dd>
+存储先前 Transformer 词元的键张量和值张量，在自回归推理中用于避免重复计算历史注意力信息。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-l-cc81" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-l-cc81">L</h2>
+<dl>
+<dt><strong>L0 范数</strong></dt>
+<dd>
+向量或张量中非零元素的数量，在剪枝中用于表示稀疏程度或剩余权重的目标预算。
+</dd>
+<dt><strong>标签质量漂移</strong></dt>
+<dd>
+标签的可靠性或一致性随时间下降的现象，即使底层输入分布保持稳定也可能发生。
+</dd>
+<dt><strong>标签偏移</strong></dt>
+<dd>
+一种分布偏移，标签频率发生变化，而以标签为条件的特征模式保持稳定。
+</dd>
+<dt><strong>LAPACK</strong></dt>
+<dd>
+线性代数软件包，在 BLAS 的基础上扩展了更高层次的线性代数操作，包括矩阵分解、特征值问题和线性方程组求解，为机器学习计算提供关键的数学基础。
+</dd>
+<dt><strong>延迟</strong></dt>
+<dd>
+从请求或事件发生到相应响应或完成之间的时间间隔，在要求及时响应的实时应用中至关重要。
+</dd>
+<dt><strong>延迟约束</strong></dt>
+<dd>
+限制模型推理最大可接受延迟的实时性要求，在响应时间至关重要的部署场景中指导优化决策。
+</dd>
+<dt><strong>层归一化</strong></dt>
+<dd>
+一种对每个样本沿特征维度归一化输入的技术，常用于 Transformer 架构，以稳定训练过程。
+</dd>
+<dt><strong>逐层量化</strong></dt>
+<dd>
+一种量化粒度，单层中的所有参数共享相同的量化参数，可提高计算效率，但与更细粒度的方法相比，可能限制表示精度。
+</dd>
+<dt><strong>学习率</strong></dt>
+<dd>
+决定梯度下降优化中权重更新步长的超参数，对训练稳定性和收敛速度具有关键影响。
+</dd>
+<dt><strong>学习率调度</strong></dt>
+<dd>
+在训练过程中系统地调整学习率，采用阶梯衰减、指数衰减或余弦退火等策略，以改善收敛性和最终模型性能。
+</dd>
+<dt><strong>生命周期一致性</strong></dt>
+<dd>
+机器学习开发的所有阶段都应与系统总体目标保持一致的原则，要求数据处理、模型架构和评估标准相互协调。
+</dd>
+<dt><strong>线性扩展失效</strong></dt>
+<dd>
+增加计算资源（例如将加速器数量翻倍）时，由于通信开销和同步成本，性能增益低于线性增长的现象。
+</dd>
+<dt><strong>LINPACK</strong></dt>
+<dd>
+由阿贡国家实验室开发的基准测试，通过求解稠密线性方程组来衡量系统性能，因用于 TOP500 超级计算机排名而闻名。
+</dd>
+<dt><strong>利特尔定律</strong></dt>
+<dd>
+一种排队关系，指出平均并发数等于到达率乘以在系统中的平均停留时间，将吞吐量、延迟和容量联系起来。
+</dd>
+<dt><strong>Llama</strong></dt>
+<dd>
+即 Large Language Model Meta AI，是一个开放基础模型家族，推广了 RMSNorm 和 SwiGLU 等高效架构选择，成为大规模 Transformer 效率的现代参考基准。
+</dd>
+<dt><strong>负载均衡</strong></dt>
+<dd>
+将传入请求分配到多个服务器实例，以防止瓶颈、缩短响应时间并确保高可用性。
+</dd>
+<dt><strong>局部敏感哈希（LSH）</strong></dt>
+<dd>
+一类以高概率将相似对象映射到相同桶中的哈希方法，可实现具有可扩展性的近似相似性搜索。
+</dd>
+<dt><strong>未归一化分数（logits）</strong></dt>
+<dd>
+神经网络最后一层输出的原始、未归一化分数，随后由 softmax 等激活函数转换为概率。
+</dd>
+<dt><strong>损失函数</strong></dt>
+<dd>
+衡量模型输出满足训练目标程度的数学函数，为训练算法提供要最小化的目标。
+</dd>
+<dt><strong>损失缩放</strong></dt>
+<dd>
+混合精度训练中的一种技术，在反向传播前将损失乘以一个较大的因子，以防止低精度格式中的梯度下溢。
+</dd>
+<dt><strong>彩票假说</strong></dt>
+<dd>
+一种理论，认为大型神经网络包含稀疏子网络，这些子网络从适当的初始化状态开始独立训练时，能够以显著更小的规模达到与完整网络相当的准确率。
+</dd>
+<dt><strong>低秩分解</strong></dt>
+<dd>
+一种矩阵分解技术，将大型权重矩阵近似为较小矩阵的乘积，从而减少神经网络层所需的参数数量和计算操作数。
+</dd>
+<dt><strong>LSTM</strong></dt>
+<dd>
+长短期记忆，是一种循环神经网络架构，通过控制信息流的门控机制处理长期依赖关系。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary--52e5" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary--52e5">M</h2>
+<dl>
+<dt><strong>机器学习</strong></dt>
+<dd>
+人工智能的一个分支，使系统能够通过经验和数据自动提升任务性能，而无需显式编程。
+</dd>
+<dt><strong>机器学习框架</strong></dt>
+<dd>
+提供用于设计、训练和部署机器学习模型的工具与抽象的软件平台，通过计算图、硬件优化和工作流编排，将用户应用与基础设施连接起来。例如 TensorFlow、PyTorch 和 JAX。
+</dd>
+<dt><strong>机器学习生命周期</strong></dt>
+<dd>
+一种结构化的迭代过程，涵盖机器学习系统开发、部署和维护所涉及的全部阶段，从问题定义到持续监控和改进。
+</dd>
+<dt><strong>机器学习运维（MLOps）</strong></dt>
+<dd>
+一门工程学科及一套工具，通过对从开发到生产的整个机器学习流水线进行自动化、监控和管理，实现机器学习模型的生产运行。
+</dd>
+<dt><strong>机器学习系统工程</strong></dt>
+<dd>
+一门致力于跨计算平台构建可靠、高效且可扩展的 AI 系统的工程学科，涵盖从数据采集到部署和运维的整个 AI 生命周期，强调资源感知和系统级优化。
+</dd>
+<dt><strong>宏观基准测试</strong></dt>
+<dd>
+一种评估完整机器学习模型的方法，用于了解架构选择和组件交互如何影响系统的整体行为与性能。
+</dd>
+<dt><strong>基于幅值的剪枝</strong></dt>
+<dd>
+最常见的剪枝方法，移除绝对值最小的参数，其依据是假设幅值较小的权重对模型输出的贡献较小。
+</dd>
+<dt><strong>掩蔽</strong></dt>
+<dd>
+一种匿名化技术，通过修改或混淆敏感值，使其无法被直接追溯至原始数据主体。
+</dd>
+<dt><strong>成员推理攻击</strong></dt>
+<dd>
+一种隐私攻击，试图确定某条特定记录是否包含在模型的训练数据中。
+</dd>
+<dt><strong>内存带宽</strong></dt>
+<dd>
+从内存读取数据或向内存写入数据的速率，以字节每秒衡量，通常会成为内存密集型机器学习工作负载的瓶颈。
+</dd>
+<dt><strong>内存层次结构</strong></dt>
+<dd>
+按不同访问速度和容量组织内存系统的方式，从快速的片上缓存到较慢的片外主存。
+</dd>
+<dt><strong>内存墙</strong></dt>
+<dd>
+处理器速度与内存带宽之间不断扩大的性能差距，计算能力的增长超过了向处理器提供数据的速率，成为大型机器学习模型的主要瓶颈。
+</dd>
+<dt><strong>元数据</strong></dt>
+<dd>
+关于数据集的描述性信息，包括数据采集细节、质量指标、验证状态，以及数据管理所必需的其他上下文信息。
+</dd>
+<dt><strong>微批次</strong></dt>
+<dd>
+有效批次中较小的一部分，在梯度累积或流水线并行中按顺序处理，以降低内存峰值占用。
+</dd>
+<dt><strong>微基准测试</strong></dt>
+<dd>
+用于评估机器学习系统中单个组件或特定操作的专用评估工具，例如张量操作或神经网络层。
+</dd>
+<dt><strong>微控制器</strong></dt>
+<dd>
+集成在单个集成电路上的小型计算机，包含处理器内核、存储器和可编程输入/输出外设，常用于嵌入式系统。
+</dd>
+<dt><strong>MinHash</strong></dt>
+<dd>
+一种使用紧凑签名近似估计集合相似度的概要方法，常用于大规模近重复检测。
+</dd>
+<dt><strong>小批量梯度下降</strong></dt>
+<dd>
+一种训练方法，每次使用一小部分训练样本同时计算梯度并更新权重，在计算效率与梯度估计质量之间取得平衡。
+</dd>
+<dt><strong>小批量处理</strong></dt>
+<dd>
+一种在小批量样本上计算梯度的优化方法，在批处理的计算效率与随机方法的内存约束之间取得平衡。
+</dd>
+<dt><strong>混合精度计算</strong></dt>
+<dd>
+在计算的不同阶段使用不同数值精度的技术，例如矩阵乘法使用 FP16，累加使用 FP32。
+</dd>
+<dt><strong>混合精度训练</strong></dt>
+<dd>
+一种结合不同数值精度（通常为 FP16 和 FP32）的训练方法，在保持训练稳定性的同时优化内存使用和计算速度。
+</dd>
+<dt><strong>机器学习节点</strong></dt>
+<dd>
+被视为一个运维单元的单个生产环境机器学习应用，包括数据流水线、特征计算、模型训练、模型服务基础设施和监控。
+</dd>
+<dt><strong>机器学习系统</strong></dt>
+<dd>
+由三个核心组件组成的集成计算系统：引导算法行为的数据、从数据中提取模式的学习算法，以及支持训练和推理过程的计算基础设施。
+</dd>
+<dt><strong>机器学习系统谱系</strong></dt>
+<dd>
+机器学习系统的部署范围，从资源充裕的云端系统到约束严苛的微型嵌入式设备，各类系统都需要不同的优化策略和权衡。
+</dd>
+<dt><strong>机器学习测试评分</strong></dt>
+<dd>
+一套评估机器学习系统生产就绪程度的评分准则，涵盖数据、模型、基础设施和监控测试。
+</dd>
+<dt><strong>MLCommons</strong></dt>
+<dd>
+开发和维护机器学习系统行业标准基准测试的组织，其成果包括用于训练和推理评估的 MLPerf 套件。
+</dd>
+<dt><strong>MLPerf</strong></dt>
+<dd>
+行业标准基准测试套件，为各种深度学习工作负载提供标准化的训练和推理测试，以支持机器学习系统之间的公平比较。
+</dd>
+<dt><strong>MLPerf 执行场景</strong></dt>
+<dd>
+标准的 MLPerf 推理流量场景，用于模拟具有不同延迟和吞吐量要求的顺序、同步、服务器、批处理和交互式工作负载。
+</dd>
+<dt><strong>MLPerf 推理基准</strong></dt>
+<dd>
+一种基准测试框架，评估从云数据中心到移动设备和嵌入式系统等不同部署环境中的机器学习推理性能。
+</dd>
+<dt><strong>MLPerf 移动端基准</strong></dt>
+<dd>
+将 MLPerf 评估扩展到智能手机和移动设备的专用基准测试，衡量严格功耗和内存约束下的延迟与响应能力。
+</dd>
+<dt><strong>MLPerf 功耗测量</strong></dt>
+<dd>
+一种 MLPerf 方法，在测量性能的同时衡量机器学习工作负载的功耗和能源效率。
+</dd>
+<dt><strong>MLPerf 微型系统基准</strong></dt>
+<dd>
+为嵌入式和超低功耗 AI 系统设计的基准测试，例如处理能力极其有限的物联网设备、可穿戴设备和微控制器。
+</dd>
+<dt><strong>MLPerf 训练基准</strong></dt>
+<dd>
+一种标准化基准测试，通过测量不同硬件平台上达到目标准确率所需的时间、吞吐量和资源利用率，评估机器学习训练性能。
+</dd>
+<dt><strong>移动端机器学习</strong></dt>
+<dd>
+在智能手机和平板电脑等便携式电池供电设备上直接执行机器学习模型，以实现个性化且响应迅速的应用。
+</dd>
+<dt><strong>模型卡</strong></dt>
+<dd>
+一种记录机器学习模型的标准化格式，涵盖负责任部署所必需的信息，包括预期用途、性能影响因素和伦理考量。
+</dd>
+<dt><strong>以模型为中心的 AI</strong></dt>
+<dd>
+一种将数据集视为固定不变、将工程工作重点放在优化模型架构上的研究范式。
+</dd>
+<dt><strong>模型压缩</strong></dt>
+<dd>
+在力求保持准确率的同时，减小机器学习模型规模和计算需求的技术，使其能够部署到资源受限的设备上。
+</dd>
+<dt><strong>模型部署</strong></dt>
+<dd>
+将训练完成的机器学习模型集成到生产系统中的过程，使其能够对新数据进行预测，并为最终用户提供价值。
+</dd>
+<dt><strong>模型漂移</strong></dt>
+<dd>
+由于数据模式、用户行为或环境条件发生变化，偏离原始训练条件，导致机器学习模型性能随时间下降的现象。
+</dd>
+<dt><strong>模型评估</strong></dt>
+<dd>
+使用多种指标和验证技术，系统地评估机器学习模型的性能，以确定模型是否满足要求并具备部署条件。
+</dd>
+<dt><strong>模型 FLOPs 利用率（MFU）</strong></dt>
+<dd>
+由观测吞吐量推算出的模型每秒浮点运算数与硬件理论峰值每秒浮点运算数之比，用于衡量工作负载将可用算力用于模型计算的有效程度。
+</dd>
+<dt><strong>模型优化</strong></dt>
+<dd>
+对机器学习模型进行系统性改进，在保持有效性的同时提升效率，并在准确率、计算成本、内存使用、延迟和能源效率之间取得平衡。
+</dd>
+<dt><strong>模型并行</strong></dt>
+<dd>
+一种分布式训练策略，将神经网络模型拆分到多个设备上，每个设备负责计算网络的一部分。
+</dd>
+<dt><strong>模型量化</strong></dt>
+<dd>
+降低机器学习模型数值精度的过程，通常从 FP32 降至 INT8，以减小模型大小和内存流量；只有使用高效的低精度核才能提高速度。
+</dd>
+<dt><strong>模型注册中心</strong></dt>
+<dd>
+用于存储、版本控制和管理已训练机器学习模型及其关联元数据的集中式存储库，支持模型治理和部署。
+</dd>
+<dt><strong>模型服务</strong></dt>
+<dd>
+通过 API 暴露已部署机器学习模型的基础设施和系统，以适当的延迟和吞吐量大规模处理预测请求。
+</dd>
+<dt><strong>模型训练</strong></dt>
+<dd>
+使用机器学习算法从训练数据中学习模式、调整模型参数以最小化预测误差，并构建可用预测系统的过程。
+</dd>
+<dt><strong>模型验证</strong></dt>
+<dd>
+在独立数据集上测试机器学习模型的过程，用于评估其泛化能力，并确保其在未见数据上表现可靠。
+</dd>
+<dt><strong>模型版本管理</strong></dt>
+<dd>
+系统地跟踪和管理机器学习模型的不同版本，包括模型参数、训练数据和性能指标，以支持比较和回滚。
+</dd>
+<dt><strong>动量</strong></dt>
+<dd>
+一种在迭代过程中累积速度向量的优化技术，帮助梯度下降穿越局部极小值区域，并沿一致的梯度方向加速收敛。
+</dd>
+<dt><strong>监控</strong></dt>
+<dd>
+在生产环境中持续观察和测量机器学习系统性能、数据质量及运行指标，以检测问题并触发维护操作。
+</dd>
+<dt><strong>多头注意力</strong></dt>
+<dd>
+一种使用多个并行注意力头的注意力机制，每个头关注输入的不同方面，从而同时捕获多种类型的关系。
+</dd>
+<dt><strong>多层感知机（MLP）</strong></dt>
+<dd>
+一种前馈神经网络，在输入层与输出层之间具有一个或多个隐藏层，能够通过全连接和激活函数学习非线性映射。
+</dd>
+<dt><strong>乘加运算（MAC）</strong></dt>
+<dd>
+将两个值相乘并将结果累加到运行总和中的运算，在线性层和加速器数据通路中占据主导地位。
+</dd>
+<dt><strong>MYCIN</strong></dt>
+<dd>
+最早的大规模专家系统之一，斯坦福大学自 1972 年起开发，用于诊断血液感染，体现了人工智能从追求通用智能转向获取特定领域人类专家知识的方向变化。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-n-aec4" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-n-aec4">N</h2>
+<dl>
+<dt><strong>N:M 稀疏性</strong></dt>
+<dd>
+一种结构化稀疏模式，每 M 个值中恰有 N 个非零值，为硬件提供更规则的零值模式以供利用。
+</dd>
+<dt><strong>神经架构搜索</strong></dt>
+<dd>
+一种自动化方法，通过搜索层、连接和架构超参数的可能组合，寻找在指定目标和约束下表现良好的神经网络架构。
+</dd>
+<dt><strong>神经网络</strong></dt>
+<dd>
+一种计算模型，由按层组织的互连节点组成，能够通过可调节的连接权重学习从输入到输出的映射。
+</dd>
+<dt><strong>神经网络处理器（NPU）</strong></dt>
+<dd>
+专为加速神经网络运算和机器学习计算而设计的专用处理器，针对 AI 工作负载的并行处理进行了优化。
+</dd>
+<dt><strong>神经形态计算</strong></dt>
+<dd>
+一种模拟生物神经网络结构与功能的计算方法，有望为 AI 应用提供能效更高的处理能力。
+</dd>
+<dt><strong>NoSQL</strong></dt>
+<dd>
+一类采用灵活模式、用于处理大量非结构化或半结构化数据的数据库系统，常用于大数据应用。
+</dd>
+<dt><strong>数值精度优化</strong></dt>
+<dd>
+模型优化的一个维度，关注数值的表示和处理方式，包括将高精度值映射为低位宽表示的量化技术。
+</dd>
+<dt><strong>NVLink</strong></dt>
+<dd>
+NVIDIA 用于节点内通信的高带宽 GPU 互连技术，适用于梯度同步和模型并行中的激活值传输。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary--c219" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary--c219">O</h2>
+<dl>
+<dt><strong>可观测性</strong></dt>
+<dd>
+一种综合监控方法，通过指标、日志和追踪信息洞察系统行为，从而根据外部输出理解内部状态。
+</dd>
+<dt><strong>片上存储器</strong></dt>
+<dd>
+直接集成在处理器芯片上的高速存储器，包括缓存和暂存存储器，可提供高带宽、低延迟的数据访问。
+</dd>
+<dt><strong>设备端学习</strong></dt>
+<dd>
+机器学习模型直接在边缘设备上适应和学习的能力，无需将数据传输到外部服务器。
+</dd>
+<dt><strong>独热编码</strong></dt>
+<dd>
+一种将类别标签表示为向量的方法，向量中仅有一个元素为 1，其余元素均为 0。
+</dd>
+<dt><strong>一次性剪枝</strong></dt>
+<dd>
+一种在单个步骤中移除大部分参数的剪枝策略，通常随后通过微调恢复准确率；该策略简单，但可能需要更大力度的微调。
+</dd>
+<dt><strong>联机分析处理（OLAP）</strong></dt>
+<dd>
+一种针对大型数据集上的复杂分析查询进行优化的数据库处理方式，通常用于数据仓库中的商业智能分析。
+</dd>
+<dt><strong>在线推理</strong></dt>
+<dd>
+一种以低延迟处理单个请求的实时预测服务，适用于需要即时响应的交互式应用。
+</dd>
+<dt><strong>联机事务处理（OLTP）</strong></dt>
+<dd>
+一种针对频繁的短事务和实时处理进行优化的数据库处理方式，常用于业务运行应用。
+</dd>
+<dt><strong>ONNX</strong></dt>
+<dd>
+开放神经网络交换格式，是一种表示机器学习模型的标准化格式，可实现不同框架之间的互操作，使在一个框架中训练的模型能够使用另一个框架部署。
+</dd>
+<dt><strong>ONNX Runtime</strong></dt>
+<dd>
+一种跨平台推理引擎，通过算子融合和内核调优等技术优化机器学习模型，以提高推理速度并减少计算开销。
+</dd>
+<dt><strong>优化器</strong></dt>
+<dd>
+在训练过程中调整模型参数以最小化损失函数的算法，常见示例包括 SGD（随机梯度下降）、Adam 和 RMSprop，各自采用不同的参数更新策略。
+</dd>
+<dt><strong>优化器状态</strong></dt>
+<dd>
+优化器在模型参数之外维护的辅助值，例如 Adam 的动量和方差张量，通常在大模型的训练内存占用中占据主导地位。
+</dd>
+<dt><strong>编排</strong></dt>
+<dd>
+对复杂工作流和分布式计算任务进行协调与管理，通常使用 Kubernetes 等平台管理容器。
+</dd>
+<dt><strong>离群点检测</strong></dt>
+<dd>
+识别显著偏离正常模式的数据点的过程，这些数据点可能代表错误、异常或有价值的罕见事件。
+</dd>
+<dt><strong>过拟合</strong></dt>
+<dd>
+一种模型过度学习训练数据的具体细节，以至于无法泛化到未见过的新样本的现象，通常表现为训练准确率很高，但验证性能较差。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-p-da81" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-p-da81">P</h2>
+<dl>
+<dt><strong>填充</strong></dt>
+<dd>
+卷积网络中的一种技术，在输入边界周围添加零或其他值，以控制输出特征图的空间尺寸。
+</dd>
+<dt><strong>PagedAttention</strong></dt>
+<dd>
+一种 KV 缓存内存管理技术，将注意力上下文存储在固定大小的页中，而非为每个请求分配连续内存块，以减少碎片。
+</dd>
+<dt><strong>范式转变</strong></dt>
+<dd>
+科学研究方法的根本性变化，例如 AI 在 20 世纪 90 年代从符号推理转向统计学习，以及在 2010 年代从浅层学习转向深度学习，要求研究者放弃既有方法，采用截然不同的途径。
+</dd>
+<dt><strong>并行性</strong></dt>
+<dd>
+同时执行多个计算任务或操作的能力，是实现高性能神经网络处理的基础。
+</dd>
+<dt><strong>参数</strong></dt>
+<dd>
+神经网络中可学习的组成部分，包括权重和偏置，在训练过程中通过调整来最小化损失函数。
+</dd>
+<dt><strong>帕累托前沿</strong></dt>
+<dd>
+一组配置，在这些配置中，改善一个目标必然会使另一个目标变差，用于分析准确率、延迟、内存和能耗之间的权衡。
+</dd>
+<dt><strong>分区</strong></dt>
+<dd>
+一种数据库技术，根据特定条件将大型数据集划分为更小、易于管理的片段，以提高查询性能和系统可扩展性。
+</dd>
+<dt><strong>感知机</strong></dt>
+<dd>
+神经网络的基本构建单元，由加权输入、偏置项和产生单一输出的激活函数组成。
+</dd>
+<dt><strong>性能洞察</strong></dt>
+<dd>
+从生产环境中机器学习系统的监控结果中得出的分析性认识，用于揭示模型准确率、系统效率或用户体验的改进机会。
+</dd>
+<dt><strong>单位数据性能（PPD）</strong></dt>
+<dd>
+衡量每个训练样本带来的准确率增益的指标，用于评估数据集或选择策略的质量。较高的 PPD 表明数据集信息丰富且冗余较少。
+</dd>
+<dt><strong>锁页内存</strong></dt>
+<dd>
+页面被锁定的主机内存，可支持 CPU 与 GPU 之间直接、异步传输，以预留系统内存为代价提高数据加载吞吐量。
+</dd>
+<dt><strong>流水线丛林</strong></dt>
+<dd>
+一种反模式，复杂且相互依赖的数据处理流水线变得难以维护、调试和修改，从而造成技术债务和运行复杂性。
+</dd>
+<dt><strong>流水线并行</strong></dt>
+<dd>
+一种模型并行形式，将模型的不同层放置在不同设备上，数据以流水线方式流经这些层，从而允许同时处理多个批次。
+</dd>
+<dt><strong>时间点正确性</strong></dt>
+<dd>
+保证训练样本仅使用在历史预测时点本应可用的特征值，从而防止信息泄漏。
+</dd>
+<dt><strong>池化</strong></dt>
+<dd>
+卷积网络中的一种下采样操作，在保留重要特征的同时减小空间尺寸，通常对局部区域执行最大值或平均值运算。
+</dd>
+<dt><strong>群体稳定性指数（PSI）</strong></dt>
+<dd>
+一种基于分箱的分布偏移指标，通过将当前特征分布与基准分布进行比较来检测群体漂移。
+</dd>
+<dt><strong>位置编码</strong></dt>
+<dd>
+Transformer 架构中用于注入词元在序列中位置信息的方法，因为 Transformer 本身不具备固有的顺序处理机制。
+</dd>
+<dt><strong>训练后量化</strong></dt>
+<dd>
+一种应用于已训练模型的量化方法，无需修改训练过程，通常使用有代表性的数据进行校准，以确定最优量化参数。
+</dd>
+<dt><strong>电能使用效率（PUE）</strong></dt>
+<dd>
+数据中心用于衡量能源效率的指标，计算方式为设施总功耗与 IT 设备功耗之比。
+</dd>
+<dt><strong>功耗墙</strong></dt>
+<dd>
+大约在 2005 年达到的一项技术瓶颈：提高处理器频率若不伴随不可持续的功率密度和发热量增长，就无法继续带来性能提升，因此迫使架构转向并行化和专用化。
+</dd>
+<dt><strong>精度</strong></dt>
+<dd>
+在数值计算中，用于表示数值的有效位数或有效数字位数，会影响机器学习系统的计算准确性和资源需求。
+</dd>
+<dt><strong>预取</strong></dt>
+<dd>
+一种系统优化技术，在需要数据之前将其加载到内存中，使数据加载与计算重叠执行，以减少空闲时间并提高训练吞吐量。
+</dd>
+<dt><strong>问题定义</strong></dt>
+<dd>
+机器学习开发的初始阶段，包括明确规定目标、约束、成功指标和运行要求，以指导后续所有开发决策。
+</dd>
+<dt><strong>处理单元（PE）</strong></dt>
+<dd>
+加速器中重复使用的构建单元，包含计算单元和本地存储，由多个 PE 组成的阵列可并行执行张量运算。
+</dd>
+<dt><strong>可编程逻辑控制器（PLC）</strong></dt>
+<dd>
+用于制造业和物联网环境的工业控制系统，可与机器学习模型集成，以在运营技术场景中实现自动化决策。
+</dd>
+<dt><strong>蛋白质折叠问题</strong></dt>
+<dd>
+根据蛋白质的氨基酸序列及其所处环境预测其三维结构和动态行为的科学难题。对于这一长期存在的问题，AlphaFold 等系统取得了突破性的预测精度，但尚未解决所有折叠相关问题。
+</dd>
+<dt><strong>代理变量</strong></dt>
+<dd>
+即使受保护属性或敏感属性已被移除，仍间接携带有关该属性信号的特征。
+</dd>
+<dt><strong>假名化</strong></dt>
+<dd>
+一种隐私保护技术，用人工标识符替换直接标识符，同时保留为分析目的追溯记录的能力。
+</dd>
+<dt><strong>PyTorch</strong></dt>
+<dd>
+Facebook 人工智能研究实验室开发的深度学习框架，强调动态计算图、即时执行和直观的 Python 集成，在研究和实验中尤为流行。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-q-4b3f" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-q-4b3f">Q</h2>
+<dl>
+<dt><strong>量化</strong></dt>
+<dd>
+一种模型压缩技术，以较低精度表示参数或激活值，例如从 FP32 转为 INT8，在不减少数学运算次数的情况下减少存储和数据搬移；实现加速需要硬件和内核支持。
+</dd>
+<dt><strong>量化感知训练</strong></dt>
+<dd>
+一种在训练过程中模拟量化影响的训练方法，使模型能够适应较低精度，通常比训练后量化获得更高的准确率。
+</dd>
+<dt><strong>量化粒度</strong></dt>
+<dd>
+应用量化参数的层级，范围从逐张量（最粗）到逐通道或逐组（更细）；更细的粒度通常能保留更高的准确率，但需要更多存储空间。
+</dd>
+<dt><strong>每秒查询数（QPS）</strong></dt>
+<dd>
+衡量系统一秒内可处理多少推理请求的性能指标，常用于评估生产部署中的吞吐量。
+</dd>
+<dt><strong>查询—键—值</strong></dt>
+<dd>
+注意力机制的三个组成部分，其中查询决定要寻找什么，键表示有哪些可用内容，值包含实际需要加权和组合的信息。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-r-6c03" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-r-6c03">R</h2>
+<dl>
+<dt><strong>实时处理</strong></dt>
+<dd>
+在应用的时间约束下，在数据可用时对其进行处理；硬实时系统保证满足最坏情况下的截止期限，而软实时系统允许偶尔错过截止期限。
+</dd>
+<dt><strong>感受野</strong></dt>
+<dd>
+输入中影响某个特定神经元输出的区域，决定了该神经元能够检测到的模式的空间范围。
+</dd>
+<dt><strong>循环神经网络</strong></dt>
+<dd>
+一种专为序列数据处理设计的神经网络，其连接形成环路，使信息能够跨时间步保留。
+</dd>
+<dt><strong>红色 AI</strong></dt>
+<dd>
+优先追求准确率或性能最大化，而不考虑为此不断增加的计算成本和环境成本的 AI 研究与开发方式。
+</dd>
+<dt><strong>正则化</strong></dt>
+<dd>
+通过添加约束或惩罚来防止神经网络过拟合的技术，包括 dropout、权重衰减和数据增强等方法。
+</dd>
+<dt><strong>ReLU</strong></dt>
+<dd>
+修正线性单元激活函数，定义为 <span class="math inline">\(f(x) = \max(0, x)\)</span>，在保持计算效率的同时引入非线性，并有助于缓解正输入区域的梯度消失问题。
+</dd>
+<dt><strong>残差连接</strong></dt>
+<dd>
+将某一层的输入与其输出相加的跳跃连接，通过缓解梯度消失问题，使极深网络的训练成为可能。
+</dd>
+<dt><strong>ResNet</strong></dt>
+<dd>
+残差网络，一种由带有跳跃连接的残差块构成的深度卷积架构，使数百层网络的训练成为可能，并取得了突破性性能。
+</dd>
+<dt><strong>ResNet-50</strong></dt>
+<dd>
+残差网络架构的一种特定的 50 层变体，在视觉基准测试中兼顾深度与计算成本，是计算受限工作负载的典型标杆模型。
+</dd>
+<dt><strong>视网膜眼底照片</strong></dt>
+<dd>
+眼球内表面的医学图像，包含视网膜、视盘和血管，常用于诊断眼部疾病和训练医疗 AI 系统。
+</dd>
+<dt><strong>反向模式微分</strong></dt>
+<dd>
+一种通过逆序遍历计算图来计算梯度的自动微分技术，对于输入多、输出少的函数效率极高，因此非常适合神经网络训练。
+</dd>
+<dt><strong>脊点</strong></dt>
+<dd>
+在给定硬件平台上，工作负载从内存受限转为计算受限时的算术强度，计算方式为峰值 FLOP/s 除以内存带宽。它是 Roofline 模型图中的转折点。
+</dd>
+<dt><strong>环形 AllReduce</strong></dt>
+<dd>
+一种带宽利用率高的 AllReduce 算法，设备沿环形拓扑传递数据块并累加结果，用于分布式梯度同步。
+</dd>
+<dt><strong>RMSprop</strong></dt>
+<dd>
+一种自适应学习率优化算法，通过维护梯度平方的移动平均值，在训练过程中自动调整各参数的学习率。
+</dd>
+<dt><strong>基于角色的访问控制（RBAC）</strong></dt>
+<dd>
+一种根据用户、服务或团队角色授予权限的访问控制模型，而非临时逐个授予权限。
+</dd>
+<dt><strong>回滚</strong></dt>
+<dd>
+在生产环境中检测到问题时，恢复到模型或系统先前稳定版本的过程，以确保服务连续性。
+</dd>
+<dt><strong>Roofline 分析</strong></dt>
+<dd>
+一种性能建模技术，以运算强度为横轴、可达到的性能为纵轴绘图，并以峰值算力和带宽构成性能上限，用于识别系统是内存受限还是计算受限。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary--4d13" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary--4d13">S</h2>
+<dl>
+<dt><strong>可扩展性</strong></dt>
+<dd>
+机器学习系统在数据量、用户数量或计算需求增加时，能够在性能或用户体验不显著下降的情况下进行处理的能力。
+</dd>
+<dt><strong>缩放因子与零点</strong></dt>
+<dd>
+用于在实值张量与整数值之间进行双向映射的量化参数，其中缩放因子控制步长，零点将实数零映射到量化范围内。
+</dd>
+<dt><strong>模式</strong></dt>
+<dd>
+数据结构与格式的定义，规定数据类型、字段名称和关系，对数据验证和处理一致性至关重要。
+</dd>
+<dt><strong>模式演化</strong></dt>
+<dd>
+随时间修改数据模式，同时保持向后兼容性，并确保依赖该模式的系统和应用持续正常运行的过程。
+</dd>
+<dt><strong>读时模式</strong></dt>
+<dd>
+数据湖中采用的一种方法，在读取数据时才定义并强制执行数据结构，而非在存储时执行，从而为多种数据类型提供灵活性。
+</dd>
+<dt><strong>暂存存储器</strong></dt>
+<dd>
+由软件管理的高速本地存储器，供加速器在编译器或运行时控制下暂存数据，以支持可预测的数据搬移。
+</dd>
+<dt><strong>分割图</strong></dt>
+<dd>
+在像素级别对对象进行分类的详细标注，提供最细粒度的标签信息，但需要显著更多的存储和处理资源。
+</dd>
+<dt><strong>自注意力</strong></dt>
+<dd>
+一种查询、键和值均来自同一序列的注意力机制，使每个位置都能关注包括自身在内的所有位置。
+</dd>
+<dt><strong>半监督学习</strong></dt>
+<dd>
+一种同时使用有标签和无标签数据进行训练的机器学习方法，通过结构性假设，在标签有限的情况下提升模型性能。
+</dd>
+<dt><strong>敏感度</strong></dt>
+<dd>
+分类模型正确识别出的实际阳性病例所占比例，也称为真阳性率或召回率；在漏检阳性病例会造成严重后果的医疗应用中至关重要。
+</dd>
+<dt><strong>无服务器计算</strong></dt>
+<dd>
+一种由提供商自动管理基础设施的云计算模式，使代码执行无需考虑服务器管理问题。
+</dd>
+<dt><strong>服务级别协议（SLA）</strong></dt>
+<dd>
+一种规定服务承诺的正式对外合同，通常通过一个或多个 SLO 表述承诺，并规定不履约的后果或处罚。
+</dd>
+<dt><strong>服务级别目标（SLO）</strong></dt>
+<dd>
+针对延迟、错误率或可用性等服务级别指标设定的内部可测量目标，用于指导运维，并可能作为对外 SLA 的依据。
+</dd>
+<dt><strong>影子部署</strong></dt>
+<dd>
+一种部署策略，新模型与生产模型并行运行，其预测结果会被记录，但不提供给用户，从而能够在不影响用户的情况下进行验证。
+</dd>
+<dt><strong>浅层学习</strong></dt>
+<dd>
+使用支持向量机和决策树等复杂度有限的算法的机器学习方法，需要精心设计特征，但无法像深度学习方法那样自动发现层次化表示。
+</dd>
+<dt><strong>SHAP 值</strong></dt>
+<dd>
+基于 Shapley 值的特征归因分数，用于估计每个特征对模型预测的贡献。
+</dd>
+<dt><strong>sigmoid</strong></dt>
+<dd>
+一种将输入值映射到 0 与 1 之间的激活函数，曾广泛使用，但在深层网络中容易出现梯度消失问题。
+</dd>
+<dt><strong>静默偏差</strong></dt>
+<dd>
+一种模型不公平现象，会产生看似有效但具有歧视性的输出，能够逃过传统错误监控，需要按群体细分评估才能检测。
+</dd>
+<dt><strong>静默退化</strong></dt>
+<dd>
+机器学习系统性能在未触发错误、异常或告警的情况下逐渐下降的现象。机器学习系统可能持续运行，却产生越来越不准确的预测。
+</dd>
+<dt><strong>静默失效</strong></dt>
+<dd>
+一种系统失效模式，机器学习模型持续产生看似合理、但准确性或上下文相关性逐渐下降的输出，且不触发常规错误告警。
+</dd>
+<dt><strong>SIMD（单指令多数据）</strong></dt>
+<dd>
+一种同时对多个数据元素执行相同操作的并行计算架构，适用于规则的数据并行计算。
+</dd>
+<dt><strong>SIMT（单指令多线程）</strong></dt>
+<dd>
+SIMD 的一种扩展，支持多个独立线程并行执行，每个线程维护各自的状态和程序计数器。
+</dd>
+<dt><strong>奇异值分解</strong></dt>
+<dd>
+一种将矩阵分解为三个矩阵乘积的矩阵分解技术，常用于低秩近似，通过仅保留最重要的奇异值来压缩神经网络层。
+</dd>
+<dt><strong>跳跃连接</strong></dt>
+<dd>
+一种绕过一个或多个层的直接连接，使梯度能够更容易地流经深层网络，并改善极深架构的训练效果。
+</dd>
+<dt><strong>软目标</strong></dt>
+<dd>
+在知识蒸馏中用作监督信号的教师模型概率分布，携带硬标签之外的类别相似性信息。
+</dd>
+<dt><strong>softmax</strong></dt>
+<dd>
+一种将 logits 转换为概率分布的激活函数，输出之和为 1，用于多类别分类。
+</dd>
+<dt><strong>稀疏 Tensor Core</strong></dt>
+<dd>
+Tensor Core 的一种变体，通过跳过满足约束的零值，加速其支持的结构化稀疏模式，例如 2:4 稀疏性。
+</dd>
+<dt><strong>稀疏性</strong></dt>
+<dd>
+张量中许多值恰好为零的性质。当零值具有合适的结构，且有专用稀疏内核或硬件支持时，稀疏性可以提高计算效率；接近零的值只有在剪枝后才计入。
+</dd>
+<dt><strong>SPEC CPU</strong></dt>
+<dd>
+由系统性能评估合作组织开发的标准化基准测试套件，使用实际应用而非合成测试来衡量处理器性能。
+</dd>
+<dt><strong>特殊函数单元（SFU）</strong></dt>
+<dd>
+用于执行指数、倒数、求根以及某些激活函数原语等特殊运算的专用硬件，这些运算难以直接映射到普通算术单元或矩阵乘法单元。
+</dd>
+<dt><strong>特异度</strong></dt>
+<dd>
+分类模型正确识别出的实际阴性病例所占比例，也称为真阴性率；对于避免大量假阳性使转诊系统不堪重负十分重要。
+</dd>
+<dt><strong>SPECpower</strong></dt>
+<dd>
+一种衡量服务器在不同工作负载水平下能效的基准测试方法，可直接比较计算系统中功耗与性能的权衡。
+</dd>
+<dt><strong>推测解码</strong></dt>
+<dd>
+自回归语言模型的一种优化技术，由较小模型生成草稿词元，再由较大模型验证，从而在保持质量的同时加速推理。
+</dd>
+<dt><strong>光速（延迟）</strong></dt>
+<dd>
+信息传输的物理速度极限（在光纤中约为 200,000 km/s），构成网络延迟不可消除的下界，因此对于需要在长距离通信条件下实现低于 10 ms 响应时间的应用，必须采用边缘计算。
+</dd>
+<dt><strong>状态字典</strong></dt>
+<dd>
+框架序列化时使用的从模块或优化器名称到张量的映射，用于保存、加载模型和优化器状态，以及创建其检查点。
+</dd>
+<dt><strong>静态图</strong></dt>
+<dd>
+在执行开始前就已完整定义的计算图，支持全面优化和高效部署，但要求预先指定所有操作，因此限制了运行时灵活性。
+</dd>
+<dt><strong>静态量化</strong></dt>
+<dd>
+一种在校准阶段一次性确定量化参数，并在推理过程中保持参数不变的量化方法，计算效率较高，但适应性弱于动态方法。
+</dd>
+<dt><strong>统计学习</strong></dt>
+<dd>
+20 世纪 90 年代兴起的机器学习时代，将研究重点从基于规则的符号 AI 转向能够从数据中学习模式的算法，为现代数据驱动的人工智能方法奠定了基础。
+</dd>
+<dt><strong>随机梯度下降</strong></dt>
+<dd>
+梯度下降的一种变体，使用单个训练样本或小批量样本而非整个数据集来估计梯度，从而降低内存需求并支持在线学习。
+</dd>
+<dt><strong>直通估计器（STE）</strong></dt>
+<dd>
+一种梯度近似方法，使训练过程中的梯度能够通过舍入等不可微操作，常用于量化感知训练。
+</dd>
+<dt><strong>流式摄取</strong></dt>
+<dd>
+一种在数据到达时进行实时处理的数据处理模式，对需要即时处理和低延迟响应的应用至关重要。
+</dd>
+<dt><strong>流处理</strong></dt>
+<dd>
+一种实时数据处理方法，在连续数据流到达时进行处理，从而支持对事件的即时响应和模式检测。
+</dd>
+<dt><strong>步幅</strong></dt>
+<dd>
+卷积滤波器在输入上移动的步长，控制输出的空间维度以及各次滤波器应用之间的重叠程度。
+</dd>
+<dt><strong>结构化剪枝</strong></dt>
+<dd>
+一种移除整个计算单元（如神经元、通道或层）的剪枝方法，生成规模更小的稠密模型，相较于非结构化剪枝产生的稀疏矩阵，这类模型对硬件更友好。
+</dd>
+<dt><strong>监督学习</strong></dt>
+<dd>
+一种机器学习方法，模型从带标签的训练样本中学习，以对新的无标签数据进行预测。
+</dd>
+<dt><strong>符号人工智能</strong></dt>
+<dd>
+一种使用问题的高层符号表示、逻辑和搜索算法的人工智能方法，在深度学习革命之前占据主导地位，以专家系统和基于规则的推理为代表。
+</dd>
+<dt><strong>合成基准测试</strong></dt>
+<dd>
+为衡量系统性能的特定方面而人工设计的测试程序，区别于基于真实应用和工作负载的基准测试。
+</dd>
+<dt><strong>合成数据</strong></dt>
+<dd>
+使用算法、仿真或生成模型人工生成的数据，用于补充真实世界的数据集，以应对数据可用性限制或隐私问题。
+</dd>
+<dt><strong>系统熵</strong></dt>
+<dd>
+机器学习系统随着世界变化（漂移）或隐藏依赖关系累积（技术债务）而逐渐退化的趋势，需要主动投入精力（运维）来维持有序状态。
+</dd>
+<dt><strong>片上系统（SoC）</strong></dt>
+<dd>
+将计算机或电子系统的大部分或全部组件集成在单个芯片上的集成电路，包括 CPU、GPU、内存和专用处理器。常用于移动设备和嵌入式系统，以节省空间并提高能效。
+</dd>
+<dt><strong>系统协同设计</strong></dt>
+<dd>
+对算法、软件和硬件进行联合设计，使模型结构和执行方式适配物理能力与约束。
+</dd>
+<dt><strong>系统集成</strong></dt>
+<dd>
+将各种组件和子系统组合为统一、可用的系统，使其作为一个整体高效、可靠地运行的过程。
+</dd>
+<dt><strong>系统思维</strong></dt>
+<dd>
+一种通过考察各个组件如何相互作用并影响整个系统来理解复杂系统的方法。在机器学习中，数据、算法、硬件和部署环境必须有效协同，因此系统思维尤为重要。
+</dd>
+<dt><strong>脉动阵列</strong></dt>
+<dd>
+一种专用硬件架构，通过使数据流经处理单元网格来高效执行矩阵运算，最大限度地减少数据移动和能耗。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary--9e60" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary--9e60">T</h2>
+<dl>
+<dt><strong>尾延迟</strong></dt>
+<dd>
+系统响应时间的高百分位数，通常以 P95 或 P99 延迟衡量，对描述峰值负载下的慢请求十分重要，但不等同于绝对最坏情况。它是对延迟中位数和均值的补充，而非替代。
+</dd>
+<dt><strong>定制化推理基准测试</strong></dt>
+<dd>
+针对特定部署环境或用例设计的专门性能测试，考虑其特有的约束和优化要求。
+</dd>
+<dt><strong>双曲正切函数（tanh）</strong></dt>
+<dd>
+将输入映射到 (-1, 1) 的双曲正切激活函数，提供以零为中心的输出。
+</dd>
+<dt><strong>技术债务</strong></dt>
+<dd>
+开发过程中为求快捷而作出的设计决策所累积的长期维护成本。在机器学习系统中，由于数据依赖关系和模型复杂性，这一问题尤为突出。
+</dd>
+<dt><strong>遥测</strong></dt>
+<dd>
+自动收集并传输分布式系统的性能数据和指标，以支持远程监控和分析。
+</dd>
+<dt><strong>张量</strong></dt>
+<dd>
+用于表示神经网络中数据的多维数组，将标量（0 维）、向量（1 维）和矩阵（2 维）推广到更高维度。
+</dd>
+<dt><strong>张量核心（Tensor Core）</strong></dt>
+<dd>
+一种专用的 GPU 矩阵运算单元，用于加速张量分块上的混合精度乘累加运算。
+</dd>
+<dt><strong>张量分解</strong></dt>
+<dd>
+将矩阵分解推广到高阶张量的方法，通过将权重张量表示为参数更少的小张量的组合来压缩神经网络层。
+</dd>
+<dt><strong>张量并行</strong></dt>
+<dd>
+一种模型并行策略，将单个张量运算（如矩阵乘法）拆分到多个设备上，从而降低每个设备的内存需求；当计算时间的减少量超过新增通信时间时，还可能降低大型网络层的延迟。
+</dd>
+<dt><strong>张量处理单元（TPU）</strong></dt>
+<dd>
+Google 专门为机器学习工作负载设计的定制专用集成电路，针对矩阵运算进行了优化，并采用脉动阵列架构。
+</dd>
+<dt><strong>TensorFlow</strong></dt>
+<dd>
+Google 开发的综合性机器学习框架，为从研究到生产的整个机器学习流水线提供工具，同时支持即时执行和基于图的计算，并具有广泛的生态系统支持。
+</dd>
+<dt><strong>TensorRT</strong></dt>
+<dd>
+NVIDIA 的推理优化库，通过算子融合和降低精度等技术加速 GPU 硬件上的深度学习推理。
+</dd>
+<dt><strong>三值化</strong></dt>
+<dd>
+一种将权重限制为三个值（通常为 -1、0、+1）的极端量化技术，在实现显著压缩的同时，保留比二值量化更强的表示能力。
+</dd>
+<dt><strong>热设计功耗（TDP）</strong></dt>
+<dd>
+设备或散热系统在典型最大工作负载下被设计为能够持续散除的功率与热量水平。
+</dd>
+<dt><strong>热降频</strong></dt>
+<dd>
+移动设备和嵌入式设备中的一种保护机制，通过降低处理器时钟频率和性能来防止过热，通常会限制设备端机器学习推理的持续性能。
+</dd>
+<dt><strong>吞吐量</strong></dt>
+<dd>
+系统处理数据或完成操作的速率，通常以每秒操作数衡量，对大型模型的训练至关重要。
+</dd>
+<dt><strong>每个输出词元耗时（TPOT）</strong></dt>
+<dd>
+自回归解码过程中首个词元之后的逐词元延迟，反映解码吞吐量和内存带宽的限制。
+</dd>
+<dt><strong>达到目标准确率的时间</strong></dt>
+<dd>
+将模型训练至指定验证准确率所需的实际经过时间。
+</dd>
+<dt><strong>首词元时间（TTFT）</strong></dt>
+<dd>
+在流式大语言模型服务中，从请求到达到生成首个词元的时间，包括预填充、调度和初始响应延迟。
+</dd>
+<dt><strong>TinyML</strong></dt>
+<dd>
+一个专注于在微控制器和传感器等资源极度受限的嵌入式设备上部署机器学习模型的领域，其运行功率范围为毫瓦级至不足一瓦，内存、功率和计算能力均受到严格限制。也称为<em>微型机器学习</em>。
+</dd>
+<dt><strong>TOPS</strong></dt>
+<dd>
+每秒万亿次操作，是表示系统一秒内能够执行多少万亿次操作的操作速率单位。它通常用于报告低精度整数工作负载的性能，因此必须明确操作类型和精度。
+</dd>
+<dt><strong>总拥有成本（TCO）</strong></dt>
+<dd>
+一种用于机器学习系统的综合性财务指标，涵盖系统整个生命周期内的训练、推理和运营成本。
+</dd>
+<dt><strong>训练与服务分离</strong></dt>
+<dd>
+一种混合架构模式，在强大的云基础设施上执行计算密集型模型训练，再对训练好的模型进行优化，并将其部署到资源受限的边缘设备或移动设备上进行推理。
+</dd>
+<dt><strong>训练</strong></dt>
+<dd>
+使用数据或交互经验以及优化过程调整神经网络参数，以最小化损失或最大化奖励的过程。
+</dd>
+<dt><strong>训练与服务偏差</strong></dt>
+<dd>
+模型训练与生产服务期间特征或数据计算方式不一致的现象，可能导致模型性能下降。常见原因包括训练与推理之间的预处理流水线、特征计算时机或数据源不同。
+</dd>
+<dt><strong>迁移学习</strong></dt>
+<dd>
+一种利用相关任务上预训练模型所获得知识的机器学习技术，通过复用已学习的特征和表示，在数据有限的新任务上实现更快的训练和更好的性能。
+</dd>
+<dt><strong>Transformer</strong></dt>
+<dd>
+一种由注意力机制、前馈模块、残差连接和归一化构成的神经网络架构；其原始设计去除了循环和卷积，但后续变体可能会引入这些机制。
+</dd>
+<dt><strong>平移等变性</strong></dt>
+<dd>
+输入发生平移时，输出特征图也发生相应平移的性质，区别于舍弃位置信息的不变性。
+</dd>
+<dt><strong>平移不变性</strong></dt>
+<dd>
+输入发生平移时，模型输出保持不变的性质。卷积具有平移等变性；池化或全局聚合可以产生近似不变性。
+</dd>
+<dt><strong>Tucker 分解</strong></dt>
+<dd>
+一种使用核心张量和因子矩阵将奇异值分解推广到高阶张量的张量分解方法，常用于压缩卷积神经网络层。
+</dd>
+<dt><strong>电视白频谱</strong></dt>
+<dd>
+未被使用的广播频率，可重新用于提供互联网连接。例如，FarmBeats 等系统利用这些频率，将网络接入扩展到偏远地区的农业传感器和物联网设备。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-u-80b1" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-u-80b1">U</h2>
+<dl>
+<dt><strong>均匀量化</strong></dt>
+<dd>
+一种将数值范围划分为等间距区间的量化方法，实现简单，但对于非均匀数值分布可能并非最优。
+</dd>
+<dt><strong>通用近似定理</strong></dt>
+<dd>
+一项理论结果，证明具有足够宽度和适当非线性激活函数的神经网络，可以以任意精度逼近紧致域上的任意连续函数。
+</dd>
+<dt><strong>数据的非同寻常的有效性</strong></dt>
+<dd>
+一种经验观察：对于许多问题，增加数据比改进算法更有效，这推动了以数据为中心的人工智能范式。
+</dd>
+<dt><strong>非结构化剪枝</strong></dt>
+<dd>
+一种在保留整体网络架构的同时移除单个权重的剪枝方法，产生的稀疏权重矩阵需要专门的硬件支持才能实现计算收益。
+</dd>
+<dt><strong>非结构化稀疏性</strong></dt>
+<dd>
+一种模型稀疏形式，单个权重在不遵循任何特定模式的情况下被设为零，形成不规则的稀疏模式，需要专门的硬件支持才能实现计算收益。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-v-fdba" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-v-fdba">V</h2>
+<dl>
+<dt><strong>验证问题</strong></dt>
+<dd>
+模型测试期间发现的问题，表明存在性能不佳、过拟合、数据质量问题或其他必须在部署前解决的问题。
+</dd>
+<dt><strong>梯度消失问题</strong></dt>
+<dd>
+深度神经网络中的一种问题，梯度在逐层反向传播时呈指数级减小，使靠近输入的网络层难以有效学习。
+</dd>
+<dt><strong>向量运算</strong></dt>
+<dd>
+同时处理多个数据元素的计算操作，使神经网络中的逐元素变换能够高效并行执行。
+</dd>
+<dt><strong>验证差距</strong></dt>
+<dd>
+有限测试集的覆盖范围与机器学习系统在生产环境中可能遇到的更大输入空间之间的不匹配。
+</dd>
+<dt><strong>版本管理</strong></dt>
+<dd>
+跟踪数据集、模型和流水线随时间变化的实践，为机器学习系统提供可复现性、回滚能力和审计记录。
+</dd>
+<dt><strong>良性循环</strong></dt>
+<dd>
+深度学习中的一种自我强化过程，数据可用性、算法和计算能力的改进分别推动其他领域的进一步发展，从而加速整体进步。
+</dd>
+<dt><strong>冯·诺依曼瓶颈</strong></dt>
+<dd>
+传统计算机架构中处理器与内存之间的共享总线所导致的性能限制，在这种情况下，数据移动的代价高于计算。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-w-09c9" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-w-09c9">W</h2>
+<dl>
+<dt><strong>仓库级计算机（WSC）</strong></dt>
+<dd>
+作为单台可编程计算机运行的数据中心，将计算、存储、网络以及故障视为系统层面的资源。
+</dd>
+<dt><strong>线程束</strong></dt>
+<dd>
+NVIDIA GPU 上由 32 个线程组成的一组线程，其中的活动线程在同一时刻执行同一条指令；它是 NVIDIA GPU 上线程调度的基本单位。
+</dd>
+<dt><strong>Waymo</strong></dt>
+<dd>
+Alphabet Inc.&nbsp;的一家子公司，代表了机器学习系统在自动驾驶汽车技术中的领先部署，展示了机器学习系统如何在安全关键环境中跨越嵌入式系统与云基础设施。
+</dd>
+<dt><strong>弱监督</strong></dt>
+<dd>
+一种使用通过启发式方法、远程监督或程序化方法更高效地获取的较低质量标签，而非专家手工标注的方法。
+</dd>
+<dt><strong>网页抓取</strong></dt>
+<dd>
+一种从网站自动提取数据以构建定制数据集的技术，需要审慎考虑法律、伦理和技术约束。
+</dd>
+<dt><strong>权重</strong></dt>
+<dd>
+一种可学习参数，用于确定不同层神经元之间的连接强度，在训练期间进行调整以最小化损失函数。
+</dd>
+<dt><strong>权重矩阵</strong></dt>
+<dd>
+神经网络中连接一层与另一层的权重的有序集合，使计算能够通过矩阵运算高效进行。
+</dd>
+<dt><strong>权重共享</strong></dt>
+<dd>
+在不同空间位置使用相同参数的实践，如卷积网络中的做法，在减少参数数量的同时保持模式检测能力。
+</dd>
+<dt><strong>Whetstone</strong></dt>
+<dd>
+由英国国家物理实验室的 Curnow 和 Wichmann 开发的早期基准测试，于 1972 年首次以 ALGOL 60 程序的形式发布，随后于 1976 年发布了经典的 FORTRAN 版本。它以 MWIPS（每秒百万条 Whetstone 指令）衡量浮点运算性能，成为最早得到广泛采用的标准化性能测试之一。
+</dd>
+<dt><strong>工作流编排</strong></dt>
+<dd>
+对复杂机器学习流水线序列进行自动协调和管理，确保分布式系统中的执行顺序、依赖关系管理和错误处理正确无误。
+</dd>
+</dl>
+</section>
+<section id="sec-glossary-x-8ce7" class="level2 unlisted">
+<h2 class="unlisted anchored" data-anchor-id="sec-glossary-x-8ce7">X</h2>
+<dl>
+<dt><strong>XLA</strong></dt>
+<dd>
+加速线性代数，是一种面向线性代数运算的领域专用编译器，通过为 CPU、GPU 和 TPU 等各种硬件平台生成高效代码，优化 TensorFlow 和 JAX 计算。
+</dd>
+</dl>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https?:\/\/[^/]+\/books\/mlsys\/vol1\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../vol1_zh/backmatter/appendix_assumptions.html" class="pagination-link" aria-label="系统假设">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">系统假设</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>机器学习系统导论 · 简体中文本地预览</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+<!--
+  MLSysBook release-pill — shared footer version chip for Quarto + static sites.
+
+  Renders a small "v0.1.0 · Apr 26, 2026" chip from a deployed
+  release-manifest.json. Best-effort chrome: silent on any fetch failure
+  (manifest missing, offline, CORS). Use at any site that emits a manifest
+  via scripts/version/release.py emit-manifest.
+
+  ── Standardized placement (all MLSysBook sites) ──
+
+  The chip lives in the page-footer, right slot, so it reads as an
+  intentional part of the footer bar (not dangling below the page). Two
+  pieces per site:
+
+  1. This file loads the style + populator script site-wide:
+
+       format:
+         html:
+           include-in-header:
+             - text: |
+                 <meta name="release-manifest" content="/<project-base>/release-manifest.json">
+           include-after-body:
+             - file: ../shared/release/release-pill.html
+
+  2. Each page-footer places the chip span where it should render:
+
+       website:
+         page-footer:
+           right:
+             - text: |
+                 <span class="release-pill" data-release-pill></span>
+             - icon: github
+               href: ...
+
+  The meta tag tells the script where to find the manifest. The script
+  populates every span carrying data-release-pill, so the chip can sit in
+  the footer (canonical), an about page, or anywhere else.
+
+  ── Manifest contract ──
+
+  The manifest is the JSON written by scripts/version/release.py
+  emit-manifest. Required keys: releaseId, releaseHash. Optional but
+  recommended: buildDate, project. Anything else is ignored.
+
+  ── Why runtime fetch instead of build-time templating ──
+
+  Build-time templating would be deterministic but requires per-project
+  Lua/template machinery. Runtime fetch is project-agnostic and works
+  identically across Quarto, Next.js, and plain HTML. The one fetch per
+  page-load is cheap and the chip degrades to nothing on failure.
+-->
+
+<style>
+  /* Fixed muted gray on every site — the chip must look identical regardless of
+     each Quarto theme's accent colors (do NOT inherit --bs-secondary / link color). */
+  .release-pill {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--release-pill-color, #6c757d);
+  }
+  .release-pill a,
+  .release-pill a:visited,
+  .release-pill-version,
+  .release-pill-date {
+    color: var(--release-pill-color, #6c757d);
+    text-decoration: none;
+  }
+  .release-pill a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .release-pill-date {
+    opacity: 0.75;
+  }
+</style>
+
+<script>
+  (function () {
+    var pills = document.querySelectorAll('[data-release-pill]');
+    if (!pills.length) return;
+
+    // Manifest URL resolution order:
+    //   1. data-manifest attribute on the pill (per-page override)
+    //   2. <meta name="release-manifest" content="..."> in <head>
+    //   3. './release-manifest.json' relative to current page (fallback)
+    var meta = document.querySelector('meta[name="release-manifest"]');
+    var metaPath = meta && meta.getAttribute('content');
+
+    fetch(metaPath || './release-manifest.json', { cache: 'no-store' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (m) {
+        if (!m || !m.releaseId || !m.releaseHash) return;
+        var date = m.buildDate
+          ? new Date(m.buildDate).toLocaleDateString('en-US',
+              { year: 'numeric', month: 'short', day: 'numeric' })
+          : '';
+        var shortHash = String(m.releaseHash).slice(0, 7);
+        var title =
+          (m.project ? m.project + ' ' : '') +
+          'v' + m.releaseId +
+          (date ? ' · built ' + date : '') +
+          ' · hash ' + shortHash;
+
+        pills.forEach(function (el) {
+          var rawLink = el.getAttribute('data-link') || '#release';
+          // XSS hardening: allow only anchor, relative, or http(s) links; reject javascript:/data: URLs.
+          var linkHref = /^(?:#|\/|\.{1,2}\/|https?:\/\/)/i.test(rawLink) ? rawLink : '#release';
+          var a = document.createElement('a');
+          a.href = linkHref;
+          a.title = title;
+          a.setAttribute('aria-label',
+            'Release v' + m.releaseId + (date ? ', built ' + date : ''));
+          var v = document.createElement('span');
+          v.className = 'release-pill-version';
+          v.textContent = 'v' + m.releaseId;
+          a.appendChild(v);
+          if (date) {
+            var d = document.createElement('span');
+            d.className = 'release-pill-date';
+            d.textContent = ' · ' + date;
+            a.appendChild(d);
+          }
+          el.innerHTML = '';
+          el.appendChild(a);
+        });
+      })
+      .catch(function () { /* silent: best-effort chrome */ });
+  })();
+</script>
+    <script type="text/javascript">
+    (function(d) {
+      function renderPseudocode() {
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let pseudocodeOptions = {
+            indentSize: el.dataset.indentSize,
+            commentDelimiter: " " + el.dataset.commentDelimiter + " ",
+            lineNumber: el.dataset.lineNumber.toLowerCase() === "true",
+            lineNumberPunc: el.dataset.lineNumberPunc,
+            noEnd: el.dataset.noEnd.toLowerCase() === "true",
+            scopeLines: el.dataset.indentLines.toLowerCase() === "true",
+            titlePrefix: el.dataset.captionPrefix,
+          };
+          pseudocode.renderElement(el.querySelector(".pseudocode"), pseudocodeOptions);
+        });
+        d.querySelectorAll(".pseudocode-container").forEach(function(el) {
+          let captionSpan = el.querySelector(".ps-root > .ps-algorithm > .ps-line > .ps-keyword")
+          if (captionSpan !== null) {
+            let captionPrefix = el.dataset.captionPrefix + " ";
+            let captionNumber = "";
+            if (el.dataset.pseudocodeNumber) {
+              captionNumber = el.dataset.pseudocodeNumber + " ";
+              if (el.dataset.chapterLevel) {
+                captionNumber = el.dataset.chapterLevel + "." + captionNumber;
+              }
+            }
+            captionSpan.innerHTML = captionPrefix + captionNumber;
+          }
+        });
+      }
+      // pseudocode.js needs a math backend (KaTeX or MathJax) present *at the
+      // moment* renderElement runs. This book renders math with MathJax loaded
+      // via `defer`, so window.MathJax does not exist yet when this after-body
+      // script executes at parse time — calling renderElement now throws
+      // "No math backend found" and the raw LaTeX source stays on the page.
+      // Wait for the math backend to be ready before rendering: KaTeX if it is
+      // present synchronously, otherwise MathJax's startup promise (available
+      // after the deferred MathJax script has run, by window 'load').
+      function whenMathReady(cb) {
+        if (window.katex) { cb(); return; }
+        var mj = window.MathJax;
+        if (mj && mj.startup && mj.startup.promise) { mj.startup.promise.then(cb); return; }
+        window.addEventListener("load", function() {
+          var m = window.MathJax;
+          if (m && m.startup && m.startup.promise) { m.startup.promise.then(cb); }
+          else { cb(); }
+        });
+      }
+      whenMathReady(renderPseudocode);
+    })(document);
+    </script>
+  
+
+
+
+
+<a id="zh-library-back" href="/books/mlsys/" style="position:fixed;right:18px;bottom:18px;z-index:1050;background:#203d3d;color:white;border-radius:24px;padding:9px 16px;font:14px system-ui;text-decoration:none;box-shadow:0 2px 14px #0002">← 中文书架</a>
+</body></html>
