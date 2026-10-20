@@ -15,6 +15,16 @@ Finishing the first version of a video often reveals the real work: terminology 
 
 This article describes capabilities documented in the repository and release notes available on October 20, 2026. A documented feature is not evidence of successful testing on every platform. `gptbert/baocut` is a fork of [JimLiu/baocut](https://github.com/JimLiu/baocut). We first cover the shared product capabilities, then the Intel Mac preview distributed by this fork.
 
+## System architecture: one Runtime and one video write path
+
+The diagram summarizes the main call relationships in the repository’s architecture document. Clients use the Runtime’s public interfaces. Inside the Runtime, Agent Harness, Video, and Models handle agent tasks, video services, and model capabilities respectively. Video changes pass through the Video service to Rust Engine Host. VideoEngine / VideoStore own video state; WASM preview in the UI has no write authority.
+
+[![BaoCut architecture: clients connect to a local Runtime, which orchestrates agents and compute services; video writes pass through Rust Engine Host and VideoStore.]({{ '/assets/images/baocut-architecture-en.svg' | relative_url }})]({{ '/assets/images/baocut-architecture-en.svg' | relative_url }})
+
+*Click the diagram for a larger view. Solid arrows indicate calls or writes; the dashed arrow connects external agent engines. Return events, supervision processes, and Runtime metadata storage are omitted. Local model backends vary by platform; Intel limits are discussed below.*
+
+This separates AI task orchestration from precise video-editing semantics. Outputs from model and media jobs must still be applied through the video service and engine, rather than letting a model write directly to the video database. [Architecture reference (§1–2)](https://github.com/gptbert/baocut/blob/33c9e09f803b454482066ad0f78d8e21b2c6ec68/docs/architecture/architecture-design.md).
+
 ## Start with footage you already have
 
 An interview, lesson, or talking-head recording is a straightforward starting point. BaoCut can use local speech-recognition models or online APIs to produce timed text. Documented local options include Whisper, Qwen3-ASR, and MOSS with speaker diarization. Segments can appear on the timeline as the job progresses, allowing review before the entire recording is processed.

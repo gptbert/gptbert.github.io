@@ -14,6 +14,16 @@ alternate_url: /en/posts/2026/10/20/baocut-editable-ai-video/
 
 本文按 2026 年 10 月 20 日可查的仓库文档与发行说明介绍功能，不把文档中的能力列表当作每个平台上的实测结果。`gptbert/baocut` 是 [JimLiu/baocut](https://github.com/JimLiu/baocut) 的 fork；下文先介绍项目的共同能力，再说明这个 fork 提供的 Intel Mac 预览版。
 
+## 系统架构：一个 Runtime，统一的视频写入路径
+
+下图按仓库架构文档概括主要调用关系。客户端通过 Runtime 的公共接口发起操作；Runtime 内的 Agent Harness、Video 和 Models 分别负责智能体任务、视频服务与模型能力。视频修改由 Video 服务交给 Rust Engine Host，视频状态统一由 VideoEngine / VideoStore 管理，界面里的 WASM 预览不取得写入权。
+
+[![BaoCut 系统架构：客户端连接本地 Runtime，Runtime 编排智能体与计算服务，视频写入经过 Rust Engine Host 和 VideoStore。]({{ '/assets/images/baocut-architecture.svg' | relative_url }})]({{ '/assets/images/baocut-architecture.svg' | relative_url }})
+
+*点击架构图可查看大图。实线表示调用或写入方向，虚线连接外部智能体引擎；图中省略返回事件、监管进程和 Runtime 元数据存储。本地模型后端随平台变化，Intel 限制见下文。*
+
+这套划分让 AI 任务调度与精确的视频编辑语义各有归属。模型和媒体任务产出结果后，仍需通过视频服务与引擎应用到时间线，而非由模型直接改写视频数据库。[架构依据（§1–2）](https://github.com/gptbert/baocut/blob/33c9e09f803b454482066ad0f78d8e21b2c6ec68/docs/architecture/architecture-design.md)。
+
 ## 从一段已有素材开始
 
 最直观的入口是一段访谈、课程或口播。BaoCut 可以调用本地语音识别模型，也可以连接在线接口，将语音变成带时间信息的文本。文档列出的本地选项包括 Whisper、Qwen3-ASR，以及支持说话人区分的 MOSS。识别片段可以随任务进度进入时间线，不必等整段录音全部处理完再开始查看。
