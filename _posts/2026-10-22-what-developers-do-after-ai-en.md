@@ -69,6 +69,10 @@ I now prefer to organize acceptance checks around the user’s path: where it st
 
 AI can help run checks, analyze results, and add tests. Developers still need to judge what the evidence covers and which conclusions remain premature.
 
+[![Requirements define behavior, implementation produces changes, verification gathers evidence, and delivery states support and limits. Failed verification returns to implementation.]({{ '/assets/images/developer-workflow-en.svg' | relative_url }})]({{ '/assets/images/developer-workflow-en.svg' | relative_url }})
+
+*A practical workflow distilled from these projects. Click to enlarge; the dashed path returns failed verification to implementation.*
+
 ## The easier features are to add, the more direction matters
 
 One immediate effect of AI is that adding features takes less effort.
